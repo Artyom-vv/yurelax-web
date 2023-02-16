@@ -8,7 +8,7 @@ button.mat-button {
   line-height: 100%;
 }
 
-.mat-button-wrapper {
+.mdc-button__label {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,47 +17,54 @@ button.mat-button {
 @mixin btn-big {
   height: 56px;
   padding: 0 20px;
-  .mat-button-wrapper {
+  .mdc-button__label {
     gap: 8px;
   }
-  .icon {
+  .icon:not(#{$unique_stroke_icons}) {
     @include icon-size(24px);
   }
 }
 @mixin btn-normal {
   height: 48px;
   padding: 0 16px;
-  .mat-button-wrapper {
+  .mdc-button__label {
     gap: 6px;
   }
-  .icon {
+  .icon:not(#{$unique_stroke_icons}) {
     @include icon-size(20px);
   }
 }
 @mixin btn-small {
   height: 40px;
   padding: 0 12px;
-  .mat-button-wrapper {
+  .mdc-button__label {
     gap: 4px;
   }
-  .icon {
+  .icon:not(#{$unique_stroke_icons}) {
     @include icon-size(16px);
   }
 }
+
+$unique_stroke_icons: ".icon-login";
 
 @mixin btn-primary() {
   $default_color: map-get($project-colors, "purple", 100);
 
   background-color: map-get($project-colors, "purple", 400);
 
-  &, span {
-    @include span-text-big();
-    @include weight-medium();
-    color: $default_color;
+  .mdc-button__label {
+    &, span {
+      @include span-text-big();
+      @include weight-medium();
+      color: $default_color;
+    }
   }
 
-  &_iconly {
-    .icon {
+  &.btn_iconly {
+    #{$unique_stroke_icons} {
+      stroke: $default_color;
+    }
+    .icon:not(#{$unique_stroke_icons}) {
       fill: $default_color;
     }
   }
@@ -67,7 +74,10 @@ button.mat-button {
     &, span {
       color: map-get($project-colors, "purple", 200);
     }
-    .icon {
+    #{$unique_stroke_icons} {
+      stroke: map-get($project-colors, "purple", 200);
+    }
+    .icon:not(#{$unique_stroke_icons}) {
       fill: map-get($project-colors, "purple", 200);
     }
   }
@@ -86,14 +96,21 @@ button.mat-button {
 
   background-color: map-get($project-colors, "gradation", 700);
 
-  &, span {
-    @include span-text-default();
-    @include weight-regular();
-    color: $default_color;
+
+  .mdc-button__label {
+    &, span {
+      @include span-text-default();
+      @include weight-regular();
+      color: $default_color;
+    }
   }
 
-  &_iconly {
-    .icon {
+
+  &.btn_iconly {
+    #{$unique_stroke_icons} {
+      stroke: $default_color;
+    }
+    .icon:not(#{$unique_stroke_icons}) {
       fill: $default_color;
     }
   }
@@ -103,11 +120,15 @@ button.mat-button {
     &, span {
       color: map-get($project-colors, "gradation", 300);
     }
-    .icon {
+    #{$unique_stroke_icons} {
+      stroke: map-get($project-colors, "gradation", 300);
+    }
+    .icon:not(#{$unique_stroke_icons}) {
       fill: map-get($project-colors, "gradation", 300);
     }
   }
   &:not(:disabled):hover {
+    background-color: map-get($project-colors, "gradation", 600);
   }
   &:focus {
   }
@@ -121,12 +142,15 @@ button.mat-button {
   &, span {
     color: map-get($project-colors, "gradation", 600);
   }
-  .icon {
+  #{$unique_stroke_icons} {
+    stroke: map-get($project-colors, "gradation", 600);
+  }
+  .icon:not(#{$unique_stroke_icons}) {
     fill: map-get($project-colors, "gradation", 600);
   }
 }
 
-.mat-button.btn {
+button.mat-mdc-button.btn {
   &, span {
     transition: 0.2s ease;
   }

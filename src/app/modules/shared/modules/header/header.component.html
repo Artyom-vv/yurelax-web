@@ -12,5 +12,13 @@
         <li *ngFor="let route of routes" [routerLink]="route.link" routerLinkActive="active" class="link text text_body regular c-gradation-300">{{route.name}}</li>
       </ul>
     </div>
+    <div class="flex gap-24 flex_align-center">
+      <div class="socials flex gap-12">
+        <yrx-icon icon="vk"></yrx-icon>
+        <yrx-icon icon="dc"></yrx-icon>
+        <yrx-icon icon="tg"></yrx-icon>
+      </div>
+      <yrx-button type="secondary"><span>Войти</span><yrx-icon btn-icon icon="login"></yrx-icon></yrx-button>
+    </div>
   </div>
 </header>

@@ -19,8 +19,8 @@ export class AuthService {
   }
 
   deleteCookies() {
-    this.cookieService.delete('accessToken')
-    this.cookieService.delete('refreshToken')
+    this.cookieService.delete('accessToken', '/')
+    this.cookieService.delete('refreshToken', '/')
   }
 
   saveCookies(tokens: TokensResponseInterface) {
@@ -65,7 +65,7 @@ export class AuthService {
   }
 
   refreshToken(refreshToken: string): Observable<TokensResponseInterface> {
-    return this.http.post<TokensResponseInterface>(`${environment.apiUrl}/auth/refresh-token`, {refreshToken}).pipe(
+    return this.http.post<TokensResponseInterface>(`${environment.apiUrl}/auth/refresh-token`, {refreshToken}, {headers: {'Anonymous': 'true'}}).pipe(
       tap((tokens) => {
         this.saveCookies(tokens)
       }),

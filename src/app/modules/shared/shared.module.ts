@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {SharedComponent} from './shared.component';
 import {RouterModule} from "@angular/router";
 import {SvgSpritesComponent} from './components/svg-sprites/svg-sprites.component';
+import {ToolsService} from "./services/global/tools.service";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {SvgSpritesComponent} from './components/svg-sprites/svg-sprites.componen
   imports: [
     CommonModule,
     RouterModule
-  ]
+  ],
+  providers: [ToolsService]
 })
 export class SharedModule {
 }

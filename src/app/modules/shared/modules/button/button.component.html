@@ -1,0 +1,6 @@
+<button mat-button [disableRipple]="true" class="btn" [ngClass]="'btn_'+size+' btn_'+type" [class.btn_iconly]="icon.children.length > 0">
+  <ng-content></ng-content>
+  <div class="icon-wrapper" #icon>
+    <ng-content select="[btn-icon]"></ng-content>
+  </div>
+</button>

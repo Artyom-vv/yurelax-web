@@ -24,6 +24,10 @@
   &-dc, &-tg, &-vk {
     @include icon-size(24px);
     fill: map-get($project-colors, "gradation", 500);
+    cursor: pointer;
+    &:hover {
+      fill: map-get($project-colors, "gradation", 400);
+    }
   }
 
   &-yurelax {
@@ -33,7 +37,8 @@
 
   &-login {
     @include icon-size(20px);
-    fill: map-get($project-colors, "gradation", 300);
+    stroke: map-get($project-colors, "gradation", 300);
+    fill: none;
   }
 
   &-spinner {
