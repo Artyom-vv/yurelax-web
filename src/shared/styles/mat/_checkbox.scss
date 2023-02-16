@@ -1,0 +1,72 @@
+@import "src/styles/vars";
+
+div.mat-option-pseudo-checkbox {
+  margin-right: 10px;
+}
+
+mat-pseudo-checkbox.mat-pseudo-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid map-get($project-colors, "blue", 0);
+  border-radius: 3px;
+
+  &:after {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -67%) rotate(-45deg);
+  }
+}
+
+.mat-primary .mat-pseudo-checkbox-checked,
+.mat-primary .mat-pseudo-checkbox-indeterminate {
+  background-color: map-get($project-colors, "blue", 6);
+}
+
+mat-checkbox {
+  padding: 5px 5px 5px 0;
+
+  &.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: map-get($project-colors, "blue", 6);
+  }
+
+  .mat-checkbox-background,
+  .mat-checkbox-frame {
+    // Отступ на глаз взял, т.к. mixed в дизайне указан
+    border-radius: 4px;
+  }
+
+  .mat-checkbox-inner-container {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+  }
+
+  .mat-checkbox-checkmark {
+    width: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .mat-checkbox-layout .mat-checkbox-label {
+    color: map-get($project-colors, "gray", 13);
+    font-size: 15px;
+    line-height: 1.33em;
+    font-weight: 400;
+
+    white-space: normal;
+  }
+  .mat-checkbox-layout {
+    gap: 10px;
+    align-items: center;
+  }
+  &.start {
+    .mat-checkbox-inner-container {
+      margin-top: 3px;
+    }
+    .mat-checkbox-layout {
+      gap: 10px;
+      align-items: start;
+    }
+  }
+}

@@ -1,0 +1,55 @@
+@import "/src/shared/styles/vars.colors";
+
+@mixin icon-size($size) {
+  @include icon-width($size);
+  @include icon-height($size);
+}
+
+@mixin icon-width($size) {
+  width: $size;
+  max-width: $size;
+  min-width: $size;
+}
+
+@mixin icon-height($size) {
+  height: $size;
+  max-height: $size;
+  min-height: $size;
+}
+
+.icon {
+  display: block;
+  transition: 0.2s ease;
+
+  &-dc, &-tg, &-vk {
+    @include icon-size(24px);
+    fill: map-get($project-colors, "gradation", 500);
+  }
+
+  &-yurelax {
+    @include icon-size(48px);
+    fill: map-get($project-colors, "red", 300);
+  }
+
+  &-login {
+    @include icon-size(20px);
+    fill: map-get($project-colors, "gradation", 300);
+  }
+
+  &-spinner {
+    @include icon-size(16px);
+    fill: black;
+    animation: spinner 0.6s linear infinite;
+  }
+
+  @keyframes spinner {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+}
+

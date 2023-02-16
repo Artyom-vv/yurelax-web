@@ -1,0 +1,70 @@
+@import "src/styles/vars";
+
+.paginator {
+  user-select: none;
+  min-height: 52px;
+  gap: 12px;
+  padding: 8px 0;
+
+  .title-medium {
+    color: map-get($project-colors, "gray", 700);
+    &::selection {
+      background-color: transparent;
+    }
+  }
+}
+.box_input {
+  max-width: 64px;
+  input {
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #E8E8E8;
+    color: #585757;
+    padding: 0 12px;
+  }
+}
+.paginator-body {
+  gap: 16px;
+  &__elements {
+    gap: 4px;
+  }
+  &__prev, &__next {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s ease;
+    background: #FFFFFF;
+    border: 1px solid #E8E8E8;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.paginator-item {
+  transition: 0.2s ease;
+  user-select: none;
+  cursor: pointer;
+
+  width: 32px;
+  height: 40px;
+
+  background: #FFFFFF;
+  border: 1px solid #E8E8E8;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+
+  &:not(.active):hover {
+    background-color: #f9ffdf;
+  }
+  &.active {
+    .title-medium {
+      color: map-get($project-colors, "gray", 700);
+    }
+    background: map-get($project-colors, "green", 400);
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 2px 1px rgba(0, 0, 0, 0.06), 0px 1px 1px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+  }
+}

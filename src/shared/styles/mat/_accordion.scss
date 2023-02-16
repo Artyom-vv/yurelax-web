@@ -1,0 +1,33 @@
+mat-expansion-panel.accordion {
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  padding: 2px;
+
+  &:not([class*=mat-elevation-z]) {
+    box-shadow: unset;
+  }
+  .mat-expansion-indicator {
+    display: none;
+  }
+
+  .mat-content {
+    justify-content: space-between;
+  }
+  .mat-expansion-panel-body {
+    padding: 0;
+  }
+
+  .mat-expansion-panel-header {
+    height: 20px !important;
+    padding: 2px 0;
+    &:hover {
+      transition: 0.2s ease;
+      cursor: pointer;
+      background-color: #fcfcfc !important;
+    }
+  }
+  .mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: unset !important;
+  }
+}

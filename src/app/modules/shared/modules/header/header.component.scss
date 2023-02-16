@@ -1,0 +1,27 @@
+@import "src/shared/styles/vars.colors";
+
+.header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  background-color: map-get($project-colors, "gradation", 800);
+}
+.logotype {
+  cursor: pointer;
+  .text_tiny {
+    line-height: 14px;
+  }
+}
+.link {
+  cursor: pointer;
+  transition: 0.2s ease;
+  &:not(.active):hover {
+    color: map-get($project-colors, "gradation", 200);
+  }
+  &:active {
+    color: map-get($project-colors, "gradation", 300);
+  }
+  &.active {
+    color: map-get($project-colors, "gradation", 200);
+  }
+}

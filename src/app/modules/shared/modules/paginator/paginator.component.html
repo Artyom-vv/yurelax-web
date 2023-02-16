@@ -1,0 +1,36 @@
+<div [formGroup]="form" class="paginator flex flex_justify-between">
+  <div class="flex gap-12 flex_align-center">
+    <h5 class="title-medium">Перейти к</h5>
+    <div class="box box_input">
+      <input
+        formControlName="page"
+        autocomplete="off"
+        type="number"
+        matInput
+      />
+    </div>
+    <h5 class="title-medium">странице</h5>
+  </div>
+  <div class="paginator-body flex flex_align-center">
+    <div class="paginator-body__prev" (click)="onPrev()">
+      <svg [style.opacity]="active_step === 1 ? 0.4 : 1" class="icon icon-arrow-left">
+        <use xlink:href="#arrow-left"></use>
+      </svg>
+    </div>
+    <ul class="paginator-body__elements flex">
+      <li class="paginator-item text flex flex_center" *ngIf="(steps$.value.length === 0);">
+        <h5 class="title-medium">...</h5>
+      </li>
+      <li *ngFor="let element of (steps$ | async)" [class.active]="active_step === element" class="paginator-item text flex flex_center" (click)="selectPagination(element)">
+        <h5 class="title-medium">
+          {{element}}
+        </h5>
+      </li>
+    </ul>
+    <div class="paginator-body__next" (click)="onNext()">
+      <svg [style.opacity]="active_step === total_steps || total_steps === 0 ? 0.4 : 1" class="icon icon-arrow-right">
+        <use xlink:href="#arrow-right"></use>
+      </svg>
+    </div>
+  </div>
+</div>

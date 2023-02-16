@@ -1,0 +1,48 @@
+@import "/src/shared/styles/vars";
+
+.box {
+  position: relative;
+  width: 100%;
+
+  &_input {
+    .icon {
+      display: none;
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+    }
+  }
+  &_select {
+    .icon {
+      display: none;
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .icon-arrow-down {
+      display: block;
+    }
+  }
+
+  &_textarea {
+    .mat-form-field-flex {
+      //height: 141px;
+    }
+    .mat-input-element, .mat-form-field-infix {
+      height: 100%;
+    }
+  }
+}
+
+
+// Для mat-form-field
+.icon-help + .icon_help {
+  display: block;
+}
+.icon-search + .icon_search {
+  display: block;
+}
+

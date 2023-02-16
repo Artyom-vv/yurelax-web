@@ -1,0 +1,21 @@
+<div *ngIf="img !== null " class="img-wrapper">
+  <img [src]="img?.url" [alt]="img?.type">
+  <svg (click)="onRemove()" class="icon icon-drop-box-close">
+    <use xlink:href="#drop-box-close"></use>
+  </svg>
+</div>
+<div appDrop (fileDropped)="onDrop($event)" [class.disabled]="disabled" [class.loaded]="img !== null " [class.row]="row" [class.flex_justify-start]="row" [class.flex_center]="!row" (click)="openFileManager()" class="drop-box full-height w100 flex_grow flex">
+  <div class="content flex flex_column flex_center gap-16">
+    <svg class="icon icon-upload">
+      <use xlink:href="#upload"></use>
+    </svg>
+    <h5 class="title-medium">{{title}}</h5>
+  </div>
+  <input
+    (change)="onChangeFile()"
+    type="file"
+    accept="image/png,image/jpg,image/jpeg"
+    #fileLoader
+    style="display: none;"
+  />
+</div>

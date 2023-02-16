@@ -1,0 +1,199 @@
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/vars.md";
+
+@mixin title-styles {
+  font-family: $main_font;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin: 0;
+  color: #fff;
+}
+
+.mat-typography h1, h2, h3, h4, h5, h6 {
+  @include title-styles;
+}
+
+@mixin h1-desktop {
+  font-size: 48px;
+  line-height: 60px;
+}
+
+@mixin h2-desktop {
+  font-size: 40px;
+  line-height: 52px;
+}
+
+@mixin h3-desktop {
+  font-size: 32px;
+  line-height: 40px;
+}
+
+@mixin h4-desktop {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+@mixin h5-desktop {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+@mixin h1-mobile {
+  font-size: 32px;
+  line-height: 40px;
+}
+
+@mixin h2-mobile {
+  font-size: 28px;
+  line-height: 36px;
+}
+
+@mixin h3-mobile {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+@mixin h4-mobile {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+@mixin h5-mobile {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.mat-typography h1 {
+  @include h1-desktop;
+  @media (max-width: map-get($md, "t-h")) {
+    @include h1-mobile;
+  }
+}
+.mat-typography h2 {
+  @include h2-desktop;
+  @media (max-width: map-get($md, "t-h")) {
+    @include h2-mobile;
+  }
+}
+.mat-typography h3 {
+  @include h3-desktop;
+  @media (max-width: map-get($md, "t-h")) {
+    @include h3-mobile;
+  }
+}
+.mat-typography h4 {
+  @include h4-desktop;
+  @media (max-width: map-get($md, "t-h")) {
+    @include h4-mobile;
+  }
+}
+.mat-typography h5 {
+  @include h5-desktop;
+  @media (max-width: map-get($md, "t-h")) {
+    @include h5-mobile;
+  }
+}
+
+.headline {
+  @include title-styles;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+@mixin weight-regular {
+  font-weight: 400;
+}
+@mixin weight-medium {
+  font-weight: 500;
+}
+@mixin weight-semi-bold {
+  font-weight: 600;
+}
+@mixin weight-bold {
+  font-weight: 700;
+}
+
+.regular {
+  @include weight-regular;
+}
+.medium {
+  @include weight-medium;
+}
+.semi-bold {
+  @include weight-semi-bold;
+}
+.bold {
+  @include weight-bold;
+}
+
+@mixin text {
+  font-family: $second_font;
+  font-weight: 400;
+  color: #fff;
+}
+@mixin text-big {
+  font-size: 16px;
+  line-height: 24px;
+}
+@mixin text-body {
+  font-size: 14px;
+  line-height: 19.6px;
+}
+@mixin text-table {
+  font-size: 12px;
+  line-height: 16.2px;
+}
+@mixin text-tiny {
+  font-size: 10px;
+  line-height: 12px;
+}
+
+.text {
+  @include text;
+  &_big {
+    @include text-big;
+  }
+  &_body {
+    @include text-body;
+  }
+  &_table {
+    @include text-table;
+  }
+  &_tiny {
+    @include text-tiny;
+  }
+}
+
+@mixin span-text {
+  font-family: $second_font;
+  font-weight: 400;
+  color: #fff;
+  @include span-text-default;
+}
+@mixin span-text-default {
+  font-size: 14px;
+  line-height: 16px;
+}
+@mixin span-text-big {
+  font-size: 16px;
+  line-height: 16px;
+}
+@mixin span-text-small {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+span {
+  @include span-text;
+  &_big {
+    @include span-text-big;
+  }
+  &_small {
+    @include span-text-small;
+  }
+}
+
+//@media (max-width: 1440px) {
+//  font-size: calc(32px + (72 - 32) * ((100vw - 360px) / (1440 - 360)));
+//  line-height: calc(40px + (80 - 40) * ((100vw - 360px) / (1440 - 360)));
+//}

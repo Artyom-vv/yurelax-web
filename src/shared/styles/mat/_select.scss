@@ -1,0 +1,68 @@
+@import "src/styles/vars";
+
+div.mat-select-arrow-wrapper {
+  display: none;
+}
+
+div.mat-select-value-text {
+  @include input-text;
+  color: #000;
+}
+
+div.mat-select-panel {
+  max-width: unset;
+  min-width: auto !important;
+
+}
+
+div.mat-select-panel:not([class*=mat-elevation-z])
+div.mat-autocomplete-panel:not([class*=mat-elevation-z]){
+  background: #FFFFFF;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+}
+
+div.mat-select-panel mat-option.mat-option,
+div.mat-autocomplete-panel mat-option.mat-option, {
+  &.mat-active {
+    background-color: transparent;
+  }
+
+  transition: 0.2s ease;
+
+  &:hover {
+    background-color: map-get($project-colors, "green", 50);
+  }
+}
+
+.mat-select-panel .mat-option, .mat-autocomplete-panel .mat-option {
+  user-select: none;
+  font-size: 15px;
+  line-height: 1.33em;
+
+  .mat-option-text {
+    color: #000;
+  }
+}
+
+.mat-select-panel .mat-option.mat-selected.mat-option-multiple,
+.mat-autocomplete-panel .mat-option.mat-selected.mat-option-multiple,
+.mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple),
+.mat-autocomplete-panel .mat-option.mat-selected:not(.mat-option-multiple) {
+  background-color: map-get($project-colors, "green", 50);
+}
+
+div.mat-select-panel-wrap {
+  position: absolute;
+  width: 360px;
+  transform: translate(-2px, 47px);
+}
+
+span.mat-select-value-text span {
+  @include input-text;
+  color: #000;
+}
+
+.box_select mat-form-field.mat-focused+svg {
+  transform: translateY(-50%) rotate(-180deg);
+}

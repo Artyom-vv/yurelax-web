@@ -1,0 +1,16 @@
+<header class="header">
+  <div class="container container_large flex flex_justify-between">
+    <div class="navigation flex gap-32 flex_align-center">
+      <div [routerLink]="'/platform'" class="logotype flex gap-12 flex_align-center">
+        <yrx-icon icon="yurelax"></yrx-icon>
+        <div class="flex flex_column gap-2">
+          <h1 class="headline c-gradation-100">yurelax</h1>
+          <p class="text text_tiny c-gradation-200">Minecraft сервер</p>
+        </div>
+      </div>
+      <ul class="flex gap-32 ">
+        <li *ngFor="let route of routes" [routerLink]="route.link" routerLinkActive="active" class="link text text_body regular c-gradation-300">{{route.name}}</li>
+      </ul>
+    </div>
+  </div>
+</header>

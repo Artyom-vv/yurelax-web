@@ -1,0 +1,98 @@
+import {Injectable} from "@angular/core";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Observable, tap} from "rxjs";
+import {UserResponseInterface} from "../../platform/interfaces/user.interface";
+import {environment} from "../../../../environments/environment";
+import {catchError} from "rxjs/operators";
+import {LoginRequestInterface} from "../interfaces/login-request.interface";
+import {LoginResponseInterface} from "../interfaces/login-response.interface";
+import {RegisterRequestInterface} from "../interfaces/register-request.interface";
+import {RegisterResponseInterface} from "../interfaces/register-response.interface";
+import {TokensResponseInterface} from "../interfaces/tokens-response.interface";
+import {PersistenceService} from "../../shared/services/global/persistence.service";
+import {AppStore} from "../../../store/app.store";
+import {CookieService} from "ngx-cookie-service";
+
+@Injectable()
+export class AuthService {
+  constructor(private http: HttpClient, private persistenceService: PersistenceService, private cookieService: CookieService, private appStore: AppStore) {
+  }
+
+  deleteCookies() {
+    this.cookieService.delete('accessToken')
+    this.cookieService.delete('refreshToken')
+  }
+
+  saveCookies(tokens: TokensResponseInterface) {
+    this.cookieService.set('accessToken', tokens.accessToken, {
+      path: '/'
+    })
+    this.cookieService.set('refreshToken', tokens.refreshToken, {
+      path: '/'
+    })
+  }
+
+  saveUserData(user: UserResponseInterface) {
+    this.persistenceService.set('user', user)
+    this.appStore.setUser(user);
+  }
+
+  saveData(user: LoginResponseInterface | RegisterResponseInterface): void {
+    this.saveCookies(user.tokens)
+    this.saveUserData(user.user)
+  }
+
+  login(data: LoginRequestInterface): Observable<LoginResponseInterface> {
+    return this.http.post<LoginResponseInterface>(`${environment.apiUrl}/auth/login`, data).pipe(
+      tap((res) => {
+        this.saveData(res)
+      }),
+      catchError((err) => {
+        throw new Error(err.message);
+      })
+    )
+  }
+
+  register(data: RegisterRequestInterface): Observable<RegisterResponseInterface> {
+    return this.http.post<RegisterResponseInterface>(`${environment.apiUrl}/auth/register`, data).pipe(
+      tap((res) => {
+        this.saveData(res)
+      }),
+      catchError((err) => {
+        throw new Error(err.message);
+      })
+    )
+  }
+
+  refreshToken(refreshToken: string): Observable<TokensResponseInterface> {
+    return this.http.post<TokensResponseInterface>(`${environment.apiUrl}/auth/refresh-token`, {refreshToken}).pipe(
+      tap((tokens) => {
+        this.saveCookies(tokens)
+      }),
+      catchError((err) => {
+        this.deleteCookies();
+        throw new Error(err.message);
+      })
+    )
+  }
+
+  getMe(): Observable<UserResponseInterface> {
+    return this.http.get<UserResponseInterface>(`${environment.apiUrl}/auth/get-me`).pipe(
+      tap((res) => {
+        this.saveUserData(res)
+      }),
+      catchError((err) => {
+        throw new Error(err.message);
+      })
+    )
+  }
+
+  logout(): Observable<UserResponseInterface> {
+    return this.http.get<UserResponseInterface>(`${environment.apiUrl}/auth/logout`).pipe(
+      catchError((err) => {
+        throw new Error(err.message);
+      })
+    )
+  }
+
+}

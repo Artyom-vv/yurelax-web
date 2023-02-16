@@ -1,0 +1,49 @@
+@import "src/shared/styles/vars.md";
+
+.spacing {
+  &.2XS {
+    height: 12px;
+  }
+  &.XS {
+    height: 16px;
+  }
+  &.S {
+    height: 24px;
+  }
+  &.M {
+    height: 48px;
+  }
+  &.L {
+    height: 72px;
+  }
+  &.XL {
+    height: 96px;
+  }
+  &.2XL {
+    height: 128px;
+  }
+  @media (max-width: map-get($md, 't-h')) {
+    &.2XS {
+      height: 8px;
+    }
+    &.XS {
+      height: 12px;
+    }
+    &.S {
+      height: 16px;
+    }
+    &.M {
+      height: 32px;
+    }
+    &.L {
+      height: 48px;
+    }
+    &.XL {
+      height: 64px;
+    }
+    &.2XL {
+      height: 88px;
+    }
+  }
+}
+

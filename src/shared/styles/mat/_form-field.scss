@@ -1,0 +1,122 @@
+@import "../vars";
+
+@keyframes input-margin-transition {
+  0% {
+    margin-bottom: 0;
+  }
+  100% {
+    margin-bottom: 3px;
+  }
+}
+
+.err {
+  mat-form-field {
+    &.ng-invalid.ng-touched {
+      animation: input-margin-transition 0.3s ease;
+      margin-bottom: 3px;
+
+      // СТИЛИ НА НЕВАЛИДНОСТЬ
+      mat-error {
+        transform: translateY(1px);
+        color: #f44336;
+      }
+    }
+  }
+
+}
+
+mat-form-field {
+  width: 100%;
+  user-select: none;
+  border: 1px solid transparent;
+
+  // СТИЛИ НА ФОН
+  &.mat-form-field-appearance-fill {
+    .mat-form-field-flex {
+      background-color: #fff;
+      padding: 8px 16px 10px 16px;
+      border: 1px solid #E3E5E6;
+    }
+  }
+}
+
+.mat-form-field-wrapper {
+  padding: 0;
+}
+
+.mat-form-field-appearance-fill div.mat-form-field-subscript-wrapper {
+  bottom: -16px;
+  top: unset;
+  padding: 0;
+}
+
+// СТИЛИ ДЛЯ ЭЛЕМЕНТА ФОНА, ЕСЛИ ЕСТЬ ИКОНКА
+mat-form-field.icon.mat-form-field-appearance-fill div.mat-form-field-flex {
+  padding-left: 35px;
+}
+
+// СТИЛИ ДЛЯ ЭЛЕМЕНТА ФОНА, ЕСЛИ ИНПУТ АКТИВЕН
+mat-form-field.mat-focused.mat-form-field-appearance-fill {
+  padding: 1px;
+  border-width: 0px;
+  .mat-form-field-flex {
+    border: 2px solid #000000;
+    background-color: #fff;
+  }
+}
+
+.mat-form-field-disabled.mat-form-field-appearance-fill div.mat-form-field-flex {
+  background: #F7F9FA;
+  border: 1px solid #F2F4F5;
+  .mat-input-element {
+    color: #CDCFD0;
+  }
+}
+
+.mat-focused.mat-form-field-appearance-fill.mat-form-field-can-float.mat-form-field-should-float .mat-select.mat-select-empty+.mat-form-field-label-wrapper>.mat-form-field-label {
+  transform: translateY(0.01em) scale(1);
+}
+
+.mat-form-field-appearance-fill .mat-form-field-label {
+  @include input-text;
+}
+
+span.mat-form-field-label-wrapper {
+  top: -1.22em;
+  height: 20px;
+}
+
+mat-form-field.mat-form-field-appearance-fill div.mat-form-field-flex {
+  border-radius: 0px;
+}
+
+mat-form-field.mat-form-field-appearance-fill .mat-form-field-infix {
+  padding: 0;
+  width: 100%;
+}
+
+div.mat-form-field-flex {
+  height: 50px;
+}
+
+span.mat-form-field-label-wrapper label.mat-form-field-label {
+  font-size: 15px;
+  line-height: 1.65em;
+}
+
+//mat-select:not(.mat-select-empty) + span.mat-form-field-label-wrapper label.mat-form-field-label,
+//.mat-input-element:not([placeholder]) + span.mat-form-field-label-wrapper label.mat-form-field-label {
+//  line-height: 140%;
+//}
+span.mat-select-value-text {
+  position: relative;
+}
+
+input.mat-input-element {
+  position: relative;
+  margin-top: -0.2em;
+}
+.mat-form-field-appearance-fill div.mat-form-field-subscript-wrapper {
+  font-size: 70%;
+  bottom: -13px;
+}
