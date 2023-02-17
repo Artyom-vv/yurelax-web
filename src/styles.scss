@@ -1,19 +1,18 @@
-html, body { height: 100%; }
-body { margin: 0; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
 
 @import "src/shared/styles/reset";
 @import "src/shared/styles/layout/main";
 @import "src/shared/styles/widjets/main";
 @import "src/shared/styles/modals/main";
+@import "src/shared/styles/vars.colors";
 
-.wrapper {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-img,svg {
+img, svg {
   user-select: none;
   -webkit-user-drag: none;
   //&::selection {
@@ -24,6 +23,22 @@ img,svg {
 .w100 {
   width: 100%;
 }
+
 .full-height {
   height: 100%;
+}
+
+::-webkit-scrollbar {
+  background-color: map-get($project-colors, "gradation", 750);
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 3px solid map-get($project-colors, "gradation", 750);
+  background-color: map-get($project-colors, "gradation", 500);
+  border-radius: 4px;
+}
+.separator {
+  height: 1px;
+  background-color: map-get($project-colors, "gradation", 600);
 }

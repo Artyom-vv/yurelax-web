@@ -7,6 +7,9 @@ import {SpacingComponent} from './spacing.component';
   declarations: [
     SpacingComponent
   ],
+  exports: [
+    SpacingComponent
+  ],
   imports: [
     CommonModule
   ]

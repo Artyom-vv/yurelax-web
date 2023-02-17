@@ -1,0 +1,15 @@
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/vars.animations";
+
+.footer {
+  background-color: map-get($project-colors, "gradation", 750);
+}
+.link {
+  transition: $trs;
+  &:hover {
+    color: map-get($project-colors, "gradation", 200);
+  }
+}
+.logotype {
+  cursor: pointer;
+}

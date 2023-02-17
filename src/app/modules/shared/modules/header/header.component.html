@@ -1,8 +1,8 @@
-<header class="header">
+<header class="header" [class.light]="light">
   <div class="container container_large flex flex_justify-between">
     <div class="navigation flex gap-32 flex_align-center">
       <div [routerLink]="'/platform'" class="logotype flex gap-12 flex_align-center">
-        <yrx-icon icon="yurelax"></yrx-icon>
+        <yrx-icon [hover]="false" [color]=" light ? 'purple-100' : ''" icon="yurelax"></yrx-icon>
         <div class="flex flex_column gap-2">
           <h1 class="headline c-gradation-100">yurelax</h1>
           <p class="text text_tiny c-gradation-200">Minecraft сервер</p>
@@ -14,11 +14,11 @@
     </div>
     <div class="flex gap-24 flex_align-center">
       <div class="socials flex gap-12">
-        <yrx-icon icon="vk"></yrx-icon>
-        <yrx-icon icon="dc"></yrx-icon>
-        <yrx-icon icon="tg"></yrx-icon>
+        <a *ngFor="let social of socials" [href]="social.link" target="_blank">
+          <yrx-icon [color]=" light ? 'purple-200' : ''" [icon]="social.icon"></yrx-icon>
+        </a>
       </div>
-      <yrx-button type="secondary"><span>Войти</span><yrx-icon btn-icon icon="login"></yrx-icon></yrx-button>
+      <yrx-button [custom]="light ? 'light' : ''" type="secondary"><span>Войти</span><yrx-icon btn-icon icon="login"></yrx-icon></yrx-button>
     </div>
   </div>
 </header>

@@ -6,6 +6,6 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./spacing.component.scss']
 })
 export class SpacingComponent {
-  @Input() type: '2XS' | 'XS' | 'S' | 'M' | 'L' | 'XL' | '2XL' | null = null
+  @Input() type: 'XS2' | 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XL2' | null = null
   @Input() customSpace: number = 0
 }

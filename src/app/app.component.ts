@@ -49,6 +49,12 @@ export class AppComponent implements OnInit, OnDestroy {
       {link: '/platform/store', name: 'Магазин'},
       {link: '/platform/games', name: 'Мини-игры'},
     ])
+
+    this.appStore.setSocials([
+      {link: 'https://vk.com/yurelax', name: 'Вконтакте', icon: 'vk'},
+      {link: 'https://discord.gg/xTWx7T4y6W', name: 'Дискорд', icon: 'dc'},
+      {link: '', name: 'Телеграм', icon: 'tg'},
+    ])
   }
 
   ngOnDestroy() {

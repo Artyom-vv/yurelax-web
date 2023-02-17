@@ -1,0 +1,9 @@
+@import "src/shared/styles/vars.colors";
+
+.layout {
+  position: relative;
+  overflow-x: hidden;
+}
+.layout.isHomePage {
+  background-color: map-get($project-colors, "purple", 400);
+}

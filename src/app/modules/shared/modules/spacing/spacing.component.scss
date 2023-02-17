@@ -1,7 +1,7 @@
 @import "src/shared/styles/vars.md";
 
 .spacing {
-  &.2XS {
+  &.XS2 {
     height: 12px;
   }
   &.XS {
@@ -19,11 +19,11 @@
   &.XL {
     height: 96px;
   }
-  &.2XL {
+  &.XL2 {
     height: 128px;
   }
   @media (max-width: map-get($md, 't-h')) {
-    &.2XS {
+    &.XS2 {
       height: 8px;
     }
     &.XS {
@@ -41,7 +41,7 @@
     &.XL {
       height: 64px;
     }
-    &.2XL {
+    &.XL2 {
       height: 88px;
     }
   }

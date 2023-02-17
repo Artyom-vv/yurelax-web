@@ -1,5 +1,7 @@
-<div class="layout">
+<div [ngStyle]="styles" class="layout flex flex_column" [class.isHomePage]="isHomePage">
   <ng-content select="[header]"></ng-content>
-  <ng-content select="[content]"></ng-content>
+  <main class="main flex_grow">
+    <ng-content select="[content]"></ng-content>
+  </main>
   <yrx-footer></yrx-footer>
 </div>

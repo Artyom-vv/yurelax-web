@@ -8,4 +8,5 @@ import {Component, Input} from '@angular/core';
 export class ButtonComponent{
   @Input() size: 'big' | 'normal' | 'small' = 'normal';
   @Input() type: 'primary' | 'secondary' = 'primary'
+  @Input() custom: string = ''
 }

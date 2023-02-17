@@ -4,7 +4,41 @@
   height: 80px;
   display: flex;
   align-items: center;
-  background-color: map-get($project-colors, "gradation", 800);
+  position: relative;
+  z-index: 2;
+  &:not(.light) {
+    background-color: map-get($project-colors, "gradation", 800);
+    .link {
+      &:not(.active):hover {
+        color: map-get($project-colors, "gradation", 200);
+      }
+      &:active {
+        color: map-get($project-colors, "gradation", 300);
+      }
+      &.active {
+        color: map-get($project-colors, "gradation", 200);
+      }
+    }
+  }
+  &.light {
+    .link {
+      color: map-get($project-colors, "purple", 100);
+      &:not(.active):hover {
+        color: map-get($project-colors, "gradation", 100);
+      }
+      &:active {
+        color: map-get($project-colors, "purple", 100);
+      }
+      &.active {
+        color: map-get($project-colors, "gradation", 100);
+      }
+    }
+    .logotype {
+      .text_tiny, .headline {
+        color: map-get($project-colors, "purple", 100);
+      }
+    }
+  }
 }
 .logotype {
   cursor: pointer;
@@ -15,13 +49,4 @@
 .link {
   cursor: pointer;
   transition: 0.2s ease;
-  &:not(.active):hover {
-    color: map-get($project-colors, "gradation", 200);
-  }
-  &:active {
-    color: map-get($project-colors, "gradation", 300);
-  }
-  &.active {
-    color: map-get($project-colors, "gradation", 200);
-  }
 }

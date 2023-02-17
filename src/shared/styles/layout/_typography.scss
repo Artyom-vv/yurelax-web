@@ -9,7 +9,7 @@
   color: #fff;
 }
 
-.mat-typography h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {
   @include title-styles;
 }
 
@@ -63,31 +63,31 @@
   line-height: 24px;
 }
 
-.mat-typography h1 {
+h1 {
   @include h1-desktop;
   @media (max-width: map-get($md, "t-h")) {
     @include h1-mobile;
   }
 }
-.mat-typography h2 {
+h2 {
   @include h2-desktop;
   @media (max-width: map-get($md, "t-h")) {
     @include h2-mobile;
   }
 }
-.mat-typography h3 {
+h3 {
   @include h3-desktop;
   @media (max-width: map-get($md, "t-h")) {
     @include h3-mobile;
   }
 }
-.mat-typography h4 {
+h4 {
   @include h4-desktop;
   @media (max-width: map-get($md, "t-h")) {
     @include h4-mobile;
   }
 }
-.mat-typography h5 {
+h5 {
   @include h5-desktop;
   @media (max-width: map-get($md, "t-h")) {
     @include h5-mobile;

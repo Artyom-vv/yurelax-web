@@ -4,6 +4,7 @@ import {PlatformRoutingModule} from "./platform-routing.module";
 import { PlatformComponent } from './platform.component';
 import {LayoutModule} from "../shared/modules/layout/layout.module";
 import {HeaderModule} from "../shared/modules/header/header.module";
+import {HomeModule} from "./modules/home/home.module";
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import {HeaderModule} from "../shared/modules/header/header.module";
     CommonModule,
     PlatformRoutingModule,
     LayoutModule,
-    HeaderModule
+    HeaderModule,
+    HomeModule
   ]
 })
 export class PlatformModule {

@@ -24,6 +24,7 @@ button.mat-button {
     @include icon-size(24px);
   }
 }
+
 @mixin btn-normal {
   height: 48px;
   padding: 0 16px;
@@ -34,6 +35,7 @@ button.mat-button {
     @include icon-size(20px);
   }
 }
+
 @mixin btn-small {
   height: 40px;
   padding: 0 12px;
@@ -45,7 +47,7 @@ button.mat-button {
   }
 }
 
-$unique_stroke_icons: ".icon-login";
+$unique_stroke_icons: ".icon-login, .icon-arrow-up";
 
 @mixin btn-primary() {
   $default_color: map-get($project-colors, "purple", 100);
@@ -64,6 +66,7 @@ $unique_stroke_icons: ".icon-login";
     #{$unique_stroke_icons} {
       stroke: $default_color;
     }
+
     .icon:not(#{$unique_stroke_icons}) {
       fill: $default_color;
     }
@@ -71,12 +74,15 @@ $unique_stroke_icons: ".icon-login";
   &_loading {
     border: 1px solid map-get($project-colors, "purple", 300);
     background-color: map-get($project-colors, "purple", 400);
+
     &, span {
       color: map-get($project-colors, "purple", 200);
     }
+
     #{$unique_stroke_icons} {
       stroke: map-get($project-colors, "purple", 200);
     }
+
     .icon:not(#{$unique_stroke_icons}) {
       fill: map-get($project-colors, "purple", 200);
     }
@@ -110,6 +116,7 @@ $unique_stroke_icons: ".icon-login";
     #{$unique_stroke_icons} {
       stroke: $default_color;
     }
+
     .icon:not(#{$unique_stroke_icons}) {
       fill: $default_color;
     }
@@ -117,12 +124,15 @@ $unique_stroke_icons: ".icon-login";
   &_loading {
     border: 1px solid map-get($project-colors, "gradation", 700);
     background-color: map-get($project-colors, "gradation", 800);
+
     &, span {
       color: map-get($project-colors, "gradation", 300);
     }
+
     #{$unique_stroke_icons} {
       stroke: map-get($project-colors, "gradation", 300);
     }
+
     .icon:not(#{$unique_stroke_icons}) {
       fill: map-get($project-colors, "gradation", 300);
     }
@@ -150,13 +160,52 @@ $unique_stroke_icons: ".icon-login";
   }
 }
 
+@mixin btn-custom-light {
+  $default_color: map-get($project-colors, "purple", 100);
+
+  background-color: map-get($project-colors, "purple", 300);
+
+
+  .mdc-button__label {
+    &, span {
+      @include span-text-default();
+      @include weight-regular();
+      color: $default_color;
+    }
+  }
+
+
+  &.btn_iconly {
+    #{$unique_stroke_icons} {
+      stroke: $default_color;
+    }
+
+    .icon:not(#{$unique_stroke_icons}) {
+      fill: $default_color;
+    }
+  }
+
+  &:not(:disabled):hover {
+    background-color: map-get($project-colors, "purple", 200);
+  }
+
+  &:focus {
+  }
+
+  &:active {
+    background-color: map-get($project-colors, "purple", 300);
+  }
+}
+
 button.mat-mdc-button.btn {
   &, span {
     transition: 0.2s ease;
   }
+
   .mat-button-focus-overlay {
     display: none !important;
   }
+
   overflow: hidden;
 
   &:disabled {
@@ -164,9 +213,14 @@ button.mat-mdc-button.btn {
     @include btn-disabled;
   }
 
+  &[custom="light"] {
+    @include btn-custom-light;
+  }
+
   &_primary {
     @include btn-primary;
   }
+
   &_secondary {
     @include btn-secondary;
   }
@@ -174,9 +228,11 @@ button.mat-mdc-button.btn {
   &_big {
     @include btn-big;
   }
+
   &_normal {
     @include btn-normal;
   }
+
   &_small {
     @include btn-small;
   }
