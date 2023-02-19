@@ -1,1 +1,31 @@
-<p>register works!</p>
+<ng-container [formGroup]="form">
+  <yrx-auth-header page="login">Регистрация</yrx-auth-header>
+  <yrx-spacing type="S"></yrx-spacing>
+  <div class="box box_input">
+    <input autocomplete="nickname" formControlName="login" class="input_normal input_iconly" matInput placeholder="Введите логин">
+  </div>
+  <yrx-spacing type="XS"></yrx-spacing>
+  <div class="box box_input">
+    <input autocomplete="email" formControlName="email" class="input_normal input_iconly" matInput placeholder="Введите E-mail">
+  </div>
+  <yrx-spacing type="XS"></yrx-spacing>
+  <div class="box box_input">
+    <input autocomplete="new-password" formControlName="password" type="password" class="input_normal input_iconly" matInput placeholder="Введите пароль">
+  </div>
+  <yrx-spacing type="XS"></yrx-spacing>
+  <div class="box box_input">
+    <input autocomplete="password" formControlName="passwordRepeat" type="password" class="input_normal input_iconly" matInput placeholder="Повторите пароль">
+  </div>
+  <yrx-spacing type="S"></yrx-spacing>
+  <p class="text text_table regular">
+    Продолжая вы принимаете <a href="#" class="link c-purple-300 medium">условия пользования</a> и соглашаетесь с <a
+    href="#" class="link c-purple-300 medium">политикой конфеденциальности</a>
+  </p>
+  <yrx-spacing type="M"></yrx-spacing>
+  <yrx-button class="w100" type="primary">Зарегистрироваться</yrx-button>
+  <yrx-spacing type="XS"></yrx-spacing>
+  <div class="flex flex_center gap-6">
+    <p class="text text_body regular">Уже есть аккаунт?</p>
+    <yrx-link [routerLink]="['/auth/login']" [iconStroked]="true" icon="login">Войти</yrx-link>
+  </div>
+</ng-container>

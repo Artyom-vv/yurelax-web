@@ -37,6 +37,7 @@ export class FooterComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe())
+    this.appStore.setFooterHeight(0);
   }
 
   public scrollTop() {

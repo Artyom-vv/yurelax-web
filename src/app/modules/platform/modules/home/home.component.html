@@ -12,6 +12,14 @@
     <div class="container flex_column flex flex_align-center">
       <yrx-spacing type="L"></yrx-spacing>
       <h1 class="text-center title">yurelax — необычный сервер с сюжетом и мини-играми</h1>
+      <yrx-spacing type="M"></yrx-spacing>
+      <yrx-button *ngIf="!isLogged; else playButton" [routerLink]="['/auth/register']" custom="white">
+        <span>Зарегистрироваться</span>
+        <yrx-icon [stroked]="true" color="purple-400" icon="login"></yrx-icon>
+      </yrx-button>
+      <ng-template #playButton>
+        <yrx-button custom="white">Начать играть</yrx-button>
+      </ng-template>
     </div>
   </div>
 </section>

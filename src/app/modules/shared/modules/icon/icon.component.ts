@@ -9,5 +9,6 @@ export class IconComponent {
   @Input() icon: string = ''
   @Input() fill: string = ''
   @Input() color: string = ''
+  @Input() stroked: boolean = false;
   @Input() hover: boolean = true
 }

@@ -9,6 +9,7 @@ export interface AppState {
   socials: SocialStoreInterface[]
   footerHeight: number
   isHomePage: boolean
+  isLogged: boolean
 }
 export const DEFAULT_STATE: AppState = {
   user: null,
@@ -16,5 +17,6 @@ export const DEFAULT_STATE: AppState = {
   navigation: [],
   socials: [],
   footerHeight: 0,
-  isHomePage: false
+  isHomePage: false,
+  isLogged: false
 };

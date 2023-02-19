@@ -5,10 +5,11 @@ import {SystemUserService} from "./modules/shared/services/global/system-user.se
 import {filter, Subscription, switchMap, tap} from "rxjs";
 import {AuthService} from "./modules/auth/services/auth.service";
 import {catchError} from "rxjs/operators";
+
 @Component({
   selector: 'yrx-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
 
@@ -29,7 +30,11 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     this.subscriptions.push(
       this.authService.getMe().pipe(
+        tap(() => {
+          this.appStore.setIsLogged(true);
+        }),
         catchError((err) => {
+          this.systemUser.logout()
           throw new Error(err)
         })
       ).subscribe()

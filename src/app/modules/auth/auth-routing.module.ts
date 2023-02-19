@@ -14,14 +14,30 @@ const routes: Routes = [
     canActivate: [CheckAuthGuard],
     children: [
       {path: '', redirectTo: 'login', pathMatch: 'full'},
-      {path: 'login', component: LoginComponent},
-      {path: 'register', component: RegisterComponent},
+      {
+        path: 'login',
+        component: LoginComponent,
+        data: {route: 'login'}
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
+        data: {route: 'register'}
+      },
     ]
   },
   {
     path: 'email-verify',
-    component: EmailVerifyComponent,
-    canActivate: [EmailVerifyGuard]
+    component: AuthComponent,
+    canActivate: [EmailVerifyGuard],
+    children: [
+      {
+        path: '',
+        data: {route: 'email-verify'},
+        component: EmailVerifyComponent,
+        pathMatch: 'full',
+      },
+    ]
   },
 ];
 

@@ -15,11 +15,18 @@ export class AppStore extends ComponentStore<AppState> {
 
   readonly user$: Observable<UserStoreInterface | null> = this.select(state => state.user);
   readonly isExit$: Observable<boolean> = this.select(state => state.isExit);
+  readonly isLogged$: Observable<boolean> = this.select(state => state.isLogged);
 
   readonly navigation$: Observable<NavigationStoreInterface[]> = this.select(state => state.navigation);
   readonly socials$: Observable<SocialStoreInterface[]> = this.select(state => state.socials);
   readonly footerHeight$: Observable<number> = this.select(state => state.footerHeight);
   readonly isHomePage$: Observable<boolean> = this.select(state => state.isHomePage);
+
+  readonly setIsLogged = this.updater((state, isLogged: boolean) => ({
+    ...state,
+    isLogged
+  }));
+
 
   readonly setIsHomePage = this.updater((state, isHomePage: boolean) => ({
     ...state,

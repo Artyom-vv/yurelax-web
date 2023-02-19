@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {AuthGuard} from "./modules/shared/services/global/auth.guard";
 import {AdminGuard} from "./modules/shared/services/global/admin.guard";
-import {UserGuard} from "./modules/shared/services/global/user.guard";
 
 const routes: Routes = [
   {path: '', redirectTo: 'auth', pathMatch: 'full'},
@@ -12,7 +11,6 @@ const routes: Routes = [
   },
   {
     path: 'platform',
-    canActivate: [AuthGuard, UserGuard],
     loadChildren: () => import('./modules/platform/platform.module').then(m => m.PlatformModule)
   },
   {

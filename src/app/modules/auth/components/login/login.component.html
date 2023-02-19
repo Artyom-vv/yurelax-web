@@ -1,1 +1,20 @@
-<p>login works!</p>
+<ng-container [formGroup]="form">
+  <yrx-auth-header page="login">Вход</yrx-auth-header>
+  <yrx-spacing type="S"></yrx-spacing>
+  <div class="box box_input">
+    <input autocomplete="email" formControlName="email" class="input_normal input_iconly" matInput placeholder="Введите логин или e-mail">
+  </div>
+  <yrx-spacing type="XS"></yrx-spacing>
+  <div class="box box_input">
+    <input autocomplete="password" formControlName="password" type="password" class="input_normal input_iconly" matInput placeholder="Введите пароль">
+  </div>
+  <yrx-spacing type="XS"></yrx-spacing>
+  <yrx-link [underlined]="true">Забыли пароль?</yrx-link>
+  <yrx-spacing type="M"></yrx-spacing>
+  <yrx-button (press)="login()" class="w100" type="primary" [disabled]="dataLoading || form.invalid"><span>Войти</span><yrx-icon *ngIf="dataLoading" btn-icon icon="loader"></yrx-icon></yrx-button>
+  <yrx-spacing type="XS"></yrx-spacing>
+  <div class="flex flex_center gap-6">
+    <p class="text text_body regular">Нет аккаунта?</p>
+    <yrx-link [routerLink]="['/auth/register']">Зарегистрируйтесь</yrx-link>
+  </div>
+</ng-container>

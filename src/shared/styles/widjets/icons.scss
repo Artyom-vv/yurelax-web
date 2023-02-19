@@ -1,4 +1,5 @@
 @import "/src/shared/styles/vars.colors";
+@import "/src/shared/styles/vars.animations";
 
 @mixin icon-size($size) {
   @include icon-width($size);
@@ -17,9 +18,11 @@
   min-height: $size;
 }
 
+$unique_stroke_icons: ".icon-login, .icon-arrow-up, .icon-loader";
+
 .icon {
   display: block;
-  transition: 0.2s ease;
+  transition: $trs;
 
   &-dc, &-tg, &-vk {
     @include icon-size(24px);
@@ -31,6 +34,7 @@
   }
 
   &-yurelax {
+    transition: unset;
     @include icon-size(48px);
     fill: map-get($project-colors, "red", 300);
   }
@@ -47,13 +51,14 @@
     fill: none;
   }
 
-  &-spinner {
-    @include icon-size(16px);
-    fill: black;
-    animation: spinner 0.6s linear infinite;
+  &-loader {
+    @include icon-size(24px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+    animation: loader $spinner infinite;
   }
 
-  @keyframes spinner {
+  @keyframes loader {
     0% {
       transform: rotate(0deg);
     }
@@ -65,6 +70,11 @@
 .icon {
   &-gradation-800 {
     fill: map-get($project-colors, "gradation", 800);
+    &.icon-hover {
+      &:hover {
+        fill: map-get($project-colors, "gradation", 800);
+      }
+    }
   }
 
   &-gradation-700 {
@@ -137,10 +147,20 @@
 
   &-purple-200 {
     fill: map-get($project-colors, "purple", 200);
+    &.icon-hover {
+      &:hover {
+        fill: map-get($project-colors, "purple", 100);
+      }
+    }
   }
 
   &-purple-100 {
     fill: map-get($project-colors, "purple", 100);
+    &.icon-hover {
+      &:hover {
+        fill: map-get($project-colors, "purple", 200);
+      }
+    }
   }
 
   &-green-600 {
@@ -191,138 +211,136 @@
     fill: map-get($project-colors, "yellow", 100);
   }
 }
-.icon-hover {
-  &.icon-gradation-800 {
-    &:hover {
-      fill: map-get($project-colors, "gradation", 800);
+
+.icon.icon_stroke {
+  fill: transparent;
+  &.icon {
+    &-gradation-800 {
+      stroke: map-get($project-colors, "gradation", 800);
     }
-  }
 
-  &.icon-gradation-700 {
-    fill: map-get($project-colors, "gradation", 700);
-  }
-
-  &.icon-gradation-600 {
-    fill: map-get($project-colors, "gradation", 600);
-  }
-
-  &.icon-gradation-500 {
-    fill: map-get($project-colors, "gradation", 500);
-  }
-
-  &.icon-gradation-400 {
-    fill: map-get($project-colors, "gradation", 400);
-  }
-
-  &.icon-gradation-300 {
-    fill: map-get($project-colors, "gradation", 300);
-  }
-
-  &.icon-gradation-200 {
-    fill: map-get($project-colors, "gradation", 200);
-  }
-
-  &.icon-gradation-100 {
-    fill: map-get($project-colors, "gradation", 100);
-  }
-
-  &.icon-red-600 {
-    fill: map-get($project-colors, "red", 600);
-  }
-
-  &.icon-red-500 {
-    fill: map-get($project-colors, "red", 500);
-  }
-
-  &.icon-red-400 {
-    fill: map-get($project-colors, "red", 400);
-  }
-
-  &.icon-red-300 {
-    fill: map-get($project-colors, "red", 300);
-  }
-
-  &.icon-red-200 {
-    fill: map-get($project-colors, "red", 200);
-  }
-
-  &.icon-red-100 {
-    fill: map-get($project-colors, "red", 100);
-  }
-
-  &.icon-purple-600 {
-    fill: map-get($project-colors, "purple", 600);
-  }
-
-  &.icon-purple-500 {
-    fill: map-get($project-colors, "purple", 500);
-  }
-
-  &.icon-purple-400 {
-    fill: map-get($project-colors, "purple", 400);
-  }
-
-  &.icon-purple-300 {
-    fill: map-get($project-colors, "purple", 300);
-  }
-
-  &.icon-purple-200 {
-    &:hover {
-      fill: map-get($project-colors, "purple", 100);
+    &-gradation-700 {
+      stroke: map-get($project-colors, "gradation", 700);
     }
-  }
 
-  &.icon-purple-100 {
-    &:hover {
-      fill: map-get($project-colors, "purple", 200);
+    &-gradation-600 {
+      stroke: map-get($project-colors, "gradation", 600);
     }
-  }
 
-  &.icon-green-600 {
-    fill: map-get($project-colors, "green", 600);
-  }
+    &-gradation-500 {
+      stroke: map-get($project-colors, "gradation", 500);
+    }
 
-  &.icon-green-500 {
-    fill: map-get($project-colors, "green", 500);
-  }
+    &-gradation-400 {
+      stroke: map-get($project-colors, "gradation", 400);
+    }
 
-  &.icon-green-400 {
-    fill: map-get($project-colors, "green", 400);
-  }
+    &-gradation-300 {
+      stroke: map-get($project-colors, "gradation", 300);
+    }
 
-  &.icon-green-300 {
-    fill: map-get($project-colors, "green", 300);
-  }
+    &-gradation-200 {
+      stroke: map-get($project-colors, "gradation", 200);
+    }
 
-  &.icon-green-200 {
-    fill: map-get($project-colors, "green", 200);
-  }
+    &-gradation-100 {
+      stroke: map-get($project-colors, "gradation", 100);
+    }
 
-  &.icon-green-100 {
-    fill: map-get($project-colors, "green", 100);
-  }
+    &-red-600 {
+      stroke: map-get($project-colors, "red", 600);
+    }
 
-  &.icon-yellow-600 {
-    fill: map-get($project-colors, "yellow", 600);
-  }
+    &-red-500 {
+      stroke: map-get($project-colors, "red", 500);
+    }
 
-  &.icon-yellow-500 {
-    fill: map-get($project-colors, "yellow", 500);
-  }
+    &-red-400 {
+      stroke: map-get($project-colors, "red", 400);
+    }
 
-  &.icon-yellow-400 {
-    fill: map-get($project-colors, "yellow", 400);
-  }
+    &-red-300 {
+      stroke: map-get($project-colors, "red", 300);
+    }
 
-  &.icon-yellow-300 {
-    fill: map-get($project-colors, "yellow", 300);
-  }
+    &-red-200 {
+      stroke: map-get($project-colors, "red", 200);
+    }
 
-  &.icon-yellow-200 {
-    fill: map-get($project-colors, "yellow", 200);
-  }
+    &-red-100 {
+      stroke: map-get($project-colors, "red", 100);
+    }
 
-  &.icon-yellow-100 {
-    fill: map-get($project-colors, "yellow", 100);
+    &-purple-600 {
+      stroke: map-get($project-colors, "purple", 600);
+    }
+
+    &-purple-500 {
+      stroke: map-get($project-colors, "purple", 500);
+    }
+
+    &-purple-400 {
+      stroke: map-get($project-colors, "purple", 400);
+    }
+
+    &-purple-300 {
+      stroke: map-get($project-colors, "purple", 300);
+    }
+
+    &-purple-200 {
+      stroke: map-get($project-colors, "purple", 200);
+    }
+
+    &-purple-100 {
+      stroke: map-get($project-colors, "purple", 100);
+    }
+
+    &-green-600 {
+      stroke: map-get($project-colors, "green", 600);
+    }
+
+    &-green-500 {
+      stroke: map-get($project-colors, "green", 500);
+    }
+
+    &-green-400 {
+      stroke: map-get($project-colors, "green", 400);
+    }
+
+    &-green-300 {
+      stroke: map-get($project-colors, "green", 300);
+    }
+
+    &-green-200 {
+      stroke: map-get($project-colors, "green", 200);
+    }
+
+    &-green-100 {
+      stroke: map-get($project-colors, "green", 100);
+    }
+
+    &-yellow-600 {
+      stroke: map-get($project-colors, "yellow", 600);
+    }
+
+    &-yellow-500 {
+      stroke: map-get($project-colors, "yellow", 500);
+    }
+
+    &-yellow-400 {
+      stroke: map-get($project-colors, "yellow", 400);
+    }
+
+    &-yellow-300 {
+      stroke: map-get($project-colors, "yellow", 300);
+    }
+
+    &-yellow-200 {
+      stroke: map-get($project-colors, "yellow", 200);
+    }
+
+    &-yellow-100 {
+      stroke: map-get($project-colors, "yellow", 100);
+    }
   }
 }

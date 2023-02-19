@@ -1,47 +1,83 @@
-@import "src/styles/vars";
+@import "src/shared/styles/layout/typography";
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/vars.animations";
+@import "src/shared/styles/widjets/icons";
 
-mat-label {
-  color: #828282;
+.cdk-text-field-autofill-monitored:not(:-webkit-autofill) {
+  animation: unset;
 }
 
-.mat-placeholder-required {
-  color: #828282;
+$icon_selector: ".input_iconly + yrx-icon .icon";
+
+@mixin input-big {
+  height: 56px;
+  @include text-big;
+}
+@mixin input-normal {
+  height: 48px;
+  @include text-body;
+}
+@mixin input-small {
+  height: 40px;
+  @include text-body;
+  #{$icon_selector} {
+    @include icon-size(16px);
+  }
 }
 
-.mat-form-field-underline {
-  display: none;
+@mixin input-iconly {
+  & + yrx-icon {
+    .icon {
+      @include icon-size(20px);
+      display: block;
+      &:not(.icon_colored) {
+        fill: map-get($project-colors, "gradation", 300);
+        &.icon_stroke {
+          fill: transparent;
+          stroke: map-get($project-colors, "gradation", 300);
+        }
+      }
+    }
+  }
 }
 
-input.mat-input-element,
-  {
-
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+input.mat-mdc-input-element {
+  width: 100%;
+  transition: $trs;
+  border-radius: 6px;
+  padding: 0 16px;
+  @include text;
+  @include weight-regular;
+  color: map-get($project-colors, "gradation", 100);
+  caret-color: map-get($project-colors, "purple", 400);
+  background-color: map-get($project-colors, "gradation", 700);
+  border: 1px solid transparent;
+  &::placeholder {
+    color: map-get($project-colors, "gradation", 400);
+  }
+  &:not(.ng-touched.ng-invalid):focus {
+    background-color: map-get($project-colors, "purple", 500);
+    border-color: map-get($project-colors, "purple", 400);
+  }
+  &.ng-touched {
+    &.ng-invalid {
+      color: map-get($project-colors, "gradation", 300);
+      border-color: map-get($project-colors, "red", 400);
+    }
   }
 
-  // Расскоментировать, если понадобится отключить подсветку при авто-заполнении
-  //&:-webkit-autofill {
-  //  -webkit-box-shadow:0 0 0 50px #f5f5f5 inset;
-  //  -webkit-text-fill-color: #828282;
-  //}
-  @include input-text;
-
-  &.ng-dirty {
-    color: #333333;
+  &.input {
+    &_big {
+      @include input-big;
+    }
+    &_normal {
+      @include input-normal;
+    }
+    &_small {
+      @include input-small;
+    }
+    &_iconly {
+      @include input-iconly;
+    }
   }
-
-  color: #000;
-  width: 100%;
-}
-
-.input-wrapper {
-  flex-wrap: wrap;
-  width: 100%;
-  gap: 24px;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator {
-  display: none;
 }

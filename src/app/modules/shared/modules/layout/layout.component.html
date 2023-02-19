@@ -1,7 +1,7 @@
-<div [ngStyle]="styles" class="layout flex flex_column" [class.isHomePage]="isHomePage">
+<div [ngStyle]="styles" class="layout flex flex_column" [class.withoutScroll]="withoutScroll" [class.isHomePage]="isHomePage">
   <ng-content select="[header]"></ng-content>
-  <main class="main flex_grow">
+  <main [@routeAnimations]="animationsService.getRouteAnimationData(null, false)" class="main flex_grow">
     <ng-content select="[content]"></ng-content>
   </main>
-  <yrx-footer></yrx-footer>
+  <yrx-footer *ngIf="!withoutFooter"></yrx-footer>
 </div>

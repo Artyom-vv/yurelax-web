@@ -5,6 +5,7 @@ import { PlatformComponent } from './platform.component';
 import {LayoutModule} from "../shared/modules/layout/layout.module";
 import {HeaderModule} from "../shared/modules/header/header.module";
 import {HomeModule} from "./modules/home/home.module";
+import {UserGuard} from "../shared/services/global/user.guard";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {HomeModule} from "./modules/home/home.module";
     LayoutModule,
     HeaderModule,
     HomeModule
-  ]
+  ],
+  providers: [UserGuard]
 })
 export class PlatformModule {
 }

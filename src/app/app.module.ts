@@ -12,7 +12,6 @@ import {AuthService} from "./modules/auth/services/auth.service";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
 import {AuthGuard} from "./modules/shared/services/global/auth.guard";
-import {UserGuard} from "./modules/shared/services/global/user.guard";
 import {TokenInterceptor} from "./modules/shared/services/global/token.interceptor";
 
 @NgModule({
@@ -33,7 +32,6 @@ import {TokenInterceptor} from "./modules/shared/services/global/token.intercept
     SystemUserService,
     AuthService,
     AuthGuard,
-    UserGuard,
     {
       provide: HTTP_INTERCEPTORS,
       multi: true,

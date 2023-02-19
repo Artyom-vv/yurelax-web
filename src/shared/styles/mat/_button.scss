@@ -3,7 +3,6 @@
 @import "src/shared/styles/widjets/icons";
 
 button.mat-button {
-  transition: 0.2s ease;
   cursor: pointer;
   line-height: 100%;
 }
@@ -19,6 +18,9 @@ button.mat-button {
   padding: 0 20px;
   .mdc-button__label {
     gap: 8px;
+    &, span {
+      @include span-text-big();
+    }
   }
   .icon:not(#{$unique_stroke_icons}) {
     @include icon-size(24px);
@@ -30,6 +32,9 @@ button.mat-button {
   padding: 0 16px;
   .mdc-button__label {
     gap: 6px;
+    &, span {
+      @include span-text-default();
+    }
   }
   .icon:not(#{$unique_stroke_icons}) {
     @include icon-size(20px);
@@ -41,13 +46,15 @@ button.mat-button {
   padding: 0 12px;
   .mdc-button__label {
     gap: 4px;
+    &, span {
+      @include span-text-small();
+    }
   }
   .icon:not(#{$unique_stroke_icons}) {
     @include icon-size(16px);
   }
 }
 
-$unique_stroke_icons: ".icon-login, .icon-arrow-up";
 
 @mixin btn-primary() {
   $default_color: map-get($project-colors, "purple", 100);
@@ -56,7 +63,6 @@ $unique_stroke_icons: ".icon-login, .icon-arrow-up";
 
   .mdc-button__label {
     &, span {
-      @include span-text-big();
       @include weight-medium();
       color: $default_color;
     }
@@ -105,7 +111,6 @@ $unique_stroke_icons: ".icon-login, .icon-arrow-up";
 
   .mdc-button__label {
     &, span {
-      @include span-text-default();
       @include weight-regular();
       color: $default_color;
     }
@@ -197,9 +202,49 @@ $unique_stroke_icons: ".icon-login, .icon-arrow-up";
   }
 }
 
+@mixin btn-custom-white {
+  $default_color: map-get($project-colors, "purple", 400);
+
+  background-color: map-get($project-colors, "gradation", 100);
+
+
+  .mdc-button__label {
+    &, span {
+      @include span-text-big();
+      @include weight-medium();
+      color: $default_color;
+    }
+  }
+
+
+  &.btn_iconly {
+    #{$unique_stroke_icons} {
+      stroke: $default_color;
+    }
+
+    .icon:not(#{$unique_stroke_icons}) {
+      fill: $default_color;
+    }
+  }
+
+  &:not(:disabled):hover {
+    background-color: map-get($project-colors, "purple", 100);
+  }
+
+  &:focus {
+  }
+
+  &:active {
+    background-color: map-get($project-colors, "gradation", 100);
+  }
+}
+
+
 button.mat-mdc-button.btn {
-  &, span {
-    transition: 0.2s ease;
+  width: 100%;
+  transition: background-color $trs, color $trs;
+  span {
+    transition: color $trs;
   }
 
   .mat-button-focus-overlay {
@@ -213,8 +258,18 @@ button.mat-mdc-button.btn {
     @include btn-disabled;
   }
 
+  &:not(&_iconly) {
+    .icon-wrapper {
+      display: none;
+    }
+  }
+
   &[custom="light"] {
     @include btn-custom-light;
+  }
+
+  &[custom="white"] {
+    @include btn-custom-white;
   }
 
   &_primary {

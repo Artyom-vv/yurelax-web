@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {LayoutComponent} from './layout.component';
 import {RouterModule} from "@angular/router";
 import {FooterModule} from "../footer/footer.module";
-
+import {AnimationsService} from "../../animations/services/animations.service";
 
 @NgModule({
   declarations: [
@@ -16,6 +16,9 @@ import {FooterModule} from "../footer/footer.module";
     CommonModule,
     RouterModule,
     FooterModule
+  ],
+  providers: [
+    AnimationsService
   ]
 })
 export class LayoutModule {

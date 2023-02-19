@@ -5,14 +5,25 @@ import {CookieService} from "ngx-cookie-service";
 
 @Injectable()
 export class SystemUserService {
-  constructor(private cookieService: CookieService, private appStore: AppStore, private router: Router) {
+  constructor(
+    private cookieService: CookieService,
+    private appStore: AppStore,
+    private router: Router,
+  ) {
   }
 
   getAccessToken = (): string => this.cookieService.get('accessToken');
   getRefreshToken = (): string => this.cookieService.get('refreshToken');
 
+  removeAccessToken = () => this.cookieService.delete('accessToken', '/');
+  removeRefreshToken = () => this.cookieService.delete('refreshToken', '/');
+
   logout() {
     this.appStore.setUser(null);
+    this.appStore.setIsLogged(false);
+    this.removeRefreshToken()
+    this.removeAccessToken()
     localStorage.clear();
+    this.router.navigate(['/auth'])
   }
 }

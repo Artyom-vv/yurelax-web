@@ -1,24 +1,39 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {Subscription} from "rxjs";
+import {AppearanceAnimation} from "../../animations/redirect.animation";
+import {AnimationsService} from "../../animations/services/animations.service";
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'yrx-layout',
   templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss']
+  styleUrls: ['./layout.component.scss'],
+  animations: [
+    AppearanceAnimation,
+  ]
 })
 export class LayoutComponent implements OnInit, OnDestroy {
   constructor(
-    private appStore: AppStore
+    private appStore: AppStore,
+    public animationsService: AnimationsService,
+    @Inject(DOCUMENT) private document: Document
   ) {
   }
+
+  @Input() withoutFooter: boolean = false;
 
   private subscriptions: Subscription[] = []
 
   public isHomePage: boolean = false
+  public withoutScroll: boolean = false
   public styles: {
     [key: string]: string
   } = {}
+  public resizeObserver: ResizeObserver = new ResizeObserver((entries) => {
+    const documentHeight: number = entries[0].target.clientHeight;
+    this.withoutScroll = this.document.body.scrollHeight <= documentHeight;
+  })
 
   ngOnInit() {
     this.subscriptions.push(
@@ -31,9 +46,11 @@ export class LayoutComponent implements OnInit, OnDestroy {
         this.isHomePage = isHomePage
       })
     )
+    this.resizeObserver.observe(document.body)
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe())
   }
+
 }

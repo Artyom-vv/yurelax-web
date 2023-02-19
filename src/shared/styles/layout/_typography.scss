@@ -162,12 +162,26 @@ h5 {
   &_tiny {
     @include text-tiny;
   }
+
+  &.regular {
+    @include weight-regular;
+  }
+  &.medium {
+    @include weight-medium;
+  }
+  &.semi-bold {
+    @include weight-semi-bold;
+  }
+  &.bold {
+    @include weight-bold;
+  }
 }
 
 @mixin span-text {
   font-family: $second_font;
   font-weight: 400;
   color: #fff;
+  letter-spacing: 0.015em;
   @include span-text-default;
 }
 @mixin span-text-default {
