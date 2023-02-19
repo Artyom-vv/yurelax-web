@@ -1,0 +1,6 @@
+@import "src/shared/styles/vars.colors";
+
+.profile-header {
+  height: 48px;
+  background-color: map-get($project-colors, "gradation", 750);
+}

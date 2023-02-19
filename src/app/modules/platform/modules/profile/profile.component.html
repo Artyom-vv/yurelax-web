@@ -1,4 +1,12 @@
-<yrx-layout>
-  <yrx-header header></yrx-header>
-  <router-outlet content></router-outlet>
-</yrx-layout>
+<section class="profile-layout flex flex_column" [ngStyle]="styles">
+  <yrx-profile-header></yrx-profile-header>
+  <main class="main flex_grow flex gap-48">
+    <div class="flex flex_column">
+      <yrx-profile-sidebar></yrx-profile-sidebar>
+    </div>
+    <div class="scrollable">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+  <yrx-footer></yrx-footer>
+</section>

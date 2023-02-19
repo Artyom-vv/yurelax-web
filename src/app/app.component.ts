@@ -59,6 +59,20 @@ export class AppComponent implements OnInit, OnDestroy {
       {link: '/platform/games', name: 'Мини-игры', isLogged: true},
     ])
 
+    this.appStore.setProfileNavigation([
+      [
+        {link: '/platform/profile/', name: 'Главная', icon: 'home'},
+        {link: '/platform/profile/wallet', name: 'Кошелек', icon: 'wallet'},
+        {link: '/platform/profile/store', name: 'Магазин', icon: 'shopping-bag'},
+        {link: '/platform/profile/games', name: 'Мини-игры', icon: 'box'},
+        {link: '/platform/profile/referrals', name: 'Реферальная система', icon: 'user-plus'},
+      ],
+      [
+        {link: '/platform/profile/settings', name: 'Настройка аккаунта', icon: 'settings'},
+        {link: '/platform/profile/restrictions', name: 'Баны и предупреждения', icon: 'alert-triangle'},
+      ]
+    ])
+
     this.appStore.setSocials([
       {link: 'https://vk.com/yurelax', name: 'Вконтакте', icon: 'vk'},
       {link: 'https://discord.gg/xTWx7T4y6W', name: 'Дискорд', icon: 'dc'},

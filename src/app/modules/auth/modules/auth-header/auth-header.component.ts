@@ -6,5 +6,5 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./auth-header.component.scss']
 })
 export class AuthHeaderComponent {
-  @Input() page: 'login' | 'register' | 'email-verify' | 'password_recover' | null = null
+  @Input() page: 'login' | 'register' | 'email-verify' | 'recover-password' | null = null
 }

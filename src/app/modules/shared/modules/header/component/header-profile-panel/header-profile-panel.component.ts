@@ -1,7 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../../../store/app.store";
-import {Subscription, tap} from "rxjs";
+import {Subscription, switchMap, tap} from "rxjs";
 import {UserStoreInterface} from "../../../../../../store/interfaces/user-store.interface";
+import {SkinsService} from "../../../../services/skins.service";
 
 @Component({
   selector: 'yrx-header-profile-panel',
@@ -11,7 +12,8 @@ import {UserStoreInterface} from "../../../../../../store/interfaces/user-store.
 export class HeaderProfilePanelComponent implements OnInit, OnDestroy {
 
   constructor(
-    private appStore: AppStore
+    private appStore: AppStore,
+    private skinsService: SkinsService
   ) {
   }
 
@@ -24,6 +26,10 @@ export class HeaderProfilePanelComponent implements OnInit, OnDestroy {
       this.appStore.user$.pipe(
         tap((user) => {
           this.user = user
+        }),
+        switchMap((user) => this.skinsService.getAvatar(user?.login)),
+        tap((val) => {
+          console.log(val)
         })
       ).subscribe()
     )

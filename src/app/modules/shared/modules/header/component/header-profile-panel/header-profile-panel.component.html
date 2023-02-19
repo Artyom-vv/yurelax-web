@@ -1,5 +1,5 @@
 <div [routerLink]="['/platform/profile']" class="panel flex gap-12 flex_align-center">
-  <div class="avatar"></div>
+  <img src="assets/content/header/default-avatar.png" [alt]="'Аватар игрока '+user?.login+' на yurelax'" class="avatar"/>
   <div class="flex flex_column">
     <p class="text text_body medium">{{user?.login}}</p>
     <yrx-link [hover]="false" class="link" size="small" [iconStroked]="true" icon="chevron-arrow-right">Личный кабинет</yrx-link>

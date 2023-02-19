@@ -1,0 +1,8 @@
+@import "src/shared/styles/vars.colors";
+
+.profile-layout {
+  background-color: map-get($project-colors, "gradation", 800);
+}
+.scrollable {
+
+}

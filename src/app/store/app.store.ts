@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {UserStoreInterface} from "./interfaces/user-store.interface";
 import {NavigationStoreInterface} from "./interfaces/navigation-store.interface";
 import {SocialStoreInterface} from "./interfaces/socials-store.interface";
+import {ProfileNavigationStoreInterface} from "./interfaces/profile-navigation-store.interface";
 
 @Injectable()
 export class AppStore extends ComponentStore<AppState> {
@@ -19,6 +20,7 @@ export class AppStore extends ComponentStore<AppState> {
 
   readonly preloading$: Observable<boolean> = this.select(state => state.preloading);
   readonly navigation$: Observable<NavigationStoreInterface[]> = this.select(state => state.navigation);
+  readonly profileNavigation$: Observable<ProfileNavigationStoreInterface[][]> = this.select(state => state.profileNavigation);
   readonly socials$: Observable<SocialStoreInterface[]> = this.select(state => state.socials);
   readonly footerHeight$: Observable<number> = this.select(state => state.footerHeight);
   readonly isHomePage$: Observable<boolean> = this.select(state => state.isHomePage);
@@ -46,6 +48,11 @@ export class AppStore extends ComponentStore<AppState> {
   readonly setSocials = this.updater((state, socials: SocialStoreInterface[]) => ({
     ...state,
     socials
+  }));
+
+  readonly setProfileNavigation = this.updater((state, profileNavigation: ProfileNavigationStoreInterface[][]) => ({
+    ...state,
+    profileNavigation
   }));
 
   readonly setNavigation = this.updater((state, navigation: NavigationStoreInterface[]) => ({

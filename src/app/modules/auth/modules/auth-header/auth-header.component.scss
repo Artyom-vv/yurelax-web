@@ -6,4 +6,69 @@
   overflow: hidden;
   border: 1px solid map-get($project-colors, "gradation", 700);
   border-radius: 6px;
+  position: relative;
+}
+.first-image, .second-image, .third-image {
+  position: absolute;
+}
+
+.register {
+  .first-image {
+    top: -41px;
+    right: -8px;
+    filter: blur(1px);
+    transform: rotate(-60deg);
+    width: 80px;
+    height: 80px;
+  }
+
+  .second-image {
+    filter: blur(1px);
+    transform: rotate(30deg);
+    width: 72px;
+    height: 72px;
+    bottom: -28px;
+    right: -28px;
+  }
+
+  .third-image {
+    right: 20px;
+    top: -8px;
+    z-index: 1;
+  }
+
+  .layer-blur-image {
+    filter: blur(50px);
+    z-index: 0;
+  }
+}
+.login {
+  .first-image {
+    top: -40px;
+    right: -24px;
+    filter: blur(1px);
+    transform: rotate(-60deg);
+    width: 80px;
+    height: 80px;
+  }
+
+  .second-image {
+    filter: blur(1px);
+    transform: rotate(30deg);
+    width: 72px;
+    height: 72px;
+    bottom: -28px;
+    right: -20px;
+  }
+
+  .third-image {
+    right: 24px;
+    top: -3px;
+    z-index: 1;
+  }
+
+  .layer-blur-image {
+    filter: blur(50px);
+    z-index: 0;
+  }
 }
