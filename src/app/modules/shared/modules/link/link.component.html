@@ -1,8 +1,13 @@
-<span (mouseenter)="hover = true" (mouseleave)="hover = false" class="link flex flex_align-center gap-6" [ngClass]="'link_'+size" [class.link_underlined]="underlined" [class.link_iconly]="icon">
+<span [attr.custom]="custom" (mouseenter)="_hover = true" (mouseleave)="_hover = false" class="link flex flex_align-center gap-6" [class.hover]="hover" [ngClass]="'link_'+size" [class.link_underlined]="underlined" [class.link_iconly]="icon">
   <span class="text" [ngClass]="weight">
     <ng-content></ng-content>
   </span>
   <span class="icon-wrapper">
-    <yrx-icon [hover]="false" [stroked]="iconStroked" [color]="hover ? 'purple-200' : 'gradation-100'" [icon]="icon"></yrx-icon>
+    <yrx-icon [hover]="false" [stroked]="iconStroked"
+              [color]="
+                custom === '' ? this.hover ? this._hover ? 'purple-200' : 'gradation-100' : 'gradation-100' :
+                custom === 'purple-300' ? 'purple-300' : ''
+              "
+              [icon]="icon"></yrx-icon>
   </span>
 </span>

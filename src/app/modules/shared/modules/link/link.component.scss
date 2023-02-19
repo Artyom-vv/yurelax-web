@@ -1,6 +1,6 @@
 @import "src/shared/styles/vars.colors";
 @import "src/shared/styles/vars.animations";
-@import "src/shared/styles/widjets/icons";
+@import "src/shared/styles/widjets/icon_tools";
 @import "src/shared/styles/layout/typography";
 
 $text: ".text, .text span";
@@ -22,19 +22,76 @@ $text: ".text, .text span";
   #{$text} {
     @include text-table();
   }
-  &_iconly {
-    .icon {
-      @include icon-size(16px)
+  &.link {
+    &_iconly {
+      gap: 2px;
+    }
+  }
+}
+
+@mixin link-style-default {
+  #{$text} {
+    color: map-get($project-colors, "gradation", 100);
+  }
+  #{$text}, &_underlined {
+    transition: $trs;
+  }
+  &_underlined {
+    border-bottom-color: map-get($project-colors, "gradation", 100);
+    &.hover {
+      &:hover {
+        border-bottom-color: map-get($project-colors, "purple", 200);
+      }
+    }
+  }
+  &.hover {
+    &:hover {
+      #{$text} {
+        color: map-get($project-colors, "purple", 200);
+      }
+    }
+  }
+}
+
+@mixin link-custom-purple {
+  #{$text} {
+    color: map-get($project-colors, "purple", 300);
+  }
+
+  #{$text}, &_underlined {
+    transition: $trs;
+  }
+  &_underlined {
+    border-bottom-color: map-get($project-colors, "purple", 300);
+    &.hover {
+      &:hover {
+        pointer-events: none;
+      }
+    }
+  }
+  &.hover {
+    &:hover {
+      pointer-events: none;
     }
   }
 }
 
 .link {
+  display: inline-flex;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+
   &_iconly {
-    .icon {
+    yrx-icon {
       @include icon-size(20px)
     }
   }
+  &:not(&_iconly) {
+    .icon-wrapper {
+      display: none;
+    }
+  }
+
   &_big {
     @include link-big;
   }
@@ -45,29 +102,11 @@ $text: ".text, .text span";
     @include link-small;
   }
 
-  display: inline-flex;
-  cursor: pointer;
-  border-bottom: 1px solid transparent;
-  #{$text} {
-    color: map-get($project-colors, "gradation", 100);
-  }
-  #{$text}, &_underlined {
-    transition: $trs;
-  }
-  &_underlined {
-    border-bottom-color: map-get($project-colors, "gradation", 100);
-    &:hover {
-      border-bottom-color: map-get($project-colors, "purple", 200);
-    }
-  }
-  &:hover {
-    #{$text} {
-      color: map-get($project-colors, "purple", 200);
-    }
-  }
-  &:not(&_iconly) {
-    .icon-wrapper {
-      display: none;
+  @include link-style-default;
+
+  &[custom="purple-300"] {
+    &.link {
+      @include link-custom-purple;
     }
   }
 }

@@ -32,9 +32,13 @@ export class AppComponent implements OnInit, OnDestroy {
       this.authService.getMe().pipe(
         tap(() => {
           this.appStore.setIsLogged(true);
+          this.appStore.setPreloading(false);
         }),
         catchError((err) => {
-          this.systemUser.logout()
+          this.systemUser.logout(false)
+          setTimeout(() => {
+            this.appStore.setPreloading(false);
+          }, 300)
           throw new Error(err)
         })
       ).subscribe()
@@ -49,10 +53,10 @@ export class AppComponent implements OnInit, OnDestroy {
         })).subscribe()
     )
     this.appStore.setNavigation([
-      {link: '/platform', name: 'О проекте'},
-      {link: '/platform/wiki', name: 'Вики'},
-      {link: '/platform/store', name: 'Магазин'},
-      {link: '/platform/games', name: 'Мини-игры'},
+      {link: '/platform', name: 'О проекте', isLogged: false},
+      {link: '/platform/wiki', name: 'Вики', isLogged: false},
+      {link: '/platform/store', name: 'Магазин', isLogged: true},
+      {link: '/platform/games', name: 'Мини-игры', isLogged: true},
     ])
 
     this.appStore.setSocials([

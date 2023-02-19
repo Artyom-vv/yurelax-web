@@ -27,6 +27,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   public isHomePage: boolean = false
   public withoutScroll: boolean = false
+  public preloading: boolean = true
   public styles: {
     [key: string]: string
   } = {}
@@ -39,6 +40,11 @@ export class LayoutComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.appStore.footerHeight$.subscribe((footerHeight) => {
         this.styles['minHeight'] = `calc(100vh + ${footerHeight}px`;
+      })
+    )
+    this.subscriptions.push(
+      this.appStore.preloading$.subscribe((preloading) => {
+        this.preloading = preloading
       })
     )
     this.subscriptions.push(

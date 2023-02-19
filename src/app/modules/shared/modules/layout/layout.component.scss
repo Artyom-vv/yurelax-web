@@ -8,6 +8,9 @@
 .layout.isHomePage {
   background-color: map-get($project-colors, "purple", 400);
 }
+.preloading {
+  height: 100vh;
+}
 .withoutScroll {
   padding-right: 12px;
 }

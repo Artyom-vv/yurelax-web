@@ -17,6 +17,7 @@ export class AppStore extends ComponentStore<AppState> {
   readonly isExit$: Observable<boolean> = this.select(state => state.isExit);
   readonly isLogged$: Observable<boolean> = this.select(state => state.isLogged);
 
+  readonly preloading$: Observable<boolean> = this.select(state => state.preloading);
   readonly navigation$: Observable<NavigationStoreInterface[]> = this.select(state => state.navigation);
   readonly socials$: Observable<SocialStoreInterface[]> = this.select(state => state.socials);
   readonly footerHeight$: Observable<number> = this.select(state => state.footerHeight);
@@ -27,6 +28,10 @@ export class AppStore extends ComponentStore<AppState> {
     isLogged
   }));
 
+  readonly setPreloading = this.updater((state, preloading: boolean) => ({
+    ...state,
+    preloading
+  }));
 
   readonly setIsHomePage = this.updater((state, isHomePage: boolean) => ({
     ...state,

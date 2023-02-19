@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public routes: NavigationStoreInterface[] = []
   public socials: SocialStoreInterface[] = []
+  public isLogged: boolean = false
 
   ngOnInit() {
     this.subscriptions.push(
@@ -31,6 +32,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.appStore.socials$.subscribe((socials) => {
         this.socials = socials
+      })
+    )
+    this.subscriptions.push(
+      this.appStore.isLogged$.subscribe((val) => {
+        this.isLogged = val
       })
     )
   }

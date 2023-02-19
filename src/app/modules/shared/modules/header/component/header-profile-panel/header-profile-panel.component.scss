@@ -1,0 +1,21 @@
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/vars.animations";
+@import "src/shared/styles/widjets/icons";
+
+.panel {
+  height: 64px;
+  background-color: map-get($project-colors, "purple", 300);
+  padding: 0 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: $trs;
+  &:hover {
+    background-color: map-get($project-colors, "purple", 200);
+  }
+}
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background-color: #fff;
+}

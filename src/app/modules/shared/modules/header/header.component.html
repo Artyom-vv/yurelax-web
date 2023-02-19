@@ -9,7 +9,9 @@
         </div>
       </div>
       <ul class="flex gap-32 ">
-        <li *ngFor="let route of routes" [routerLink]="route.link" routerLinkActive="active" class="link text text_body regular c-gradation-300">{{route.name}}</li>
+        <ng-container *ngFor="let route of routes">
+          <li *ngIf="isLogged || !route.isLogged" [routerLink]="route.link" routerLinkActive="active" class="link text text_body regular c-gradation-300">{{route.name}}</li>
+        </ng-container>
       </ul>
     </div>
     <div class="flex gap-24 flex_align-center">
@@ -18,7 +20,10 @@
           <yrx-icon [color]=" light ? 'purple-200' : ''" [icon]="social.icon"></yrx-icon>
         </a>
       </div>
-      <yrx-button [routerLink]="['/auth/login']" [custom]="light ? 'light' : ''" type="secondary"><span>Войти</span><yrx-icon btn-icon icon="login"></yrx-icon></yrx-button>
+      <yrx-button *ngIf="!isLogged; else profilePanel" [routerLink]="['/auth/login']" [custom]="light ? 'light' : ''" type="secondary"><span>Войти</span><yrx-icon btn-icon icon="login"></yrx-icon></yrx-button>
+      <ng-template #profilePanel>
+        <yrx-header-profile-panel></yrx-header-profile-panel>
+      </ng-template>
     </div>
   </div>
 </header>

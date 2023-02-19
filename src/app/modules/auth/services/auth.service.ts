@@ -46,6 +46,7 @@ export class AuthService {
     return this.http.post<LoginResponseInterface>(`${environment.apiUrl}/auth/login`, data).pipe(
       tap((res) => {
         this.saveData(res)
+        this.appStore.setIsLogged(true);
       }),
       catchError((err) => {
         throw new Error(err.message);

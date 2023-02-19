@@ -1,4 +1,4 @@
-<div [ngStyle]="styles" class="layout flex flex_column" [class.withoutScroll]="withoutScroll" [class.isHomePage]="isHomePage">
+<div [ngStyle]="styles" class="layout flex flex_column" [class.withoutScroll]="withoutScroll" [class.preloading]="preloading" [class.isHomePage]="isHomePage">
   <ng-content select="[header]"></ng-content>
   <main [@routeAnimations]="animationsService.getRouteAnimationData(null, false)" class="main flex_grow">
     <ng-content select="[content]"></ng-content>

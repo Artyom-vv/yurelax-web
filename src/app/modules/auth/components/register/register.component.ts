@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subscription, tap} from "rxjs";
@@ -15,6 +15,7 @@ export class RegisterComponent {
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -43,6 +44,7 @@ export class RegisterComponent {
         }),
         catchError(err => {
           this.dataLoading = false
+          this.cdr.detectChanges()
           throw new Error(err);
         })
       ).subscribe()

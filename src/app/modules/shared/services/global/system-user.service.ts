@@ -18,12 +18,12 @@ export class SystemUserService {
   removeAccessToken = () => this.cookieService.delete('accessToken', '/');
   removeRefreshToken = () => this.cookieService.delete('refreshToken', '/');
 
-  logout() {
+  logout(b: boolean = true) {
     this.appStore.setUser(null);
     this.appStore.setIsLogged(false);
     this.removeRefreshToken()
     this.removeAccessToken()
     localStorage.clear();
-    this.router.navigate(['/auth'])
+    if (b) this.router.navigate(['/auth'])
   }
 }

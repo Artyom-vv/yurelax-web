@@ -5,7 +5,7 @@ export const AppearanceAnimation = trigger('routeAnimations', [
     style({
       opacity: 0
     }),
-    animate('400ms ease'),
+    animate('500ms ease'),
     query('@*', animateChild(), {optional: true}),
   ]),
 ]);

@@ -10,6 +10,7 @@ export interface AppState {
   footerHeight: number
   isHomePage: boolean
   isLogged: boolean
+  preloading: boolean
 }
 export const DEFAULT_STATE: AppState = {
   user: null,
@@ -18,5 +19,6 @@ export const DEFAULT_STATE: AppState = {
   socials: [],
   footerHeight: 0,
   isHomePage: false,
-  isLogged: false
+  isLogged: false,
+  preloading: true
 };

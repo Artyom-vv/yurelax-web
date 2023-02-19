@@ -1,24 +1,6 @@
 @import "/src/shared/styles/vars.colors";
 @import "/src/shared/styles/vars.animations";
-
-@mixin icon-size($size) {
-  @include icon-width($size);
-  @include icon-height($size);
-}
-
-@mixin icon-width($size) {
-  width: $size;
-  max-width: $size;
-  min-width: $size;
-}
-
-@mixin icon-height($size) {
-  height: $size;
-  max-height: $size;
-  min-height: $size;
-}
-
-$unique_stroke_icons: ".icon-login, .icon-arrow-up, .icon-loader";
+@import "/src/shared/styles/widjets/icon_tools";
 
 .icon {
   display: block;
@@ -49,6 +31,13 @@ $unique_stroke_icons: ".icon-login, .icon-arrow-up, .icon-loader";
     @include icon-size(20px);
     stroke: map-get($project-colors, "gradation", 100);
     fill: none;
+  }
+  &-chevron {
+    &-arrow-right {
+      @include icon-size(16px);
+      stroke: map-get($project-colors, "gradation", 100);
+      fill: none;
+    }
   }
 
   &-loader {

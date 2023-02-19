@@ -22,7 +22,7 @@
     href="#" class="link c-purple-300 medium">политикой конфеденциальности</a>
   </p>
   <yrx-spacing type="M"></yrx-spacing>
-  <yrx-button class="w100" type="primary">Зарегистрироваться</yrx-button>
+  <yrx-button [disabled]="dataLoading || form.invalid" (press)="register()" class="w100" type="primary">Зарегистрироваться</yrx-button>
   <yrx-spacing type="XS"></yrx-spacing>
   <div class="flex flex_center gap-6">
     <p class="text text_body regular">Уже есть аккаунт?</p>
