@@ -12,6 +12,9 @@ button.mat-button {
   display: flex;
   align-items: center;
   justify-content: center;
+  &, span {
+    @include span-text
+  }
 }
 
 @mixin btn-big {

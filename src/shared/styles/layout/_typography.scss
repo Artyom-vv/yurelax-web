@@ -198,7 +198,9 @@ h5 {
 }
 
 span {
-  @include span-text;
+  .span {
+    @include span-text;
+  }
   &_big {
     @include span-text-big;
   }

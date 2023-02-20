@@ -7,7 +7,7 @@ import {SkinsService} from "../../../../services/skins.service";
 @Component({
   selector: 'yrx-header-profile-panel',
   templateUrl: './header-profile-panel.component.html',
-  styleUrls: ['./header-profile-panel.component.scss']
+  styleUrls: ['./header-profile-panel.component.scss'],
 })
 export class HeaderProfilePanelComponent implements OnInit, OnDestroy {
 
@@ -27,10 +27,10 @@ export class HeaderProfilePanelComponent implements OnInit, OnDestroy {
         tap((user) => {
           this.user = user
         }),
-        switchMap((user) => this.skinsService.getAvatar(user?.login)),
-        tap((val) => {
-          console.log(val)
-        })
+        // switchMap((user) => this.skinsService.getAvatar(user?.login)),
+        // tap((val) => {
+        //   console.log(val)
+        // })
       ).subscribe()
     )
   }

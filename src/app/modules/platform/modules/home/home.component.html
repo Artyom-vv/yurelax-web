@@ -13,13 +13,19 @@
       <yrx-spacing type="L"></yrx-spacing>
       <h1 class="text-center title">yurelax — необычный сервер с сюжетом и мини-играми</h1>
       <yrx-spacing type="M"></yrx-spacing>
-      <yrx-button *ngIf="!isLogged; else playButton" [routerLink]="['/auth/register']" custom="white">
+      <yrx-button *ngIf="!isLogged; else unloggedButton" [routerLink]="['/auth/register']" custom="white">
         <span>Зарегистрироваться</span>
         <yrx-icon [stroked]="true" color="purple-400" icon="login"></yrx-icon>
       </yrx-button>
-      <ng-template #playButton>
+      <ng-template #unloggedButton>
         <yrx-button [routerLink]="['/platform/profile']" custom="white">Открыть профиль</yrx-button>
+        <yrx-spacing type="XS"></yrx-spacing>
+        <yrx-button (press)="logout()" custom="white">Выйти</yrx-button>
       </ng-template>
+      <yrx-spacing type="XS"></yrx-spacing>
+      <yrx-button [routerLink]="['/auth/minecraft']" [queryParams]="{
+        authToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6InN1cHBpY2siLCJpYXQiOjE2NzY5Mjc5MDMsImV4cCI6MTY3NjkyOTEwM30.g2N1EASEynEOCD4X_BMUIQqlvJICavFr281uNXmHgOM'
+      }" custom="white">Minecraft Auth</yrx-button>
     </div>
   </div>
 </section>

@@ -12,6 +12,8 @@ import {TokensResponseInterface} from "../interfaces/tokens-response.interface";
 import {PersistenceService} from "../../shared/services/global/persistence.service";
 import {AppStore} from "../../../store/app.store";
 import {CookieService} from "ngx-cookie-service";
+import {JwtMaResponseInterface} from "../interfaces/jwt-ma-response.interface";
+import {JwtMaAuthResponseInterface} from "../interfaces/jwt-ma-auth-response.interface";
 
 @Injectable()
 export class AuthService {
@@ -73,6 +75,22 @@ export class AuthService {
       catchError((err) => {
         this.deleteCookies();
         throw new Error(err.message);
+      })
+    )
+  }
+
+  jwtMaAuth(login: string): Observable<JwtMaAuthResponseInterface> {
+    return this.http.post<JwtMaAuthResponseInterface>(`${environment.apiUrl}/auth/jwt-ma-auth`, {login}).pipe(
+      catchError((err) => {
+        throw new Error(err)
+      })
+    )
+  }
+
+  jwtMa(jwt: string): Observable<JwtMaResponseInterface> {
+    return this.http.post<JwtMaResponseInterface>(`${environment.apiUrl}/auth/jwt-ma`, {jwt}).pipe(
+      catchError((err) => {
+        throw new Error(err)
       })
     )
   }

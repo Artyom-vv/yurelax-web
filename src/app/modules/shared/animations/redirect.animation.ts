@@ -5,8 +5,12 @@ export const AppearanceAnimation = trigger('routeAnimations', [
     style({
       opacity: 0
     }),
-    animate('500ms ease'),
-    query('@*', animateChild(), {optional: true}),
+    group([
+      animate('500ms ease', style({
+        opacity: 1
+      })),
+      query('@*', animateChild(), {optional: true}),
+    ])
   ]),
 ]);
 
@@ -16,7 +20,7 @@ export const SwipeAnimation = trigger('authRouteAnimations', [
       style({
         opacity: 0
       }),
-      animate('600ms ease')
+      animate('600ms 100ms ease')
     ])
   ]),
   transition('* => *', [

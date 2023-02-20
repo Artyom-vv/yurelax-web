@@ -21,6 +21,9 @@ import {IconModule} from "../shared/modules/icon/icon.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import { AuthLayoutComponent } from './components/auth-layout/auth-layout.component';
 import {AnimationsService} from "../shared/animations/services/animations.service";
+import { MLoginComponent } from './components/m-login/m-login.component';
+import { MAuthLayoutComponent } from './components/m-login/components/m-auth-layout/m-auth-layout.component';
+import {AuthStore} from "./store/auth.store";
 
 @NgModule({
   declarations: [
@@ -29,6 +32,8 @@ import {AnimationsService} from "../shared/animations/services/animations.servic
     RegisterComponent,
     EmailVerifyComponent,
     AuthLayoutComponent,
+    MLoginComponent,
+    MAuthLayoutComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +53,7 @@ import {AnimationsService} from "../shared/animations/services/animations.servic
     AuthService,
     CheckAuthGuard,
     EmailVerifyGuard,
+    AuthStore,
     {
       provide: HTTP_INTERCEPTORS,
       multi: true,

@@ -18,6 +18,7 @@ export class AuthLayoutComponent implements OnInit {
   ) {
   }
 
+  @Input() width: number = 368;
   @Input() outlet!: RouterOutlet;
 
   ngOnInit() {

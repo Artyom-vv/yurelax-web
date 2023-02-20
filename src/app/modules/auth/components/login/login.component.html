@@ -1,4 +1,4 @@
-<ng-container [formGroup]="form">
+<div [@fadeAnimation]="transitionToMA" [formGroup]="form">
   <yrx-auth-header page="login">Вход</yrx-auth-header>
   <yrx-spacing type="S"></yrx-spacing>
   <div class="box box_input">
@@ -17,4 +17,4 @@
     <p class="text text_body regular">Нет аккаунта?</p>
     <yrx-link [routerLink]="['/auth/register']">Зарегистрируйтесь</yrx-link>
   </div>
-</ng-container>
+</div>

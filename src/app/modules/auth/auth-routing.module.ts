@@ -6,6 +6,8 @@ import {RegisterComponent} from "./components/register/register.component";
 import {EmailVerifyComponent} from "./components/email-verify/email-verify.component";
 import {CheckAuthGuard} from "../shared/services/global/check-auth.guard";
 import {EmailVerifyGuard} from "../shared/services/global/email-verify.guard";
+import {MLoginComponent} from "./components/m-login/m-login.component";
+import {MAuthLayoutComponent} from "./components/m-login/components/m-auth-layout/m-auth-layout.component";
 
 const routes: Routes = [
   {
@@ -35,6 +37,18 @@ const routes: Routes = [
         path: '',
         data: {route: 'email-verify'},
         component: EmailVerifyComponent,
+        pathMatch: 'full',
+      },
+    ]
+  },
+  {
+    path: 'minecraft',
+    component: MAuthLayoutComponent,
+    children: [
+      {
+        path: '',
+        data: {route: 'minecraft'},
+        component: MLoginComponent,
         pathMatch: 'full',
       },
     ]

@@ -28,30 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
     if (user) {
       this.appStore.setUser(user)
     }
-    this.subscriptions.push(
-      this.authService.getMe().pipe(
-        tap(() => {
-          this.appStore.setIsLogged(true);
-          this.appStore.setPreloading(false);
-        }),
-        catchError((err) => {
-          this.systemUser.logout(false)
-          setTimeout(() => {
-            this.appStore.setPreloading(false);
-          }, 300)
-          throw new Error(err)
-        })
-      ).subscribe()
-    )
-    this.subscriptions.push(
-      this.appStore.isExit$.pipe(
-        filter(isExit => isExit),
-        switchMap(() => this.authService.logout()),
-        tap(() => {
-          this.systemUser.logout();
-          this.appStore.setIsExit(false);
-        })).subscribe()
-    )
+    this.dataFields()
     this.appStore.setNavigation([
       {link: '/platform', name: 'О проекте', isLogged: false},
       {link: '/platform/wiki', name: 'Вики', isLogged: false},
@@ -82,5 +59,32 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe())
+  }
+
+  private dataFields(): void {
+    this.subscriptions.push(
+      this.authService.getMe().pipe(
+        tap(() => {
+          this.appStore.setIsLogged(true);
+          this.appStore.setPreloading(false);
+        }),
+        catchError((err) => {
+          this.systemUser.logout(false)
+          setTimeout(() => {
+            this.appStore.setPreloading(false);
+          }, 300)
+          throw new Error(err)
+        })
+      ).subscribe()
+    )
+    this.subscriptions.push(
+      this.appStore.isExit$.pipe(
+        filter(isExit => isExit),
+        switchMap(() => this.authService.logout()),
+        tap(() => {
+          this.systemUser.logout();
+          this.appStore.setIsExit(false);
+        })).subscribe()
+    )
   }
 }

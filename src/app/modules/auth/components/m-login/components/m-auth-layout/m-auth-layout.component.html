@@ -1,0 +1,6 @@
+<yrx-layout [withoutFooter]="true">
+  <yrx-header header></yrx-header>
+  <yrx-auth-layout [width]="600" content [outlet]="outlet">
+    <router-outlet #outlet="outlet"></router-outlet>
+  </yrx-auth-layout>
+</yrx-layout>

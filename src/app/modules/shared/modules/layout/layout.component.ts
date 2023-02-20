@@ -26,7 +26,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = []
 
   public isHomePage: boolean = false
-  public withoutScroll: boolean = false
+  public withoutScroll: boolean = true
   public preloading: boolean = true
   public styles: {
     [key: string]: string

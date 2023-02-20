@@ -1,0 +1,24 @@
+<ng-container *ngIf="userLoading; else userLoaded">
+  <yrx-icon icon="loader"></yrx-icon>
+</ng-container>
+
+<ng-template #userLoaded>
+  <div [@fadeAnimation]="error || successMA || isWaitingForMA || transitionToLogin" class="text-center">
+    <h3 *ngIf="user; else userEmpty">Привет, <span class="c-purple-300">{{user?.login}}</span>!</h3>
+    <ng-template #userEmpty>
+      <h3>Привет!</h3>
+    </ng-template>
+    <yrx-spacing type="XS"></yrx-spacing>
+    <p class="text text_big regular flex flex_center gap-8"><span>Прямо сейчас мы авторизируем тебя, осталось немного</span><yrx-icon icon="loader"></yrx-icon></p>
+  </div>
+  <div [@fadeAnimation]="!error || successMA || isWaitingForMA" class="text-center">
+    <h3>Сессия недействительна 😥</h3>
+    <yrx-spacing type="XS"></yrx-spacing>
+    <p class="text text_big regular">Получите новую ссылку и зайдите заново</p>
+  </div>
+  <div [@fadeAnimation]="error || !successMA" class="text-center">
+    <h3 class="c-green-300">Авторизация прошла успешно!</h3>
+    <yrx-spacing type="XS"></yrx-spacing>
+    <p class="text text_big regular">Вы можете закрыть это окно</p>
+  </div>
+</ng-template>

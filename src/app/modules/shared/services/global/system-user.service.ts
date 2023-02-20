@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core'
 import {Router} from '@angular/router';
 import {AppStore} from "../../../../store/app.store";
 import {CookieService} from "ngx-cookie-service";
+import {PersistenceService} from "./persistence.service";
 
 @Injectable()
 export class SystemUserService {
@@ -9,6 +10,7 @@ export class SystemUserService {
     private cookieService: CookieService,
     private appStore: AppStore,
     private router: Router,
+    private persistenceService: PersistenceService
   ) {
   }
 
@@ -19,11 +21,11 @@ export class SystemUserService {
   removeRefreshToken = () => this.cookieService.delete('refreshToken', '/');
 
   logout(b: boolean = true) {
-    this.appStore.setUser(null);
-    this.appStore.setIsLogged(false);
     this.removeRefreshToken()
     this.removeAccessToken()
     localStorage.clear();
+    this.appStore.setUser(null);
+    this.appStore.setIsLogged(false);
     if (b) this.router.navigate(['/auth'])
   }
 }
