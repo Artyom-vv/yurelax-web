@@ -1,13 +1,13 @@
 import {UserStoreInterface} from "./interfaces/user-store.interface";
 import {NavigationStoreInterface} from "./interfaces/navigation-store.interface";
 import {SocialStoreInterface} from "./interfaces/socials-store.interface";
-import {ProfileNavigationStoreInterface} from "./interfaces/profile-navigation-store.interface";
+import {SidebarNavigationInterface} from "../modules/platform/modules/sidebar/interfaces/sidebar-navigation.interface";
 
 export interface AppState {
   user: UserStoreInterface | null
   isExit: boolean
   navigation: NavigationStoreInterface[]
-  profileNavigation: ProfileNavigationStoreInterface[][]
+  profileNavigation: SidebarNavigationInterface[][]
   socials: SocialStoreInterface[]
   footerHeight: number
   isHomePage: boolean

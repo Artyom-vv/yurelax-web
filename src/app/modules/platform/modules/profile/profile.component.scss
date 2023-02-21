@@ -3,6 +3,11 @@
 .profile-layout {
   background-color: map-get($project-colors, "gradation", 800);
 }
+.sidebar {
+  align-self: start;
+  position: sticky;
+  top: 24px;
+}
 .scrollable {
 
 }

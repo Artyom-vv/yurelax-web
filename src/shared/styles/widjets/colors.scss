@@ -1,7 +1,7 @@
 @import "src/shared/styles/vars.colors";
 @import "src/shared/styles/vars.animations";
 
-.c {
+span.c, .text.c, .c {
   &-white {
     color: #fff;
   }

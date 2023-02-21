@@ -10,8 +10,20 @@
     @include icon-size(24px);
     fill: map-get($project-colors, "gradation", 500);
     cursor: pointer;
+
     &:hover {
       fill: map-get($project-colors, "gradation", 400);
+    }
+  }
+
+  &-ucoin {
+    @include icon-size(24px);
+    &_circle {
+      stroke: map-get($project-colors, "gradation", 100);
+      fill: none;
+    }
+    &_path,&_rect {
+      fill: map-get($project-colors, "gradation", 100);
     }
   }
 
@@ -32,6 +44,13 @@
     stroke: map-get($project-colors, "gradation", 100);
     fill: none;
   }
+
+  &-arrow-left {
+    @include icon-size(20px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+
   &-chevron {
     &-arrow-right {
       @include icon-size(16px);
@@ -47,6 +66,60 @@
     animation: loader $spinner infinite;
   }
 
+  &-alert-triangle {
+    @include icon-size(20px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+
+  &-box {
+    @include icon-size(20px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+
+  &-home {
+    @include icon-size(20px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+
+  &-laptop {
+    @include icon-size(20px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+
+  &-logout {
+    @include icon-size(20px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+
+  &-settings {
+    @include icon-size(20px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+
+  &-shopping-bag {
+    @include icon-size(20px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+
+  &-user-plus {
+    @include icon-size(20px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+
+  &-wallet {
+    @include icon-size(20px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+
   @keyframes loader {
     0% {
       transform: rotate(0deg);
@@ -56,9 +129,11 @@
     }
   }
 }
+
 .icon {
   &-gradation-800 {
     fill: map-get($project-colors, "gradation", 800);
+
     &.icon-hover {
       &:hover {
         fill: map-get($project-colors, "gradation", 800);
@@ -136,6 +211,7 @@
 
   &-purple-200 {
     fill: map-get($project-colors, "purple", 200);
+
     &.icon-hover {
       &:hover {
         fill: map-get($project-colors, "purple", 100);
@@ -145,6 +221,7 @@
 
   &-purple-100 {
     fill: map-get($project-colors, "purple", 100);
+
     &.icon-hover {
       &:hover {
         fill: map-get($project-colors, "purple", 200);
@@ -203,6 +280,7 @@
 
 .icon.icon_stroke {
   fill: transparent;
+
   &.icon {
     &-gradation-800 {
       stroke: map-get($project-colors, "gradation", 800);

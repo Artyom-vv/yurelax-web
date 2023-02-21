@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable, tap} from "rxjs";
+import {Observable, of, tap} from "rxjs";
 import {UserResponseInterface} from "../../platform/interfaces/user.interface";
 import {environment} from "../../../../environments/environment";
 import {catchError} from "rxjs/operators";
@@ -65,6 +65,10 @@ export class AuthService {
         throw new Error(err.message);
       })
     )
+  }
+
+  logoutFromAllDevices(): Observable<any> {
+    return of(false)
   }
 
   refreshToken(refreshToken: string): Observable<TokensResponseInterface> {

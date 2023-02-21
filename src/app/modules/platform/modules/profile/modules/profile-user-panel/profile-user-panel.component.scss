@@ -1,0 +1,7 @@
+@import "src/shared/styles/vars.colors";
+
+.user-panel {
+  padding: 16px;
+  border-radius: 16px;
+  background-color: map-get($project-colors, "gradation", 700);
+}

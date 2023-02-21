@@ -1,0 +1,119 @@
+@import "src/shared/styles/widjets/icon_tools";
+@import "src/shared/styles/layout/typography";
+@import "src/shared/styles/vars.animations";
+@import "src/shared/styles/vars.colors";
+
+$text_selectors: "&, span";
+
+@mixin dropout-point-big {
+  height: 56px;
+  padding: 0 12px;
+  .icon {
+    @include icon-size(24px)
+  }
+  #{$text_selectors} {
+    @include text-big;
+    @include weight-regular;
+  }
+}
+@mixin dropout-point-normal {
+  height: 48px;
+  padding: 0 12px;
+  .icon {
+    @include icon-size(20px)
+  }
+  #{$text_selectors} {
+    @include text-body;
+    @include weight-regular;
+  }
+}
+@mixin dropout-point-small {
+  height: 40px;
+  padding: 0 8px;
+  .icon {
+    @include icon-size(20px)
+  }
+  #{$text_selectors} {
+    @include text-body;
+    @include weight-regular;
+  }
+}
+
+.dropout-point {
+
+  width: 100%;
+  cursor: pointer;
+
+  transition: $trs;
+  border-radius: 0;
+  background-color: map-get($project-colors, "gradation", 800);
+  border-bottom: 1px solid transparent;
+  &_underlined {
+    border-bottom-color: map-get($project-colors, "gradation", 600);
+  }
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  #{$text_selectors} {
+    @include text;
+    color: map-get($project-colors, "gradation", 300);
+  }
+  .icon:not(.icon_stroke) {
+    fill: map-get($project-colors, "gradation", 300);
+  }
+  .icon.icon_stroke {
+    stroke: map-get($project-colors, "gradation", 300);
+  }
+
+  &:not(&_iconly) {
+    .icon-wrapper {
+      display: none;
+    }
+  }
+
+  &_big {
+    @include dropout-point-big;
+  }
+  &_normal {
+    @include dropout-point-normal;
+  }
+  &_small {
+    @include dropout-point-small;
+  }
+
+  &_active {
+    border-bottom-color: transparent;
+    background-color: map-get($project-colors, "gradation", 700);
+    border-radius: 6px;
+    .icon:not(.icon_stroke) {
+      fill: map-get($project-colors, "gradation", 100);
+    }
+    .icon.icon_stroke {
+      stroke: map-get($project-colors, "gradation", 100);
+    }
+    #{$text_selectors} {
+      color: map-get($project-colors, "gradation", 100);
+      @include weight-medium
+    }
+  }
+
+  &:hover:not(&_active) {
+    &.dropout-point {
+      &_underlined {
+        border-bottom-color: map-get($project-colors, "gradation", 600);
+      }
+    }
+    background-color: map-get($project-colors, "gradation", 700);
+    .icon:not(.icon_stroke) {
+      fill: map-get($project-colors, "gradation", 200);
+    }
+    .icon.icon_stroke {
+      stroke: map-get($project-colors, "gradation", 200);
+    }
+    #{$text_selectors} {
+      color: map-get($project-colors, "gradation", 200);
+    }
+  }
+}

@@ -30,8 +30,4 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.appStore.setIsHomePage(false)
     this.subscriptions.forEach(sub => sub.unsubscribe())
   }
-
-  logout() {
-    this.appStore.setIsExit(true)
-  }
 }

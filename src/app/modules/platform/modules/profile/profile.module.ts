@@ -4,22 +4,17 @@ import {ProfileComponent} from './profile.component';
 import {ProfileRoutingModule} from "./profile-routing.module";
 import {HeaderModule} from "../../../shared/modules/header/header.module";
 import {LayoutModule} from "../../../shared/modules/layout/layout.module";
-import {ProfileSidebarComponent} from './components/profile-sidebar/profile-sidebar.component';
 import {ProfileHeaderModule} from "./modules/profile-header/profile-header.module";
 import {FooterModule} from "../../../shared/modules/footer/footer.module";
-import {LinkModule} from "../../../shared/modules/link/link.module";
+import {SidebarModule} from "../sidebar/sidebar.module";
+import {ProfileUserPanelModule} from "./modules/profile-user-panel/profile-user-panel.module";
 import {SpacingModule} from "../../../shared/modules/spacing/spacing.module";
-import {
-  ProfileSidebarUserPanelComponent
-} from './components/profile-sidebar/components/profile-sidebar-user-panel/profile-sidebar-user-panel.component';
-import {IconModule} from "../../../shared/modules/icon/icon.module";
+import {LinkModule} from "../../../shared/modules/link/link.module";
 
 
 @NgModule({
   declarations: [
     ProfileComponent,
-    ProfileSidebarComponent,
-    ProfileSidebarUserPanelComponent,
   ],
   imports: [
     CommonModule,
@@ -28,9 +23,10 @@ import {IconModule} from "../../../shared/modules/icon/icon.module";
     LayoutModule,
     ProfileHeaderModule,
     FooterModule,
-    LinkModule,
+    SidebarModule,
+    ProfileUserPanelModule,
     SpacingModule,
-    IconModule
+    LinkModule,
   ]
 })
 export class ProfileModule {

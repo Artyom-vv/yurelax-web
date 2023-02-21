@@ -6,19 +6,21 @@ import {LayoutModule} from "../shared/modules/layout/layout.module";
 import {HeaderModule} from "../shared/modules/header/header.module";
 import {HomeModule} from "./modules/home/home.module";
 import {UserGuard} from "../shared/services/global/user.guard";
+import {SpacingModule} from "../shared/modules/spacing/spacing.module";
 
 
 @NgModule({
   declarations: [
     PlatformComponent
   ],
-  imports: [
-    CommonModule,
-    PlatformRoutingModule,
-    LayoutModule,
-    HeaderModule,
-    HomeModule
-  ],
+    imports: [
+        CommonModule,
+        PlatformRoutingModule,
+        LayoutModule,
+        HeaderModule,
+        HomeModule,
+        SpacingModule
+    ],
   providers: [UserGuard]
 })
 export class PlatformModule {

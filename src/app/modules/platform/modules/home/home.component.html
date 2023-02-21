@@ -19,13 +19,8 @@
       </yrx-button>
       <ng-template #unloggedButton>
         <yrx-button [routerLink]="['/platform/profile']" custom="white">Открыть профиль</yrx-button>
-        <yrx-spacing type="XS"></yrx-spacing>
-        <yrx-button (press)="logout()" custom="white">Выйти</yrx-button>
       </ng-template>
       <yrx-spacing type="XS"></yrx-spacing>
-      <yrx-button [routerLink]="['/auth/minecraft']" [queryParams]="{
-        authToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6InN1cHBpY2siLCJpYXQiOjE2NzY5Mjc5MDMsImV4cCI6MTY3NjkyOTEwM30.g2N1EASEynEOCD4X_BMUIQqlvJICavFr281uNXmHgOM'
-      }" custom="white">Minecraft Auth</yrx-button>
     </div>
   </div>
 </section>
