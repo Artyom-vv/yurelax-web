@@ -1,9 +1,12 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, AbstractControlOptions, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subscription, tap} from "rxjs";
 import {catchError} from "rxjs/operators";
-import {LOGIN_VALIDATION_PATTERN, MIN_PASSWORD_LENGTH, PASSWORD_VALIDATION_PATTERN} from "../../auth.constants";
+import {
+  LOGIN_VALIDATION_PATTERN, MAX_LOGIN_LENGTH,
+  MIN_LOGIN_LENGTH, MIN_PASSWORD_LENGTH,
+} from "../../auth.constants";
 
 @Component({
   selector: 'yrx-register',
@@ -23,6 +26,10 @@ export class RegisterComponent {
 
   public form!: FormGroup;
   public dataLoading: boolean = false;
+
+  public MIN_PASSWORD_LENGTH = MIN_PASSWORD_LENGTH
+  public MAX_LOGIN_LENGTH = MAX_LOGIN_LENGTH
+  public MIN_LOGIN_LENGTH = MIN_LOGIN_LENGTH
 
   ngOnInit() {
     this.dataFields()
@@ -51,15 +58,28 @@ export class RegisterComponent {
     )
   }
 
+  public checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
+    return (group: FormGroup) => {
+      let passwordInput = group.controls[passwordKey],
+        passwordConfirmationInput = group.controls[passwordConfirmationKey];
+      if (passwordInput.value !== passwordConfirmationInput.value || !passwordInput.value && !passwordConfirmationInput.value) {
+        return passwordConfirmationInput.setErrors({notEquivalent: true})
+      } else {
+        return passwordConfirmationInput.setErrors(null);
+      }
+    }
+  }
+
   private initForms(): void {
     this.form = this.fb.group({
-      login: ["", [Validators.required, Validators.pattern(LOGIN_VALIDATION_PATTERN)]],
+      login: ["", [Validators.required, Validators.minLength(MIN_LOGIN_LENGTH), Validators.maxLength(MAX_LOGIN_LENGTH), Validators.pattern(LOGIN_VALIDATION_PATTERN)]],
       email: ["", [Validators.required, Validators.email]],
       userInvitedId: [null],
-      password: ["", [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH), Validators.pattern(PASSWORD_VALIDATION_PATTERN)]],
-      passwordRepeat: ["", [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH), Validators.pattern(PASSWORD_VALIDATION_PATTERN)]],
-
-    })
+      password: ["", [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH)]],
+      passwordRepeat: ["", [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH)]],
+    }, {
+      validators: [this.checkIfMatchingPasswords('password', 'passwordRepeat')]
+    } as AbstractControlOptions)
   }
 
   private dataFields(): void {
@@ -67,7 +87,15 @@ export class RegisterComponent {
   }
 
   private watchForms(): void {
-
+    this.form.valueChanges.pipe().subscribe(
+      () => {
+        console.log(this.form.get('password'))
+        console.log(this.form.get('passwordRepeat')?.errors)
+        console.log(this.form.get('password')?.errors)
+        console.log(this.form.get('email')?.errors)
+        console.log(this.form.get('login')?.errors)
+      }
+    )
   }
 
 }

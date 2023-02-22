@@ -24,6 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = []
 
   ngOnInit() {
+    this.systemUser.removeMAToken()
     const user = this.persistenceService.get('user');
     if (user) {
       this.appStore.setUser(user)

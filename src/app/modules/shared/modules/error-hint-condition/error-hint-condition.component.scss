@@ -1,0 +1,10 @@
+@import "src/shared/styles/vars.colors";
+
+:host {
+  &[ng-reflect-condition="true"] {
+    position: absolute;
+    span {
+      color: map-get($project-colors, "red", 300);
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable, of, tap} from "rxjs";
+import {Observable, throwError, of, tap} from "rxjs";
 import {UserResponseInterface} from "../../platform/interfaces/user.interface";
 import {environment} from "../../../../environments/environment";
 import {catchError} from "rxjs/operators";
@@ -14,10 +14,17 @@ import {AppStore} from "../../../store/app.store";
 import {CookieService} from "ngx-cookie-service";
 import {JwtMaResponseInterface} from "../interfaces/jwt-ma-response.interface";
 import {JwtMaAuthResponseInterface} from "../interfaces/jwt-ma-auth-response.interface";
+import {SystemUserService} from "../../shared/services/global/system-user.service";
 
 @Injectable()
 export class AuthService {
-  constructor(private http: HttpClient, private persistenceService: PersistenceService, private cookieService: CookieService, private appStore: AppStore) {
+  constructor(
+    private http: HttpClient,
+    private persistenceService: PersistenceService,
+    private cookieService: CookieService,
+    private appStore: AppStore,
+    private systemUser: SystemUserService
+  ) {
   }
 
   deleteCookies() {
@@ -78,24 +85,20 @@ export class AuthService {
       }),
       catchError((err) => {
         this.deleteCookies();
-        throw new Error(err.message);
+        throw new Error(err.error.message);
       })
     )
   }
 
   jwtMaAuth(login: string): Observable<JwtMaAuthResponseInterface> {
     return this.http.post<JwtMaAuthResponseInterface>(`${environment.apiUrl}/auth/jwt-ma-auth`, {login}).pipe(
-      catchError((err) => {
-        throw new Error(err)
-      })
+      catchError((err) => throwError(err.error))
     )
   }
 
   jwtMa(jwt: string): Observable<JwtMaResponseInterface> {
     return this.http.post<JwtMaResponseInterface>(`${environment.apiUrl}/auth/jwt-ma`, {jwt}).pipe(
-      catchError((err) => {
-        throw new Error(err)
-      })
+      catchError((err) => throwError(err.error))
     )
   }
 

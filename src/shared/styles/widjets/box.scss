@@ -1,8 +1,10 @@
-@import "/src/shared/styles/vars";
-
 .box {
   position: relative;
   width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 
   &_input {
     .icon {

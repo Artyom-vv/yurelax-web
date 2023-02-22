@@ -7,6 +7,13 @@
   animation: unset;
 }
 
+mat-form-field.mat-form-field {
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  height: auto;
+}
+
 $icon_selector: ".input_iconly + yrx-icon .icon";
 
 @mixin input-big {
@@ -63,6 +70,13 @@ input.mat-mdc-input-element {
     &.ng-invalid {
       color: map-get($project-colors, "gradation", 300);
       border-color: map-get($project-colors, "red", 400);
+    }
+  }
+
+  &.ng-touched {
+    &.ng-valid {
+      color: map-get($project-colors, "gradation", 300);
+      border-color: map-get($project-colors, "green", 400);
     }
   }
 

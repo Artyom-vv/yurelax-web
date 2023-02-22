@@ -24,6 +24,8 @@ import {AnimationsService} from "../shared/animations/services/animations.servic
 import { MLoginComponent } from './components/m-login/m-login.component';
 import { MAuthLayoutComponent } from './components/m-login/components/m-auth-layout/m-auth-layout.component';
 import {AuthStore} from "./store/auth.store";
+import {ErrorHintConditionModule} from "../shared/modules/error-hint-condition/error-hint-condition.module";
+import {ErrorHintWrapperModule} from "../shared/modules/error-hint-wrapper/error-hint-wrapper.module";
 
 @NgModule({
   declarations: [
@@ -35,19 +37,21 @@ import {AuthStore} from "./store/auth.store";
     MLoginComponent,
     MAuthLayoutComponent,
   ],
-  imports: [
-    CommonModule,
-    AuthRoutingModule,
-    LayoutModule,
-    HeaderModule,
-    AuthHeaderModule,
-    SpacingModule,
-    ButtonModule,
-    LinkModule,
-    MatInputModule,
-    IconModule,
-    ReactiveFormsModule,
-  ],
+    imports: [
+        CommonModule,
+        AuthRoutingModule,
+        LayoutModule,
+        HeaderModule,
+        AuthHeaderModule,
+        SpacingModule,
+        ButtonModule,
+        LinkModule,
+        MatInputModule,
+        IconModule,
+        ReactiveFormsModule,
+        ErrorHintConditionModule,
+        ErrorHintWrapperModule,
+    ],
   providers: [
     AnimationsService,
     AuthService,

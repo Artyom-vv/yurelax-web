@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
-import {filter, Subscription, switchMap, tap} from "rxjs";
+import {filter, Subscription, tap} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MIN_PASSWORD_LENGTH, PASSWORD_VALIDATION_PATTERN} from "../../auth.constants";
+import {MIN_PASSWORD_LENGTH} from "../../auth.constants";
 import {catchError} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {AuthStore} from "../../store/auth.store";
@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public dataLoading: boolean = false;
   public isWaitingForMA: boolean = false;
   public transitionToMA: boolean = false;
+  public MIN_PASSWORD_LENGTH = MIN_PASSWORD_LENGTH
 
   ngOnInit() {
     this.dataFields()
@@ -66,17 +67,10 @@ export class LoginComponent implements OnInit, OnDestroy {
           if (!this.isWaitingForMA) this.router.navigate(['/platform']);
         }),
         filter(() => this.isWaitingForMA),
-        switchMap((res) => this.authService.jwtMaAuth(res.user.login)),
-        tap((res) => {
+        tap(() => {
           this.transitionToMA = true;
           this.cdr.detectChanges()
-          setTimeout(() => {
-            this.router.navigate(['/auth/minecraft'], {
-              queryParams: {
-                authStatus: res.success
-              }
-            });
-          }, 600)
+          setTimeout(() => this.router.navigate(['/auth/minecraft']), 600)
         }),
         catchError(err => {
           this.dataLoading = false
@@ -90,7 +84,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private initForms(): void {
     this.form = this.fb.group({
       email: ["", [Validators.required, Validators.email]],
-      password: ["", [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH), Validators.pattern(PASSWORD_VALIDATION_PATTERN)]]
+      password: ["", [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH)]]
     })
   }
 

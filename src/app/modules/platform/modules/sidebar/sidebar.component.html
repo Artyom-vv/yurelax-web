@@ -1,7 +1,7 @@
 <div class="sidebar flex flex_column">
   <ng-content select="[sidebar-top-content]"></ng-content>
   <div class="sections flex flex_column">
-    <ng-container *ngFor="let group of navigation">
+    <ng-container *ngFor="let group of navigation; let groupIdx = index">
       <ul class="flex flex_column">
         <li *ngFor="let link of group; let idx = index">
           <yrx-dropout-point *ngIf="link.isButton; else linkTemplate" [underlined]="group.length-1 !== idx" (press)="link?.callback()" [icon]="link.icon" [iconStroked]="link.iconStroked">
@@ -14,7 +14,7 @@
           </ng-template>
         </li>
       </ul>
-      <yrx-spacing type="S"></yrx-spacing>
+      <yrx-spacing *ngIf="navigation.length-1 !== groupIdx" type="S"></yrx-spacing>
     </ng-container>
   </div>
   <ng-content select="[sidebar-bottom-content]"></ng-content>
