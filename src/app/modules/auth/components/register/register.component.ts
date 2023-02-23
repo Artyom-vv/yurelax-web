@@ -7,6 +7,8 @@ import {
   LOGIN_VALIDATION_PATTERN, MAX_LOGIN_LENGTH,
   MIN_LOGIN_LENGTH, MIN_PASSWORD_LENGTH,
 } from "../../auth.constants";
+import {ExistingUserLoginValidator} from "../../validators/existing-user-login.validator";
+import {UserService} from "../../../platform/services/user.service";
 
 @Component({
   selector: 'yrx-register',
@@ -18,7 +20,8 @@ export class RegisterComponent {
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private userService: UserService
   ) {
   }
 
@@ -72,7 +75,7 @@ export class RegisterComponent {
 
   private initForms(): void {
     this.form = this.fb.group({
-      login: ["", [Validators.required, Validators.minLength(MIN_LOGIN_LENGTH), Validators.maxLength(MAX_LOGIN_LENGTH), Validators.pattern(LOGIN_VALIDATION_PATTERN)]],
+      login: ["", [Validators.required, Validators.minLength(MIN_LOGIN_LENGTH), Validators.maxLength(MAX_LOGIN_LENGTH), Validators.pattern(LOGIN_VALIDATION_PATTERN)], [ExistingUserLoginValidator(this.userService)]],
       email: ["", [Validators.required, Validators.email]],
       userInvitedId: [null],
       password: ["", [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH)]],
@@ -87,15 +90,7 @@ export class RegisterComponent {
   }
 
   private watchForms(): void {
-    this.form.valueChanges.pipe().subscribe(
-      () => {
-        console.log(this.form.get('password'))
-        console.log(this.form.get('passwordRepeat')?.errors)
-        console.log(this.form.get('password')?.errors)
-        console.log(this.form.get('email')?.errors)
-        console.log(this.form.get('login')?.errors)
-      }
-    )
+    const passwordControl: AbstractControl = this.form.get('password')!;
   }
 
 }

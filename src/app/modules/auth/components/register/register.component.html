@@ -7,6 +7,7 @@
       <yrx-error-hint-condition [condition]="['required']">Логин не должен быть пустым</yrx-error-hint-condition>
       <yrx-error-hint-condition [condition]="['minlength', 'maxlength']">Длина логина должна быть от {{MIN_LOGIN_LENGTH}} до {{MAX_LOGIN_LENGTH}} символов</yrx-error-hint-condition>
       <yrx-error-hint-condition [condition]="['pattern']">Логин содержит недопустимые символы</yrx-error-hint-condition>
+      <yrx-error-hint-condition [condition]="['loginExists']">Такой логин уже существует</yrx-error-hint-condition>
     </yrx-error-hint-wrapper>
   </div>
   <yrx-spacing type="XS"></yrx-spacing>
@@ -18,16 +19,21 @@
     </yrx-error-hint-wrapper>
   </div>
   <yrx-spacing type="XS"></yrx-spacing>
-  <div class="box box_input">
-    <input autocomplete="new-password" formControlName="password" type="password" class="input_normal input_iconly" matInput placeholder="Введите пароль">
+  <div class="box">
+    <div class="box box_input">
+      <input #passwordRef autocomplete="new-password" formControlName="password" type="password" class="input_normal input_iconly" matInput placeholder="Введите пароль">
+      <yrx-icon passwordHider [ref]="passwordRef" [deps]="[passwordRepeatRef]"  [stroked]="true" [icon]="passwordRef.type === 'password' ? 'eye-off' : 'eye'"></yrx-icon>
+    </div>
     <yrx-error-hint-wrapper [control]="form.get('password')">
       <yrx-error-hint-condition [condition]="['minlength']">Длина пароля должна быть больше {{MIN_PASSWORD_LENGTH}} символов</yrx-error-hint-condition>
       <yrx-error-hint-condition [condition]="['required']">Пароль не должен быть пустым</yrx-error-hint-condition>
     </yrx-error-hint-wrapper>
   </div>
   <yrx-spacing type="XS"></yrx-spacing>
-  <div class="box box_input">
-    <input autocomplete="password" formControlName="passwordRepeat" type="password" class="input_normal input_iconly" matInput placeholder="Повторите пароль">
+  <div class="box">
+    <div class="box box_input">
+      <input #passwordRepeatRef autocomplete="password" formControlName="passwordRepeat" type="password" class="input_normal input_iconly" matInput placeholder="Повторите пароль">
+    </div>
     <yrx-error-hint-wrapper [control]="form.get('passwordRepeat')">
       <yrx-error-hint-condition [condition]="['notEquivalent']">Пароли не совпадают</yrx-error-hint-condition>
     </yrx-error-hint-wrapper>
@@ -38,7 +44,7 @@
     href="#" class="link c-purple-300 medium">политикой конфеденциальности</a>
   </p>
   <yrx-spacing type="M"></yrx-spacing>
-  <yrx-button [disabled]="dataLoading || form.invalid" (press)="register()" class="w100" type="primary">Зарегистрироваться</yrx-button>
+  <yrx-button [disabled]="dataLoading || form.invalid || form.pending" (press)="register()" class="w100" type="primary">Зарегистрироваться</yrx-button>
   <yrx-spacing type="XS"></yrx-spacing>
   <div class="flex flex_center gap-6">
     <p class="text text_body regular">Уже есть аккаунт?</p>

@@ -33,15 +33,24 @@ $icon_selector: ".input_iconly + yrx-icon .icon";
 }
 
 @mixin input-iconly {
+  padding-right: 32px;
   & + yrx-icon {
+    display: block;
     .icon {
       @include icon-size(20px);
-      display: block;
       &:not(.icon_colored) {
         fill: map-get($project-colors, "gradation", 300);
         &.icon_stroke {
           fill: transparent;
           stroke: map-get($project-colors, "gradation", 300);
+        }
+      }
+      &-hover {
+        &:not(.icon_colored):not(.icon_stroke):hover {
+          fill: map-get($project-colors, "gradation", 100);
+        }
+        &.icon_stroke:not(.icon_colored):hover {
+          stroke: map-get($project-colors, "gradation", 100);
         }
       }
     }

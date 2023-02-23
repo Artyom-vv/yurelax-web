@@ -27,6 +27,20 @@
     }
   }
 
+  &-eye {
+    cursor: pointer;
+    @include icon-size(24px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+
+  &-eye-off {
+    cursor: pointer;
+    @include icon-size(24px);
+    stroke: map-get($project-colors, "gradation", 600);
+    fill: none;
+  }
+
   &-yurelax {
     transition: unset;
     @include icon-size(48px);
