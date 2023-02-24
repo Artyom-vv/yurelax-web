@@ -7,7 +7,7 @@
       <yrx-error-hint-condition [condition]="['required']">Логин не должен быть пустым</yrx-error-hint-condition>
       <yrx-error-hint-condition [condition]="['minlength', 'maxlength']">Длина логина должна быть от {{MIN_LOGIN_LENGTH}} до {{MAX_LOGIN_LENGTH}} символов</yrx-error-hint-condition>
       <yrx-error-hint-condition [condition]="['pattern']">Логин содержит недопустимые символы</yrx-error-hint-condition>
-      <yrx-error-hint-condition [condition]="['loginExists']">Такой логин уже существует</yrx-error-hint-condition>
+      <yrx-error-hint-condition [condition]="['alreadyUse']">Такой логин уже существует</yrx-error-hint-condition>
     </yrx-error-hint-wrapper>
   </div>
   <yrx-spacing type="XS"></yrx-spacing>
@@ -16,6 +16,7 @@
     <yrx-error-hint-wrapper [control]="form.get('email')">
       <yrx-error-hint-condition [condition]="['required']">Почта не должна быть пустой</yrx-error-hint-condition>
       <yrx-error-hint-condition [condition]="['email']">Указанная почта имеет неверный формат</yrx-error-hint-condition>
+      <yrx-error-hint-condition [condition]="['alreadyUse']">Такая почта уже существует</yrx-error-hint-condition>
     </yrx-error-hint-wrapper>
   </div>
   <yrx-spacing type="XS"></yrx-spacing>

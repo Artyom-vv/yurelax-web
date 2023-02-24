@@ -113,6 +113,7 @@ export class MLoginComponent implements OnInit, OnDestroy {
             this.transitionToLogin = true;
           }, 600)
           setTimeout(() => {
+            this.greeting = false;
             this.authStore.setIsWaitingForMA(true);
             this.router.navigate(['/auth/login'])
           }, 1800)
@@ -133,8 +134,8 @@ export class MLoginComponent implements OnInit, OnDestroy {
             this.successMA = res.success
             this.dataLoading = false
           }))
+        )
       )
-    )
 
     this.subscriptions.push(
       this.appStore.user$.pipe(
@@ -144,6 +145,7 @@ export class MLoginComponent implements OnInit, OnDestroy {
           return this.authStore.isWaitingForMA$.pipe(
             mergeMap((isWaitingForMA) => {
               this.isWaitingForMA = isWaitingForMA;
+              if (isWaitingForMA) this.greeting = false;
               return iif(() => isWaitingForMA, jwtMaAuth$, jwtMaPrepare$)
             }),
           )
@@ -156,10 +158,5 @@ export class MLoginComponent implements OnInit, OnDestroy {
         })
       ).subscribe()
     )
-  }
-
-  public greetingDone() {
-    this.greeting = false
-    console.log(this.greeting)
   }
 }
