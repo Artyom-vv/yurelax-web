@@ -90,6 +90,15 @@ input.mat-mdc-input-element {
   background-color: map-get($project-colors, "gradation", 700);
   -webkit-box-shadow: 0 0 0 50px map-get($project-colors, "gradation", 700) inset;
   border: 1px solid transparent;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+  }
   &::placeholder {
     color: map-get($project-colors, "gradation", 400);
   }

@@ -1,7 +1,6 @@
 @import "src/shared/styles/vars.colors";
 
 .auth-header {
-  height: 88px;
   padding: 24px;
   overflow: hidden;
   border: 1px solid map-get($project-colors, "gradation", 700);

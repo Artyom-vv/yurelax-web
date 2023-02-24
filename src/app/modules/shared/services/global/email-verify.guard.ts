@@ -16,6 +16,7 @@ export class EmailVerifyGuard implements CanActivate, CanActivateChild {
       if (this.systemUser.getAccessToken()) {
         if (user?.role === RolesEnum.DEFAULT && !user?.emailVerify) return of(true);
       }
+      this.router.navigate(['/platform'])
       return of(false);
     })
   );

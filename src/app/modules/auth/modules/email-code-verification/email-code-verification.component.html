@@ -1,0 +1,23 @@
+<div class="email-code-verification flex flex_column flex_align-center">
+  <yrx-auth-header page="email-code-verification">{{headline}}</yrx-auth-header>
+  <yrx-spacing type="XS2"></yrx-spacing>
+  <p class="text text_body regular text-center c-gradation-300">
+    Введите шестизначный код, отправленный вам на электронную почту
+  </p>
+  <yrx-spacing type="S"></yrx-spacing>
+  <div class="flex gap-8 flex_align-center" [formGroup]="form">
+    <ng-container *ngFor="let inputId of inputs">
+      <div class="box box_input">
+        <input #inputRefs [readonly]="!viewMounted" [id]="inputId.toString()" type="number" inputEvent (onInput)="onInput($event)" autocomplete="off" [formControlName]="'value'+(inputId+1)" class="input_big" matInput placeholder="0">
+      </div>
+      <p *ngIf="inputs.length / 2 === inputId + 1" class="text text_big regular c-gradation-400">—</p>
+    </ng-container>
+  </div>
+  <yrx-spacing type="M"></yrx-spacing>
+  <yrx-button [disabled]="dataLoading || form.invalid" (press)="onConfirm()" class="w100" type="primary">
+    <span><ng-content></ng-content></span>
+    <yrx-icon btn-icon *ngIf="dataLoading" icon="loader"></yrx-icon>
+  </yrx-button>
+  <yrx-spacing type="XS"></yrx-spacing>
+  <yrx-link (click)="onResend()">Отправить повторно (60с)</yrx-link>
+</div>

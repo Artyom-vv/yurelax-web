@@ -29,6 +29,9 @@ import {ErrorHintWrapperModule} from "../shared/modules/error-hint-wrapper/error
 import {UserService} from "../platform/services/user.service";
 import {SharedModule} from "../shared/shared.module";
 import {PasswordStrengthModule} from "./modules/password-strength/password-strength.module";
+import { RecoverPasswordVerifyComponent } from './components/recover-password-verify/recover-password-verify.component';
+import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
+import {EmailCodeVerificationModule} from "./modules/email-code-verification/email-code-verification.module";
 
 @NgModule({
   declarations: [
@@ -39,6 +42,8 @@ import {PasswordStrengthModule} from "./modules/password-strength/password-stren
     AuthLayoutComponent,
     MLoginComponent,
     MAuthLayoutComponent,
+    RecoverPasswordVerifyComponent,
+    RecoverPasswordComponent,
   ],
     imports: [
         CommonModule,
@@ -56,6 +61,7 @@ import {PasswordStrengthModule} from "./modules/password-strength/password-stren
         ErrorHintWrapperModule,
         SharedModule,
         PasswordStrengthModule,
+        EmailCodeVerificationModule,
     ],
   providers: [
     AnimationsService,

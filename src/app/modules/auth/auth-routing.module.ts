@@ -31,7 +31,7 @@ const routes: Routes = [
   {
     path: 'email-verify',
     component: AuthComponent,
-    canActivate: [EmailVerifyGuard],
+    // canActivate: [EmailVerifyGuard],
     children: [
       {
         path: '',
