@@ -84,11 +84,9 @@ export class RegisterComponent {
   }
 
   private dataFields(): void {
-
   }
 
   private watchForms(): void {
-    const passwordControl: AbstractControl = this.form.get('password')!;
   }
 
 }

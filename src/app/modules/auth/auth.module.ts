@@ -28,6 +28,7 @@ import {ErrorHintConditionModule} from "../shared/modules/error-hint-condition/e
 import {ErrorHintWrapperModule} from "../shared/modules/error-hint-wrapper/error-hint-wrapper.module";
 import {UserService} from "../platform/services/user.service";
 import {SharedModule} from "../shared/shared.module";
+import {PasswordStrengthModule} from "./modules/password-strength/password-strength.module";
 
 @NgModule({
   declarations: [
@@ -39,22 +40,23 @@ import {SharedModule} from "../shared/shared.module";
     MLoginComponent,
     MAuthLayoutComponent,
   ],
-  imports: [
-    CommonModule,
-    AuthRoutingModule,
-    LayoutModule,
-    HeaderModule,
-    AuthHeaderModule,
-    SpacingModule,
-    ButtonModule,
-    LinkModule,
-    MatInputModule,
-    IconModule,
-    ReactiveFormsModule,
-    ErrorHintConditionModule,
-    ErrorHintWrapperModule,
-    SharedModule,
-  ],
+    imports: [
+        CommonModule,
+        AuthRoutingModule,
+        LayoutModule,
+        HeaderModule,
+        AuthHeaderModule,
+        SpacingModule,
+        ButtonModule,
+        LinkModule,
+        MatInputModule,
+        IconModule,
+        ReactiveFormsModule,
+        ErrorHintConditionModule,
+        ErrorHintWrapperModule,
+        SharedModule,
+        PasswordStrengthModule,
+    ],
   providers: [
     AnimationsService,
     AuthService,

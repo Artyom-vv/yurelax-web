@@ -31,6 +31,8 @@
     </yrx-error-hint-wrapper>
   </div>
   <yrx-spacing type="XS"></yrx-spacing>
+  <yrx-password-strength [control]="form.get('password')"></yrx-password-strength>
+  <yrx-spacing type="XS"></yrx-spacing>
   <div class="box">
     <div class="box box_input">
       <input #passwordRepeatRef autocomplete="password" formControlName="passwordRepeat" type="password" class="input_normal input_iconly" matInput placeholder="Повторите пароль">

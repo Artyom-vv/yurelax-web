@@ -10,7 +10,7 @@ import {passwordStrength} from "../../auth.constants";
   styleUrls: ['./password-strength.component.scss']
 })
 export class PasswordStrengthComponent implements OnInit, OnDestroy {
-  @Input() control!: AbstractControl;
+  @Input() control: AbstractControl | null = null;
 
   private subscriptions: Subscription[] = []
 
@@ -18,11 +18,11 @@ export class PasswordStrengthComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscriptions.push(
-      this.control.valueChanges.pipe(
+      this.control?.valueChanges.pipe(
         tap((password) => {
           this.passwordStrength = passwordStrength(password);
         })
-      ).subscribe()
+      ).subscribe()!
     )
   }
 
