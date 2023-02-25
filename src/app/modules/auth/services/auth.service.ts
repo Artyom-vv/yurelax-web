@@ -57,9 +57,7 @@ export class AuthService {
         this.saveData(res)
         this.appStore.setIsLogged(true);
       }),
-      catchError((err) => {
-        throw new Error(err.message);
-      })
+      catchError((err) => throwError(err))
     )
   }
 

@@ -19,7 +19,7 @@
   <yrx-spacing type="XS"></yrx-spacing>
   <yrx-link [underlined]="true">Забыли пароль?</yrx-link>
   <yrx-spacing type="M"></yrx-spacing>
-  <yrx-button (press)="login()" class="w100" type="primary" [disabled]="dataLoading || form.invalid"><span>Войти</span><yrx-icon *ngIf="dataLoading" btn-icon icon="loader"></yrx-icon></yrx-button>
+  <yrx-button (press)="login()" class="w100" type="primary" [iconLoading]="dataLoading" [disabled]="dataLoading || form.invalid"><span>Войти</span><yrx-icon *ngIf="dataLoading" btn-icon icon="loader"></yrx-icon></yrx-button>
   <yrx-spacing type="XS"></yrx-spacing>
   <div class="flex flex_center gap-6">
     <p class="text text_body regular">Нет аккаунта?</p>

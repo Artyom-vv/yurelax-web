@@ -29,9 +29,10 @@ import {ErrorHintWrapperModule} from "../shared/modules/error-hint-wrapper/error
 import {UserService} from "../platform/services/user.service";
 import {SharedModule} from "../shared/shared.module";
 import {PasswordStrengthModule} from "./modules/password-strength/password-strength.module";
-import { RecoverPasswordVerifyComponent } from './components/recover-password-verify/recover-password-verify.component';
-import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
+import {RecoverPasswordVerifyComponent} from './components/recover-password-verify/recover-password-verify.component';
+import {RecoverPasswordComponent} from './components/recover-password/recover-password.component';
 import {EmailCodeVerificationModule} from "./modules/email-code-verification/email-code-verification.module";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -45,24 +46,25 @@ import {EmailCodeVerificationModule} from "./modules/email-code-verification/ema
     RecoverPasswordVerifyComponent,
     RecoverPasswordComponent,
   ],
-    imports: [
-        CommonModule,
-        AuthRoutingModule,
-        LayoutModule,
-        HeaderModule,
-        AuthHeaderModule,
-        SpacingModule,
-        ButtonModule,
-        LinkModule,
-        MatInputModule,
-        IconModule,
-        ReactiveFormsModule,
-        ErrorHintConditionModule,
-        ErrorHintWrapperModule,
-        SharedModule,
-        PasswordStrengthModule,
-        EmailCodeVerificationModule,
-    ],
+  imports: [
+    CommonModule,
+    AuthRoutingModule,
+    LayoutModule,
+    HeaderModule,
+    AuthHeaderModule,
+    SpacingModule,
+    ButtonModule,
+    LinkModule,
+    MatInputModule,
+    IconModule,
+    ReactiveFormsModule,
+    ErrorHintConditionModule,
+    ErrorHintWrapperModule,
+    SharedModule,
+    PasswordStrengthModule,
+    EmailCodeVerificationModule,
+    MatSnackBarModule
+  ],
   providers: [
     AnimationsService,
     AuthService,

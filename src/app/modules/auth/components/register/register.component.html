@@ -37,7 +37,7 @@
     <div class="box box_input">
       <input #passwordRepeatRef autocomplete="password" formControlName="passwordRepeat" type="password" class="input_normal input_iconly" matInput placeholder="Повторите пароль">
     </div>
-    <yrx-error-hint-wrapper [control]="form.get('passwordRepeat')">
+    <yrx-error-hint-wrapper [control]="form.get('passwordRepeat')" [isYandexCringe]="true">
       <yrx-error-hint-condition [condition]="['notEquivalent']">Пароли не совпадают</yrx-error-hint-condition>
     </yrx-error-hint-wrapper>
   </div>

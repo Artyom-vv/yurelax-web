@@ -7,6 +7,7 @@ import {catchError} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {AuthStore} from "../../store/auth.store";
 import {animate, style, transition, trigger} from "@angular/animations";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'yrx-login',
@@ -33,7 +34,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private authStore: AuthStore
+    private authStore: AuthStore,
+    private _snackBar: MatSnackBar
   ) {
   }
 
@@ -75,7 +77,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         catchError(err => {
           this.dataLoading = false
           this.cdr.detectChanges()
-          throw new Error(err);
+          if (err.statusCode === 401) {
+            this._snackBar.open('Неправильный логин или пароль', 'Закрыть')
+          } else this._snackBar.open('Произошла ошибка', 'Закрыть')
+          throw new Error(err.message);
         })
       ).subscribe()
     )

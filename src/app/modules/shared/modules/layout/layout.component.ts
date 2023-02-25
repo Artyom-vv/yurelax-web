@@ -4,6 +4,7 @@ import {Subscription} from "rxjs";
 import {AppearanceAnimation} from "../../animations/redirect.animation";
 import {AnimationsService} from "../../animations/services/animations.service";
 import {DOCUMENT} from "@angular/common";
+import {ToolsService} from "../../services/global/tools.service";
 
 @Component({
   selector: 'yrx-layout',
@@ -17,7 +18,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
   constructor(
     private appStore: AppStore,
     public animationsService: AnimationsService,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
+    private toolsService: ToolsService
   ) {
   }
 
@@ -26,14 +28,14 @@ export class LayoutComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = []
 
   public isHomePage: boolean = false
-  public withoutScroll: boolean = true
+  public withoutScroll: boolean = !this.toolsService.mobileAndTabletCheck()
   public preloading: boolean = true
   public styles: {
     [key: string]: string
   } = {}
   public resizeObserver: ResizeObserver = new ResizeObserver((entries) => {
     const documentHeight: number = entries[0].target.clientHeight;
-    this.withoutScroll = this.document.body.scrollHeight <= documentHeight;
+    this.withoutScroll = this.document.body.scrollHeight <= documentHeight
   })
 
   ngOnInit() {
@@ -52,7 +54,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
         this.isHomePage = isHomePage
       })
     )
-    this.resizeObserver.observe(document.body)
+    if (!this.toolsService.mobileAndTabletCheck()) {
+      this.resizeObserver.observe(document.body)
+    }
   }
 
   ngOnDestroy() {

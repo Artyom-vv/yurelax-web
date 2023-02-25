@@ -13,6 +13,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
 import {AuthGuard} from "./modules/shared/services/global/auth.guard";
 import {TokenInterceptor} from "./modules/shared/services/global/token.interceptor";
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import {TokenInterceptor} from "./modules/shared/services/global/token.intercept
       provide: HTTP_INTERCEPTORS,
       multi: true,
       useClass: TokenInterceptor,
-    }
+    },
   ],
   bootstrap: [AppComponent]
 })

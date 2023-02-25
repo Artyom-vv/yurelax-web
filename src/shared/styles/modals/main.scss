@@ -1,10 +1,6 @@
 @import "dialog";
 @import "exampleModal";
 
-.cdk-global-overlay-wrapper {
-  overflow-y: scroll;
-}
-
 .cdk-overlay-backdrop {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(8px);
