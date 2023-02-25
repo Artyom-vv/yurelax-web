@@ -24,7 +24,6 @@ export class EmailCodeVerificationComponent implements OnInit, OnDestroy, AfterV
   ) {
   }
 
-  @Input() headline: string = ''
   @Input() dataLoading: boolean = false
   @Output() confirm: EventEmitter<any> = new EventEmitter<any>()
   @Output() resend: EventEmitter<any> = new EventEmitter<any>()

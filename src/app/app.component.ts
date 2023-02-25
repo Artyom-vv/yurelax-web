@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component,OnDestroy, OnInit} from '@angular/core';
 import {PersistenceService} from "./modules/shared/services/global/persistence.service";
 import {AppStore} from "./store/app.store";
 import {SystemUserService} from "./modules/shared/services/global/system-user.service";
@@ -17,13 +17,15 @@ export class AppComponent implements OnInit, OnDestroy {
     private persistenceService: PersistenceService,
     private appStore: AppStore,
     private systemUser: SystemUserService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
   }
+
 
   private subscriptions: Subscription[] = []
 
   ngOnInit() {
+
     this.systemUser.removeMAToken()
     const user = this.persistenceService.get('user');
     if (user) {
