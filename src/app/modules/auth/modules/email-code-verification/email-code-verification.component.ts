@@ -53,6 +53,7 @@ export class EmailCodeVerificationComponent implements OnInit, OnDestroy, AfterV
     } else if (event.action === 'back') {
       input = this.inputRefs.find(input => +input.nativeElement.id === event.id - 1);
     }
+    console.log(event.action)
     if (input) input.nativeElement.focus()
   }
 

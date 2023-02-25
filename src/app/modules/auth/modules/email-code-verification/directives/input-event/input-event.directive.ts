@@ -1,12 +1,15 @@
-import {Directive, ElementRef, EventEmitter, HostListener, Output} from "@angular/core";
+import {Directive, ElementRef, EventEmitter, HostListener, Input, Output} from "@angular/core";
 import {InputEmitInterface} from "./interfaces/input-emit.interface";
+import {AbstractControl} from "@angular/forms";
 
 @Directive({
   selector: '[inputEvent]'
 })
 export class InputEventDirective {
 
-  constructor(el: ElementRef) {
+  constructor(
+    private el: ElementRef,
+  ) {
     this.input = el;
   }
 
@@ -15,31 +18,13 @@ export class InputEventDirective {
     const input: HTMLInputElement = this.input.nativeElement;
     this.acceptable = true;
     this.code = event.code
-    console.log(event)
-    if (event.key === 'Delete') {
-      this.output = {
-        action: null,
-        id: 0
-      };
-      input.value = ''
-      if (!input.value) {
-        this.output.id = +input.id
-        this.onInput.emit(this.output)
-      }
-    } else if (event.key === 'Backspace') {
-      this.output = {
-        action: 'back',
-        id: 0
-      }
-      if (!input.value) {
-        this.output.id = +input.id
-        this.onInput.emit(this.output)
-      }
+    if (event.key === 'Delete' || event.key === 'Backspace') {
+      this.output.action = null
+      this.control?.setValue(null)
+      this.output.id = +input.id
+      this.onInput.emit(this.output)
     } else if (event.code.startsWith('Digit')) {
-      this.output = {
-        action: 'next',
-        id: 0
-      }
+      this.output.action = 'next'
     } else {
       this.acceptable = false;
 
@@ -61,16 +46,18 @@ export class InputEventDirective {
     const input = event.target
     if (this.acceptable) {
       if (+event.data > 0 && +event.data <= 9) {
-        input.value = event.data
+        this.control?.setValue(event.data)
       } else {
-        input.value = ''
+        this.control?.setValue(null)
       }
     } else {
-      input.value = ''
+      this.control?.setValue(null)
     }
     this.output.id = +input.id;
     this.onInput.emit(this.output)
   }
+
+  @Input() control: AbstractControl | null = null
   @Output() onInput: EventEmitter<InputEmitInterface> = new EventEmitter<InputEmitInterface>()
 
   public output: InputEmitInterface = {} as InputEmitInterface;
