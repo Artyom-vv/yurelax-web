@@ -10,7 +10,7 @@ import {debounceTime, Subscription, tap} from "rxjs";
 
 @Component({
   host: {
-    "[style.display]": "isYandexCringe ? display : control?.invalid ? 'block' : 'none'"
+    "[style.display]": "isYandexCringe ? display : control?.invalid && control?.touched ? 'block' : 'none'"
   },
   selector: 'yrx-error-hint-wrapper',
   templateUrl: './error-hint-wrapper.component.html',

@@ -66,7 +66,6 @@ export class MLoginComponent implements OnInit, OnDestroy {
   public greeting: boolean = true;
   public dataLoading: boolean = false;
   public userLoading: boolean = true;
-  public alreadyLogged: boolean = false;
   public successMA: boolean = false;
   public transitionToLogin: boolean = false;
   public isWaitingForMA: boolean = false;
@@ -94,7 +93,7 @@ export class MLoginComponent implements OnInit, OnDestroy {
       filter(({authToken}) => {
         if (!authToken) return this.router.navigate(['/platform'])
         if (this.systemUser.getMAToken() === authToken) {
-          this.alreadyLogged = true;
+          this.error = true
           return false
         }
         this.persistenceService.set('MAToken', authToken)
