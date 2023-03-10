@@ -97,7 +97,7 @@ input.mat-mdc-input-element {
   }
 
   &[type=number] {
-    -moz-appearance:textfield; /* Firefox */
+    -moz-appearance:textfield;
   }
   &::placeholder {
     color: map-get($project-colors, "gradation", 400);
@@ -115,9 +115,6 @@ input.mat-mdc-input-element {
         -webkit-text-fill-color: map-get($project-colors, "gradation", 300) !important;
       }
     }
-  }
-
-  &.ng-touched {
     &.ng-valid {
       color: map-get($project-colors, "gradation", 300);
       border-color: map-get($project-colors, "green", 400);

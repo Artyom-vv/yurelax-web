@@ -24,7 +24,7 @@ import {AnimationsService} from "../shared/animations/services/animations.servic
 import {MLoginComponent} from './components/m-login/m-login.component';
 import {MAuthLayoutComponent} from './components/m-login/components/m-auth-layout/m-auth-layout.component';
 import {AuthStore} from "./store/auth.store";
-import {ErrorHintConditionModule} from "../shared/modules/error-hint-condition/error-hint-condition.module";
+import {ErrorHintConditionModule} from "../shared/modules/error-hint-wrapper/modules/error-hint-condition/error-hint-condition.module";
 import {ErrorHintWrapperModule} from "../shared/modules/error-hint-wrapper/error-hint-wrapper.module";
 import {UserService} from "../platform/services/user.service";
 import {SharedModule} from "../shared/shared.module";

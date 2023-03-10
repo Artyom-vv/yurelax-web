@@ -91,6 +91,7 @@ export class MLoginComponent implements OnInit, OnDestroy {
 
     const jwtMaPrepare$ = this.route.queryParams.pipe(
       filter(({authToken}) => {
+        // Под названием AuthToken подразумеваю тот же MAToken
         if (!authToken) return this.router.navigate(['/platform'])
         if (this.systemUser.getMAToken() === authToken) {
           this.error = true
@@ -107,6 +108,7 @@ export class MLoginComponent implements OnInit, OnDestroy {
         const refreshTokenExpired = this.toolsService.tokenExpired(refreshToken);
 
         const authNotAvailable: boolean = accessToken ? accessTokenExpired : refreshToken ? refreshTokenExpired : true
+        console.log(authNotAvailable)
         if (authNotAvailable) {
           setTimeout(() => {
             this.transitionToLogin = true;
