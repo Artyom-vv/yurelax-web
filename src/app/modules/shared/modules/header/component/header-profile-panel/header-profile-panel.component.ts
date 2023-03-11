@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../../../store/app.store";
 import {Subscription, switchMap, tap} from "rxjs";
 import {UserStoreInterface} from "../../../../../../store/interfaces/user-store.interface";
@@ -17,15 +17,22 @@ export class HeaderProfilePanelComponent implements OnInit, OnDestroy {
   ) {
   }
 
+  @Input() dark: boolean = false;
+
   private subscriptions: Subscription[] = []
 
   public user: UserStoreInterface | null = null
+  public isLogged: boolean = false
 
   ngOnInit() {
     this.subscriptions.push(
       this.appStore.user$.pipe(
         tap((user) => {
           this.user = user
+        }),
+        switchMap(() => this.appStore.isLogged$),
+        tap((isLogged) => {
+          this.isLogged = isLogged
         }),
         // switchMap((user) => this.skinsService.getAvatar(user?.login)),
         // tap((val) => {

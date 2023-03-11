@@ -7,6 +7,7 @@ import {ButtonModule} from "../button/button.module";
 import {HeaderProfilePanelComponent} from './component/header-profile-panel/header-profile-panel.component';
 import {LinkModule} from "../link/link.module";
 import {SkinsService} from "../../services/skins.service";
+import {SkeletonModule} from "../skeleton/skeleton.module";
 
 @NgModule({
   declarations: [
@@ -16,14 +17,15 @@ import {SkinsService} from "../../services/skins.service";
   exports: [
     HeaderComponent
   ],
-  imports: [
-    CommonModule,
-    IconModule,
-    RouterLink,
-    RouterLinkActive,
-    ButtonModule,
-    LinkModule,
-  ],
+    imports: [
+        CommonModule,
+        IconModule,
+        RouterLink,
+        RouterLinkActive,
+        ButtonModule,
+        LinkModule,
+        SkeletonModule,
+    ],
   providers: [SkinsService]
 })
 export class HeaderModule {

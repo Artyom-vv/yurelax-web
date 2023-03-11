@@ -12,6 +12,12 @@
   &:hover {
     background-color: map-get($project-colors, "purple", 200);
   }
+  &.dark {
+    background-color: map-get($project-colors, "gradation", 700);
+    &:hover {
+      background-color: map-get($project-colors, "gradation", 600);
+    }
+  }
 }
 .avatar {
   width: 40px;

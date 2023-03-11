@@ -208,9 +208,7 @@ button.mat-button {
 
 @mixin btn-custom-white {
   $default_color: map-get($project-colors, "purple", 400);
-
   background-color: map-get($project-colors, "gradation", 100);
-
 
   .mdc-button__label {
     &, span {
@@ -247,6 +245,7 @@ button.mat-button {
 button.mat-mdc-button.btn {
   width: 100%;
   transition: background-color $trs, color $trs;
+  border-radius: 6px;
   span {
     transition: color $trs;
   }

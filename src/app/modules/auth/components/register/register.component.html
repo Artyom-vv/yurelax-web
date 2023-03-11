@@ -1,4 +1,4 @@
-<ng-container [formGroup]="form">
+<form [formGroup]="form">
   <yrx-auth-header page="register">Регистрация</yrx-auth-header>
   <yrx-spacing type="S"></yrx-spacing>
   <div class="box box_input">
@@ -53,4 +53,4 @@
     <p class="text text_body regular">Уже есть аккаунт?</p>
     <yrx-link [routerLink]="['/auth/login']" [iconStroked]="true" icon="login">Войти</yrx-link>
   </div>
-</ng-container>
+</form>

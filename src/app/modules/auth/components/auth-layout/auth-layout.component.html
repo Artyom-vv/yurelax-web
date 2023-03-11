@@ -1,7 +1,7 @@
 <section class="full-height" content>
   <div class="container full-height flex flex_center">
-    <form [ngStyle]="{width: width+'px'}" class="auth-layout-form flex flex_column flex_justify-center" [@authRouteAnimations]="animationsService.getRouteAnimationData(outlet)">
+    <div [ngStyle]="{width: width+'px'}" class="auth-layout-form flex flex_column flex_justify-center" [@authRouteAnimations]="animationsService.getRouteAnimationData(outlet)">
       <ng-content></ng-content>
-    </form>
+    </div>
   </div>
 </section>

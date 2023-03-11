@@ -1,8 +1,8 @@
-<div [@fadeAnimation]="transitionToMA" [formGroup]="form">
+<form [@fadeAnimation]="transitionToMA" [formGroup]="form">
   <yrx-auth-header page="login">Вход</yrx-auth-header>
   <yrx-spacing type="S"></yrx-spacing>
   <div class="box box_input">
-    <input autocomplete="email" formControlName="email" class="input_normal input_iconly" matInput placeholder="Введите e-mail">
+    <input formControlName="email" class="input_normal input_iconly" matInput placeholder="Введите e-mail">
     <yrx-error-hint-wrapper [control]="form.get('email')">
       <yrx-error-hint-condition [condition]="['required']">Почта не должна быть пустой</yrx-error-hint-condition>
       <yrx-error-hint-condition [condition]="['email']">Указанная почта имеет неверный формат</yrx-error-hint-condition>
@@ -10,7 +10,7 @@
   </div>
   <yrx-spacing type="XS"></yrx-spacing>
   <div class="box box_input">
-    <input autocomplete="password" formControlName="password" type="password" class="input_normal input_iconly" matInput placeholder="Введите пароль">
+    <input formControlName="password" type="password" class="input_normal input_iconly" matInput placeholder="Введите пароль">
     <yrx-error-hint-wrapper [control]="form.get('password')">
       <yrx-error-hint-condition [condition]="['minlength']">Длина пароля не может быть меньше {{MIN_PASSWORD_LENGTH}} символов</yrx-error-hint-condition>
       <yrx-error-hint-condition [condition]="['required']">Пароль не должен быть пустым</yrx-error-hint-condition>
@@ -25,4 +25,4 @@
     <p class="text text_body regular">Нет аккаунта?</p>
     <yrx-link [routerLink]="['/auth/register']">Зарегистрируйтесь</yrx-link>
   </div>
-</div>
+</form>

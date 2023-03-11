@@ -1,0 +1,33 @@
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/vars.animations";
+
+.skeleton {
+  &.dark {
+    background: linear-gradient(-45deg, map-get($project-colors, "gradation", 700),darken(map-get($project-colors, "gradation", 600), 2), map-get($project-colors, "gradation", 600));
+    background-size: 400% 400%;
+  }
+
+  &.light {
+    background: linear-gradient(-45deg, map-get($project-colors, "purple", 300), darken(map-get($project-colors, "purple", 200), 2), map-get($project-colors, "purple", 300));
+    background-size: 400% 400%;
+  }
+
+  &.white {
+    background: linear-gradient(-45deg, map-get($project-colors, "gradation", 100), map-get($project-colors, "gradation", 300), map-get($project-colors, "gradation", 100));
+    background-size: 400% 400%;
+  }
+
+  animation: gradient $skeleton infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0 50%
+  }
+}

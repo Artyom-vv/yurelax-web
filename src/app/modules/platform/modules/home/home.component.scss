@@ -1,4 +1,5 @@
 @import "src/shared/styles/vars.colors";
+@import "src/shared/styles/vars.animations";
 
 .hero {
   height: 100%;
@@ -20,6 +21,19 @@
 }
 .title {
   max-width: 612px;
+}
+.show {
+  animation: home-btn-container-show $trs;
+}
+@keyframes home-btn-container-show {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }
 .columns {
   position: absolute;

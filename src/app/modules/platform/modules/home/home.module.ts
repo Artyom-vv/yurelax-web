@@ -5,6 +5,7 @@ import {SpacingModule} from "../../../shared/modules/spacing/spacing.module";
 import {ButtonModule} from "../../../shared/modules/button/button.module";
 import {IconModule} from "../../../shared/modules/icon/icon.module";
 import {RouterLink} from "@angular/router";
+import {SkeletonModule} from "../../../shared/modules/skeleton/skeleton.module";
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {RouterLink} from "@angular/router";
         SpacingModule,
         ButtonModule,
         IconModule,
-        RouterLink
+        RouterLink,
+        SkeletonModule
     ]
 })
 export class HomeModule {

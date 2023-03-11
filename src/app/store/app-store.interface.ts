@@ -23,5 +23,5 @@ export const DEFAULT_STATE: AppState = {
   footerHeight: 0,
   isHomePage: false,
   isLogged: false,
-  preloading: false
+  preloading: true
 };
