@@ -1,0 +1,75 @@
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/vars.animations";
+
+.online {
+  height: 136px;
+  background-color: map-get($project-colors, "gradation", 700);
+  border-radius: 12px;
+  padding: 0 48px;
+
+  position: relative;
+  img {
+    position: absolute;
+  }
+}
+
+.parrot {
+  width: 304px;
+  height: 208px;
+  right: 177px;
+  bottom: 0;
+}
+.bee {
+  width: 152px;
+  height: 152px;
+  top: -52px;
+  right: 405px;
+}
+.floating {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  span {
+    position: absolute;
+    border-radius: 50%;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    &:nth-child(1) {
+      background-color: rgba(map-get($project-colors, "green", 400), 0.15);
+      height: 24px;
+      width: 24px;
+      animation: floating-pulsate-1 $floating infinite;
+    }
+    &:nth-child(2) {
+      background-color: map-get($project-colors, "green", 400);
+      height: 12px;
+      width: 12px;
+      animation: floating-pulsate-2 $floating infinite;
+    }
+  }
+}
+@keyframes floating-pulsate-1 {
+  0% {
+    background-color: rgba(map-get($project-colors, "green", 400), 0.15);
+  }
+  50% {
+    background-color: rgba(map-get($project-colors, "green", 400), 0.8);
+  }
+  100% {
+    background-color: rgba(map-get($project-colors, "green", 400), 0.15);
+  }
+}
+
+@keyframes floating-pulsate-2 {
+  0% {
+    background-color: map-get($project-colors, "green", 400);
+  }
+  50% {
+    background-color: darken(map-get($project-colors, "green", 400), 20)
+  }
+  100% {
+    background-color: map-get($project-colors, "green", 400);
+  }
+}

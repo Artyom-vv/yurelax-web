@@ -7,7 +7,6 @@ import {SidebarNavigationInterface} from "./interfaces/sidebar-navigation.interf
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-
   @Input() navigation: SidebarNavigationInterface[][] = []
 
   ngOnInit() {

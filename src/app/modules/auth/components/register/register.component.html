@@ -23,7 +23,7 @@
   <div class="box">
     <div class="box box_input">
       <input #passwordRef autocomplete="new-password" formControlName="password" type="password" class="input_normal input_iconly" matInput placeholder="Введите пароль">
-      <yrx-icon passwordHider [ref]="passwordRef" [deps]="[passwordRepeatRef]" [stroked]="true" [icon]="passwordRef.type === 'password' ? 'eye-off' : 'eye'"></yrx-icon>
+      <yrx-icon passwordHider [deps]="[passwordRepeatRef]" [stroked]="true" [icon]="passwordRef.type === 'password' ? 'eye-off' : 'eye'"></yrx-icon>
     </div>
     <yrx-error-hint-wrapper [control]="form.get('password')">
       <yrx-error-hint-condition [condition]="['minlength']">Длина пароля должна быть больше {{MIN_PASSWORD_LENGTH}} символов</yrx-error-hint-condition>

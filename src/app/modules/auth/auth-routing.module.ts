@@ -5,9 +5,9 @@ import {AuthComponent} from "./auth.component";
 import {RegisterComponent} from "./components/register/register.component";
 import {EmailVerifyComponent} from "./components/email-verify/email-verify.component";
 import {CheckAuthGuard} from "../shared/services/global/check-auth.guard";
-import {EmailVerifyGuard} from "../shared/services/global/email-verify.guard";
 import {MLoginComponent} from "./components/m-login/m-login.component";
 import {MAuthLayoutComponent} from "./components/m-login/components/m-auth-layout/m-auth-layout.component";
+import {WhichEmailRecoverComponent} from "./components/which-email-recover/which-email-recover.component";
 
 const routes: Routes = [
   {
@@ -29,9 +29,20 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'which-email-recover',
+    component: AuthComponent,
+    children: [
+      {
+        path: '',
+        data: {route: 'which-email-recover'},
+        component: WhichEmailRecoverComponent,
+        pathMatch: 'full',
+      },
+    ]
+  },
+  {
     path: 'email-verify',
     component: AuthComponent,
-    // canActivate: [EmailVerifyGuard],
     children: [
       {
         path: '',

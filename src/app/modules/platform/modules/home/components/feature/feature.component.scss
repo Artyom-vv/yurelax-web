@@ -1,0 +1,23 @@
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/vars.animations";
+
+:host {
+  flex-basis: 306px;
+}
+.feature {
+  transition: $trs;
+  background-color: map-get($project-colors, "gradation", 800);
+  border-radius: 12px;
+  padding: 16px;
+  height: 152px;
+  cursor: pointer;
+  &:hover {
+    background-color: map-get($project-colors, "gradation", 700);
+  }
+}
+.background {
+  width: 48px;
+  height: 48px;
+  background-color: map-get($project-colors, "purple", 400);
+  border-radius: 6px;
+}

@@ -134,6 +134,24 @@
     fill: none;
   }
 
+  &-joystick {
+    @include icon-size(24px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+
+  &-swords {
+    @include icon-size(24px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+
+  &-users {
+    @include icon-size(24px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+
   @keyframes loader {
     0% {
       transform: rotate(0deg);

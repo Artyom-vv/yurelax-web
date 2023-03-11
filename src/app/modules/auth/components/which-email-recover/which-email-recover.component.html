@@ -1,0 +1,16 @@
+<form [formGroup]="form">
+  <yrx-link [routerLink]="['/auth']" [iconReverse]="true" [iconStroked]="true" icon="arrow-left">Вернуться назад</yrx-link>
+  <yrx-spacing type="XS"></yrx-spacing>
+  <yrx-auth-header page="email-code">Сброс пароля</yrx-auth-header>
+  <yrx-spacing type="S"></yrx-spacing>
+  <div class="box box_input">
+    <input formControlName="email" class="input_normal input_iconly" matInput placeholder="Введите e-mail">
+    <yrx-error-hint-wrapper [control]="form.get('email')">
+      <yrx-error-hint-condition [condition]="['required']">Почта не должна быть пустой</yrx-error-hint-condition>
+      <yrx-error-hint-condition [condition]="['email']">Указанная почта имеет неверный формат</yrx-error-hint-condition>
+    </yrx-error-hint-wrapper>
+  </div>
+  <yrx-spacing type="M"></yrx-spacing>
+  <yrx-button (press)="send()" class="w100" type="primary" [iconLoading]="dataLoading" [disabled]="dataLoading || form.invalid"><span>Отправить</span><yrx-icon *ngIf="dataLoading" btn-icon icon="loader"></yrx-icon></yrx-button>
+  <yrx-spacing type="XS"></yrx-spacing>
+</form>

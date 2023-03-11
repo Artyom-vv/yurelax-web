@@ -35,9 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       ).subscribe()
     )
     this.subscriptions.push(
-      this.appStore.preloading$.pipe(
-        tap((val) => this.preloading = val)
-      ).subscribe()
+      this.appStore.preloading$.subscribe((val) => this.preloading = val)
     )
   }
   ngOnDestroy() {

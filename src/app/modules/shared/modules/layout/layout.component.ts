@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, Inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {Subscription} from "rxjs";
 import {AppearanceAnimation} from "../../animations/redirect.animation";
@@ -19,7 +19,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
     private appStore: AppStore,
     public animationsService: AnimationsService,
     @Inject(DOCUMENT) private document: Document,
-    private toolsService: ToolsService
+    private toolsService: ToolsService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -36,6 +37,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   public resizeObserver: ResizeObserver = new ResizeObserver((entries) => {
     const documentHeight: number = entries[0].target.clientHeight;
     this.withoutScroll = this.document.body.scrollHeight <= documentHeight
+    this.cdr.detectChanges()
   })
 
   ngOnInit() {

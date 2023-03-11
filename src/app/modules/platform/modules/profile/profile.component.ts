@@ -4,6 +4,7 @@ import {Subscription, tap} from "rxjs";
 import {SidebarNavigationInterface} from "../sidebar/interfaces/sidebar-navigation.interface";
 import {AppearanceAnimation} from "../../../shared/animations/redirect.animation";
 import {AnimationsService} from "../../../shared/animations/services/animations.service";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'yrx-profile',
@@ -17,6 +18,7 @@ export class ProfileComponent implements OnInit, OnDestroy  {
   constructor(
     private appStore: AppStore,
     public animationsService: AnimationsService,
+    public _location: Location
   ) {
   }
 

@@ -6,11 +6,15 @@ import {ButtonModule} from "../../../shared/modules/button/button.module";
 import {IconModule} from "../../../shared/modules/icon/icon.module";
 import {RouterLink} from "@angular/router";
 import {SkeletonModule} from "../../../shared/modules/skeleton/skeleton.module";
+import { FeatureComponent } from './components/feature/feature.component';
+import { OnlineComponent } from './components/online/online.component';
 
 
 @NgModule({
   declarations: [
-    HomeComponent
+    HomeComponent,
+    FeatureComponent,
+    OnlineComponent
   ],
     imports: [
         CommonModule,

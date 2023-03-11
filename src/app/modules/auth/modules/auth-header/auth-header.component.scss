@@ -71,3 +71,37 @@
     z-index: 0;
   }
 }
+.email-code {
+  .first-image {
+    top: 44px;
+    right: 60px;
+    opacity: 0.6;
+    filter: blur(2px);
+    transform: rotate(45deg);
+    width: 72px;
+    height: 72px;
+  }
+
+  .second-image {
+    opacity: 0.3;
+    filter: blur(1px);
+    transform: rotate(-45deg);
+    top: -28px;
+    right: -28px;
+    width: 72px;
+    height: 72px;
+  }
+
+  .third-image {
+    right: 4px;
+    top: -8px;
+    z-index: 1;
+    width: 104px;
+    height: 104px;
+  }
+
+  .layer-blur-image {
+    filter: blur(50px);
+    z-index: 0;
+  }
+}

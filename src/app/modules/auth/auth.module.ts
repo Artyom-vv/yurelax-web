@@ -33,6 +33,7 @@ import {RecoverPasswordVerifyComponent} from './components/recover-password-veri
 import {RecoverPasswordComponent} from './components/recover-password/recover-password.component';
 import {EmailCodeVerificationModule} from "./modules/email-code-verification/email-code-verification.module";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { WhichEmailRecoverComponent } from './components/which-email-recover/which-email-recover.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     MAuthLayoutComponent,
     RecoverPasswordVerifyComponent,
     RecoverPasswordComponent,
+    WhichEmailRecoverComponent,
   ],
   imports: [
     CommonModule,

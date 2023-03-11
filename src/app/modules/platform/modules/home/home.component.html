@@ -6,23 +6,61 @@
   <div class="column"></div>
   <div class="column"></div>
 </div>
-<section class="home">
-  <div class="hero">
-    <img class="home-img" src="assets/content/hero.png" alt="yurelax — необычный сервер с сюжетом и мини-играми">
+<img class="home-img" src="assets/content/hero.png" alt="yurelax — необычный сервер с сюжетом и мини-играми">
+<div class="home">
+  <section class="hero">
     <div class="container flex_column flex flex_align-center">
       <yrx-spacing type="L"></yrx-spacing>
       <h1 class="text-center title">yurelax — необычный сервер с сюжетом и мини-играми</h1>
       <yrx-spacing type="M"></yrx-spacing>
+      <yrx-skeleton *ngIf="preloading && access_token" [styles]="{height: '48px', width: '175px', borderRadius: '6px'}" theme="light"></yrx-skeleton>
+      <yrx-skeleton *ngIf="preloading && !access_token" [styles]="{height: '48px', width: '225px', borderRadius: '6px'}" theme="light"></yrx-skeleton>
       <div class="show" *ngIf="!preloading">
         <yrx-button *ngIf="!isLogged; else unloggedButton" [routerLink]="['/auth/register']" custom="white">
           <span>Зарегистрироваться</span>
           <yrx-icon [stroked]="true" color="purple-400" icon="login"></yrx-icon>
         </yrx-button>
         <ng-template #unloggedButton>
-          <yrx-button [routerLink]="['/platform/profile']" custom="white">Открыть профиль</yrx-button>
+          <yrx-button [routerLink]="['/platform/profile']" custom="white">
+            <span>Открыть профиль</span>
+            <yrx-icon [stroked]="true" color="purple-400" icon="home"></yrx-icon>
+          </yrx-button>
         </ng-template>
       </div>
       <yrx-spacing type="XS"></yrx-spacing>
     </div>
+  </section>
+  <section class="features flex flex_align-center">
+    <img class="features-img" src="assets/content/hero.png" alt="yurelax — необычный сервер с сюжетом и мини-играми">
+    <img class="features-img" src="assets/content/hero.png" alt="yurelax — необычный сервер с сюжетом и мини-играми">
+    <div class="container flex gap-24">
+      <yrx-feature>
+        <span header>Уникальные ивенты</span>
+        <span text>Принимайте участие в регулярных событиях и получайте редкие предметы.</span>
+        <yrx-icon [stroked]="true" icon="box" feature-icon></yrx-icon>
+      </yrx-feature>
+      <yrx-feature>
+        <span header>RPG-система</span>
+        <span text>Прокачивайте своего персонажа и побеждайте боссов для получения редкого лута.</span>
+        <yrx-icon [stroked]="true" icon="swords" feature-icon></yrx-icon>
+      </yrx-feature>
+      <yrx-feature>
+        <span header>Мини-игры</span>
+        <span text>На нашем сервере вы найдете более 20 увлекательных режимов. Играйте сами и зовите друзей.</span>
+        <yrx-icon [stroked]="true" icon="joystick" feature-icon></yrx-icon>
+      </yrx-feature>
+      <yrx-feature>
+        <span header>Комьюнити</span>
+        <span text>Мы регулярно модерируем сервера, а в нашей группе Вконтакте Вы всегда получите обратную связь.</span>
+        <yrx-icon [stroked]="true" icon="users" feature-icon></yrx-icon>
+      </yrx-feature>
+    </div>
+  </section>
+  <div class="content">
+    <div class="container">
+      <yrx-spacing type="XL"></yrx-spacing>
+      <yrx-online></yrx-online>
+      <yrx-spacing type="XL"></yrx-spacing>
+    </div>
   </div>
-</section>
+</div>

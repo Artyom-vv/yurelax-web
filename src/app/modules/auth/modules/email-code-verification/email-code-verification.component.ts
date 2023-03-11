@@ -71,7 +71,7 @@ export class EmailCodeVerificationComponent implements OnInit, OnDestroy, AfterV
       value3: [null, [Validators.required, Validators.maxLength(1)]],
       value4: [null, [Validators.required, Validators.maxLength(1)]],
       value5: [null, [Validators.required, Validators.maxLength(1)]],
-      value6: [null, [Validators.required, Validators.maxLength(1)]]
+      value6: [null, [Validators.required, Validators.maxLength(1)]],
     })
   }
 }

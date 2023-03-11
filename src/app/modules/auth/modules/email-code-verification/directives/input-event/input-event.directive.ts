@@ -18,11 +18,17 @@ export class InputEventDirective {
     const input: HTMLInputElement = this.input.nativeElement;
     this.acceptable = true;
     this.code = event.code
-    if (event.key === 'Delete' || event.key === 'Backspace') {
+    if (event.key === 'Delete') {
       this.output.action = null
       this.control?.setValue(null)
       this.output.id = +input.id
       this.onInput.emit(this.output)
+    } else if (event.key === 'Backspace') {
+      this.output.action = 'back'
+      this.control?.setValue(null)
+      this.output.id = +input.id
+      this.onInput.emit(this.output)
+      event.preventDefault();
     } else if (event.code.startsWith('Digit')) {
       this.output.action = 'next'
     } else {
@@ -44,6 +50,7 @@ export class InputEventDirective {
   @HostListener('input', ['$event'])
   onInputEvent(event: any) {
     const input = event.target
+    console.log(event)
     if (this.acceptable) {
       if (+event.data > 0 && +event.data <= 9) {
         this.control?.setValue(event.data)

@@ -17,7 +17,7 @@
     </yrx-error-hint-wrapper>
   </div>
   <yrx-spacing type="XS"></yrx-spacing>
-  <yrx-link [underlined]="true">Забыли пароль?</yrx-link>
+  <yrx-link [routerLink]="['/auth/which-email-recover']" [underlined]="true">Забыли пароль?</yrx-link>
   <yrx-spacing type="M"></yrx-spacing>
   <yrx-button (press)="login()" class="w100" type="primary" [iconLoading]="dataLoading" [disabled]="dataLoading || form.invalid"><span>Войти</span><yrx-icon *ngIf="dataLoading" btn-icon icon="loader"></yrx-icon></yrx-button>
   <yrx-spacing type="XS"></yrx-spacing>
