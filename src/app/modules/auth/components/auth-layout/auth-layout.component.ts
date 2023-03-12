@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SwipeAnimation} from "../../../shared/animations/redirect.animation";
 import {AnimationsService} from "../../../shared/animations/services/animations.service";
-import {animate, query, style, transition, trigger} from "@angular/animations";
 import {RouterOutlet} from "@angular/router";
 
 @Component({

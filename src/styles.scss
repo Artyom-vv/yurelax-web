@@ -26,12 +26,12 @@ img, svg {
 }
 
 ::-webkit-scrollbar {
-  background-color: map-get($project-colors, "gradation", 750);
+  background-color: map-get($project-colors, "gradation", 800);
   width: 12px;
 }
 
 ::-webkit-scrollbar-thumb {
-  border: 3px solid map-get($project-colors, "gradation", 750);
+  border: 3px solid map-get($project-colors, "gradation", 800);
   background-color: map-get($project-colors, "gradation", 500);
   border-radius: 4px;
 }

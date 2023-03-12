@@ -8,13 +8,19 @@ import {RouterLink} from "@angular/router";
 import {SkeletonModule} from "../../../shared/modules/skeleton/skeleton.module";
 import { FeatureComponent } from './components/feature/feature.component';
 import { OnlineComponent } from './components/online/online.component';
+import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
+import { InfoLayoutComponent } from './components/info-layout/info-layout.component';
+import { ActivityComponent } from './components/activity/activity.component';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
     FeatureComponent,
-    OnlineComponent
+    OnlineComponent,
+    ContentLayoutComponent,
+    InfoLayoutComponent,
+    ActivityComponent
   ],
     imports: [
         CommonModule,

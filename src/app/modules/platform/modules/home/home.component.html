@@ -6,6 +6,7 @@
   <div class="column"></div>
   <div class="column"></div>
 </div>
+<div class="background"></div>
 <img class="home-img" src="assets/content/hero.png" alt="yurelax — необычный сервер с сюжетом и мини-играми">
 <div class="home">
   <section class="hero">
@@ -23,7 +24,6 @@
         <ng-template #unloggedButton>
           <yrx-button [routerLink]="['/platform/profile']" custom="white">
             <span>Открыть профиль</span>
-            <yrx-icon [stroked]="true" color="purple-400" icon="home"></yrx-icon>
           </yrx-button>
         </ng-template>
       </div>
@@ -37,22 +37,22 @@
       <yrx-feature>
         <span header>Уникальные ивенты</span>
         <span text>Принимайте участие в регулярных событиях и получайте редкие предметы.</span>
-        <yrx-icon [stroked]="true" icon="box" feature-icon></yrx-icon>
+        <yrx-icon [width]="24" [height]="24" [stroked]="true" icon="box" feature-icon></yrx-icon>
       </yrx-feature>
       <yrx-feature>
         <span header>RPG-система</span>
         <span text>Прокачивайте своего персонажа и побеждайте боссов для получения редкого лута.</span>
-        <yrx-icon [stroked]="true" icon="swords" feature-icon></yrx-icon>
+        <yrx-icon [width]="24" [height]="24" [stroked]="true" icon="swords" feature-icon></yrx-icon>
       </yrx-feature>
       <yrx-feature>
         <span header>Мини-игры</span>
         <span text>На нашем сервере вы найдете более 20 увлекательных режимов. Играйте сами и зовите друзей.</span>
-        <yrx-icon [stroked]="true" icon="joystick" feature-icon></yrx-icon>
+        <yrx-icon [width]="24" [height]="24" [stroked]="true" icon="joystick" feature-icon></yrx-icon>
       </yrx-feature>
       <yrx-feature>
         <span header>Комьюнити</span>
         <span text>Мы регулярно модерируем сервера, а в нашей группе Вконтакте Вы всегда получите обратную связь.</span>
-        <yrx-icon [stroked]="true" icon="users" feature-icon></yrx-icon>
+        <yrx-icon [width]="24" [height]="24" [stroked]="true" icon="users" feature-icon></yrx-icon>
       </yrx-feature>
     </div>
   </section>
@@ -61,6 +61,20 @@
       <yrx-spacing type="XL"></yrx-spacing>
       <yrx-online></yrx-online>
       <yrx-spacing type="XL"></yrx-spacing>
+      <ng-container *ngFor="let content of content_blocks; let idx = index;">
+        <yrx-content-layout [img]="content.img" [reversed]="(idx+1)%2!==0">
+          <yrx-info-layout>
+            <span headline>{{content.info.headline}}</span>
+            <span text>{{content.info.text}}</span>
+              <yrx-activity activities *ngFor="let activity of content.info.activities">
+                <span headline>{{activity.headline}}</span>
+                <span text>{{activity.text}}</span>
+                <yrx-icon activity-icon [icon]="activity.icon" [stroked]="activity.iconStroked"></yrx-icon>
+              </yrx-activity>
+          </yrx-info-layout>
+        </yrx-content-layout>
+        <yrx-spacing type="XL" *ngIf="content_blocks.length !== idx+1"></yrx-spacing>
+      </ng-container>
     </div>
   </div>
 </div>

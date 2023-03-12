@@ -79,6 +79,14 @@
     fill: none;
     animation: loader $spinner infinite;
   }
+  @keyframes loader {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 
   &-alert-triangle {
     @include icon-size(20px);
@@ -151,14 +159,22 @@
     stroke: map-get($project-colors, "gradation", 100);
     fill: none;
   }
-
-  @keyframes loader {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
+  &-arrow-big-up {
+    @include icon-size(20px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+  &-sword {
+    @include icon-width(21px);
+    @include icon-height(20px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+  &-trophy {
+    @include icon-width(21px);
+    @include icon-height(20px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
   }
 }
 
