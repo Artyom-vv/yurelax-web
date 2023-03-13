@@ -21,7 +21,7 @@
     }
   }
   &.light {
-    background: linear-gradient(180deg, #3D45B8 0%, rgba(61, 69, 184, 0) 100%);
+    //background: linear-gradient(180deg, #3D45B8 0%, rgba(61, 69, 184, 0) 100%);
     .link {
       color: map-get($project-colors, "purple", 100);
       &:not(.active):hover {
