@@ -15,6 +15,8 @@ import {CookieService} from "ngx-cookie-service";
 import {JwtMaResponseInterface} from "../interfaces/jwt-ma-response.interface";
 import {JwtMaAuthResponseInterface} from "../interfaces/jwt-ma-auth-response.interface";
 import {SystemUserService} from "../../shared/services/global/system-user.service";
+import {UserStoreInterface} from "../../../store/interfaces/user-store.interface";
+import {GetMeResponseInterface} from "../interfaces/get-me-response.interface";
 
 @Injectable()
 export class AuthService {
@@ -41,14 +43,15 @@ export class AuthService {
     })
   }
 
-  saveUserData(user: UserResponseInterface) {
+  saveUserData(user: UserStoreInterface) {
     this.persistenceService.set('user', user)
     this.appStore.setUser(user);
   }
 
-  saveData(user: LoginResponseInterface | RegisterResponseInterface): void {
-    this.saveCookies(user.tokens)
-    this.saveUserData(user.user)
+  saveData(res: LoginResponseInterface | RegisterResponseInterface): void {
+    const {tokens, ...userdata} = res;
+    this.saveCookies(res.tokens)
+    this.saveUserData(userdata)
   }
 
   login(data: LoginRequestInterface): Observable<LoginResponseInterface> {
@@ -101,8 +104,8 @@ export class AuthService {
     )
   }
 
-  getMe(): Observable<UserResponseInterface> {
-    return this.http.get<UserResponseInterface>(`${environment.apiUrl}/auth/get-me`).pipe(
+  getMe(): Observable<GetMeResponseInterface> {
+    return this.http.get<GetMeResponseInterface>(`${environment.apiUrl}/auth/get-me`).pipe(
       tap((res) => {
         this.saveUserData(res)
       }),

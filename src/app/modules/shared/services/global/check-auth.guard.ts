@@ -12,15 +12,15 @@ export class CheckAuthGuard implements CanActivate, CanActivateChild {
   }
 
   canActivate = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => this.appStore.user$.pipe(
-    switchMap((user: UserStoreInterface | null) => {
+    switchMap((userStore: UserStoreInterface | null) => {
       if (this.systemUser.getAccessToken()) {
-        if (!user?.emailVerify) {
+        if (!userStore?.user?.emailVerify) {
           this.router.navigate(['/auth/email-verify']);
           return of(false)
-        } else if (user?.role === RolesEnum.ADMIN) {
+        } else if (userStore?.user?.role === RolesEnum.ADMIN) {
           this.router.navigate(['/admin']);
           return of(false);
-        } else if (user?.role === RolesEnum.USER) {
+        } else if (userStore?.user?.role === RolesEnum.USER) {
           this.router.navigate(['/platform']);
           return of(false)
         }

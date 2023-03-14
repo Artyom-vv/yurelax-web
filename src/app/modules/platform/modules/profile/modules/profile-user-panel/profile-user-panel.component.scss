@@ -5,3 +5,8 @@
   border-radius: 16px;
   background-color: map-get($project-colors, "gradation", 700);
 }
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+}

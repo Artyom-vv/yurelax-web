@@ -4,7 +4,7 @@
 
 <ng-template #userLoaded>
   <div [@fadeAnimation]="error || !greeting || successMA || isWaitingForMA || transitionToLogin" class="text-center">
-    <h3 *ngIf="user; else userEmpty">Привет, <span class="c-purple-300">{{user?.login}}</span>!</h3>
+    <h3 *ngIf="userStore; else userEmpty">Привет, <span class="c-purple-300">{{userStore?.user?.login}}</span>!</h3>
     <ng-template #userEmpty>
       <h3>Привет!</h3>
     </ng-template>

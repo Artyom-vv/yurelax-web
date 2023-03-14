@@ -21,7 +21,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {
   }
 
-
   private subscriptions: Subscription[] = []
 
   ngOnInit() {

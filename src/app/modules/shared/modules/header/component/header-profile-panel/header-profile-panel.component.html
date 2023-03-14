@@ -1,7 +1,10 @@
 <div [routerLink]="['/platform/profile']" class="panel flex gap-12 flex_align-center" [class.dark]="dark">
-  <img width="40" height="40" src="assets/content/header/default-avatar.png" [alt]="'Аватар игрока '+user?.login+' на yurelax'" class="avatar"/>
+  <yrx-skeleton *ngIf="dataLoading; else avatarTemplate" [styles]="{width: '40px', height: '40px', borderRadius: '6px'}" [theme]="dark ? 'dark' : 'light'"></yrx-skeleton>
+  <ng-template #avatarTemplate>
+    <img width="40" height="40" [src]="userStore?.userInfo?.avatarUrl ? userStore?.userInfo?.avatarUrl : 'assets/content/header/default-avatar.png'" [alt]="'Аватар игрока '+userStore?.user?.login+' на yurelax'" class="avatar"/>
+  </ng-template>
   <div class="flex flex_column">
-    <p class="text text_body medium">{{user?.login}}</p>
+    <p class="text text_body medium">{{userStore?.user?.login}}</p>
     <yrx-link [hover]="dark" [custom]="dark ? 'purple-300' : ''" class="link" size="small" [iconStroked]="true" icon="chevron-arrow-right">Личный кабинет</yrx-link>
   </div>
 </div>

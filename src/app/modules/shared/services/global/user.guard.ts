@@ -11,8 +11,8 @@ export class UserGuard implements CanActivate, CanActivateChild {
   }
 
   canActivate = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => this.appStore.user$.pipe(
-    switchMap((user: UserStoreInterface | null) => {
-      if (user?.role === RolesEnum.USER) return of(true);
+    switchMap((userStore: UserStoreInterface | null) => {
+      if (userStore?.user?.role === RolesEnum.USER) return of(true);
 
       this.router.navigate(['/auth'])
       return of(false);

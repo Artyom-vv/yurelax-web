@@ -11,6 +11,7 @@ import {JwtMaAuthResponseInterface} from "../../interfaces/jwt-ma-auth-response.
 import {AuthStore} from "../../store/auth.store";
 import {ToolsService} from "../../../shared/services/global/tools.service";
 import {PersistenceService} from "../../../shared/services/global/persistence.service";
+import {UserStoreInterface} from "../../../../store/interfaces/user-store.interface";
 
 @Component({
   selector: 'yrx-m-login',
@@ -70,7 +71,7 @@ export class MLoginComponent implements OnInit, OnDestroy {
   public transitionToLogin: boolean = false;
   public isWaitingForMA: boolean = false;
   public error: boolean = false;
-  public user: UserResponseInterface | null = null
+  public userStore: UserStoreInterface | null = null
 
   ngOnInit() {
     this.dataFields()
@@ -141,7 +142,7 @@ export class MLoginComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.appStore.user$.pipe(
         switchMap(user => {
-          this.user = user
+          this.userStore = user
           this.userLoading = false;
           return this.authStore.isWaitingForMA$.pipe(
             mergeMap((isWaitingForMA) => {

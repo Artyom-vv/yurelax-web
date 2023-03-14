@@ -17,15 +17,15 @@ import {SkeletonModule} from "../skeleton/skeleton.module";
   exports: [
     HeaderComponent
   ],
-    imports: [
-        CommonModule,
-        IconModule,
-        RouterLink,
-        RouterLinkActive,
-        ButtonModule,
-        LinkModule,
-        SkeletonModule,
-    ],
+  imports: [
+    CommonModule,
+    IconModule,
+    RouterLink,
+    RouterLinkActive,
+    ButtonModule,
+    LinkModule,
+    SkeletonModule,
+  ],
   providers: [SkinsService]
 })
 export class HeaderModule {
