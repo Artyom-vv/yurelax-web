@@ -100,6 +100,12 @@
     fill: none;
   }
 
+  &-file {
+    @include icon-size(24px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+
   &-home {
     @include icon-size(20px);
     stroke: map-get($project-colors, "gradation", 100);

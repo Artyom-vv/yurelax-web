@@ -1,0 +1,14 @@
+@import "src/shared/styles/vars.colors";
+
+.skins-viewer {
+  height: 368px;
+  background-color: map-get($project-colors, "gradation", 700);
+  border-radius: 12px;
+  padding: 24px;
+}
+.viewer {
+  height: 100%;
+  flex-basis: 294px;
+  border-radius: 6px;
+  background: map-get($project-colors, "gradation", 750);
+}

@@ -1,11 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {ProfileHomeComponent} from "./profile-home.component";
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    loadChildren: () => import('./modules/profile-home/profile-home.module').then(m => m.ProfileHomeModule)
+    component: ProfileHomeComponent,
   },
 ];
 
@@ -13,5 +14,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ProfileRoutingModule {
+export class ProfileHomeRoutingModule {
 }

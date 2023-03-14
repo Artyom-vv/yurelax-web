@@ -5,7 +5,7 @@ import {Directive, EventEmitter, HostBinding, HostListener, Output} from '@angul
 })
 export class DropDirective {
 
-  @HostBinding('class.draging') private fileOver: boolean = false;
+  @HostBinding('class.dragging') private fileOver: boolean = false;
   @Output() fileDropped: EventEmitter<{files: File[]}> = new EventEmitter<{files: File[]}>()
 
   constructor() {

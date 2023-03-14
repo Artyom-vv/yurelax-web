@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import {PlatformComponent} from "./platform.component";
 import {HomeComponent} from "./modules/home/home.component";
 import {AuthGuard} from "../shared/services/global/auth.guard";
-import {UserGuard} from "../shared/services/global/user.guard";
 import {ProfileComponent} from "./modules/profile/profile.component";
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},

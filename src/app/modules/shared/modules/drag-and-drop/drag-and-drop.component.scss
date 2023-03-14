@@ -1,0 +1,42 @@
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/vars.animations";
+
+.drag-and-drop {
+  height: 56px;
+  border-radius: 12px;
+  width: 100%;
+  background-color: map-get($project-colors, "gradation", 750);
+  padding: 0 16px;
+  transition: $trs;
+  border: 1px dashed map-get($project-colors, "purple", 400);
+
+  overflow: hidden;
+
+  &.disabled {
+    .icon {
+      opacity: 0;
+    }
+
+    border-color: map-get($project-colors, "gradation", 600);
+  }
+
+  &.loaded {
+    display: none;
+  }
+  &:not(.disabled).dragging {
+    border-color: map-get($project-colors, "purple", 300);
+  }
+
+  position: relative;
+}
+.icon {
+  transform: rotate(-30deg) translate(-50%,-50%);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 0;
+}
+.z-index {
+  position: relative;
+  z-index: 1;
+}

@@ -1,0 +1,12 @@
+<div class="skins-viewer flex gap-16 flex_align-center">
+  <div class="viewer">
+
+  </div>
+  <div class="loader flex_grow">
+    <h3>Загрузить скин игрока</h3>
+    <yrx-spacing type="S"></yrx-spacing>
+    <p class="text text_body regular c-gradation-300">Технические требования для установки скина</p>
+    <yrx-spacing type="XS"></yrx-spacing>
+    <yrx-drag-and-drop [loading]="dataLoading" (onChange)="onSelectFile($event)" [iconStroked]="true" icon="file" [accept]="['image/png','image/jpg','image/jpeg']"></yrx-drag-and-drop>
+  </div>
+</div>

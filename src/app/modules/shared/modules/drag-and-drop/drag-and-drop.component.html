@@ -1,0 +1,17 @@
+<div appDrop (fileDropped)="onDrop($event)" [class.disabled]="loading" [class.loaded]="false" class="drag-and-drop flex flex_center gap-6">
+  <div class="z-index flex gap-6" *ngIf="!loading; else loadingTemplate">
+    <yrx-link (click)="openFileManager()">Выберите файл</yrx-link>
+    <p class="text text_big regular c-gradation-100">или перетащите в окно</p>
+  </div>
+  <ng-template #loadingTemplate>
+    <yrx-link>Обработка файла...</yrx-link>
+  </ng-template>
+  <yrx-icon color="gradation-700" class="icon" [width]="80" [height]="80" [stroked]="iconStroked" [icon]="icon"></yrx-icon>
+</div>
+<input
+  (change)="onChangeFile()"
+  type="file"
+  [accept]="accept.join(',')"
+  #fileLoader
+  style="display: none;"
+/>
