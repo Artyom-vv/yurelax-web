@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
-import {AbstractControl, AbstractControlOptions, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {finalize, Subscription, switchMap, tap} from "rxjs";
+import { AbstractControlOptions, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {finalize, Subscription, tap} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {
   LOGIN_VALIDATION_PATTERN, MAX_LOGIN_LENGTH,
@@ -9,6 +9,7 @@ import {
 } from "../../auth.constants";
 import {ExistingUserValidator} from "../../validators/existing-user.validator";
 import {UserService} from "../../../platform/services/user.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'yrx-register',
@@ -21,7 +22,9 @@ export class RegisterComponent {
     private authService: AuthService,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
   }
 
@@ -35,8 +38,8 @@ export class RegisterComponent {
   public MIN_LOGIN_LENGTH = MIN_LOGIN_LENGTH
 
   ngOnInit() {
-    this.dataFields()
     this.initForms()
+    this.dataFields()
     this.watchForms()
   }
 
@@ -49,6 +52,7 @@ export class RegisterComponent {
     this.subscriptions.push(
       this.authService.register(this.form.getRawValue()).pipe(
         finalize(() => {
+          this.router.navigate(['/auth/email-verify'])
           this.dataLoading = false;
         }),
         catchError(err => {
@@ -84,6 +88,15 @@ export class RegisterComponent {
   }
 
   private dataFields(): void {
+    this.subscriptions.push(
+      this.route.queryParams.pipe(
+        tap((data) => {
+          if (data['ref']) {
+            this.form.patchValue({userInvitedId:data['ref']}, {emitEvent: false});
+          }
+        })
+      ).subscribe()
+    )
   }
 
   private watchForms(): void {

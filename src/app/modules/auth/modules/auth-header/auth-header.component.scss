@@ -73,7 +73,7 @@
 }
 .email-code {
   .first-image {
-    top: 44px;
+    bottom: -28px;
     right: 60px;
     opacity: 0.6;
     filter: blur(2px);
@@ -94,7 +94,8 @@
 
   .third-image {
     right: 4px;
-    top: -8px;
+    top: 50%;
+    transform: translateY(-50%);
     z-index: 1;
     width: 104px;
     height: 104px;

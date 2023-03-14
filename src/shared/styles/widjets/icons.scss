@@ -182,6 +182,11 @@
     stroke: map-get($project-colors, "gradation", 100);
     fill: none;
   }
+  &-refresh-ccw {
+    @include icon-size(20px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
 }
 
 .icon {
