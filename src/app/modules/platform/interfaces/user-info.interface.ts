@@ -4,6 +4,7 @@ export interface UserInfoInterface {
   coins: number
   ucoins: number
   prestigeScore: number
+  skinType: 'default' | 'slim'
   skinUrl: string | null
   avatarUrl: string | null
   userInfoId: string
