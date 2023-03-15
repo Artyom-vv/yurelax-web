@@ -5,6 +5,7 @@ import {SpacingModule} from "../../../../../shared/modules/spacing/spacing.modul
 import {DragAndDropModule} from "../../../../../shared/modules/drag-and-drop/drag-and-drop.module";
 import {IconModule} from "../../../../../shared/modules/icon/icon.module";
 import {ModelService} from "../../../../../shared/services/model.service";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {ModelService} from "../../../../../shared/services/model.service";
     CommonModule,
     SpacingModule,
     DragAndDropModule,
-    IconModule
+    IconModule,
+    ReactiveFormsModule
   ],
   providers: [ModelService]
 })

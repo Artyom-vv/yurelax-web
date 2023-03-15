@@ -6,7 +6,9 @@
         <p class="text text_body medium c-gradation-500">360°</p>
         <yrx-icon [stroked]="true" icon="refresh-ccw" color="gradation-500"></yrx-icon>
       </div>
-      <div class="scrollbar"></div>
+      <div class="scrollbar" [formGroup]="form">
+<!--        <input formControlName="rotation" type="range" [min]="0" [max]="360" [step]="1">-->
+      </div>
     </div>
   </div>
   <div class="loader flex_grow">
