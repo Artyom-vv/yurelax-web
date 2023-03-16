@@ -2,15 +2,13 @@ import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from
 import {DropBoxOnChangeInterface} from "../../../../../shared/modules/drag-and-drop/interfaces/drop-box.interface";
 import {SkinsService} from "../../../../../shared/services/skins.service";
 import {AppStore} from "../../../../../../store/app.store";
-import {map, Subscription, switchMap, tap} from "rxjs";
+import {Subscription, tap} from "rxjs";
 import {UserStoreInterface} from "../../../../../../store/interfaces/user-store.interface";
-import * as THREE from 'three';
-import {AnimationClip} from "three/src/Three";
 import {ModelService} from "../../../../../shared/services/model.service";
-import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader";
-import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import {Group} from "three";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {SkinViewer} from "skinview3d";
+import {catchError} from "rxjs/operators";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'yrx-skins-viewer',
@@ -23,7 +21,8 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
     private skinsService: SkinsService,
     private appStore: AppStore,
     private modelService: ModelService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
   }
 
@@ -34,44 +33,43 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
   public dataLoading: boolean = false;
   public form!: FormGroup
   public userStore: UserStoreInterface | null = null
-
-  public model!: Group;
-  public controls!: OrbitControls;
-  public action!: THREE.AnimationAction;
-  public animation!: AnimationClip;
-  public mixer!: THREE.AnimationMixer;
-  public loader!: OBJLoader;
-  public textureLoader!: THREE.TextureLoader;
-  public scene!: THREE.Scene;
-  public ambientLight!: THREE.AmbientLight;
-  public camera!: THREE.PerspectiveCamera;
-  public renderer!: THREE.WebGLRenderer;
-  public modelBlob!: string;
+  public skin!: SkinViewer;
 
   ngAfterViewInit() {
-    this.initForms();
     this.subscriptions.push(
       this.appStore.user$.pipe(
-        map((userStore) => {
+        tap((userStore) => {
           this.userStore = userStore;
-          const skinType = this.userStore?.userInfo.skinType;
-          return skinType === 'default' ? 'steve' : 'alex';
+          this.skin = new SkinViewer({
+            canvas: this.viewer.nativeElement,
+            width: 293,
+            height: 320,
+            zoom: 0.8,
+            skin: this.userStore?.userInfo.skinUrl as string
+          });
+          this.skin.controls.enableZoom = false
+          // this.skin.canvas.addEventListener('mouseup', () => {
+            // const animation = () => {
+            //   let x: number = (this.skin.playerObject.rotation.x * 180) / Math.PI
+            //   let y: number = (this.skin.playerObject.rotation.y * 180) / Math.PI
+            //   let z: number = (this.skin.playerObject.rotation.z * 180) / Math.PI
+            //   if (x-1 > 0) {x-=0.2} else x=0;
+            //   if (y-1 > 0) {y-=0.2} else y=0;
+            //   if (z-1 > 0) {z-=0.2} else z=0;
+            //   console.log(x,y,z)
+            //   this.skin.playerObject.rotation.set(x*Math.PI/180,y*Math.PI/180,z*Math.PI/180,)
+            //   this.skin.renderer.render(this.skin.scene,this.skin.camera)
+            //   if (x>0 || y>0 || z>0) requestAnimationFrame(animation);
+            // }
+            // animation()
+          // });
         }),
-        switchMap((path) => this.modelService.getModel(path)),
-        tap((gltfBlob) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(gltfBlob);
-          reader.onloadend = () => {
-            const base64data = reader.result;
-            this.modelBlob = base64data!.toString();
-            this.create3DScene();
-          };
-        })
       ).subscribe()
     )
   }
 
   ngOnInit() {
+    this.initForms();
   }
 
   ngOnDestroy() {
@@ -93,73 +91,23 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
             })
           }
           this.dataLoading = false;
+        }),
+        catchError((err) => {
+          this.dataLoading = false;
+          this._snackBar.open('Неправильный формат скина', 'Закрыть')
+          throw new Error(err)
         })
       ).subscribe()
     }
-  }
-
-  public create3DScene() {
-    const canvasSizes = {
-      width: this.viewer.nativeElement.offsetWidth,
-      height: this.viewer.nativeElement.offsetHeight,
-    };
-    this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(
-      75,
-      canvasSizes.width / canvasSizes.height,
-      0.1,
-      1000
-    );
-    this.loader = new OBJLoader();
-    this.textureLoader = new THREE.TextureLoader;
-
-    this.loader.load(this.modelBlob, (object: any) => {
-      this.textureLoader.load(this.userStore?.userInfo.skinUrl as string);
-      object.position.set(0,4,0)
-      object.rotation.set(0,135 * (Math.PI / 180),0)
-      this.model = object;
-      this.scene.add(object)
-    });
-
-    this.ambientLight = new THREE.AmbientLight(0xffffff, 1);
-    const pointLight = new THREE.PointLight(0xffffff, 0.5);
-    pointLight.position.x = 2;
-    pointLight.position.y = 2;
-    pointLight.position.z = 2;
-    this.scene.add(pointLight);
-    this.scene.add(this.ambientLight);
-
-
-    this.camera.position.set(5,0,5);
-    this.scene.add(this.camera);
-
-    if (!this.viewer.nativeElement) return
-
-    this.renderer = new THREE.WebGLRenderer({
-      canvas: this.viewer.nativeElement,
-    });
-    this.renderer.setClearColor(0xe0B0F13, 1);
-    this.renderer.setSize(canvasSizes.width, canvasSizes.height);
-
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-
-    this.controls.minPolarAngle = this.controls.maxPolarAngle = Math.PI / 2;
-
-    this.controls.enableZoom = false
-
-    const animate = () => {
-      requestAnimationFrame(animate);
-      // const yy = this.model.rotation.y * 180 / Math.PI
-      // this.model.rotation.set(0,(yy+0.5) * (Math.PI / 180),0);
-      this.renderer.render(this.scene, this.camera);
-    }
-
-    animate();
   }
 
   private initForms(): void {
     this.form = this.fb.group({
       rotation: [null]
     })
+  }
+
+  test() {
+    console.log('t')
   }
 }

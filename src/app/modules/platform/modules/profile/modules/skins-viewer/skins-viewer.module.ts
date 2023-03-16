@@ -6,6 +6,7 @@ import {DragAndDropModule} from "../../../../../shared/modules/drag-and-drop/dra
 import {IconModule} from "../../../../../shared/modules/icon/icon.module";
 import {ModelService} from "../../../../../shared/services/model.service";
 import {ReactiveFormsModule} from "@angular/forms";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     SpacingModule,
     DragAndDropModule,
     IconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   providers: [ModelService]
 })

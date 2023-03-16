@@ -28,7 +28,7 @@
     "ngx-mask": "^15.0.2",
     "ngx-skeleton-loader": "^7.0.0",
     "rxjs": "~7.5.0",
-    "three": "^0.150.1",
+    "skinview3d": "^3.0.0-alpha.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
   },
