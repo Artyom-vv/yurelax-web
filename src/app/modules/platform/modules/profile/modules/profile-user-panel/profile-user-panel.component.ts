@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../../../store/app.store";
 import {Subscription, tap} from "rxjs";
-import {UserResponseInterface} from "../../../../interfaces/user.interface";
 import {UserStoreInterface} from "../../../../../../store/interfaces/user-store.interface";
 
 @Component({
@@ -10,6 +9,7 @@ import {UserStoreInterface} from "../../../../../../store/interfaces/user-store.
   styleUrls: ['./profile-user-panel.component.scss']
 })
 export class ProfileUserPanelComponent implements OnInit, OnDestroy {
+
   constructor(
     private appStore: AppStore
   ) {
@@ -17,14 +17,14 @@ export class ProfileUserPanelComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = []
 
-  public userStore: UserStoreInterface | null = null
   public dataLoading: boolean = true;
+  public userStore: UserStoreInterface | null = null;
 
   ngOnInit() {
     this.subscriptions.push(
       this.appStore.user$.pipe(
-        tap((user) => {
-          this.userStore = user
+        tap((userStore) => {
+          this.userStore = userStore
           this.dataLoading = false;
         })
       ).subscribe()
@@ -34,4 +34,5 @@ export class ProfileUserPanelComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe())
   }
+
 }

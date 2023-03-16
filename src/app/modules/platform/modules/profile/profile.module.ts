@@ -7,10 +7,8 @@ import {LayoutModule} from "../../../shared/modules/layout/layout.module";
 import {ProfileHeaderModule} from "./modules/profile-header/profile-header.module";
 import {FooterModule} from "../../../shared/modules/footer/footer.module";
 import {SidebarModule} from "../sidebar/sidebar.module";
-import {ProfileUserPanelModule} from "./modules/profile-user-panel/profile-user-panel.module";
 import {SpacingModule} from "../../../shared/modules/spacing/spacing.module";
 import {LinkModule} from "../../../shared/modules/link/link.module";
-
 
 @NgModule({
   declarations: [
@@ -24,7 +22,6 @@ import {LinkModule} from "../../../shared/modules/link/link.module";
     ProfileHeaderModule,
     FooterModule,
     SidebarModule,
-    ProfileUserPanelModule,
     SpacingModule,
     LinkModule,
   ]

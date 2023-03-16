@@ -1,12 +1,22 @@
+@import "src/shared/styles/layout/profile-border-box";
 @import "src/shared/styles/vars.colors";
 
+:host {
+  max-width: 612px;
+  width: 100%;
+}
 .user-panel {
-  padding: 16px;
-  border-radius: 16px;
-  background-color: map-get($project-colors, "gradation", 700);
+  @include profile-border-box;
+  height: 240px;
 }
 .avatar {
   width: 48px;
   height: 48px;
   border-radius: 6px;
+}
+.tag {
+  background: map-get($project-colors, "gradation", 750);
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  border-radius: 6px;
+  padding: 6px 12px;
 }

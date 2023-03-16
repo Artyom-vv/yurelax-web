@@ -5,6 +5,7 @@ import {SidebarNavigationInterface} from "../sidebar/interfaces/sidebar-navigati
 import {AppearanceAnimation} from "../../../shared/animations/redirect.animation";
 import {AnimationsService} from "../../../shared/animations/services/animations.service";
 import {Location} from "@angular/common";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'yrx-profile',
@@ -18,7 +19,8 @@ export class ProfileComponent implements OnInit, OnDestroy  {
   constructor(
     private appStore: AppStore,
     public animationsService: AnimationsService,
-    public _location: Location
+    private _location: Location,
+    private router: Router
   ) {
   }
 
@@ -46,6 +48,14 @@ export class ProfileComponent implements OnInit, OnDestroy  {
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe())
+  }
+
+  public navigate() {
+    if (history.length > 1) {
+      this._location.back()
+    } else {
+      this.router.navigate(['/platform'])
+    }
   }
 
 }

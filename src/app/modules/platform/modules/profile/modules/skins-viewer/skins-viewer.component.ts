@@ -6,7 +6,7 @@ import {Subscription, tap} from "rxjs";
 import {UserStoreInterface} from "../../../../../../store/interfaces/user-store.interface";
 import {ModelService} from "../../../../../shared/services/model.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {SkinViewer} from "skinview3d";
+import {SkinViewer, WalkingAnimation} from "skinview3d";
 import {catchError} from "rxjs/operators";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
@@ -48,6 +48,8 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
             skin: this.userStore?.userInfo.skinUrl as string
           });
           this.skin.controls.enableZoom = false
+          this.skin.animation = new WalkingAnimation()
+          this.skin.animation.speed = 0.5;
           // this.skin.canvas.addEventListener('mouseup', () => {
             // const animation = () => {
             //   let x: number = (this.skin.playerObject.rotation.x * 180) / Math.PI
@@ -105,9 +107,5 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.form = this.fb.group({
       rotation: [null]
     })
-  }
-
-  test() {
-    console.log('t')
   }
 }

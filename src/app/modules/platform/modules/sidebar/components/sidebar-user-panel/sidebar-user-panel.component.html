@@ -1,0 +1,22 @@
+<div class="user-panel flex flex_column">
+  <div class="flex gap-12 flex_align-center">
+    <yrx-skeleton *ngIf="dataLoading; else avatarTemplate" [styles]="{width: '40px', height: '40px', borderRadius: '6px'}" theme="dark"></yrx-skeleton>
+    <ng-template #avatarTemplate>
+      <img [src]="userStore?.userInfo?.avatarUrl ? userStore?.userInfo?.avatarUrl : 'assets/content/header/default-avatar.png'" [alt]="'Аватар игрока '+userStore?.user?.login+' yurelax'" class="avatar">
+    </ng-template>
+    <div class="flex flex_column">
+      <p class="text text_big medium c-gradation-100">{{userStore?.user?.login}}</p>
+      <p class="text text_table regular c-gradation-300">{{getLastOnlineStatus()}}</p>
+    </div>
+  </div>
+  <yrx-spacing type="XS"></yrx-spacing>
+  <div class="flex flex_align-center flex_justify-between">
+    <p class="text text_table regular c-gradation-300">Баланс игрока:</p>
+    <div class="flex flex_justify-between flex_align-center gap-6">
+      <p class="headline c-gradation-100">{{userStore?.userInfo?.ucoins}}</p>
+      <yrx-icon icon="ucoin"></yrx-icon>
+    </div>
+  </div>
+  <yrx-spacing type="XS"></yrx-spacing>
+  <yrx-button size="small">Пополнить баланс</yrx-button>
+</div>

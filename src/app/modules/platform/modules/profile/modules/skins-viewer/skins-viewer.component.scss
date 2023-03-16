@@ -1,10 +1,9 @@
 @import "src/shared/styles/vars.colors";
+@import "src/shared/styles/layout/profile-border-box";
 
 .skins-viewer {
   height: 368px;
-  background-color: map-get($project-colors, "gradation", 700);
-  border-radius: 12px;
-  padding: 24px;
+  @include profile-border-box;
 }
 .viewer {
   padding: 14px;
