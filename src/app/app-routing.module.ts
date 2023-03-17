@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {AuthGuard} from "./modules/shared/services/global/auth.guard";
-import {AdminGuard} from "./modules/shared/services/global/admin.guard";
+import {AuthGuard} from "./modules/shared/services/guards/auth.guard";
+import {AdminGuard} from "./modules/shared/services/guards/admin.guard";
 
 const routes: Routes = [
   {path: '', redirectTo: 'auth', pathMatch: 'full'},

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {Subscription, tap} from "rxjs";
-import {SystemUserService} from "../../../shared/services/global/system-user.service";
+import {SystemUserService} from "../../../shared/services/system-user.service";
 import {ContentLayoutInterface} from "./components/content-layout/interfaces/content-layout.interface";
 
 @Component({

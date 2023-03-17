@@ -3,7 +3,7 @@ import {AppStore} from "../../../../store/app.store";
 import {NavigationStoreInterface} from "../../../../store/interfaces/navigation-store.interface";
 import {Subscription} from "rxjs";
 import {SocialStoreInterface} from "../../../../store/interfaces/socials-store.interface";
-import {SystemUserService} from "../../services/global/system-user.service";
+import {SystemUserService} from "../../services/system-user.service";
 
 @Component({
   selector: 'yrx-header',

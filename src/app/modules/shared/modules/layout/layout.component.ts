@@ -4,7 +4,7 @@ import {Subscription} from "rxjs";
 import {AppearanceAnimation} from "../../animations/redirect.animation";
 import {AnimationsService} from "../../animations/services/animations.service";
 import {DOCUMENT} from "@angular/common";
-import {ToolsService} from "../../services/global/tools.service";
+import {ToolsService} from "../../services/tools.service";
 
 @Component({
   selector: 'yrx-layout',

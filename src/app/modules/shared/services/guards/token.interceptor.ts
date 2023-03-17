@@ -3,11 +3,11 @@ import {Injectable} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,} from '@angular/common/http';
 import {catchError} from 'rxjs/operators';
 import {Router} from '@angular/router';
-import {SystemUserService} from './system-user.service';
+import {SystemUserService} from '../system-user.service';
 import {AppStore} from "../../../../store/app.store";
 import {environment} from "../../../../../environments/environment";
 import {AuthService} from "../../../auth/services/auth.service";
-import {ToolsService} from "./tools.service";
+import {ToolsService} from "../tools.service";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {

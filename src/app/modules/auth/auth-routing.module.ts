@@ -4,11 +4,11 @@ import {LoginComponent} from "./components/login/login.component";
 import {AuthComponent} from "./auth.component";
 import {RegisterComponent} from "./components/register/register.component";
 import {EmailVerifyComponent} from "./components/email-verify/email-verify.component";
-import {CheckAuthGuard} from "../shared/services/global/check-auth.guard";
+import {CheckAuthGuard} from "../shared/services/guards/check-auth.guard";
 import {MLoginComponent} from "./components/m-login/m-login.component";
 import {MAuthLayoutComponent} from "./components/m-login/components/m-auth-layout/m-auth-layout.component";
 import {WhichEmailRecoverComponent} from "./components/which-email-recover/which-email-recover.component";
-import {EmailVerifyGuard} from "../shared/services/global/email-verify.guard";
+import {EmailVerifyGuard} from "../shared/services/guards/email-verify.guard";
 
 const routes: Routes = [
   {

@@ -45,6 +45,7 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
             width: 293,
             height: 320,
             zoom: 0.8,
+            model: this.userStore?.userInfo.skinType,
             skin: this.userStore?.userInfo.skinUrl as string
           });
           this.skin.controls.enableZoom = false

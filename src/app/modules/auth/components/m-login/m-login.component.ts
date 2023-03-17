@@ -4,13 +4,13 @@ import {UserResponseInterface} from "../../../platform/interfaces/user.interface
 import {filter, iif, mergeMap, of, Subscription, switchMap, tap} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {ActivatedRoute, Router} from "@angular/router";
-import {SystemUserService} from "../../../shared/services/global/system-user.service";
+import {SystemUserService} from "../../../shared/services/system-user.service";
 import {AuthService} from "../../services/auth.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {JwtMaAuthResponseInterface} from "../../interfaces/jwt-ma-auth-response.interface";
 import {AuthStore} from "../../store/auth.store";
-import {ToolsService} from "../../../shared/services/global/tools.service";
-import {PersistenceService} from "../../../shared/services/global/persistence.service";
+import {ToolsService} from "../../../shared/services/tools.service";
+import {PersistenceService} from "../../../shared/services/persistence.service";
 import {UserStoreInterface} from "../../../../store/interfaces/user-store.interface";
 
 @Component({

@@ -10,4 +10,5 @@ export interface UserInfoInterface {
   avatarUrl: string | null
   userInfoId: string
   createdAt: string
+  updatedAt: string
 }

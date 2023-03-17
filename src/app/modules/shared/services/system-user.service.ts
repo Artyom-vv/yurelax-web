@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core'
 import {Router} from '@angular/router';
-import {AppStore} from "../../../../store/app.store";
+import {AppStore} from "../../../store/app.store";
 import {CookieService} from "ngx-cookie-service";
 import {PersistenceService} from "./persistence.service";
 

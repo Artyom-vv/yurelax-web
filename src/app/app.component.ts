@@ -1,7 +1,7 @@
 import {Component,OnDestroy, OnInit} from '@angular/core';
-import {PersistenceService} from "./modules/shared/services/global/persistence.service";
+import {PersistenceService} from "./modules/shared/services/persistence.service";
 import {AppStore} from "./store/app.store";
-import {SystemUserService} from "./modules/shared/services/global/system-user.service";
+import {SystemUserService} from "./modules/shared/services/system-user.service";
 import {filter, Subscription, switchMap, tap} from "rxjs";
 import {AuthService} from "./modules/auth/services/auth.service";
 import {catchError} from "rxjs/operators";

@@ -9,12 +9,12 @@ import {LoginResponseInterface} from "../interfaces/login-response.interface";
 import {RegisterRequestInterface} from "../interfaces/register-request.interface";
 import {RegisterResponseInterface} from "../interfaces/register-response.interface";
 import {TokensResponseInterface} from "../interfaces/tokens-response.interface";
-import {PersistenceService} from "../../shared/services/global/persistence.service";
+import {PersistenceService} from "../../shared/services/persistence.service";
 import {AppStore} from "../../../store/app.store";
 import {CookieService} from "ngx-cookie-service";
 import {JwtMaResponseInterface} from "../interfaces/jwt-ma-response.interface";
 import {JwtMaAuthResponseInterface} from "../interfaces/jwt-ma-auth-response.interface";
-import {SystemUserService} from "../../shared/services/global/system-user.service";
+import {SystemUserService} from "../../shared/services/system-user.service";
 import {UserStoreInterface} from "../../../store/interfaces/user-store.interface";
 import {GetMeResponseInterface} from "../interfaces/get-me-response.interface";
 
