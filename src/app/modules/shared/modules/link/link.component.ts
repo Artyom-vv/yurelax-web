@@ -13,6 +13,7 @@ export class LinkComponent {
   @Input() size: 'big' | 'normal' | 'small' = 'normal';
   @Input() weight: 'regular' | 'medium' = 'medium';
   @Input() iconStroked: boolean = false;
+  @Input() iconSize: number = 0;
   @Input() custom: 'purple-300' | '' = '';
   @Input() hover: boolean = true;
   public _hover: boolean = false;

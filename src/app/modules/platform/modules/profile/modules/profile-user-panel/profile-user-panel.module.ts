@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ProfileUserPanelComponent } from './profile-user-panel.component';
 import {SkeletonModule} from "../../../../../shared/modules/skeleton/skeleton.module";
 import {SpacingModule} from "../../../../../shared/modules/spacing/spacing.module";
+import {LinkModule} from "../../../../../shared/modules/link/link.module";
 
 
 
@@ -13,10 +14,11 @@ import {SpacingModule} from "../../../../../shared/modules/spacing/spacing.modul
   exports: [
     ProfileUserPanelComponent
   ],
-  imports: [
-    CommonModule,
-    SkeletonModule,
-    SpacingModule
-  ]
+    imports: [
+        CommonModule,
+        SkeletonModule,
+        SpacingModule,
+        LinkModule
+    ]
 })
 export class ProfileUserPanelModule { }

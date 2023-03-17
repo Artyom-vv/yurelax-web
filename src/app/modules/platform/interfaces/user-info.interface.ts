@@ -5,6 +5,7 @@ export interface UserInfoInterface {
   ucoins: number
   prestigeScore: number
   lastOnlineDate: number
+  isOnline: boolean
   skinType: 'default' | 'slim'
   skinUrl: string | null
   avatarUrl: string | null

@@ -9,6 +9,7 @@ import {DropoutPointModule} from "../../../shared/modules/dropout-point/dropout-
 import {SidebarUserPanelComponent} from "./components/sidebar-user-panel/sidebar-user-panel.component";
 import {SkeletonModule} from "../../../shared/modules/skeleton/skeleton.module";
 import {ButtonModule} from "../../../shared/modules/button/button.module";
+import {UserService} from "../../services/user.service";
 
 
 

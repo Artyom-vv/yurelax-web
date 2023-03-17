@@ -1,4 +1,12 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy, ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {DropBoxOnChangeInterface} from "../../../../../shared/modules/drag-and-drop/interfaces/drop-box.interface";
 import {SkinsService} from "../../../../../shared/services/skins.service";
 import {AppStore} from "../../../../../../store/app.store";
@@ -13,7 +21,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 @Component({
   selector: 'yrx-skins-viewer',
   templateUrl: './skins-viewer.component.html',
-  styleUrls: ['./skins-viewer.component.scss']
+  styleUrls: ['./skins-viewer.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -22,7 +31,8 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
     private appStore: AppStore,
     private modelService: ModelService,
     private fb: FormBuilder,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -39,33 +49,20 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscriptions.push(
       this.appStore.user$.pipe(
         tap((userStore) => {
+          if (this.userStore?.userInfo.skinUrl !== userStore?.userInfo.skinUrl) {
+            this.skin = new SkinViewer({
+              canvas: this.viewer.nativeElement,
+              width: 293,
+              height: 320,
+              zoom: 0.8,
+              model: userStore?.userInfo.skinType,
+              skin: userStore?.userInfo.skinUrl as string
+            });
+            this.skin.controls.enableZoom = false
+            this.skin.animation = new WalkingAnimation()
+            this.skin.animation.speed = 0.5;
+          }
           this.userStore = userStore;
-          this.skin = new SkinViewer({
-            canvas: this.viewer.nativeElement,
-            width: 293,
-            height: 320,
-            zoom: 0.8,
-            model: this.userStore?.userInfo.skinType,
-            skin: this.userStore?.userInfo.skinUrl as string
-          });
-          this.skin.controls.enableZoom = false
-          this.skin.animation = new WalkingAnimation()
-          this.skin.animation.speed = 0.5;
-          // this.skin.canvas.addEventListener('mouseup', () => {
-            // const animation = () => {
-            //   let x: number = (this.skin.playerObject.rotation.x * 180) / Math.PI
-            //   let y: number = (this.skin.playerObject.rotation.y * 180) / Math.PI
-            //   let z: number = (this.skin.playerObject.rotation.z * 180) / Math.PI
-            //   if (x-1 > 0) {x-=0.2} else x=0;
-            //   if (y-1 > 0) {y-=0.2} else y=0;
-            //   if (z-1 > 0) {z-=0.2} else z=0;
-            //   console.log(x,y,z)
-            //   this.skin.playerObject.rotation.set(x*Math.PI/180,y*Math.PI/180,z*Math.PI/180,)
-            //   this.skin.renderer.render(this.skin.scene,this.skin.camera)
-            //   if (x>0 || y>0 || z>0) requestAnimationFrame(animation);
-            // }
-            // animation()
-          // });
         }),
       ).subscribe()
     )
@@ -94,10 +91,12 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
             })
           }
           this.dataLoading = false;
+          this.cdr.detectChanges()
         }),
         catchError((err) => {
           this.dataLoading = false;
           this._snackBar.open('Неправильный формат скина', 'Закрыть')
+          this.cdr.detectChanges()
           throw new Error(err)
         })
       ).subscribe()

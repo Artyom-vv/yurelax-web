@@ -7,6 +7,7 @@ import {HeaderModule} from "../shared/modules/header/header.module";
 import {HomeModule} from "./modules/home/home.module";
 import {UserGuard} from "../shared/services/guards/user.guard";
 import {SpacingModule} from "../shared/modules/spacing/spacing.module";
+import {UserService} from "./services/user.service";
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import {SpacingModule} from "../shared/modules/spacing/spacing.module";
     HomeModule,
     SpacingModule
   ],
-  providers: [UserGuard]
+  providers: [UserGuard, UserService]
 })
 export class PlatformModule {
 }

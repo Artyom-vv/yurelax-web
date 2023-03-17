@@ -65,6 +65,13 @@
     fill: none;
   }
 
+  &-arrow-right {
+    @include icon-size(16px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+
+
   &-chevron {
     &-arrow-right {
       @include icon-size(16px);

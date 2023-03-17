@@ -6,6 +6,7 @@ import {catchError} from "rxjs/operators";
 import {CheckUserExistsResponseInterface} from "../interfaces/check-user-exists-response.interface";
 import {CheckUserExistsRequestInterface} from "../interfaces/check-user-exists-request.interface";
 import {UserInfoInterface} from "../interfaces/user-info.interface";
+import {GetUserOnlineResponseInterface} from "../interfaces/get-user-online-response.interface";
 
 @Injectable()
 export class UserService {
@@ -16,6 +17,12 @@ export class UserService {
 
   getUserInfo(userId: string): Observable<UserInfoInterface> {
     return this.http.get<UserInfoInterface>(`${environment.apiUrl}/user-info/get-info/${userId}`).pipe(
+      catchError((err) => throwError(err.error))
+    )
+  }
+
+  getUserOnline(userId: string): Observable<GetUserOnlineResponseInterface> {
+    return this.http.get<GetUserOnlineResponseInterface>(`${environment.apiUrl}/user-info/get-user-online/${userId}`).pipe(
       catchError((err) => throwError(err.error))
     )
   }
