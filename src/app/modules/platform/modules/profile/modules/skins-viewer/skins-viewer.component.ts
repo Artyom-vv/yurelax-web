@@ -44,25 +44,31 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
   public form!: FormGroup
   public userStore: UserStoreInterface | null = null
   public skin!: SkinViewer;
+  public modelLoading: boolean = true;
 
   ngAfterViewInit() {
     this.subscriptions.push(
       this.appStore.user$.pipe(
         tap((userStore) => {
           if (this.userStore?.userInfo.skinUrl !== userStore?.userInfo.skinUrl) {
-            this.skin = new SkinViewer({
-              canvas: this.viewer.nativeElement,
-              width: 293,
-              height: 320,
-              zoom: 0.8,
-              model: userStore?.userInfo.skinType,
-              skin: userStore?.userInfo.skinUrl as string
-            });
-            this.skin.controls.enableZoom = false
-            this.skin.animation = new WalkingAnimation()
-            this.skin.animation.speed = 0.5;
+            setTimeout(() => {
+              this.skin = new SkinViewer({
+                canvas: this.viewer.nativeElement,
+                width: 293,
+                height: 320,
+                zoom: 0.8,
+                model: userStore?.userInfo.skinType,
+                skin: userStore?.userInfo.skinUrl as string
+              })
+              this.skin.controls.enableZoom = false
+              this.skin.animation = new WalkingAnimation()
+              this.skin.animation.speed = 0.5;
+              this.modelLoading = false;
+              this.cdr.detectChanges()
+            }, 600)
           }
           this.userStore = userStore;
+          this.cdr.detectChanges()
         }),
       ).subscribe()
     )

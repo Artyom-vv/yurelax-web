@@ -15,17 +15,20 @@
       transform: translateY(-50%);
     }
   }
+
   &_select {
+    display: block;
+    flex-direction: unset;
+    gap: unset;
     .icon {
-      display: none;
       position: absolute;
       top: 50%;
-      right: 10px;
       transform: translateY(-50%);
       pointer-events: none;
     }
-    .icon-arrow-down {
-      display: block;
+
+    yrx-icon.select-arrow .icon {
+      right: 10px;
     }
   }
 
@@ -33,6 +36,7 @@
     .mat-form-field-flex {
       //height: 141px;
     }
+
     .mat-input-element, .mat-form-field-infix {
       height: 100%;
     }

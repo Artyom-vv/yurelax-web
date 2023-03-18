@@ -1,0 +1,5 @@
+@import "src/shared/styles/layout/profile-border-box";
+
+.voting {
+  @include profile-border-box;
+}

@@ -1,0 +1,16 @@
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/vars.animations";
+
+:host {
+  width: 100%;
+}
+.voting-banner {
+  cursor: pointer;
+  height: 72px;
+  border-radius: 6px;
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  transition: $trs;
+  &:hover {
+    background-color: map-get($project-colors, "gradation", 600);
+  }
+}

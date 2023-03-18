@@ -1,9 +1,16 @@
 @import "src/shared/styles/vars.colors";
+@import "src/shared/styles/vars.animations";
 @import "src/shared/styles/layout/profile-border-box";
 
 .skins-viewer {
   height: 368px;
   @include profile-border-box;
+}
+.icon-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 }
 .viewer {
   padding: 14px;

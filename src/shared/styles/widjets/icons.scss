@@ -78,6 +78,16 @@
       stroke: map-get($project-colors, "gradation", 100);
       fill: none;
     }
+    &-arrow-down {
+      @include icon-size(20px);
+      stroke: map-get($project-colors, "gradation", 100);
+      fill: none;
+    }
+    &-arrow-up {
+      @include icon-size(20px);
+      stroke: map-get($project-colors, "gradation", 100);
+      fill: none;
+    }
   }
 
   &-loader {
