@@ -60,10 +60,11 @@ export class SidebarUserPanelComponent implements OnInit, OnDestroy {
   }
 
   public getLastOnlineStatus(lastOnlineDate: number, isOnline: boolean): string {
+    if (!lastOnlineDate) return 'Не был на сервере'
     if (isOnline) return 'Онлайн на сервере'
     const currentDate: number = new Date().getTime()
-    const seconds: number = Math.ceil((currentDate - lastOnlineDate) / 1000);
-    const minutes: number = Math.ceil(seconds / 60);
+    const seconds: number = Math.floor((currentDate - lastOnlineDate) / 1000);
+    const minutes: number = Math.floor(seconds / 60);
     const hours: number = Math.floor(minutes / 60)
     const days: number = Math.floor((hours / 24))
     if (seconds < 60) return `Онлайн недавно`

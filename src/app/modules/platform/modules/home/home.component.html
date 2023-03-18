@@ -17,12 +17,12 @@
       <yrx-skeleton *ngIf="preloading && access_token" [styles]="{height: '48px', width: '175px', borderRadius: '6px'}" theme="light"></yrx-skeleton>
       <yrx-skeleton *ngIf="preloading && !access_token" [styles]="{height: '48px', width: '225px', borderRadius: '6px'}" theme="light"></yrx-skeleton>
       <div class="show" *ngIf="!preloading">
-        <yrx-button *ngIf="!isLogged; else unloggedButton" [routerLink]="['/auth/register']" custom="white">
+        <yrx-button *ngIf="!isLogged; else unloggedButton" [routerLink]="['/auth/register']" size="big" custom="white">
           <span>Зарегистрироваться</span>
           <yrx-icon [stroked]="true" color="purple-400" icon="login"></yrx-icon>
         </yrx-button>
         <ng-template #unloggedButton>
-          <yrx-button [routerLink]="['/platform/profile']" custom="white">
+          <yrx-button [routerLink]="['/platform/profile']" size="big" custom="white">
             <span>Открыть профиль</span>
           </yrx-button>
         </ng-template>

@@ -212,8 +212,6 @@ button.mat-button {
 
   .mdc-button__label {
     &, span {
-      @include span-text-big();
-      @include weight-medium();
       color: $default_color;
     }
   }
