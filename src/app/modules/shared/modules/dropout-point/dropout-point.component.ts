@@ -9,24 +9,19 @@ import {OptionSelectOutputInterface} from "./interfaces/option-select-output.int
   styleUrls: ['./dropout-point.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DropoutPointComponent implements AfterViewInit {
+export class DropoutPointComponent {
   @Input() size: 'big' | 'normal' | 'small' = 'normal'
   @Input() icon: string = ''
   @Input() iconStroked: boolean = false
   @Input() underlined: boolean = true
   @Input() default: boolean = false
+  @Input() selected: boolean = false
   @Input() optionCustom: 'dark' | null = null
   @Input() rla?: RouterLinkActive
   @Input() value: string | number | boolean | null = null;
   @Input() isOption: boolean = false;
   @Output() press: EventEmitter<any> = new EventEmitter<any>()
   @Output() optionSelect: EventEmitter<OptionSelectOutputInterface> = new EventEmitter<OptionSelectOutputInterface>()
-
-  ngAfterViewInit() {
-    if (this.default) {
-      this.onOptionSelect()
-    }
-  }
 
   public onClick($event: any): void {
     this.press.emit($event)

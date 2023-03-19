@@ -104,6 +104,11 @@ mat-select.mat-mdc-select {
     }
   }
 
+  &:not(.mat-mdc-select-empty) {
+    .mat-mdc-select-value-text {
+      color: map-get($project-colors, "gradation", 200);
+    }
+  }
   &:not(.ng-touched.ng-invalid):focus {
   }
   &.ng-touched {
@@ -136,6 +141,11 @@ mat-select.mat-mdc-select {
       border-color: map-get($project-colors, "gradation", 600);
       position: relative;
       z-index: 1001;
+      &:not(.mat-mdc-select-empty) {
+        .mat-mdc-select-value-text {
+          color: map-get($project-colors, "gradation", 100);
+        }
+      }
       &.isAbove {
         border-color: map-get($project-colors, "gradation", 600);
         border-radius: 0 0 6px 6px;

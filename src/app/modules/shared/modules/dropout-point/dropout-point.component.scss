@@ -39,6 +39,24 @@ $text_selectors: "&, span";
   }
 }
 
+@mixin dropout-point-hover {
+  &.dropout-point {
+    &_underlined {
+      border-bottom-color: map-get($project-colors, "gradation", 600);
+    }
+  }
+  background-color: map-get($project-colors, "gradation", 700);
+  .icon:not(.icon_stroke) {
+    fill: map-get($project-colors, "gradation", 200);
+  }
+  .icon.icon_stroke {
+    stroke: map-get($project-colors, "gradation", 200);
+  }
+  #{$text_selectors} {
+    color: map-get($project-colors, "gradation", 200);
+  }
+}
+
 .dropout-point {
 
   width: 100%;
@@ -58,6 +76,11 @@ $text_selectors: "&, span";
 
   &[custom='dark'] {
     background-color: map-get($project-colors, "gradation", 750);
+    &.dropout-point {
+      &_selected {
+        @include dropout-point-hover;
+      }
+    }
   }
 
   #{$text_selectors} {
@@ -104,20 +127,6 @@ $text_selectors: "&, span";
   }
 
   &:hover:not(&_active) {
-    &.dropout-point {
-      &_underlined {
-        border-bottom-color: map-get($project-colors, "gradation", 600);
-      }
-    }
-    background-color: map-get($project-colors, "gradation", 700);
-    .icon:not(.icon_stroke) {
-      fill: map-get($project-colors, "gradation", 200);
-    }
-    .icon.icon_stroke {
-      stroke: map-get($project-colors, "gradation", 200);
-    }
-    #{$text_selectors} {
-      color: map-get($project-colors, "gradation", 200);
-    }
+    @include dropout-point-hover;
   }
 }

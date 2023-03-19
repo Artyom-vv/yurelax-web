@@ -14,17 +14,17 @@ import {RewardsModule} from "../rewards/rewards.module";
   declarations: [
     ProfileHomeComponent,
   ],
-    imports: [
-        CommonModule,
-        ProfileHomeRoutingModule,
-        SkinsViewerModule,
-        SpacingModule,
-        ProfileUserPanelModule,
-        SalesOfferModule,
-        VotingModule,
-        StatisticModule,
-        RewardsModule
-    ]
+  imports: [
+    CommonModule,
+    ProfileHomeRoutingModule,
+    SkinsViewerModule,
+    SpacingModule,
+    ProfileUserPanelModule,
+    SalesOfferModule,
+    VotingModule,
+    StatisticModule,
+    RewardsModule
+  ]
 })
 export class ProfileHomeModule {
 }

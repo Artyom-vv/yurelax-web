@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component, ElementRef, Inject,
@@ -18,7 +19,7 @@ import {DOCUMENT} from "@angular/common";
   styleUrls: ['./select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectComponent {
+export class SelectComponent implements AfterViewInit {
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -36,11 +37,35 @@ export class SelectComponent {
   @Input() custom: 'dark' | null = null
   @Input() size: 'big' | 'normal' | 'small' = 'normal'
 
-  public selectedOption: OptionSelectOutputInterface | null = null;
+  public selectedOption?: OptionSelectOutputInterface;
   public isAbove: boolean = false;
+
+  ngAfterViewInit() {
+    const value = this.control?.getRawValue();
+    if (value) {
+      this.selectedOption = {
+        value,
+        icon: null,
+        iconStroked: null
+      }
+    } else {
+      const standard: OptionInterface | undefined = this.options.find((o, idx) => idx === this.default);
+      if (standard) {
+        const {icon, value, iconStroked} = standard
+        this.selectedOption = {
+          value,
+          icon,
+          iconStroked,
+        }
+        this.control?.setValue(value)
+      }
+    }
+    this.cdr.detectChanges()
+  }
 
   public onOptionSelect($event: OptionSelectOutputInterface): void {
     this.selectedOption = $event
+    this.control?.setValue($event.value)
     this.cdr.detectChanges()
     if (this.select && this.select.panelOpen)
       this.select.close()
