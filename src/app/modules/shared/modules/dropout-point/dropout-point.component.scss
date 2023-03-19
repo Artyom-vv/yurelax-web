@@ -57,7 +57,7 @@ $text_selectors: "&, span";
   gap: 8px;
 
   &[custom='dark'] {
-
+    background-color: map-get($project-colors, "gradation", 750);
   }
 
   #{$text_selectors} {

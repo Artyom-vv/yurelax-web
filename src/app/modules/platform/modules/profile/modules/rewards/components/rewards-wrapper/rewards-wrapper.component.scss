@@ -1,0 +1,7 @@
+@import "src/shared/styles/vars.colors";
+
+.rewards-wrapper {
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  border-radius: 6px;
+  height: 72px;
+}

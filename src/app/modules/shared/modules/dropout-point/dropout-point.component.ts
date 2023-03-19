@@ -15,7 +15,7 @@ export class DropoutPointComponent implements AfterViewInit {
   @Input() iconStroked: boolean = false
   @Input() underlined: boolean = true
   @Input() default: boolean = false
-  @Input() custom: 'dark' | null = null
+  @Input() optionCustom: 'dark' | null = null
   @Input() rla?: RouterLinkActive
   @Input() value: string | number | boolean | null = null;
   @Input() isOption: boolean = false;

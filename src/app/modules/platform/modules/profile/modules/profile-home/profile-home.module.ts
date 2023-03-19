@@ -8,21 +8,23 @@ import {ProfileUserPanelModule} from "../profile-user-panel/profile-user-panel.m
 import {SalesOfferModule} from "../sales-offer/sales-offer.module";
 import {VotingModule} from "../voting/voting.module";
 import {StatisticModule} from "../statistic/statistic.module";
+import {RewardsModule} from "../rewards/rewards.module";
 
 @NgModule({
   declarations: [
     ProfileHomeComponent,
   ],
-  imports: [
-    CommonModule,
-    ProfileHomeRoutingModule,
-    SkinsViewerModule,
-    SpacingModule,
-    ProfileUserPanelModule,
-    SalesOfferModule,
-    VotingModule,
-    StatisticModule
-  ]
+    imports: [
+        CommonModule,
+        ProfileHomeRoutingModule,
+        SkinsViewerModule,
+        SpacingModule,
+        ProfileUserPanelModule,
+        SalesOfferModule,
+        VotingModule,
+        StatisticModule,
+        RewardsModule
+    ]
 })
 export class ProfileHomeModule {
 }

@@ -11,6 +11,6 @@ export class StatisticComponent {
     {text: 'Общая статистика', value: 1, icon: 'box', iconStroked: true},
     {text: 'Hunt статистика', value: 2, icon: 'shopping-bag', iconStroked: true},
     {text: 'Stay Alive статистика', value: 3, icon: 'laptop', iconStroked: true},
-    {text: 'Tower Defence статистика', value: 4, icon: 'chevron-arrow-up', iconStroked: true},
+    {text: 'Tower Defence статистика', value: 4, icon: 'settings', iconStroked: true},
   ]
 }
