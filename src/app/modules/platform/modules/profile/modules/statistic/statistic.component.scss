@@ -1,9 +1,5 @@
-@import "src/shared/styles/vars.colors";
 @import "src/shared/styles/layout/profile-border-box";
 
 .statistic {
   @include profile-border-box;
-}
-mat-select {
-  background-color: map-get($project-colors, "gradation", 750);
 }

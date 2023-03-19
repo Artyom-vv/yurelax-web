@@ -3,7 +3,8 @@
 @import "src/shared/styles/vars.animations";
 @import "src/shared/styles/widjets/icon_tools";
 
-$icon_selector: ".select_iconly + yrx-icon .icon";
+$icon_selector: "yrx-icon .icon";
+$text_selector: ".mat-mdc-select-value-text, .mat-mdc-select-placeholder";
 
 div.mat-mdc-select-arrow-wrapper {
   display: none;
@@ -11,52 +12,94 @@ div.mat-mdc-select-arrow-wrapper {
 
 @mixin select-big {
   height: 56px;
-  @include text-big;
+  .mat-mdc-select-trigger {
+    padding-right: 44px;
+    padding-left: 16px;
+  }
+  &.select_iconly .mat-mdc-select-trigger {
+    padding-left: 44px;
+  }
+  #{$text_selector} {
+    @include text-big;
+    @include weight-regular;
+  }
+  & ~ yrx-icon.select-arrow .icon {
+    right: 16px;
+  }
+  & ~ .icon-wrapper #{$icon_selector} {
+    left: 16px;
+  }
 }
 @mixin select-normal {
   height: 48px;
-  @include text-body;
+  .mat-mdc-select-trigger {
+    padding-right: 42px;
+    padding-left: 14px;
+  }
+  &.select_iconly .mat-mdc-select-trigger {
+    padding-left: 40px;
+  }
+  #{$text_selector} {
+    @include text-body;
+    @include weight-regular;
+  }
+  & ~ yrx-icon.select-arrow .icon {
+    right: 14px;
+  }
+  & ~ .icon-wrapper #{$icon_selector} {
+    left: 14px;
+  }
 }
 @mixin select-small {
   height: 40px;
-  @include text-body;
-  #{$icon_selector} {
+  .mat-mdc-select-trigger {
+    padding-right: 34px;
+    padding-left: 10px;
+  }
+  &.select_iconly .mat-mdc-select-trigger {
+    padding-left: 30px;
+  }
+  #{$text_selector} {
+    @include text-body;
+    @include weight-regular;
+  }
+  & ~ #{$icon_selector}, & ~ .icon-wrapper #{$icon_selector} {
     @include icon-size(16px);
   }
-}
-
-@mixin select-iconly {
-  padding-right: 32px;
-  & + yrx-icon {
-    display: block;
-    .icon {
-      @include icon-size(20px);
-      &:not(.icon_colored) {
-        fill: map-get($project-colors, "gradation", 300);
-        &.icon_stroke {
-          fill: transparent;
-          stroke: map-get($project-colors, "gradation", 300);
-        }
-      }
-      &-hover {
-        &:not(.icon_colored):not(.icon_stroke):hover {
-          fill: map-get($project-colors, "gradation", 100);
-        }
-        &.icon_stroke:not(.icon_colored):hover {
-          stroke: map-get($project-colors, "gradation", 100);
-        }
-      }
-    }
+  & ~ yrx-icon.select-arrow .icon {
+    right: 10px;
+  }
+  & ~ .icon-wrapper #{$icon_selector} {
+    left: 10px;
   }
 }
 
 mat-select.mat-mdc-select {
   width: 100%;
-  transition: $trs;
   background-color: map-get($project-colors, "gradation", 700);
   border-radius: 6px;
+  border: 1px solid transparent;
+
+  &[custom="dark"] {
+    background-color: map-get($project-colors, "gradation", 750);
+  }
+
   .mat-mdc-select-trigger {
     height: 100%;
+  }
+  #{$text_selector} {
+    color: map-get($project-colors, "gradation", 400);
+  }
+
+  & ~ #{$icon_selector}, & ~ .icon-wrapper #{$icon_selector} {
+    @include icon-size(20px);
+    &:not(.icon_colored) {
+      fill: map-get($project-colors, "gradation", 300);
+      &.icon_stroke {
+        fill: transparent;
+        stroke: map-get($project-colors, "gradation", 300);
+      }
+    }
   }
 
   &:not(.ng-touched.ng-invalid):focus {
@@ -78,8 +121,35 @@ mat-select.mat-mdc-select {
     &_small {
       @include select-small;
     }
-    &_iconly {
-      @include select-iconly;
+    &_expanded {
+      & ~ yrx-icon.select-arrow .icon {
+        transform: translateY(-50%) scaleY(-1);
+      }
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+      border-color: map-get($project-colors, "gradation", 600);
+    }
+    &:not(&_iconly) {
+      .icon-wrapper {
+        display: none;
+      }
     }
   }
+}
+div.mdc-menu-surface.mat-mdc-select-panel {
+  margin: 1px 0 0 -1px;
+  box-sizing: border-box;
+  background-color: map-get($project-colors, "gradation", 700);
+  padding: 0 8px;
+  border: 1px solid #232A2F;
+  border-top: none;
+  box-shadow: 0px 8px 16px rgba(9, 13, 17, 0.3);
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  &.select-panel-dark {
+    background-color: map-get($project-colors, "gradation", 750);
+  }
+}
+.mat-mdc-option:hover:not(.mdc-list-item--disabled), .mat-mdc-option:focus:not(.mdc-list-item--disabled), .mat-mdc-option.mat-mdc-option-active, .mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
+  background-color: transparent;
 }

@@ -1,10 +1,9 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { StatisticComponent } from './statistic.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {StatisticComponent} from './statistic.component';
 import {SpacingModule} from "../../../../../shared/modules/spacing/spacing.module";
-import {MatSelectModule} from "@angular/material/select";
+import {SelectModule} from "../../../../../shared/modules/select/select.module";
 import {IconModule} from "../../../../../shared/modules/icon/icon.module";
-
 
 
 @NgModule({
@@ -14,11 +13,12 @@ import {IconModule} from "../../../../../shared/modules/icon/icon.module";
   exports: [
     StatisticComponent
   ],
-    imports: [
-        CommonModule,
-        SpacingModule,
-        MatSelectModule,
-        IconModule
-    ]
+  imports: [
+    CommonModule,
+    SpacingModule,
+    SelectModule,
+    IconModule,
+  ]
 })
-export class StatisticModule { }
+export class StatisticModule {
+}

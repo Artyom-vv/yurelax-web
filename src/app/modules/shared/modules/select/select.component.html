@@ -1,0 +1,17 @@
+<div class="box box_select">
+  <mat-select [panelClass]="'select-panel-'+custom" [attr.custom]="custom" [class.select_expanded]="select.panelOpen" [value]="selectedOption?.value" [ngClass]="'select_'+size" [class.select_iconly]="icon.children.length > 0" [placeholder]="placeholder" #select>
+    <ng-template #optionTemplate let-option>
+      <yrx-dropout-point [default]="default === option.idx" [icon]="option.option.icon" [iconStroked]="option.option.iconStroked" (optionSelect)="onOptionSelect($event)" [isOption]="true" [underlined]="options.length-1 !== option.idx" [value]="option.option.value">{{option.option.text}}</yrx-dropout-point>
+    </ng-template>
+    <mat-option style="display: none" *ngFor="let option of options; let idx = index" [value]="option.value" [ngTemplateOutlet]="optionTemplate" [ngTemplateOutletContext]="{ $implicit: {option, idx}}">{{option.text}}</mat-option>
+  </mat-select>
+  <yrx-icon class="select-arrow" [stroked]="true" icon="chevron-arrow-down"></yrx-icon>
+  <div class="icon-wrapper" #icon>
+    <ng-container *ngIf="!selectedOption?.icon; else selectedOptionIconTemplate">
+      <ng-content select="[select-icon]"></ng-content>
+    </ng-container>
+    <ng-template #selectedOptionIconTemplate>
+      <yrx-icon [stroked]="selectedOption!.iconStroked ? selectedOption!.iconStroked : false" [icon]="selectedOption!.icon ? selectedOption!.icon : ''"></yrx-icon>
+    </ng-template>
+  </div>
+</div>

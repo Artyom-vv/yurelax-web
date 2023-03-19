@@ -56,6 +56,10 @@ $text_selectors: "&, span";
   align-items: center;
   gap: 8px;
 
+  &[custom='dark'] {
+
+  }
+
   #{$text_selectors} {
     @include text;
     color: map-get($project-colors, "gradation", 300);
