@@ -33,7 +33,6 @@ export class SelectComponent implements AfterViewInit {
   @Input() control: AbstractControl | null = null;
   @Input() options: OptionInterface[] = []
   @Input() placeholder: string = ''
-  @Input() default: number = 0
   @Input() custom: 'dark' | null = null
   @Input() size: 'big' | 'normal' | 'small' = 'normal'
 
@@ -41,23 +40,13 @@ export class SelectComponent implements AfterViewInit {
   public isAbove: boolean = false;
 
   ngAfterViewInit() {
-    const value = this.control?.getRawValue();
-    if (value) {
+    const option = this.control?.getRawValue() ? this.options.find(x => x.value === this.control?.getRawValue()) : this.options[0];
+    if (option) {
+      const {icon, value, iconStroked} = option
       this.selectedOption = {
         value,
-        icon: null,
-        iconStroked: null
-      }
-    } else {
-      const standard: OptionInterface | undefined = this.options.find((o, idx) => idx === this.default);
-      if (standard) {
-        const {icon, value, iconStroked} = standard
-        this.selectedOption = {
-          value,
-          icon,
-          iconStroked,
-        }
-        this.control?.setValue(value)
+        icon,
+        iconStroked
       }
     }
     this.cdr.detectChanges()

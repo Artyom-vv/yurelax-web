@@ -14,7 +14,6 @@ export class DropoutPointComponent {
   @Input() icon: string = ''
   @Input() iconStroked: boolean = false
   @Input() underlined: boolean = true
-  @Input() default: boolean = false
   @Input() selected: boolean = false
   @Input() optionCustom: 'dark' | null = null
   @Input() rla?: RouterLinkActive
