@@ -40,7 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.appStore.setProfileNavigation([
       [
-        {isButton: false, link: '/platform/profile/', name: 'Главная', icon: 'home', iconStroked: true},
+        {isButton: false, link: '/platform/profile/home', name: 'Главная', icon: 'home', iconStroked: true},
         {isButton: false, link: '/platform/profile/wallet', name: 'Кошелек', icon: 'wallet', iconStroked: true},
         {isButton: false, link: '/platform/profile/store', name: 'Магазин', icon: 'shopping-bag', iconStroked: true},
         {isButton: false, link: '/platform/profile/games', name: 'Мини-игры', icon: 'box', iconStroked: true},

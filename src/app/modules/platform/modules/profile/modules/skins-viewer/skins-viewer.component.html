@@ -1,7 +1,7 @@
 <div class="skins-viewer flex gap-16 flex_align-center">
   <div class="viewer flex flex_column-reverse">
     <canvas #viewer></canvas>
-    <yrx-icon *ngIf="modelLoading" [stroked]="true" icon="loader" class="icon-loader"></yrx-icon>
+    <yrx-icon *ngIf="modelLoading" [stroked]="true" icon="loader" class="icon-loader edge" [class.edge]="skin"></yrx-icon>
     <div class="viewer-interactive flex_justify-self-end flex flex_column gap-12">
       <div class="viewer-actions flex_align-self-end flex gap-4 flex_align-center">
         <p class="text text_body medium c-gradation-500">360°</p>

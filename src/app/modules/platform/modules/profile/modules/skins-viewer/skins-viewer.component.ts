@@ -43,7 +43,7 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
   public dataLoading: boolean = false;
   public form!: FormGroup
   public userStore: UserStoreInterface | null = null
-  public skin!: SkinViewer;
+  public skin: SkinViewer | null = null;
   public modelLoading: boolean = true;
 
   ngAfterViewInit() {
@@ -51,6 +51,7 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.appStore.user$.pipe(
         tap((userStore) => {
           if (this.userStore?.userInfo.skinUrl !== userStore?.userInfo.skinUrl) {
+          this.modelLoading = true;
             setTimeout(() => {
               this.skin = new SkinViewer({
                 canvas: this.viewer.nativeElement,

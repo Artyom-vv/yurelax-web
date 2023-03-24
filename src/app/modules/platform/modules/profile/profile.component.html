@@ -6,7 +6,7 @@
       <div class="sidebar flex flex_column">
         <yrx-sidebar [navigation]="profileNavigation">
           <ng-container sidebar-top-content>
-            <yrx-link (click)="navigate()" [iconReverse]="true"  [iconStroked]="true" icon="arrow-left">Вернуться назад</yrx-link>
+            <yrx-link [routerLink]="['/platform']" [iconReverse]="true"  [iconStroked]="true" icon="arrow-left">Вернуться назад</yrx-link>
             <yrx-spacing type="S"></yrx-spacing>
             <yrx-sidebar-user-panel></yrx-sidebar-user-panel>
             <yrx-spacing type="S"></yrx-spacing>

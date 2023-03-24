@@ -14,9 +14,9 @@ export class DropoutPointComponent {
   @Input() icon: string = ''
   @Input() iconStroked: boolean = false
   @Input() underlined: boolean = true
+  @Input() link?: string;
   @Input() selected: boolean = false
   @Input() optionCustom: 'dark' | null = null
-  @Input() rla?: RouterLinkActive
   @Input() value: string | number | boolean | null = null;
   @Input() isOption: boolean = false;
   @Output() press: EventEmitter<any> = new EventEmitter<any>()

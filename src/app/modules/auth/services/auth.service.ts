@@ -76,6 +76,10 @@ export class AuthService {
     )
   }
 
+  kickWaitingPlayer(login: string): Observable<any> {
+    return this.http.post(`${environment.javaApiUrl}/auth/kick-waiting-player`, {login}).pipe(catchError((err) => throwError(err)))
+  }
+
   logoutFromAllDevices(): Observable<any> {
     return of(false)
   }
