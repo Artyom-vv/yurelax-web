@@ -11,6 +11,7 @@ import { OnlineComponent } from './components/online/online.component';
 import { ContentLayoutComponent } from './components/content-layout/content-layout.component';
 import { InfoLayoutComponent } from './components/info-layout/info-layout.component';
 import { ActivityComponent } from './components/activity/activity.component';
+import {ClipboardModule} from "../../../shared/directives/clipboard/clipboard.module";
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { ActivityComponent } from './components/activity/activity.component';
         ButtonModule,
         IconModule,
         RouterLink,
-        SkeletonModule
+        SkeletonModule,
+        ClipboardModule
     ]
 })
 export class HomeModule {

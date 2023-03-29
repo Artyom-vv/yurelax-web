@@ -11,6 +11,8 @@ import {
 } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {InputEmitInterface} from "./directives/input-event/interfaces/input-emit.interface";
+import {PersistenceService} from "../../../shared/services/persistence.service";
+import {BehaviorSubject, interval, map, Observable, Subscription, switchMap, tap} from "rxjs";
 
 @Component({
   selector: 'yrx-email-code-verification',
@@ -20,7 +22,8 @@ import {InputEmitInterface} from "./directives/input-event/interfaces/input-emit
 export class EmailCodeVerificationComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private fb: FormBuilder,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private persistenceService: PersistenceService
   ) {
   }
 
@@ -32,9 +35,28 @@ export class EmailCodeVerificationComponent implements OnInit, OnDestroy, AfterV
   public form!: FormGroup
   public inputs: number[] = Array.from(Array(6).keys())
   public viewMounted: boolean = false;
+  public delayDate$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  public delay: number = 0;
+  public SECONDS: number = 60
 
   ngOnInit() {
     this.initForms()
+
+    const delayDate = this.persistenceService.get('emailCodeDelay')
+    if (delayDate && +delayDate > new Date().getTime()) {
+      this.setDelay(delayDate)
+    }
+
+    this.delayDate$.pipe(
+      tap((value) => {
+        this.persistenceService.set('emailCodeDelay', value)
+        this.updateDelay(value)
+      }),
+      switchMap((value) => interval(1000).pipe(map(() => value))),
+      tap((value) => {
+        this.updateDelay(value)
+      })
+    ).subscribe()
   }
 
   ngAfterViewInit() {
@@ -46,6 +68,17 @@ export class EmailCodeVerificationComponent implements OnInit, OnDestroy, AfterV
   ngOnDestroy() {
   }
 
+  public updateDelay(value: number) {
+    const remains = value - new Date().getTime();
+    if (remains >= -1000) {
+      this.delay = Math.ceil(remains / 1000)
+    }
+  }
+
+  public setDelay(date: number): void {
+    this.delayDate$.next(date)
+  }
+
   public onInput(event: InputEmitInterface) {
     let input: ElementRef | undefined;
     if (event.action === 'next') {
@@ -53,15 +86,17 @@ export class EmailCodeVerificationComponent implements OnInit, OnDestroy, AfterV
     } else if (event.action === 'back') {
       input = this.inputRefs.find(input => +input.nativeElement.id === event.id - 1);
     }
-    console.log(event.action)
     if (input) input.nativeElement.focus()
   }
 
   public onConfirm(): void {
-    this.confirm.emit()
+    const code: number = +Object.values(this.form.getRawValue()).join('');
+    this.confirm.emit(code)
   }
+
   public onResend(): void {
     this.resend.emit()
+    this.setDelay(new Date().getTime() + this.SECONDS * 1000)
   }
 
   private initForms(): void {

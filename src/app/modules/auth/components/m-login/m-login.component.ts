@@ -96,7 +96,6 @@ export class MLoginComponent implements OnInit, OnDestroy {
       filter(({authToken}) => {
         MATToken = authToken;
         // Под названием AuthToken подразумеваю тот же MAToken
-        if (!authToken) return this.router.navigate(['/platform'])
         if (this.systemUser.getMAToken() === authToken) {
           this.error = true
           return false

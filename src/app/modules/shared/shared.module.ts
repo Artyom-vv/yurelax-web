@@ -8,18 +8,15 @@ import {HttpClientModule} from "@angular/common/http";
 import { PreloaderComponent } from './components/preloader/preloader.component';
 import {IconModule} from "./modules/icon/icon.module";
 import {SpacingModule} from "./modules/spacing/spacing.module";
-import {PasswordHiderDirective} from "./directives/password-hider.directive";
 
 @NgModule({
   declarations: [
     SharedComponent,
     SvgSpritesComponent,
     PreloaderComponent,
-    PasswordHiderDirective
   ],
   exports: [
     SharedComponent,
-    PasswordHiderDirective
   ],
   imports: [
     CommonModule,

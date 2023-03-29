@@ -9,6 +9,7 @@ import {MLoginComponent} from "./components/m-login/m-login.component";
 import {MAuthLayoutComponent} from "./components/m-login/components/m-auth-layout/m-auth-layout.component";
 import {WhichEmailRecoverComponent} from "./components/which-email-recover/which-email-recover.component";
 import {EmailVerifyGuard} from "../shared/services/guards/email-verify.guard";
+import {QueryParamGuard} from "../shared/services/guards/query-param.guard";
 
 const routes: Routes = [
   {
@@ -44,7 +45,8 @@ const routes: Routes = [
   {
     path: 'email-verify',
     component: AuthComponent,
-    canActivate: [EmailVerifyGuard],
+    canActivate: [EmailVerifyGuard, QueryParamGuard],
+    data: {param: "operationId", redirectUrl: "/platform/home"},
     children: [
       {
         path: '',
@@ -57,6 +59,8 @@ const routes: Routes = [
   {
     path: 'minecraft',
     component: MAuthLayoutComponent,
+    canActivate: [QueryParamGuard],
+    data: {param: "authToken", redirectUrl: "/platform/home"},
     children: [
       {
         path: '',

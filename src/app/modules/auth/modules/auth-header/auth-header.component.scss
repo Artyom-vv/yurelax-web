@@ -32,7 +32,8 @@
 
   .third-image {
     right: 20px;
-    top: -8px;
+    top: 50%;
+    transform: translateY(-50%);
     z-index: 1;
   }
 
@@ -62,7 +63,8 @@
 
   .third-image {
     right: 24px;
-    top: -3px;
+    top: 50%;
+    transform: translateY(calc(-50% - 3px));
     z-index: 1;
   }
 

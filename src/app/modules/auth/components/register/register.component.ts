@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import { AbstractControlOptions, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {finalize, Subscription, tap} from "rxjs";
+import {finalize, Subscription, switchMap, tap} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {
   LOGIN_VALIDATION_PATTERN, MAX_LOGIN_LENGTH,
@@ -10,6 +10,7 @@ import {
 import {ExistingUserValidator} from "../../validators/existing-user.validator";
 import {UserService} from "../../../platform/services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {MailerService} from "../../../shared/services/mailer.service";
 
 @Component({
   selector: 'yrx-register',
@@ -24,7 +25,8 @@ export class RegisterComponent {
     private cdr: ChangeDetectorRef,
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private mailerService: MailerService,
   ) {
   }
 
@@ -51,8 +53,11 @@ export class RegisterComponent {
     this.dataLoading = true;
     this.subscriptions.push(
       this.authService.register(this.form.getRawValue()).pipe(
+        switchMap(() => this.mailerService.createCode()),
+        tap(({operationId}) => {
+          this.router.navigate(['/auth/email-verify'], {queryParams: {operationId}})
+        }),
         finalize(() => {
-          this.router.navigate(['/auth/email-verify'])
           this.dataLoading = false;
         }),
         catchError(err => {

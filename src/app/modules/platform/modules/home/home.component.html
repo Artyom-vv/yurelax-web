@@ -22,8 +22,9 @@
           <yrx-icon [stroked]="true" color="purple-400" icon="login"></yrx-icon>
         </yrx-button>
         <ng-template #unloggedButton>
-          <yrx-button [routerLink]="['/platform/profile']" size="big" custom="white">
-            <span>Открыть профиль</span>
+          <yrx-button clipboard value="mc.yurelax.ru" size="big" custom="white">
+            <span>mc.yurelax.ru</span>
+            <yrx-icon [stroked]="true" color="purple-400" icon="copy"></yrx-icon>
           </yrx-button>
         </ng-template>
       </div>

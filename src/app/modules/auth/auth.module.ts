@@ -24,16 +24,21 @@ import {AnimationsService} from "../shared/animations/services/animations.servic
 import {MLoginComponent} from './components/m-login/m-login.component';
 import {MAuthLayoutComponent} from './components/m-login/components/m-auth-layout/m-auth-layout.component';
 import {AuthStore} from "./store/auth.store";
-import {ErrorHintConditionModule} from "../shared/modules/error-hint-wrapper/modules/error-hint-condition/error-hint-condition.module";
+import {
+  ErrorHintConditionModule
+} from "../shared/modules/error-hint-wrapper/modules/error-hint-condition/error-hint-condition.module";
 import {ErrorHintWrapperModule} from "../shared/modules/error-hint-wrapper/error-hint-wrapper.module";
 import {UserService} from "../platform/services/user.service";
-import {SharedModule} from "../shared/shared.module";
 import {PasswordStrengthModule} from "./modules/password-strength/password-strength.module";
 import {RecoverPasswordVerifyComponent} from './components/recover-password-verify/recover-password-verify.component';
 import {RecoverPasswordComponent} from './components/recover-password/recover-password.component';
 import {EmailCodeVerificationModule} from "./modules/email-code-verification/email-code-verification.module";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import { WhichEmailRecoverComponent } from './components/which-email-recover/which-email-recover.component';
+import {WhichEmailRecoverComponent} from './components/which-email-recover/which-email-recover.component';
+import {PasswordHiderModule} from "../shared/directives/password-hider/password-hider.module";
+import {PersistenceService} from "../shared/services/persistence.service";
+import {MailerService} from "../shared/services/mailer.service";
+import {QueryParamGuard} from "../shared/services/guards/query-param.guard";
 
 @NgModule({
   declarations: [
@@ -62,10 +67,10 @@ import { WhichEmailRecoverComponent } from './components/which-email-recover/whi
     ReactiveFormsModule,
     ErrorHintConditionModule,
     ErrorHintWrapperModule,
-    SharedModule,
     PasswordStrengthModule,
     EmailCodeVerificationModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    PasswordHiderModule
   ],
   providers: [
     AnimationsService,
@@ -74,6 +79,9 @@ import { WhichEmailRecoverComponent } from './components/which-email-recover/whi
     EmailVerifyGuard,
     AuthStore,
     UserService,
+    PersistenceService,
+    MailerService,
+    QueryParamGuard,
     {
       provide: HTTP_INTERCEPTORS,
       multi: true,

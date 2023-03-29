@@ -7,6 +7,7 @@ import {CheckUserExistsResponseInterface} from "../interfaces/check-user-exists-
 import {CheckUserExistsRequestInterface} from "../interfaces/check-user-exists-request.interface";
 import {UserInfoInterface} from "../interfaces/user-info.interface";
 import {GetUserOnlineResponseInterface} from "../interfaces/get-user-online-response.interface";
+import {UserResponseInterface} from "../interfaces/user.interface";
 
 @Injectable()
 export class UserService {
@@ -29,6 +30,12 @@ export class UserService {
 
   checkUserExists(data: CheckUserExistsRequestInterface): Observable<CheckUserExistsResponseInterface> {
     return this.http.post<CheckUserExistsResponseInterface>(`${environment.apiUrl}/user/check-user-exists`, data).pipe(
+      catchError((err) => throwError(err.error))
+    )
+  }
+
+  setEmailConfirmed(): Observable<UserResponseInterface> {
+    return this.http.post<UserResponseInterface>(`${environment.apiUrl}/user/set-email-confirmed`, null).pipe(
       catchError((err) => throwError(err.error))
     )
   }

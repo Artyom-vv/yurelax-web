@@ -79,6 +79,9 @@ $text: ".text, .text span";
 .link {
   display: inline-flex;
   cursor: pointer;
+  &.disabled {
+    cursor: not-allowed;
+  }
   border-bottom: 1px solid transparent;
 
   &_iconly {

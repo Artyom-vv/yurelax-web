@@ -1,4 +1,4 @@
-<span [attr.custom]="custom" (mouseenter)="_hover = true" (mouseleave)="_hover = false" class="link flex flex_align-center gap-6" [class.flex_row-reverse]="iconReverse" [class.hover]="hover" [ngClass]="'link_'+size" [class.link_underlined]="underlined" [class.link_iconly]="icon">
+<span [class.disabled]="disabled" (click)="onClick($event)" [attr.custom]="custom" (mouseenter)="_hover = true" (mouseleave)="_hover = false" class="link flex flex_align-center gap-6" [class.flex_row-reverse]="iconReverse" [class.hover]="hover" [ngClass]="'link_'+size" [class.link_underlined]="underlined" [class.link_iconly]="icon">
   <span class="text" [ngClass]="weight">
     <ng-content></ng-content>
   </span>

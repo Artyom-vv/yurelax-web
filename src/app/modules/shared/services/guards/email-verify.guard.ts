@@ -14,7 +14,7 @@ export class EmailVerifyGuard implements CanActivate, CanActivateChild {
   canActivate = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => this.appStore.user$.pipe(
     switchMap((userStore: UserStoreInterface | null) => {
       if (this.systemUser.getAccessToken()) {
-        if (userStore?.user?.role === RolesEnum.DEFAULT && !userStore?.user?.emailVerify) return of(true);
+        if (!userStore?.user?.emailVerify) return of(true);
       }
       this.router.navigate(['/platform'])
       return of(false);
