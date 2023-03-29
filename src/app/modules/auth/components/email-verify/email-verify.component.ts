@@ -53,7 +53,7 @@ export class EmailVerifyComponent implements OnInit, OnDestroy {
         }),
         finalize(() => this.dataLoading = false),
         catchError((err) => {
-          this._snackBar.open(err.message, 'Закрыть')
+          this._snackBar.open(err.error.message, 'Закрыть')
           console.log(err)
           throw new Error(err)
         })
@@ -68,10 +68,9 @@ export class EmailVerifyComponent implements OnInit, OnDestroy {
         operationId: this.operationId
       }).pipe(
         switchMap(() => this.createCode()),
-        finalize(() => {this.dataLoading = false}),
-        catchError((err) => {
-          if (err.status === 404) return this.createCode()
-          throw new Error(err)
+        finalize(() => this.dataLoading = false),
+        catchError(() => {
+          return this.createCode()
         })
       ).subscribe()
     )

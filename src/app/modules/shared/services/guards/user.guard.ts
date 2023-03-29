@@ -14,7 +14,7 @@ export class UserGuard implements CanActivate, CanActivateChild {
     switchMap((userStore: UserStoreInterface | null) => {
       if (userStore?.user?.role === RolesEnum.USER) return of(true);
 
-      this.router.navigate(['/auth'])
+      this.router.navigate(['/auth/email-verify'])
       return of(false);
     })
   );

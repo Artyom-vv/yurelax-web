@@ -4,12 +4,13 @@ import {PlatformComponent} from "./platform.component";
 import {HomeComponent} from "./modules/home/home.component";
 import {AuthGuard} from "../shared/services/guards/auth.guard";
 import {ProfileComponent} from "./modules/profile/profile.component";
+import {UserGuard} from "../shared/services/guards/user.guard";
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, UserGuard],
     loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule)
   },
   {

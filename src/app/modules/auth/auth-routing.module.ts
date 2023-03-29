@@ -45,8 +45,7 @@ const routes: Routes = [
   {
     path: 'email-verify',
     component: AuthComponent,
-    canActivate: [EmailVerifyGuard, QueryParamGuard],
-    data: {param: "operationId", redirectUrl: "/platform/home"},
+    canActivate: [EmailVerifyGuard],
     children: [
       {
         path: '',

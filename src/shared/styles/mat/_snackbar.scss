@@ -1,0 +1,27 @@
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/mat/button";
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+  background-color: map-get($project-colors, "gradation", 600) !important;
+  border-radius: 6px !important;
+}
+button.mat-mdc-snack-bar-action {
+  @include btn;
+  @include btn-small;
+  background-color: rgba(map-get($project-colors, "gradation", 200), 0.05);
+  &:hover {
+    background-color: rgba(map-get($project-colors, "gradation", 200), 0.1);
+  }
+  .mat-ripple-element {
+    background-color: rgba(map-get($project-colors, "gradation", 200), 0.5) !important;
+  }
+}
+.mat-mdc-button-persistent-ripple {
+  display: none;
+}
+.mat-mdc-snack-bar-container .mdc-snackbar__label {
+  font-family: $main_font !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+}

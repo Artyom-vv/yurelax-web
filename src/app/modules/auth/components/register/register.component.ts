@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import { AbstractControlOptions, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {finalize, Subscription, switchMap, tap} from "rxjs";
+import {filter, finalize, map, Subscription, switchMap, tap} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {
   LOGIN_VALIDATION_PATTERN, MAX_LOGIN_LENGTH,
@@ -11,6 +11,9 @@ import {ExistingUserValidator} from "../../validators/existing-user.validator";
 import {UserService} from "../../../platform/services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MailerService} from "../../../shared/services/mailer.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {PersistenceService} from "../../../shared/services/persistence.service";
+import {AppStore} from "../../../../store/app.store";
 
 @Component({
   selector: 'yrx-register',
@@ -27,6 +30,9 @@ export class RegisterComponent {
     private router: Router,
     private route: ActivatedRoute,
     private mailerService: MailerService,
+    private _snackBar: MatSnackBar,
+    private persistenceService: PersistenceService,
+    private appStore: AppStore
   ) {
   }
 
@@ -53,9 +59,10 @@ export class RegisterComponent {
     this.dataLoading = true;
     this.subscriptions.push(
       this.authService.register(this.form.getRawValue()).pipe(
-        switchMap(() => this.mailerService.createCode()),
-        tap(({operationId}) => {
+        switchMap((res) => this.mailerService.createCode().pipe(map(({operationId}) => ({res, operationId})))),
+        tap(({res,operationId}) => {
           this.router.navigate(['/auth/email-verify'], {queryParams: {operationId}})
+          this.appStore.setIsLogged(true);
         }),
         finalize(() => {
           this.dataLoading = false;
@@ -90,15 +97,19 @@ export class RegisterComponent {
     }, {
       validators: [this.checkIfMatchingPasswords('password', 'passwordRepeat')]
     } as AbstractControlOptions)
+    const userInvitedId: string = this.persistenceService.get('userInvitedId')
+    if (userInvitedId) this.form.patchValue({userInvitedId})
   }
 
   private dataFields(): void {
     this.subscriptions.push(
       this.route.queryParams.pipe(
-        tap((data) => {
-          if (data['ref']) {
-            this.form.patchValue({userInvitedId:data['ref']}, {emitEvent: false});
-          }
+        filter((data) => data['ref']),
+        switchMap((data) => this.userService.getUser(data['ref'])),
+        tap((user) => {
+          this.persistenceService.set('userInvitedId', user.userId);
+          this.form.patchValue({userInvitedId: user.userId}, {emitEvent: false});
+          this._snackBar.open('Вы были приглашены ' + user.login, 'Хорошо')
         })
       ).subscribe()
     )

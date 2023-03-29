@@ -239,8 +239,7 @@ button.mat-button {
   }
 }
 
-
-button.mat-mdc-button.btn {
+@mixin btn {
   width: 100%;
   transition: background-color $trs, color $trs;
   border-radius: 6px;
@@ -253,6 +252,12 @@ button.mat-mdc-button.btn {
   }
 
   overflow: hidden;
+}
+
+
+button.mat-mdc-button.btn {
+
+  @include btn;
 
   &:disabled {
     cursor: not-allowed;

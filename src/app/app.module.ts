@@ -14,6 +14,7 @@ import {CookieService} from "ngx-cookie-service";
 import {AuthGuard} from "./modules/shared/services/guards/auth.guard";
 import {TokenInterceptor} from "./modules/shared/services/guards/token.interceptor";
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
+import {UserGuard} from "./modules/shared/services/guards/user.guard";
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
       multi: true,
       useClass: TokenInterceptor,
     },
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 7000}}
   ],
   bootstrap: [AppComponent]
 })

@@ -14,7 +14,6 @@ import {AppStore} from "../../../store/app.store";
 import {CookieService} from "ngx-cookie-service";
 import {JwtMaResponseInterface} from "../interfaces/jwt-ma-response.interface";
 import {JwtMaAuthResponseInterface} from "../interfaces/jwt-ma-auth-response.interface";
-import {SystemUserService} from "../../shared/services/system-user.service";
 import {UserStoreInterface} from "../../../store/interfaces/user-store.interface";
 import {GetMeResponseInterface} from "../interfaces/get-me-response.interface";
 
@@ -25,7 +24,6 @@ export class AuthService {
     private persistenceService: PersistenceService,
     private cookieService: CookieService,
     private appStore: AppStore,
-    private systemUser: SystemUserService
   ) {
   }
 
@@ -68,7 +66,6 @@ export class AuthService {
     return this.http.post<RegisterResponseInterface>(`${environment.apiUrl}/auth/register`, data).pipe(
       tap((res) => {
         this.saveData(res)
-        this.appStore.setIsLogged(true);
       }),
       catchError((err) => {
         throw new Error(err.message);

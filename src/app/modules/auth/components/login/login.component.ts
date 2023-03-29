@@ -77,9 +77,12 @@ export class LoginComponent implements OnInit, OnDestroy {
         catchError(err => {
           this.dataLoading = false
           this.cdr.detectChanges()
-          if (err.statusCode === 401) {
+          if (err.status === 401) {
             this._snackBar.open('Неправильный логин или пароль', 'Закрыть')
-          } else this._snackBar.open('Произошла ошибка', 'Закрыть')
+          } else {
+            this._snackBar.open(err.error.message, 'Закрыть')
+          }
+
           throw new Error(err.message);
         })
       ).subscribe()

@@ -1,6 +1,6 @@
 <div class="email-code-verification flex flex_column flex_align-center">
   <p class="text text_body regular text-center c-gradation-300">
-    Введите шестизначный код, отправленный вам на электронную почту
+    {{text ? text : 'Введите шестизначный код, отправленный вам на электронную почту'}}
   </p>
   <yrx-spacing type="S"></yrx-spacing>
   <div class="flex gap-8 flex_align-center" [formGroup]="form">
