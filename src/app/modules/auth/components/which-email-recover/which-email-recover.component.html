@@ -8,6 +8,7 @@
     <yrx-error-hint-wrapper [control]="form.get('email')">
       <yrx-error-hint-condition [condition]="['required']">Почта не должна быть пустой</yrx-error-hint-condition>
       <yrx-error-hint-condition [condition]="['email']">Указанная почта имеет неверный формат</yrx-error-hint-condition>
+      <yrx-error-hint-condition [condition]="['notExist']">Аккаунта с такой почтой не существует</yrx-error-hint-condition>
     </yrx-error-hint-wrapper>
   </div>
   <yrx-spacing type="M"></yrx-spacing>

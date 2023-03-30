@@ -4,7 +4,11 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthStore} from "../../store/auth.store";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {Subscription} from "rxjs";
+import {finalize, Subscription, tap} from "rxjs";
+import {MailerService} from "../../../shared/services/mailer.service";
+import {ExistingUserValidator} from "../../validators/existing-user.validator";
+import {UserService} from "../../../platform/services/user.service";
+import {catchError} from "rxjs/operators";
 
 @Component({
   selector: 'yrx-which-email-recover',
@@ -19,7 +23,9 @@ export class WhichEmailRecoverComponent {
     private router: Router,
     private cdr: ChangeDetectorRef,
     private authStore: AuthStore,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private mailerService: MailerService,
+    private userService: UserService
   ) {
   }
 
@@ -40,12 +46,28 @@ export class WhichEmailRecoverComponent {
   }
 
   public send(): void {
-
+    this.dataLoading = true;
+    const {email} = this.form.getRawValue()
+    this.authStore.setRecoveringPasswordEmail(email)
+    this.subscriptions.push(
+      this.mailerService.recoverPasswordCode({email}).pipe(
+        tap(({operationId}) => {
+          this.authStore.setIsRecoveringPasswordStep('verify');
+          this._snackBar.open('Код отправлен на вашу почту', 'Хорошо')
+          this.router.navigate(['/auth/recover-password-verify'], {queryParams: {operationId}})
+        }),
+        finalize(() => this.dataLoading = false),
+        catchError((err) => {
+          this._snackBar.open(err.error.message,"Закрыть")
+          throw new Error(err)
+        })
+      ).subscribe()
+    )
   }
 
   private initForms(): void {
     this.form = this.fb.group({
-      email: ["", [Validators.required, Validators.email]],
+      email: ["", [Validators.required, Validators.email], [ExistingUserValidator(this.userService, true)]],
     })
   }
 

@@ -12,7 +12,8 @@ import {
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {InputEmitInterface} from "./directives/input-event/interfaces/input-emit.interface";
 import {PersistenceService} from "../../../shared/services/persistence.service";
-import {BehaviorSubject, interval, map, Observable, Subscription, switchMap, tap} from "rxjs";
+import {BehaviorSubject, finalize, interval, map, Observable, Subscription, switchMap, tap} from "rxjs";
+import {catchError} from "rxjs/operators";
 
 @Component({
   selector: 'yrx-email-code-verification',

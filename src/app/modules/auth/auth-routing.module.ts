@@ -10,6 +10,9 @@ import {MAuthLayoutComponent} from "./components/m-login/components/m-auth-layou
 import {WhichEmailRecoverComponent} from "./components/which-email-recover/which-email-recover.component";
 import {EmailVerifyGuard} from "../shared/services/guards/email-verify.guard";
 import {QueryParamGuard} from "../shared/services/guards/query-param.guard";
+import {RecoverStepGuard} from "../shared/services/guards/recover-step.guard";
+import {RecoverPasswordVerifyComponent} from "./components/recover-password-verify/recover-password-verify.component";
+import {RecoverPasswordComponent} from "./components/recover-password/recover-password.component";
 
 const routes: Routes = [
   {
@@ -51,6 +54,34 @@ const routes: Routes = [
         path: '',
         data: {route: 'email-verify'},
         component: EmailVerifyComponent,
+        pathMatch: 'full',
+      },
+    ]
+  },
+  {
+    path: 'recover-password-verify',
+    component: AuthComponent,
+    canActivate: [RecoverStepGuard],
+    data: {recoverStep: 'verify'},
+    children: [
+      {
+        path: '',
+        data: {route: 'recover-password-verify'},
+        component: RecoverPasswordVerifyComponent,
+        pathMatch: 'full',
+      },
+    ]
+  },
+  {
+    path: 'recover-password',
+    component: AuthComponent,
+    canActivate: [RecoverStepGuard],
+    data: {recoverStep: 'recover'},
+    children: [
+      {
+        path: '',
+        data: {route: 'recover-password'},
+        component: RecoverPasswordComponent,
         pathMatch: 'full',
       },
     ]

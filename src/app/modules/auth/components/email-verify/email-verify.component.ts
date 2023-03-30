@@ -6,6 +6,7 @@ import {UserService} from "../../../platform/services/user.service";
 import {catchError} from "rxjs/operators";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ActivatedRoute, Router} from "@angular/router";
+import {RecoverPasswordCodeRequestInterface} from "../../../shared/interfaces/recover-password-code-request.interface";
 
 @Component({
   selector: 'yrx-email-verify',
@@ -75,9 +76,8 @@ export class EmailVerifyComponent implements OnInit, OnDestroy {
       ).subscribe()
     )
   }
-
   createCode(): Observable<CodeResponseInterface> {
-    return this.mailerService.createCode().pipe(
+    return this.mailerService.confirmEmailCode().pipe(
       tap((response) => {
         this.operationId = response.operationId;
         this._snackBar.open('Код отправлен на вашу почту', 'Хорошо')

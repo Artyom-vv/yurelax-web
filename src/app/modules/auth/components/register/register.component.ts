@@ -59,8 +59,9 @@ export class RegisterComponent {
     this.dataLoading = true;
     this.subscriptions.push(
       this.authService.register(this.form.getRawValue()).pipe(
-        switchMap((res) => this.mailerService.createCode().pipe(map(({operationId}) => ({res, operationId})))),
+        switchMap((res) => this.mailerService.confirmEmailCode().pipe(map(({operationId}) => ({res, operationId})))),
         tap(({res,operationId}) => {
+          this._snackBar.open('Код отправлен на вашу почту', 'Хорошо')
           this.router.navigate(['/auth/email-verify'], {queryParams: {operationId}})
           this.appStore.setIsLogged(true);
         }),

@@ -39,6 +39,7 @@ import {PasswordHiderModule} from "../shared/directives/password-hider/password-
 import {PersistenceService} from "../shared/services/persistence.service";
 import {MailerService} from "../shared/services/mailer.service";
 import {QueryParamGuard} from "../shared/services/guards/query-param.guard";
+import {RecoverStepGuard} from "../shared/services/guards/recover-step.guard";
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import {QueryParamGuard} from "../shared/services/guards/query-param.guard";
     PersistenceService,
     MailerService,
     QueryParamGuard,
+    RecoverStepGuard,
     {
       provide: HTTP_INTERCEPTORS,
       multi: true,

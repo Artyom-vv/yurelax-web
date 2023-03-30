@@ -7,6 +7,7 @@ import {Injectable} from "@angular/core";
 import {VerifyCodeResponseInterface} from "../interfaces/verify-code-response.interface";
 import {VerifyCodeRequestInterface} from "../interfaces/verify-code-request.interface";
 import {DeleteCodeRequestInterface} from "../interfaces/delete-code-request.interface";
+import {RecoverPasswordCodeRequestInterface} from "../interfaces/recover-password-code-request.interface";
 
 @Injectable()
 export class MailerService {
@@ -15,9 +16,11 @@ export class MailerService {
     private http: HttpClient
   ) {
   }
-
-  createCode(): Observable<CodeResponseInterface> {
-    return this.http.post<CodeResponseInterface>(`${environment.apiUrl}/mailer/create-code`, null).pipe(catchError((err) => throwError(err)))
+  recoverPasswordCode(dto: RecoverPasswordCodeRequestInterface): Observable<CodeResponseInterface> {
+    return this.http.post<CodeResponseInterface>(`${environment.apiUrl}/mailer/recover-password`, dto).pipe(catchError((err) => throwError(err)))
+  }
+  confirmEmailCode(): Observable<CodeResponseInterface> {
+    return this.http.post<CodeResponseInterface>(`${environment.apiUrl}/mailer/confirm-email`, null).pipe(catchError((err) => throwError(err)))
   }
   verifyCode(data: VerifyCodeRequestInterface): Observable<VerifyCodeResponseInterface> {
     return this.http.post<VerifyCodeResponseInterface>(`${environment.apiUrl}/mailer/verify-code`, data).pipe(catchError((err) => throwError(err)))
