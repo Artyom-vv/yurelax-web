@@ -16,6 +16,8 @@ import {JwtMaResponseInterface} from "../interfaces/jwt-ma-response.interface";
 import {JwtMaAuthResponseInterface} from "../interfaces/jwt-ma-auth-response.interface";
 import {UserStoreInterface} from "../../../store/interfaces/user-store.interface";
 import {GetMeResponseInterface} from "../interfaces/get-me-response.interface";
+import {RecoverPasswordRequestInterface} from "../interfaces/recover-password-request.interface";
+import {RecoverPasswordResponseInterface} from "../interfaces/recover-password-response.interface";
 
 @Injectable()
 export class AuthService {
@@ -67,6 +69,14 @@ export class AuthService {
       tap((res) => {
         this.saveData(res)
       }),
+      catchError((err) => {
+        throw new Error(err.message);
+      })
+    )
+  }
+
+  recoverPassword(data: RecoverPasswordRequestInterface): Observable<RecoverPasswordResponseInterface> {
+    return this.http.post<RegisterResponseInterface>(`${environment.apiUrl}/auth/recover-password`, data).pipe(
       catchError((err) => {
         throw new Error(err.message);
       })

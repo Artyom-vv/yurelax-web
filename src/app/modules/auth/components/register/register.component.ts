@@ -14,6 +14,7 @@ import {MailerService} from "../../../shared/services/mailer.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {PersistenceService} from "../../../shared/services/persistence.service";
 import {AppStore} from "../../../../store/app.store";
+import {CheckIfMatchingPasswordsValidator} from "../../validators/check-if-matching-passwords.validator";
 
 @Component({
   selector: 'yrx-register',
@@ -76,18 +77,6 @@ export class RegisterComponent {
     )
   }
 
-  public checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
-    return (group: FormGroup) => {
-      let passwordInput = group.controls[passwordKey],
-        passwordConfirmationInput = group.controls[passwordConfirmationKey];
-      if (passwordInput.value !== passwordConfirmationInput.value || !passwordInput.value && !passwordConfirmationInput.value) {
-        return passwordConfirmationInput.setErrors({notEquivalent: true})
-      } else {
-        return passwordConfirmationInput.setErrors(null);
-      }
-    }
-  }
-
   private initForms(): void {
     this.form = this.fb.group({
       login: ["", [Validators.required, Validators.minLength(MIN_LOGIN_LENGTH), Validators.maxLength(MAX_LOGIN_LENGTH), Validators.pattern(LOGIN_VALIDATION_PATTERN)], [ExistingUserValidator(this.userService)]],
@@ -96,7 +85,7 @@ export class RegisterComponent {
       password: ["", [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH)]],
       passwordRepeat: ["", [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH)]],
     }, {
-      validators: [this.checkIfMatchingPasswords('password', 'passwordRepeat')]
+      validators: [CheckIfMatchingPasswordsValidator('password', 'passwordRepeat')]
     } as AbstractControlOptions)
     const userInvitedId: string = this.persistenceService.get('userInvitedId')
     if (userInvitedId) this.form.patchValue({userInvitedId})

@@ -108,3 +108,38 @@
     z-index: 0;
   }
 }
+.recover-password {
+  .first-image {
+    top: -36px;
+    right: -28px;
+    opacity: 0.3;
+    filter: blur(1px);
+    transform: rotate(-75deg);
+    width: 72px;
+    height: 72px;
+  }
+
+  .second-image {
+    opacity: 0.6;
+    filter: blur(2px);
+    transform: rotate(30deg);
+    bottom: -36px;
+    right: 60px;
+    width: 72px;
+    height: 72px;
+  }
+
+  .third-image {
+    right: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    width: 104px;
+    height: 104px;
+  }
+  .layer-blur-image {
+    filter: blur(50px);
+    opacity: 0.7;
+    z-index: 0;
+  }
+}

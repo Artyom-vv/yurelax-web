@@ -4,7 +4,9 @@
 @import "src/shared/styles/layout/typography";
 
 $text: ".text, .text span";
-
+:host {
+  display: block;
+}
 @mixin link-big {
   height: 28px;
   #{$text} {
