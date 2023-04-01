@@ -4,6 +4,7 @@
   position: relative;
   overflow-x: hidden;
   background-color: map-get($project-colors, "gradation", 800);
+  min-height: 100vh;
 }
 .preloading {
   height: 100vh;

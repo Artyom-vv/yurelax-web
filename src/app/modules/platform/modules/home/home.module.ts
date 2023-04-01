@@ -12,6 +12,13 @@ import { ContentLayoutComponent } from './components/content-layout/content-layo
 import { InfoLayoutComponent } from './components/info-layout/info-layout.component';
 import { ActivityComponent } from './components/activity/activity.component';
 import {ClipboardModule} from "../../../shared/directives/clipboard/clipboard.module";
+import { OfferComponent } from './components/offer/offer.component';
+import {ErrorHintWrapperModule} from "../../../shared/modules/error-hint-wrapper/error-hint-wrapper.module";
+import {MatInputModule} from "@angular/material/input";
+import {ReactiveFormsModule} from "@angular/forms";
+import {
+  ErrorHintConditionModule
+} from "../../../shared/modules/error-hint-wrapper/modules/error-hint-condition/error-hint-condition.module";
 
 
 @NgModule({
@@ -21,17 +28,22 @@ import {ClipboardModule} from "../../../shared/directives/clipboard/clipboard.mo
     OnlineComponent,
     ContentLayoutComponent,
     InfoLayoutComponent,
-    ActivityComponent
+    ActivityComponent,
+    OfferComponent
   ],
-    imports: [
-        CommonModule,
-        SpacingModule,
-        ButtonModule,
-        IconModule,
-        RouterLink,
-        SkeletonModule,
-        ClipboardModule
-    ]
+  imports: [
+    CommonModule,
+    SpacingModule,
+    ButtonModule,
+    IconModule,
+    RouterLink,
+    SkeletonModule,
+    ClipboardModule,
+    ErrorHintWrapperModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    ErrorHintConditionModule
+  ]
 })
 export class HomeModule {
 }

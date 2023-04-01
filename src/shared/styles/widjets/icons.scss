@@ -209,6 +209,21 @@
     stroke: map-get($project-colors, "gradation", 100);
     fill: none;
   }
+  &-key {
+    @include icon-size(20px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+  &-skull {
+    @include icon-size(20px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+  &-arrow-right-circle {
+    @include icon-size(20px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
 }
 
 .icon {

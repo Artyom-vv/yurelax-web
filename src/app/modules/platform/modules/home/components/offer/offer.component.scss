@@ -1,0 +1,11 @@
+@import "src/shared/styles/vars.colors";
+
+.offer {
+  height: 448px;
+  background-color: map-get($project-colors, "gradation", 700);
+  border-radius: 12px;
+  padding: 60px 48px;
+}
+.content {
+  max-width: 564px;
+}

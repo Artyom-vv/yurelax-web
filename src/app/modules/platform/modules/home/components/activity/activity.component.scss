@@ -5,6 +5,7 @@
   flex: 1 0 0;
 }
 .activity {
+  height: 100%;
   background: map-get($project-colors, "gradation", 700);
   padding: 16px;
   border-radius: 12px;

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, HostListener, Inject, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {Subscription} from "rxjs";
 import {AppearanceAnimation} from "../../animations/redirect.animation";
@@ -41,11 +41,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
   })
 
   ngOnInit() {
-    this.subscriptions.push(
-      this.appStore.footerHeight$.subscribe((footerHeight) => {
-        this.styles['minHeight'] = `calc(100vh + ${footerHeight}px`;
-      })
-    )
     this.subscriptions.push(
       this.appStore.preloading$.subscribe((preloading) => {
         this.preloading = preloading

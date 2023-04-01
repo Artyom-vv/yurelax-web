@@ -75,7 +75,8 @@ $icon_selector: ".input_iconly + yrx-icon .icon";
   }
 }
 
-input.mat-mdc-input-element {
+input.mat-mdc-input-element, textarea.mat-mdc-input-element {
+  resize: none;
   width: 100%;
   transition: $trs;
   border-radius: 6px;
@@ -137,5 +138,22 @@ input.mat-mdc-input-element {
     &_iconly {
       @include input-iconly;
     }
+  }
+  &.textarea {
+    height: auto;
+  }
+}
+textarea.mat-mdc-input-element {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  &::-webkit-scrollbar {
+    background-color: map-get($project-colors, "gradation", 700);
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: 3px solid map-get($project-colors, "gradation", 700);
+    background-color: map-get($project-colors, "gradation", 500);
+    border-radius: 4px;
   }
 }

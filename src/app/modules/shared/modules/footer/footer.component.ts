@@ -1,4 +1,12 @@
-import {AfterViewInit, Component, ElementRef,Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Inject,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {Subscription} from "rxjs";
 import {SocialStoreInterface} from "../../../../store/interfaces/socials-store.interface";
@@ -12,7 +20,7 @@ import {DOCUMENT} from "@angular/common";
 export class FooterComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private appStore: AppStore,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
   ) {
   }
 
