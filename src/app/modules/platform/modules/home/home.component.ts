@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public isLogged: boolean = false;
   public preloading: boolean = true;
   public dataLoading: boolean = true;
+  public messageLoading: boolean = false;
   public access_token: boolean = false;
   public content_blocks: ContentLayoutInterface[] = [{
     img: {

@@ -1,5 +1,4 @@
 import {
-  AfterContentChecked,
   AfterViewInit,
   ChangeDetectorRef,
   Component, DoCheck,
@@ -7,7 +6,6 @@ import {
   Input,
   Output
 } from '@angular/core';
-import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'yrx-button',

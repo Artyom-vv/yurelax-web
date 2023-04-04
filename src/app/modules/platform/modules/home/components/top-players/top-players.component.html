@@ -1,0 +1,19 @@
+<div class="container">
+  <yrx-spacing type="L"></yrx-spacing>
+  <h3>Топ-8 игроков за {{month}}</h3>
+  <yrx-spacing type="M"></yrx-spacing>
+  <div class="flex flex_wrap gap-16">
+    <yrx-selector-point style="flex-basis: 300px" *ngFor="let game of miniGames" [active]="game.miniGameKey === miniGameKey" [iconLoading]="game.miniGameKey === miniGameLoadingKey" (press)="selectTab(game.miniGameKey)">
+      <ng-container selector-point-icon>
+        <yrx-icon *ngIf="game.miniGameKey === miniGameLoadingKey; else iconLoading" [stroked]="true" icon="loader"></yrx-icon>
+        <ng-template #iconLoading>
+          <yrx-icon  [stroked]="game.iconStroked" [icon]="game.icon"></yrx-icon>
+        </ng-template>
+      </ng-container>
+      <span>{{game.name}}</span>
+    </yrx-selector-point>
+  </div>
+  <yrx-spacing type="XS"></yrx-spacing>
+  <yrx-rating-table [columns]="columns" [data]="taleData"></yrx-rating-table>
+  <yrx-spacing type="L"></yrx-spacing>
+</div>

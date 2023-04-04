@@ -1,0 +1,12 @@
+@import "src/shared/styles/vars.colors";
+
+.rating-table-point {
+  height: 64px;
+  padding: 0 24px;
+  &[theme='dark'] {
+    background-color: map-get($project-colors, "gradation", 750);
+  }
+  &[theme='bright'] {
+    background-color: map-get($project-colors, "gradation", 700);
+  }
+}

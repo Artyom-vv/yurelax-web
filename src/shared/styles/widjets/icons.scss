@@ -224,6 +224,41 @@
     stroke: map-get($project-colors, "gradation", 100);
     fill: none;
   }
+  &-№ {
+    @include icon-size(20px);
+    fill: map-get($project-colors, "gradation", 400);
+    transform: translateY(15%);
+  }
+  &-arrow {
+    @include icon-size(24px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+  &-axe {
+    @include icon-size(24px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+  &-codesandbox {
+    @include icon-size(24px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+  &-crosshair {
+    @include icon-size(24px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+  &-dices {
+    @include icon-size(24px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+  &-shield {
+    @include icon-size(24px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
 }
 
 .icon {

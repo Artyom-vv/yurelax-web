@@ -1,0 +1,6 @@
+@import "src/shared/styles/vars.colors";
+
+:host {
+  display: block;
+  background-color: map-get($project-colors, "gradation", 750);
+}

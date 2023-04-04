@@ -1,0 +1,14 @@
+<div [attr.theme]="theme" class="rating-table-point flex flex_align-center">
+  <div class="flex_grow flex gap-24 flex_align-center">
+    <p class="text text_body medium c-gradation-100">{{index}}.</p>
+    <div class="flex_grow flex flex_align-center gap-12">
+      <img src="assets/content/default_head.png" alt="Стандартная голова игрока">
+      <p class="text text_body medium" [ngClass]="userStore?.user?.login === data.login ? 'c-purple-300' : 'c-gradation-100'">{{data.login}}</p>
+    </div>
+  </div>
+  <div class="flex_grow flex">
+    <p class="flex_grow text text_body regular c-gradation-300 text-center">{{data.values[0]}}</p>
+    <p class="flex_grow text text_body regular c-gradation-300 text-center">{{data.values[1]}}</p>
+    <p class="flex_grow text text_body regular c-gradation-300 text-center">{{data.values[2]}}</p>
+  </div>
+</div>

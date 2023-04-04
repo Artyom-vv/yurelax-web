@@ -1,0 +1,46 @@
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/layout/typography";
+@import "src/shared/styles/widjets/icon_tools";
+
+.mdc-button__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  &, span {
+    @include text-big;
+    @include weight-regular;
+    color: map-get($project-colors, "gradation", 300);
+  }
+}
+
+.selector-point {
+  $second_color: map-get($project-colors, "gradation", 100);
+  $default_color: map-get($project-colors, "gradation", 300);
+
+  #{$unique_stroke_icons} {
+    stroke: $default_color;
+  }
+
+  .icon:not(#{$unique_stroke_icons}) {
+    fill: $default_color;
+  }
+
+  &:not(&_active):hover, &_active {
+    .mdc-button__label &, span{
+      color: $second_color;
+    }
+    #{$unique_stroke_icons} {
+      stroke: $second_color;
+    }
+
+    .icon:not(#{$unique_stroke_icons}) {
+      fill: $second_color;
+    }
+  }
+  &:not(&_active):hover {
+    background-color: map-get($project-colors, "gradation", 600);
+  }
+
+}

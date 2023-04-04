@@ -1,0 +1,4 @@
+<div class="flex flex_column">
+  <yrx-rating-table-head [columns]="columns"></yrx-rating-table-head>
+  <yrx-rating-table-point [theme]="(idx+1)%2===0? 'bright' : 'dark'" [index]="idx+1" *ngFor="let row of data; let idx = index" [data]="row"></yrx-rating-table-point>
+</div>

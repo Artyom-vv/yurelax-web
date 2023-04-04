@@ -1,0 +1,9 @@
+<div class="rating-table-head flex flex_align-center">
+  <div class="flex_grow flex gap-24">
+    <p class="text text_body regular c-gradation-400"><yrx-icon icon="№"></yrx-icon></p>
+    <p class="flex_grow text text_body regular c-gradation-400">Никнейм игрока</p>
+  </div>
+  <div class="flex_grow flex">
+    <p *ngFor="let column of columns" class="flex_grow text text_body regular c-gradation-400 text-center">{{column}}</p>
+  </div>
+</div>
