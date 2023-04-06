@@ -23,6 +23,9 @@ import {TopPlayersComponent} from './components/top-players/top-players.componen
 import {RatingTableModule} from "../../../shared/modules/rating-table/rating-table.module";
 import {SelectorPointModule} from "../../../shared/modules/selector-point/selector-point.module";
 import {MiniGamesService} from "../../../shared/services/mini-games.service";
+import {StatisticsService} from "../../../shared/services/statistics.service";
+import {UserStatisticsService} from "../../../shared/services/user-statistics.service";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 @NgModule({
@@ -50,8 +53,9 @@ import {MiniGamesService} from "../../../shared/services/mini-games.service";
     ErrorHintConditionModule,
     RatingTableModule,
     SelectorPointModule,
+    MatSnackBarModule
   ],
-  providers: [MiniGamesService]
+  providers: [MiniGamesService, StatisticsService, UserStatisticsService]
 })
 export class HomeModule {
 }

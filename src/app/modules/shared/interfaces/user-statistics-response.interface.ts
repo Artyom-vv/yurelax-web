@@ -4,4 +4,5 @@ export interface UserStatisticsResponseInterface {
   miniGameKey: string
   value: number
   monthlyValue: number
+  login: string
 }
