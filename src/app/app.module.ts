@@ -34,7 +34,6 @@ registerLocaleData(localeRu)
     PersistenceService,
     SystemUserService,
     AuthService,
-    AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       multi: true,

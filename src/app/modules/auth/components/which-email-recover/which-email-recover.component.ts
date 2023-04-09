@@ -6,7 +6,7 @@ import {AuthStore} from "../../store/auth.store";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {finalize, Subscription, tap} from "rxjs";
 import {MailerService} from "../../../shared/services/mailer.service";
-import {ExistingUserValidator} from "../../validators/existing-user.validator";
+import {ExistingUserValidator} from "../../../shared/validators/existing-user.validator";
 import {UserService} from "../../../platform/services/user.service";
 import {catchError} from "rxjs/operators";
 

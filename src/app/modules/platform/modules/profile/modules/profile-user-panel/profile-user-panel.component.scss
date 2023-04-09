@@ -1,11 +1,11 @@
-@import "src/shared/styles/layout/profile-border-box";
+@import "src/shared/styles/layout/colored-box";
 @import "src/shared/styles/vars.colors";
 
 :host {
   width: 100%;
 }
 .user-panel {
-  @include profile-border-box;
+  @include colored-box;
 }
 .avatar {
   width: 48px;

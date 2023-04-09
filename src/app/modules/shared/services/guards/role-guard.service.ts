@@ -6,15 +6,14 @@ import {AppStore} from "../../../../store/app.store";
 import {UserStoreInterface} from "../../../../store/interfaces/user-store.interface";
 
 @Injectable()
-export class AdminGuard implements CanActivate, CanActivateChild {
+export class RoleGuard implements CanActivate, CanActivateChild {
   constructor(private appStore: AppStore, private router: Router) {
   }
 
   canActivate = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => this.appStore.user$.pipe(
     switchMap((userStore: UserStoreInterface | null) => {
-      if (userStore?.user?.role === RolesEnum.ADMIN) return of(true);
-
-      this.router.navigate(['/auth'])
+      if (route.data["roles"].includes(userStore?.user?.role)) return of(true);
+      this.router.navigate(['/platform'])
       return of(false);
     })
   );

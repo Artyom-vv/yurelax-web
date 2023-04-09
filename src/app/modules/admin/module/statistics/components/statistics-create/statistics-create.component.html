@@ -1,0 +1,35 @@
+<div class="statistics-create flex flex_column" [formGroup]="form">
+  <div class="flex flex_column gap-12">
+    <div class="box box_input">
+      <input formControlName="title" class="input_normal input_iconly input_dark" matInput placeholder="Название статистики">
+      <yrx-error-hint-wrapper [control]="form.get('title')">
+        <yrx-error-hint-condition [condition]="['required']">Это обязательное поле</yrx-error-hint-condition>
+      </yrx-error-hint-wrapper>
+    </div>
+    <div class="box box_input">
+      <textarea formControlName="description" class="input_normal input_iconly input_dark textarea" matInput placeholder="Описание статистики"></textarea>
+      <yrx-error-hint-wrapper [control]="form.get('description')">
+        <yrx-error-hint-condition [condition]="['required']">Это обязательное поле</yrx-error-hint-condition>
+      </yrx-error-hint-wrapper>
+    </div>
+    <div class="box box_input">
+      <input formControlName="key" class="input_normal input_iconly input_dark" matInput placeholder="Ключ статистики">
+      <yrx-error-hint-wrapper [control]="form.get('key')">
+        <yrx-error-hint-condition [condition]="['required']">Это обязательное поле</yrx-error-hint-condition>
+        <yrx-error-hint-condition [condition]="['alreadyUse']">Такая статистика уже существует</yrx-error-hint-condition>
+        <yrx-error-hint-condition [condition]="['notAllowedSymbol']">Ключ содержит недопустимые символы</yrx-error-hint-condition>
+      </yrx-error-hint-wrapper>
+    </div>
+  </div>
+  <yrx-spacing type="S"></yrx-spacing>
+  <yrx-button *ngIf="!isEdit; else editTemplate" (press)="create()" class="flex_align-self-end" [disabled]="dataLoading || form.pending || form.invalid" [iconLoading]="dataLoading">
+    <span>Создать</span>
+    <yrx-icon *ngIf="dataLoading || form.pending" btn-icon [stroked]="true" icon="loader"></yrx-icon>
+  </yrx-button>
+  <ng-template #editTemplate>
+    <yrx-button (press)="edit()" class="flex_align-self-end" [disabled]="dataLoading || form.pending || form.invalid" [iconLoading]="dataLoading">
+      <span>Сохранить</span>
+      <yrx-icon *ngIf="dataLoading || form.pending" btn-icon [stroked]="true" icon="loader"></yrx-icon>
+    </yrx-button>
+  </ng-template>
+</div>

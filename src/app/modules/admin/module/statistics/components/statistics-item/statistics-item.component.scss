@@ -1,0 +1,5 @@
+@import "src/shared/styles/layout/colored-box";
+
+.statistics-item {
+  @include colored-box;
+}

@@ -1,10 +1,10 @@
 @import "src/shared/styles/vars.colors";
 @import "src/shared/styles/vars.animations";
-@import "src/shared/styles/layout/profile-border-box";
+@import "src/shared/styles/layout/colored-box";
 
 .skins-viewer {
   height: 368px;
-  @include profile-border-box;
+  @include colored-box;
 }
 .icon-loader {
   position: absolute;

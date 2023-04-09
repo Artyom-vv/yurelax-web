@@ -2,7 +2,6 @@ import {Observable, of, switchMap} from 'rxjs';
 import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot,} from '@angular/router';
 import {Injectable} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
-import {RolesEnum} from "../../enums/roles.enum";
 import {UserStoreInterface} from "../../../../store/interfaces/user-store.interface";
 import {SystemUserService} from "../system-user.service";
 

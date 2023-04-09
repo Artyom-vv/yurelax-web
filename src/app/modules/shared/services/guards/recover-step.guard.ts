@@ -1,9 +1,6 @@
-import {map, Observable, of, switchMap} from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot,} from '@angular/router';
 import {Injectable} from '@angular/core';
-import {RolesEnum} from "../../enums/roles.enum";
-import {AppStore} from "../../../../store/app.store";
-import {UserStoreInterface} from "../../../../store/interfaces/user-store.interface";
 import {AuthStore} from "../../../auth/store/auth.store";
 
 @Injectable()

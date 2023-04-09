@@ -7,7 +7,7 @@ import {
   LOGIN_VALIDATION_PATTERN, MAX_LOGIN_LENGTH,
   MIN_LOGIN_LENGTH, MIN_PASSWORD_LENGTH,
 } from "../../auth.constants";
-import {ExistingUserValidator} from "../../validators/existing-user.validator";
+import {ExistingUserValidator} from "../../../shared/validators/existing-user.validator";
 import {UserService} from "../../../platform/services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MailerService} from "../../../shared/services/mailer.service";

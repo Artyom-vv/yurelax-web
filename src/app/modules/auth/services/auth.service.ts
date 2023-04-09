@@ -64,6 +64,12 @@ export class AuthService {
     )
   }
 
+  adminLogin(data: LoginRequestInterface): Observable<LoginResponseInterface> {
+    return this.http.post<LoginResponseInterface>(`${environment.apiUrl}/auth/login`, data).pipe(
+      catchError((err) => throwError(err))
+    )
+  }
+
   register(data: RegisterRequestInterface): Observable<RegisterResponseInterface> {
     return this.http.post<RegisterResponseInterface>(`${environment.apiUrl}/auth/register`, data).pipe(
       tap((res) => {

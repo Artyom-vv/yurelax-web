@@ -1,8 +1,7 @@
+@import "src/shared/styles/layout/auth-content";
+
 .auth-layout {
   &-form {
-    width: 368px;
-    height: 100%;
-    overflow: hidden;
-    position: relative;
+    @include auth-content;
   }
 }

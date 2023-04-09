@@ -1,0 +1,14 @@
+<h3>Статистика</h3>
+<yrx-spacing type="S"></yrx-spacing>
+<yrx-statistics-create (onCreate)="onCreate($event)" class="w100"></yrx-statistics-create>
+<yrx-spacing type="M"></yrx-spacing>
+<div class="box box_input" [formGroup]="form">
+  <input formControlName="value" class="input_normal input_iconly" matInput placeholder="Поиск по ключу">
+  <yrx-icon [hover]="false" [stroked]="true" [icon]="dataLoading ? 'loader' : 'search'"></yrx-icon>
+</div>
+<yrx-spacing type="S"></yrx-spacing>
+<ng-container *ngFor="let statistics of statisticsList">
+  <yrx-statistics-item (onUpdate)="onUpdate($event)" (onDelete)="onDelete($event)" [data]="statistics"></yrx-statistics-item>
+  <yrx-spacing type="XS"></yrx-spacing>
+</ng-container>
+<p *ngIf="statisticsList.length === 0 && !dataLoading" class="text text_body regular c-gradation-300">Нет результатов</p>

@@ -75,6 +75,11 @@ $icon_selector: ".input_iconly + yrx-icon .icon";
   }
 }
 
+@mixin input-dark {
+  background-color: map-get($project-colors, "gradation", 800);
+  -webkit-box-shadow: 0 0 0 50px map-get($project-colors, "gradation", 800) inset;
+}
+
 input.mat-mdc-input-element, textarea.mat-mdc-input-element {
   resize: none;
   width: 100%;
@@ -137,6 +142,9 @@ input.mat-mdc-input-element, textarea.mat-mdc-input-element {
     }
     &_iconly {
       @include input-iconly;
+    }
+    &_dark {
+      @include input-dark
     }
   }
   &.textarea {

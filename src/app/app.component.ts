@@ -56,6 +56,12 @@ export class AppComponent implements OnInit, OnDestroy {
       ]
     ])
 
+    this.appStore.setAdminNavigation([
+      [
+        {isButton: false, link: '/admin/statistics', name: 'Статистика', icon: 'file', iconStroked: true},
+      ],
+    ])
+
     this.appStore.setSocials([
       {link: 'https://vk.com/yurelax', name: 'Вконтакте', icon: 'vk'},
       {link: 'https://discord.gg/xTWx7T4y6W', name: 'Дискорд', icon: 'dc'},

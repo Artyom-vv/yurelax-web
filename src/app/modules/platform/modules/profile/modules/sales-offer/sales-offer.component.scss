@@ -1,7 +1,7 @@
-@import "src/shared/styles/layout/profile-border-box";
+@import "src/shared/styles/layout/colored-box";
 
 .sales-offer {
-  @include profile-border-box;
+  @include colored-box;
   background: transparent;
   height: 240px;
   width: 294px;

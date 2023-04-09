@@ -17,10 +17,7 @@ export class CheckAuthGuard implements CanActivate, CanActivateChild {
         if (userStore?.user?.role === RolesEnum.DEFAULT) {
           this.router.navigate(['/auth/email-verify']);
           return of(false)
-        } else if (userStore?.user?.role === RolesEnum.ADMIN) {
-          this.router.navigate(['/admin']);
-          return of(false);
-        } else if (userStore?.user?.role === RolesEnum.USER) {
+        } else if (userStore?.user?.role === RolesEnum.USER || userStore?.user?.role === RolesEnum.ADMIN) {
           this.router.navigate(['/platform']);
           return of(false)
         }

@@ -1,18 +1,19 @@
 <section class="profile-layout flex flex_column" [ngStyle]="styles">
   <yrx-profile-header></yrx-profile-header>
   <yrx-spacing type="L"></yrx-spacing>
-  <main [@routeAnimations]="animationsService.getRouteAnimationData(null, false)" class="main flex_grow flex flex_column">
+  <main [@routeAnimations]="animationsService.getRouteAnimationData(null, false)"
+        class="main flex_grow flex flex_column">
     <div class="container flex_grow flex gap-48">
-      <div class="sidebar flex flex_column">
-        <yrx-sidebar [navigation]="profileNavigation">
-          <ng-container sidebar-top-content>
-            <yrx-link [routerLink]="['/platform']" [iconReverse]="true"  [iconStroked]="true" icon="arrow-left">Вернуться назад</yrx-link>
-            <yrx-spacing type="S"></yrx-spacing>
-            <yrx-sidebar-user-panel></yrx-sidebar-user-panel>
-            <yrx-spacing type="S"></yrx-spacing>
-          </ng-container>
-        </yrx-sidebar>
-      </div>
+      <yrx-sidebar [navigation]="profileNavigation">
+        <ng-container sidebar-top-content>
+          <yrx-link [routerLink]="['/platform']" [iconReverse]="true" [iconStroked]="true" icon="arrow-left">Вернуться
+            назад
+          </yrx-link>
+          <yrx-spacing type="S"></yrx-spacing>
+          <yrx-sidebar-user-panel></yrx-sidebar-user-panel>
+          <yrx-spacing type="S"></yrx-spacing>
+        </ng-container>
+      </yrx-sidebar>
       <div class="scrollable flex_grow">
         <router-outlet></router-outlet>
       </div>

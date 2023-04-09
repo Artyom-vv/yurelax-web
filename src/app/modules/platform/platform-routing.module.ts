@@ -1,16 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {PlatformComponent} from "./platform.component";
 import {HomeComponent} from "./modules/home/home.component";
 import {AuthGuard} from "../shared/services/guards/auth.guard";
 import {ProfileComponent} from "./modules/profile/profile.component";
-import {UserGuard} from "../shared/services/guards/user.guard";
+import {RoleGuard} from "../shared/services/guards/role-guard.service";
+import {RolesEnum} from "../shared/enums/roles.enum";
+
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AuthGuard, UserGuard],
+    canActivate: [AuthGuard, RoleGuard],
+    data: {roles: [RolesEnum.USER, RolesEnum.ADMIN]},
     loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule)
   },
   {

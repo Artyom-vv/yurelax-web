@@ -8,6 +8,7 @@ export interface AppState {
   isExit: boolean
   navigation: NavigationStoreInterface[]
   profileNavigation: SidebarNavigationInterface[][]
+  adminNavigation: SidebarNavigationInterface[][]
   socials: SocialStoreInterface[]
   footerHeight: number
   isHomePage: boolean
@@ -19,6 +20,7 @@ export const DEFAULT_STATE: AppState = {
   isExit: false,
   navigation: [],
   profileNavigation: [],
+  adminNavigation: [],
   socials: [],
   footerHeight: 0,
   isHomePage: false,

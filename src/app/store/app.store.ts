@@ -21,6 +21,7 @@ export class AppStore extends ComponentStore<AppState> {
   readonly preloading$: Observable<boolean> = this.select(state => state.preloading);
   readonly navigation$: Observable<NavigationStoreInterface[]> = this.select(state => state.navigation);
   readonly profileNavigation$: Observable<SidebarNavigationInterface[][]> = this.select(state => state.profileNavigation);
+  readonly adminNavigation$: Observable<SidebarNavigationInterface[][]> = this.select(state => state.adminNavigation);
   readonly socials$: Observable<SocialStoreInterface[]> = this.select(state => state.socials);
   readonly footerHeight$: Observable<number> = this.select(state => state.footerHeight);
   readonly isHomePage$: Observable<boolean> = this.select(state => state.isHomePage);
@@ -53,6 +54,11 @@ export class AppStore extends ComponentStore<AppState> {
   readonly setProfileNavigation = this.updater((state, profileNavigation: SidebarNavigationInterface[][]) => ({
     ...state,
     profileNavigation
+  }));
+
+  readonly setAdminNavigation = this.updater((state, adminNavigation: SidebarNavigationInterface[][]) => ({
+    ...state,
+    adminNavigation
   }));
 
   readonly setNavigation = this.updater((state, navigation: NavigationStoreInterface[]) => ({

@@ -1,0 +1,6 @@
+@import "src/shared/styles/layout/auth-content";
+
+.content {
+  @include auth-content;
+  height: auto;
+}

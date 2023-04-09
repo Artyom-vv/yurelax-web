@@ -5,9 +5,10 @@ import {PlatformComponent} from './platform.component';
 import {LayoutModule} from "../shared/modules/layout/layout.module";
 import {HeaderModule} from "../shared/modules/header/header.module";
 import {HomeModule} from "./modules/home/home.module";
-import {UserGuard} from "../shared/services/guards/user.guard";
+import {RoleGuard} from "../shared/services/guards/role-guard.service";
 import {SpacingModule} from "../shared/modules/spacing/spacing.module";
 import {UserService} from "./services/user.service";
+import {AuthGuard} from "../shared/services/guards/auth.guard";
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import {UserService} from "./services/user.service";
     HomeModule,
     SpacingModule
   ],
-  providers: [UserGuard, UserService]
+  providers: [RoleGuard, UserService, AuthGuard]
 })
 export class PlatformModule {
 }
