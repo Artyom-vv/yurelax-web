@@ -26,6 +26,7 @@ import {MiniGamesService} from "../../../shared/services/mini-games.service";
 import {StatisticsService} from "../../../shared/services/statistics.service";
 import {UserStatisticsService} from "../../../shared/services/user-statistics.service";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {ServerService} from "../../../shared/services/server.service";
 
 
 @NgModule({
@@ -55,7 +56,12 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     SelectorPointModule,
     MatSnackBarModule
   ],
-  providers: [MiniGamesService, StatisticsService, UserStatisticsService]
+  providers: [
+    MiniGamesService,
+    StatisticsService,
+    UserStatisticsService,
+    ServerService
+  ]
 })
 export class HomeModule {
 }

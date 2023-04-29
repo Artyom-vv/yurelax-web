@@ -1,4 +1,4 @@
-<div class="statistics-create flex flex_column" [formGroup]="form">
+<div class="statistics-create flex flex_column" [formGroup]="form" [class.statistics-create_editing]="isEdit">
   <div class="flex flex_column gap-12">
     <div class="box box_input">
       <input formControlName="title" class="input_normal input_iconly input_dark" matInput placeholder="Название статистики">
@@ -27,9 +27,12 @@
     <yrx-icon *ngIf="dataLoading || form.pending" btn-icon [stroked]="true" icon="loader"></yrx-icon>
   </yrx-button>
   <ng-template #editTemplate>
-    <yrx-button (press)="edit()" class="flex_align-self-end" [disabled]="dataLoading || form.pending || form.invalid" [iconLoading]="dataLoading">
-      <span>Сохранить</span>
-      <yrx-icon *ngIf="dataLoading || form.pending" btn-icon [stroked]="true" icon="loader"></yrx-icon>
-    </yrx-button>
+    <div class="flex gap-8 flex_align-self-end">
+      <yrx-button (press)="edit()" [disabled]="dataLoading || form.pending || form.invalid" [iconLoading]="dataLoading">
+        <span>Сохранить</span>
+        <yrx-icon *ngIf="dataLoading || form.pending" btn-icon [stroked]="true" icon="loader"></yrx-icon>
+      </yrx-button>
+      <yrx-button (press)="cancel()" custom="red" [disabled]="dataLoading || form.pending || form.invalid"><span>Отменить</span></yrx-button>
+    </div>
   </ng-template>
 </div>

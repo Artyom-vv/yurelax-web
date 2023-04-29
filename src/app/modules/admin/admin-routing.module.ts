@@ -4,6 +4,7 @@ import {AuthGuard} from "../shared/services/guards/auth.guard";
 import {RoleGuard} from "../shared/services/guards/role-guard.service";
 import {RolesEnum} from "../shared/enums/roles.enum";
 import {AdminComponent} from "./admin.component";
+import {AdminContentComponent} from "./components/admin-content/admin-content.component";
 
 const routes: Routes = [
   {
@@ -23,7 +24,13 @@ const routes: Routes = [
       },
       {
         path: 'statistics',
+        component: AdminContentComponent,
         loadChildren: () => import('../admin/module/statistics/statistics.module').then(m => m.StatisticsModule)
+      },
+      {
+        path: 'mini-games',
+        component: AdminContentComponent,
+        loadChildren: () => import('../admin/module/mini-games/mini-games.module').then(m => m.MiniGamesModule)
       }
     ]
   }

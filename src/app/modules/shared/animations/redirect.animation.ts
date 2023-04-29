@@ -3,7 +3,7 @@ import {animate, animateChild, group, query, style, transition, trigger} from "@
 export const AppearanceAnimation = trigger('routeAnimations', [
   transition('* => appearance', [
     style({
-      opacity: 0
+      opacity: 0,
     }),
     group([
       animate('500ms ease', style({

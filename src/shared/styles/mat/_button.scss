@@ -157,6 +157,7 @@ button.mat-button {
 }
 
 @mixin btn-disabled {
+  cursor: not-allowed;
   background-color: map-get($project-colors, "gradation", 500);
   &, span {
     color: map-get($project-colors, "gradation", 600);
@@ -240,7 +241,7 @@ button.mat-button {
 }
 
 @mixin btn-custom-red {
-  $default_color: map-get($project-colors, "gradation", 200);
+  $default_color: map-get($project-colors, "gradation", 100);
   background-color: map-get($project-colors, "red", 400);
 
   .mdc-button__label {
@@ -248,7 +249,6 @@ button.mat-button {
       color: $default_color;
     }
   }
-
 
   &.btn_iconly {
     #{$unique_stroke_icons} {
@@ -293,8 +293,10 @@ button.mat-mdc-button.btn {
 
   @include btn;
 
+  &[custom="light"]:disabled,
+  &[custom="white"]:disabled,
+  &[custom="red"]:disabled,
   &:disabled {
-    cursor: not-allowed;
     @include btn-disabled;
   }
 

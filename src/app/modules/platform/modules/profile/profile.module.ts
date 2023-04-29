@@ -9,10 +9,15 @@ import {FooterModule} from "../../../shared/modules/footer/footer.module";
 import {SidebarModule} from "../sidebar/sidebar.module";
 import {SpacingModule} from "../../../shared/modules/spacing/spacing.module";
 import {LinkModule} from "../../../shared/modules/link/link.module";
+import {ButtonModule} from "../../../shared/modules/button/button.module";
+import {IconModule} from "../../../shared/modules/icon/icon.module";
+import {ProfileContentComponent} from './components/profile-content/profile-content.component';
+import {AnimationsService} from "../../../shared/animations/services/animations.service";
 
 @NgModule({
   declarations: [
     ProfileComponent,
+    ProfileContentComponent,
   ],
   imports: [
     CommonModule,
@@ -24,7 +29,12 @@ import {LinkModule} from "../../../shared/modules/link/link.module";
     SidebarModule,
     SpacingModule,
     LinkModule,
-  ]
+    ButtonModule,
+    IconModule,
+  ],
+  providers: [
+    AnimationsService
+  ],
 })
 export class ProfileModule {
 }

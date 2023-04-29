@@ -24,7 +24,8 @@ import {RewardsModule} from "../rewards/rewards.module";
     VotingModule,
     StatisticModule,
     RewardsModule
-  ]
+  ],
 })
 export class ProfileHomeModule {
+
 }

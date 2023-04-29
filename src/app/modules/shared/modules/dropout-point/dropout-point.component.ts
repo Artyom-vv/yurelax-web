@@ -1,7 +1,6 @@
-import {AfterViewInit, Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
-import {RouterLinkActive} from "@angular/router";
-import {MatSelect} from "@angular/material/select";
+import {Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {OptionSelectOutputInterface} from "./interfaces/option-select-output.interface";
+import {RouterLinkActive} from "@angular/router";
 
 @Component({
   selector: 'yrx-dropout-point',
@@ -21,6 +20,7 @@ export class DropoutPointComponent {
   @Input() isOption: boolean = false;
   @Output() press: EventEmitter<any> = new EventEmitter<any>()
   @Output() optionSelect: EventEmitter<OptionSelectOutputInterface> = new EventEmitter<OptionSelectOutputInterface>()
+  @ViewChild('routerLinkActive') routerLinkActive?: RouterLinkActive;
 
   public onClick($event: any): void {
     this.press.emit($event)

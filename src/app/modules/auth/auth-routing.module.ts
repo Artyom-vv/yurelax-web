@@ -18,79 +18,48 @@ const routes: Routes = [
   {
     path: '',
     component: AuthComponent,
-    canActivate: [CheckAuthGuard],
     children: [
       {path: '', redirectTo: 'login', pathMatch: 'full'},
       {
         path: 'login',
+        canActivate: [CheckAuthGuard],
         component: LoginComponent,
-        data: {route: 'login'}
+        data: {route: 'login'},
       },
       {
         path: 'register',
+        canActivate: [CheckAuthGuard],
         component: RegisterComponent,
-        data: {route: 'register'}
+        data: {route: 'register'},
       },
-    ]
-  },
-  {
-    path: 'which-email-recover',
-    component: AuthComponent,
-    children: [
       {
-        path: '',
-        data: {route: 'which-email-recover'},
+        path: 'which-email-recover',
         component: WhichEmailRecoverComponent,
-        pathMatch: 'full',
+        data: {route: 'which-email-recover'},
       },
-    ]
-  },
-  {
-    path: 'email-verify',
-    component: AuthComponent,
-    canActivate: [EmailVerifyGuard],
-    children: [
       {
-        path: '',
-        data: {route: 'email-verify'},
+        path: 'email-verify',
+        canActivate: [EmailVerifyGuard],
         component: EmailVerifyComponent,
-        pathMatch: 'full',
+        data: {route: 'email-verify'},
       },
-    ]
-  },
-  {
-    path: 'recover-password-verify',
-    component: AuthComponent,
-    canActivate: [RecoverStepGuard],
-    data: {recoverStep: 'verify'},
-    children: [
       {
-        path: '',
-        data: {route: 'recover-password-verify'},
+        path: 'recover-password-verify',
+        canActivate: [RecoverStepGuard],
         component: RecoverPasswordVerifyComponent,
-        pathMatch: 'full',
+        data: {route: 'recover-password-verify', recoverStep: 'verify'},
       },
-    ]
-  },
-  {
-    path: 'recover-password',
-    component: AuthComponent,
-    canActivate: [RecoverStepGuard],
-    data: {recoverStep: 'recover'},
-    children: [
       {
-        path: '',
-        data: {route: 'recover-password'},
+        path: 'recover-password',
+        canActivate: [RecoverStepGuard],
         component: RecoverPasswordComponent,
-        pathMatch: 'full',
+        data: {route: 'recover-password', recoverStep: 'recover'},
       },
     ]
   },
   {
     path: 'minecraft',
     component: MAuthLayoutComponent,
-    canActivate: [QueryParamGuard],
-    data: {param: "authToken", redirectUrl: "/platform/home"},
     children: [
       {
         path: '',

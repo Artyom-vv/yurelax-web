@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {StatisticsService} from "../../../../../shared/services/statistics.service";
 import {finalize, first, Subscription, tap} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -17,14 +17,16 @@ export class StatisticsCreateComponent implements AfterViewInit, OnDestroy {
   constructor(
     private statisticsService: StatisticsService,
     private fb: FormBuilder,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    protected cdr: ChangeDetectorRef
   ) {
   }
 
   @Input() data!: StatisticsResponseInterface;
-  @Input() isEdit: boolean = false;
+  @Input() isEdit: boolean = false
   @Output() onCreate: EventEmitter<StatisticsResponseInterface> = new EventEmitter<StatisticsResponseInterface>();
   @Output() onUpdate: EventEmitter<StatisticsResponseInterface> = new EventEmitter<StatisticsResponseInterface>();
+  @Output() onCancel: EventEmitter<void> = new EventEmitter<void>();
 
   private subscriptions: Subscription[] = []
 
@@ -39,6 +41,7 @@ export class StatisticsCreateComponent implements AfterViewInit, OnDestroy {
     if (this.isEdit) {
       this.form.patchValue(this.data)
       this.form.get('key')?.disable()
+      this.cdr.detectChanges()
     }
   }
 
@@ -53,6 +56,8 @@ export class StatisticsCreateComponent implements AfterViewInit, OnDestroy {
         first(),
         tap((value) => {
           this.onCreate.emit(value);
+          this.form.reset()
+          this._snackBar.open(`Статистика "${value.title}" успешно создана`, 'Хорошо')
         }),
         finalize(() => this.dataLoading = false),
         catchError((err) => {
@@ -78,6 +83,10 @@ export class StatisticsCreateComponent implements AfterViewInit, OnDestroy {
         })
       ).subscribe()
     )
+  }
+
+  public cancel() {
+    this.onCancel.emit();
   }
 
   private initForms(): void {

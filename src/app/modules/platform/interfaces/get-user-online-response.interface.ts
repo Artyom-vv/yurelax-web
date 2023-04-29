@@ -1,4 +1,4 @@
 export interface GetUserOnlineResponseInterface {
-  isOnline: boolean
+  isOnline: boolean,
   lastOnlineDate: number
 }

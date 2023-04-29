@@ -38,8 +38,11 @@ export class SidebarUserPanelComponent implements OnInit, OnDestroy {
           this.dataLoading = false;
           this.cdr.detectChanges()
         }),
-        switchMap(() => interval(10000).pipe(
-          switchMap(() => this.userService.getUserOnline(this.userStore?.user.userId as string)),
+        switchMap(() => interval(5000).pipe(
+          switchMap(() => this.userService.getUserOnline({
+            login: this.userStore?.user.login as string,
+            userId: this.userStore?.user.userId as string,
+          })),
           tap(({lastOnlineDate, isOnline}) => {
             if (this.userStore) this.appStore.setUser({
               ...this.userStore,
@@ -50,7 +53,7 @@ export class SidebarUserPanelComponent implements OnInit, OnDestroy {
               }
             })
           })
-        ))
+        )),
       ).subscribe()
     )
   }

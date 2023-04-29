@@ -14,8 +14,9 @@ import {StatisticsService} from "../../../shared/services/statistics.service";
 import {ButtonModule} from "../../../shared/modules/button/button.module";
 import {IconModule} from "../../../shared/modules/icon/icon.module";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import { StatisticsItemComponent } from './components/statistics-item/statistics-item.component';
+import {StatisticsItemComponent} from './components/statistics-item/statistics-item.component';
 import {RequestsCancellerService} from "../../../shared/services/requests-canceller.service";
+import {AnimationsService} from "../../../shared/animations/services/animations.service";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,11 @@ import {RequestsCancellerService} from "../../../shared/services/requests-cancel
     IconModule,
     MatSnackBarModule
   ],
-  providers: [StatisticsService, RequestsCancellerService]
+  providers: [
+    StatisticsService,
+    RequestsCancellerService,
+    AnimationsService
+  ]
 })
 export class StatisticsModule {
 }

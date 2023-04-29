@@ -37,11 +37,10 @@ export class StatisticsComponent implements OnInit {
     this.getList()
   }
   public onUpdate($event: StatisticsResponseInterface) {
-    this.getList()
+    this.statisticsList[this.statisticsList.findIndex(x => x.key === $event.key)] = $event
   }
   public onDelete($event: StatisticsResponseInterface) {
-    this.getList()
-
+    this.statisticsList = this.statisticsList.filter(x => x.key !== $event.key);
   }
 
   public getList() {

@@ -8,10 +8,13 @@ import {RoleGuard} from "../shared/services/guards/role-guard.service";
 import {SidebarModule} from "../platform/modules/sidebar/sidebar.module";
 import {SpacingModule} from "../shared/modules/spacing/spacing.module";
 import {LinkModule} from "../shared/modules/link/link.module";
+import {AdminContentComponent} from './components/admin-content/admin-content.component';
+import {AdminStore} from "./store/admin.store";
 
 @NgModule({
   declarations: [
     AdminComponent,
+    AdminContentComponent,
   ],
   imports: [
     CommonModule,
@@ -21,7 +24,7 @@ import {LinkModule} from "../shared/modules/link/link.module";
     SpacingModule,
     LinkModule
   ],
-  providers: [AuthGuard, RoleGuard]
+  providers: [AuthGuard, RoleGuard, AdminStore]
 })
 export class AdminModule {
 }

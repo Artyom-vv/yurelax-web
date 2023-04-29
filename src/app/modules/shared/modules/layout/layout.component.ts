@@ -52,7 +52,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
       })
     )
     if (!this.toolsService.mobileAndTabletCheck()) {
-      this.resizeObserver.observe(document.body)
+      this.resizeObserver.observe(this.document.body)
     }
   }
 

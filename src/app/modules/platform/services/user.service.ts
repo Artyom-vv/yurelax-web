@@ -10,6 +10,7 @@ import {GetUserOnlineResponseInterface} from "../interfaces/get-user-online-resp
 import {UserResponseInterface} from "../interfaces/user.interface";
 import {AuthService} from "../../auth/services/auth.service";
 import {AppStore} from "../../../store/app.store";
+import {GetUserOnlineRequestInterface} from "../interfaces/get-user-online-request.interface";
 
 @Injectable()
 export class UserService {
@@ -32,8 +33,8 @@ export class UserService {
     )
   }
 
-  getUserOnline(userId: string): Observable<GetUserOnlineResponseInterface> {
-    return this.http.get<GetUserOnlineResponseInterface>(`${environment.apiUrl}/user-info/get-user-online/${userId}`).pipe(
+  getUserOnline(data: GetUserOnlineRequestInterface): Observable<GetUserOnlineResponseInterface> {
+    return this.http.post<GetUserOnlineResponseInterface>(`${environment.apiUrl}/shared/ping-player`, data).pipe(
       catchError((err) => throwError(err.error))
     )
   }

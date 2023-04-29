@@ -1,17 +1,15 @@
-<yrx-layout [withoutFooter]="true">
-  <div class="content" content>
-    <yrx-spacing type="L"></yrx-spacing>
-    <div class="container flex gap-48">
-      <yrx-sidebar [navigation]="adminNavigation">
-        <ng-container sidebar-top-content>
-          <yrx-link [routerLink]="['/platform']" [iconReverse]="true"  [iconStroked]="true" icon="arrow-left">Вернуться на сайт</yrx-link>
-          <yrx-spacing type="S"></yrx-spacing>
-        </ng-container>
-      </yrx-sidebar>
-      <div class="scrollable flex flex_column flex_grow">
-        <router-outlet></router-outlet>
-      </div>
+<div class="admin-layout" [class.withoutScroll]="withoutScroll">
+  <yrx-spacing type="L"></yrx-spacing>
+  <div class="container flex gap-48" [@routeAnimations]="animationsService.getRouteAnimationData(null, false)">
+    <yrx-sidebar [navigation]="adminNavigation">
+      <ng-container sidebar-top-content>
+        <yrx-link [routerLink]="['/platform']" [iconReverse]="true"  [iconStroked]="true" icon="arrow-left">Вернуться на сайт</yrx-link>
+        <yrx-spacing type="S"></yrx-spacing>
+      </ng-container>
+    </yrx-sidebar>
+    <div class="scrollable flex flex_column flex_grow">
+      <router-outlet></router-outlet>
     </div>
-    <yrx-spacing type="L"></yrx-spacing>
   </div>
-</yrx-layout>
+  <yrx-spacing type="L"></yrx-spacing>
+</div>

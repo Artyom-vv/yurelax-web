@@ -1,10 +1,11 @@
-import {Component,OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {PersistenceService} from "./modules/shared/services/persistence.service";
 import {AppStore} from "./store/app.store";
 import {SystemUserService} from "./modules/shared/services/system-user.service";
 import {filter, Subscription, switchMap, tap} from "rxjs";
 import {AuthService} from "./modules/auth/services/auth.service";
 import {catchError} from "rxjs/operators";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'yrx-root',
@@ -18,13 +19,23 @@ export class AppComponent implements OnInit, OnDestroy {
     private appStore: AppStore,
     private systemUser: SystemUserService,
     private authService: AuthService,
+    private router: Router
   ) {
+  }
+
+  @HostListener('window:storage',['$event'])
+  public storageUpdate(event: StorageEvent): void {
+    if (!event.key) return this.systemUser.logout(true)
+    if (event.key === 'user') {
+      this.appStore.setUser(JSON.parse(event.newValue!));
+      this.appStore.setIsLogged(true)
+      this.router.navigate(['/platform'])
+    }
   }
 
   private subscriptions: Subscription[] = []
 
   ngOnInit() {
-
     this.systemUser.removeMAToken()
     const user = this.persistenceService.get('user');
     if (user) {
@@ -59,6 +70,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.appStore.setAdminNavigation([
       [
         {isButton: false, link: '/admin/statistics', name: 'Статистика', icon: 'file', iconStroked: true},
+        {isButton: false, link: '/admin/mini-games', name: 'Мини-игры', icon: 'joystick', iconStroked: true},
       ],
     ])
 
@@ -95,7 +107,7 @@ export class AppComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             this.appStore.setPreloading(false);
           }, 300)
-          throw new Error(err)
+          throw new Error(err.error.message)
         })
       ).subscribe()
     )
@@ -106,7 +118,11 @@ export class AppComponent implements OnInit, OnDestroy {
         tap(() => {
           this.systemUser.logout();
           this.appStore.setIsExit(false);
-        })).subscribe()
+        }),
+        catchError((err) => {
+          throw new Error(err)
+        })
+      ).subscribe()
     )
   }
 }

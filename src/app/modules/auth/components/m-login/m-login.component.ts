@@ -95,11 +95,6 @@ export class MLoginComponent implements OnInit, OnDestroy {
     const jwtMaPrepare$ = this.route.queryParams.pipe(
       filter(({authToken}) => {
         MATToken = authToken;
-        // Под названием AuthToken подразумеваю тот же MAToken
-        if (this.systemUser.getMAToken() === authToken) {
-          this.error = true
-          return false
-        }
         return authToken
       }),
       filter(() => {
@@ -128,10 +123,9 @@ export class MLoginComponent implements OnInit, OnDestroy {
     const jwtMaAuth$ =
       of(false).pipe(
         tap(() => {
-          this.persistenceService.set('MAToken', MATToken)
           this.dataLoading = true
         }),
-        switchMap(() => this.authService.jwtMa(this.systemUser.getMAToken()).pipe(
+        switchMap(() => this.authService.jwtMa(MATToken).pipe(
           switchMap((res) => this.authService.jwtMaAuth(res.login)),
           tap((res: JwtMaAuthResponseInterface) => {
             this.successMA = res.success

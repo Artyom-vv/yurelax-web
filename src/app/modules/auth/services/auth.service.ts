@@ -126,17 +126,13 @@ export class AuthService {
       tap((res) => {
         this.saveUserData(res)
       }),
-      catchError((err) => {
-        throw new Error(err.message);
-      })
+      catchError((err) => throwError(err))
     )
   }
 
   logout(): Observable<UserResponseInterface> {
     return this.http.get<UserResponseInterface>(`${environment.apiUrl}/auth/logout`).pipe(
-      catchError((err) => {
-        throw new Error(err.message);
-      })
+      catchError((err) => throwError(err))
     )
   }
 

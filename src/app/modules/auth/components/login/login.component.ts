@@ -72,7 +72,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         tap(() => {
           this.transitionToMA = true;
           this.cdr.detectChanges()
-          setTimeout(() => this.router.navigate(['/auth/minecraft']), 600)
+          setTimeout(() => this.router.navigate(['/auth/minecraft'], {
+            queryParams: {
+              authToken: ''
+            }
+          }), 600)
         }),
         catchError(err => {
           this.dataLoading = false

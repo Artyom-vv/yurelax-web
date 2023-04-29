@@ -1,5 +1,11 @@
+@import "src/shared/styles/vars.colors";
 @import "src/shared/styles/layout/colored-box";
 
 .statistics-create {
   @include colored-box;
+  border: 1px solid transparent;
+  &_editing {
+    border-color: map-get($project-colors, "purple", 400);
+  }
 }
+

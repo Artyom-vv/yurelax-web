@@ -1,9 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
-import {Subscription, tap} from "rxjs";
+import {Subscription, switchMap, tap} from "rxjs";
 import {SidebarNavigationInterface} from "../sidebar/interfaces/sidebar-navigation.interface";
 import {AppearanceAnimation} from "../../../shared/animations/redirect.animation";
 import {AnimationsService} from "../../../shared/animations/services/animations.service";
+import {UserStoreInterface} from "../../../../store/interfaces/user-store.interface";
+import {RolesEnum} from "../../../shared/enums/roles.enum";
 
 @Component({
   selector: 'yrx-profile',
@@ -13,7 +15,7 @@ import {AnimationsService} from "../../../shared/animations/services/animations.
     AppearanceAnimation,
   ]
 })
-export class ProfileComponent implements OnInit, OnDestroy  {
+export class ProfileComponent implements OnInit, OnDestroy {
   constructor(
     private appStore: AppStore,
     public animationsService: AnimationsService,
@@ -26,18 +28,25 @@ export class ProfileComponent implements OnInit, OnDestroy  {
   public styles: {
     [key: string]: string
   } = {}
+  public userStore: UserStoreInterface | null = null
+  public RolesEnum = RolesEnum
 
   ngOnInit() {
     this.subscriptions.push(
-      this.appStore.footerHeight$.subscribe((footerHeight) => {
-        this.styles['minHeight'] = `calc(100vh + ${footerHeight}px`;
-      })
-    )
-    this.subscriptions.push(
-      this.appStore.profileNavigation$.pipe(
-        tap((profileNavigation) => {
-          this.profileNavigation = profileNavigation;
-        })
+      this.appStore.footerHeight$.pipe(
+        tap((footerHeight) => {
+          this.styles['minHeight'] = `calc(100vh + ${footerHeight}px`;
+        }),
+        switchMap(() => this.appStore.profileNavigation$.pipe(
+          tap((profileNavigation) => {
+            this.profileNavigation = profileNavigation;
+          })
+        )),
+        switchMap(() => this.appStore.user$.pipe(
+          tap((userStore) => {
+            this.userStore = userStore
+          })
+        ))
       ).subscribe()
     )
   }
