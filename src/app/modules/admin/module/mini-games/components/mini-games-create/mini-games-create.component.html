@@ -1,5 +1,11 @@
 <div class="mini-games-create flex flex_column" [formGroup]="form" [class.mini-games-create_editing]="isEdit">
   <div class="flex flex_column gap-12">
+    <div class="flex gap-24">
+      <yrx-drag-and-drop [fullHeight]="true" [accept]="['image/png','image/jpg','image/jpeg']" class="flex_grow" (onChange)="onPreviewSelect($event)" icon="file" [iconStroked]="true"></yrx-drag-and-drop>
+      <div class="preview flex_grow">
+        <img *ngIf="dndResponse" [src]="dndResponse?.url" [alt]="dndResponse?.file?.name">
+      </div>
+    </div>
     <div class="box box_input">
       <input formControlName="name" class="input_normal input_iconly input_dark" matInput placeholder="Название мини-игры">
       <yrx-error-hint-wrapper [control]="form.get('name')">
@@ -18,8 +24,30 @@
         <yrx-error-hint-condition [condition]="['required']">Это обязательное поле</yrx-error-hint-condition>
       </yrx-error-hint-wrapper>
     </div>
-    <div class="box box_input">
-      <mat-checkbox formControlName="iconStroked">Использовать iconStroked</mat-checkbox>
+    <yrx-select placeholder="использовать iconStroked?" custom="dark" formControlName="iconStroked" [options]="[{text: 'Да', value: true}, {text: 'Нет', value: false}]"></yrx-select>
+    <div>
+      <div class="flex flex_column gap-8">
+        <p class="text text_body regular">Ключи статистики топа</p>
+        <div class="box box_input">
+          <input formControlName="statisticsSearch" class="input_normal input_iconly input_dark" matInput placeholder="Поиск по ключу">
+          <yrx-icon [hover]="false" [stroked]="true" [icon]="statisticsLoading ? 'loader' : 'search'"></yrx-icon>
+        </div>
+        <div *ngIf="statisticsList.length > 0" class="flex gap-8 flex_wrap">
+          <yrx-tag [disabled]="this.form.getRawValue().keys.length >= 3" *ngFor="let statistics of statisticsList" (onSelect)="onSelectTag($event)" [value]="statistics.key">{{statistics.title}}</yrx-tag>
+        </div>
+        <p *ngIf="statisticsList.length === 0 && !statisticsLoading" class="text text_body regular c-gradation-300">Нет результатов</p>
+      </div>
+      <yrx-spacing type="XS2"></yrx-spacing>
+    </div>
+    <div>
+      <div class="flex flex_column gap-8">
+        <p class="text text_body regular">Ключ фильтрации топа</p>
+        <div *ngIf="statisticsSelectedList.length > 0" class="flex gap-8 flex_wrap">
+          <yrx-tag [disabled]="!!this.form.get('filteredByKey')?.valid" *ngFor="let statistics of statisticsSelectedList" (onSelect)="onSelectFilteredByKeyTag($event)" [value]="statistics.key">{{statistics.title}}</yrx-tag>
+        </div>
+        <p *ngIf="statisticsSelectedList.length === 0" class="text text_body regular c-gradation-300">Нет результатов</p>
+      </div>
+      <yrx-spacing type="XS2"></yrx-spacing>
     </div>
     <div class="box box_input">
       <input formControlName="miniGameKey" class="input_normal input_iconly input_dark" matInput placeholder="Ключ мини-игры">

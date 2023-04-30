@@ -1,0 +1,23 @@
+@import "src/shared/styles/vars.animations";
+@import "src/shared/styles/vars.colors";
+
+.tag {
+  transition: $trs;
+  user-select: none;
+  cursor: pointer;
+  border-radius: 12px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  &_selected {
+    background-color: map-get($project-colors, "purple", 400);
+    border-color: map-get($project-colors, "purple", 400);
+  }
+  &_disabled:not(&_selected) {
+    cursor: not-allowed;
+    .text {
+      transition: $trs;
+      color: map-get($project-colors, "gradation", 300);
+    }
+  }
+}

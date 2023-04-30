@@ -1,0 +1,77 @@
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/vars.animations";
+@import "src/shared/styles/widjets/icon_tools";
+
+@mixin checkbox-small {
+  width: 16px;
+  height: 16px;
+  yrx-icon .icon {
+    @include icon-size(12px);
+  }
+}
+
+@mixin checkbox-normal {
+  width: 20px;
+  height: 20px;
+
+  yrx-icon .icon {
+    @include icon-size(16px);
+  }
+}
+
+@mixin checkbox-big {
+  width: 24px;
+  height: 24px;
+  yrx-icon .icon {
+    @include icon-size(20px);
+  }
+}
+
+@mixin checkbox-control {
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  border-radius: 3px;
+  position: relative;
+  transition: $trs;
+  &.checked {
+    background-color: map-get($project-colors, "purple", 400);
+    border-color: map-get($project-colors, "purple", 400);
+    yrx-icon {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@mixin checkbox-icon {
+  transition: $checkbox;
+  opacity: 0;
+  transform: translateY(8%);
+}
+
+.checkbox {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+
+  yrx-icon {
+    @include checkbox-icon;
+  }
+
+  &-control {
+    @include checkbox-control;
+    &_small {
+      @include checkbox-small;
+    }
+    &_normal {
+      @include checkbox-normal;
+    }
+    &_big {
+      @include checkbox-big;
+    }
+  }
+
+  &-input {
+    position: absolute;
+    left: -9999px;
+  }
+}

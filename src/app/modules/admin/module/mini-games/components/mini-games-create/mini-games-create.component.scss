@@ -9,3 +9,15 @@
   }
 }
 
+.preview {
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 248px;
+  img {
+    object-position: center;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}

@@ -14,7 +14,11 @@ export class MiniGamesService {
   ) {
   }
 
-  createMiniGame(data: MiniGameRequestInterface): Observable<MiniGameResponseInterface> {
+  createMiniGame({image, ...data}: MiniGameRequestInterface): any {
+    const formData: FormData = new FormData()
+    formData.append('image', image)
+    formData.append('data', JSON.stringify(data))
+
     return this.http.post<MiniGameResponseInterface>(`${environment.apiUrl}/mini-games/create-mini-game`, data)
   }
 
@@ -27,7 +31,7 @@ export class MiniGamesService {
   }
 
   checkMiniGameExists(miniGameKey: string): Observable<boolean> {
-    return this.http.get<boolean>(`${environment.apiUrl}/statistics/check-mini-game-exists/${miniGameKey}`).pipe(
+    return this.http.get<boolean>(`${environment.apiUrl}/mini-games/check-mini-game-exists/${miniGameKey}`).pipe(
       catchError((err) => throwError(err))
     )
   }

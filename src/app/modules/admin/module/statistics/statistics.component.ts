@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {StatisticsResponseInterface} from "../../../shared/interfaces/statistics-response.interface";
 import {StatisticsService} from "../../../shared/services/statistics.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {debounceTime, distinctUntilChanged, finalize, first, Subscription, takeUntil, tap} from "rxjs";
+import {debounceTime, distinctUntilChanged, finalize, takeUntil, tap} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {RequestsCancellerService} from "../../../shared/services/requests-canceller.service";

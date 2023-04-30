@@ -2,11 +2,11 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component, ElementRef, Inject,
+  Component, ElementRef, forwardRef, Inject,
   Input,
   ViewChild
 } from '@angular/core';
-import {AbstractControl} from "@angular/forms";
+import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {OptionInterface} from "./interfaces/option.interface";
 import {MatSelect} from "@angular/material/select";
 import {OptionSelectOutputInterface} from "../dropout-point/interfaces/option-select-output.interface";
@@ -17,7 +17,14 @@ import {DOCUMENT} from "@angular/common";
   selector: 'yrx-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SelectComponent),
+      multi: true
+    }
+  ]
 })
 export class SelectComponent implements AfterViewInit {
 
@@ -30,17 +37,21 @@ export class SelectComponent implements AfterViewInit {
 
   @ViewChild('select') select!: MatSelect
   @ViewChild('boxSelect') boxSelect!: ElementRef
-  @Input() control: AbstractControl | null = null;
   @Input() options: OptionInterface[] = []
   @Input() placeholder: string = ''
   @Input() custom: 'dark' | null = null
   @Input() size: 'big' | 'normal' | 'small' = 'normal'
 
+
+  onChange: any = () => {};
+  onTouch: any = () => {};
+
   public selectedOption?: OptionSelectOutputInterface;
   public isAbove: boolean = false;
+  public value: boolean = false;
 
   ngAfterViewInit() {
-    const option = this.control?.getRawValue() ? this.options.find(x => x.value === this.control?.getRawValue()) : this.options[0];
+    const option = this.value ? this.options.find(x => x.value === this.value) : this.options[0];
     if (option) {
       const {icon, value, iconStroked} = option
       this.selectedOption = {
@@ -54,7 +65,7 @@ export class SelectComponent implements AfterViewInit {
 
   public onOptionSelect($event: OptionSelectOutputInterface): void {
     this.selectedOption = $event
-    this.control?.setValue($event.value)
+    this.onChange($event.value)
     this.cdr.detectChanges()
     if (this.select && this.select.panelOpen)
       this.select.close()
@@ -67,5 +78,18 @@ export class SelectComponent implements AfterViewInit {
 
   public closed() {
     this.selectService.closeBlocker()
+  }
+
+  writeValue(value: boolean): void {
+    this.value = value;
+    this.onChange(this.value);
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouch = fn;
   }
 }

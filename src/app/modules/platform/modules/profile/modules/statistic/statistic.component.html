@@ -1,5 +1,5 @@
-<div class="statistic">
+<div class="statistic" [formGroup]="form">
   <h3>Ваша статистика</h3>
   <yrx-spacing type="XS"></yrx-spacing>
-  <yrx-select [control]="statisticTypeControl" placeholder="Выберите опцию" [options]="options" custom="dark"></yrx-select>
+  <yrx-select placeholder="Выберите опцию" formControlName="statisticType" [options]="options" custom="dark"></yrx-select>
 </div>

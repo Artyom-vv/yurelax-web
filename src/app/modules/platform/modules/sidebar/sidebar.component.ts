@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input} from '@angular/core';
 import {SidebarNavigationInterface} from "./interfaces/sidebar-navigation.interface";
-import {NavigationStart, Router} from "@angular/router";
+import {Event, InitialNavigation, NavigationEnd, NavigationStart, Router, RouterEvent, Scroll} from "@angular/router";
 
 @Component({
   selector: 'yrx-sidebar',
@@ -20,9 +20,9 @@ export class SidebarComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
+      if (event instanceof Scroll) {
         this.navigation.forEach((links, groupIdx) => {
-          const idx = links.findIndex(link => link.link === event.url);
+          const idx = links.findIndex(link => link.link === event.routerEvent.url);
           if (idx > -1) this.activeIndex = this.getLinkIndex(groupIdx, idx)
         })
       }

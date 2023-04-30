@@ -1,8 +1,8 @@
 <div class="admin-layout" [class.withoutScroll]="withoutScroll">
-  <yrx-spacing type="L"></yrx-spacing>
   <div class="container flex gap-48" [@routeAnimations]="animationsService.getRouteAnimationData(null, false)">
     <yrx-sidebar [navigation]="adminNavigation">
       <ng-container sidebar-top-content>
+        <yrx-spacing type="L"></yrx-spacing>
         <yrx-link [routerLink]="['/platform']" [iconReverse]="true"  [iconStroked]="true" icon="arrow-left">Вернуться на сайт</yrx-link>
         <yrx-spacing type="S"></yrx-spacing>
       </ng-container>
@@ -11,5 +11,4 @@
       <router-outlet></router-outlet>
     </div>
   </div>
-  <yrx-spacing type="L"></yrx-spacing>
 </div>

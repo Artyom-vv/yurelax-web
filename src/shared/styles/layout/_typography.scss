@@ -198,14 +198,14 @@ h5 {
 }
 
 span {
-  .span {
+  &.span {
     @include span-text;
-  }
-  &_big {
-    @include span-text-big;
-  }
-  &_small {
-    @include span-text-small;
+    &_big {
+      @include span-text-big;
+    }
+    &_small {
+      @include span-text-small;
+    }
   }
 }
 

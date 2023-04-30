@@ -16,6 +16,12 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MiniGamesService} from "../../../shared/services/mini-games.service";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {CheckboxModule} from "../../../shared/modules/checkbox/checkbox.module";
+import {DragAndDropModule} from "../../../shared/modules/drag-and-drop/drag-and-drop.module";
+import {StatisticsService} from "../../../shared/services/statistics.service";
+import {RequestsCancellerService} from "../../../shared/services/requests-canceller.service";
+import {TagModule} from "../../../shared/modules/tag/tag.module";
+import {SelectModule} from "../../../shared/modules/select/select.module";
 
 
 @NgModule({
@@ -35,10 +41,16 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         IconModule,
         MatSlideToggleModule,
         MatSnackBarModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        CheckboxModule,
+        DragAndDropModule,
+        TagModule,
+        SelectModule
     ],
   providers: [
-    MiniGamesService
+    MiniGamesService,
+    StatisticsService,
+    RequestsCancellerService
   ]
 })
 export class MiniGamesModule {

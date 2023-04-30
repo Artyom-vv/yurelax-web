@@ -10,6 +10,7 @@ export class DragAndDropComponent {
   @ViewChild('fileLoader') fileLoader!: ElementRef;
   @Input() loading: boolean = false;
   @Input() accept: string[] = []
+  @Input() fullHeight: boolean = false
   @Input() icon: string = ''
   @Input() iconStroked: boolean = false
   @Output() onChange: EventEmitter<DropBoxOnChangeInterface> = new EventEmitter<DropBoxOnChangeInterface>()
@@ -35,7 +36,9 @@ export class DragAndDropComponent {
     files.forEach((file: File) => {
       if (!this.accept.includes(file.type)) return
       const reader = new FileReader();
-      this.onChange.emit({file})
+      reader.onload  = () => {
+        this.onChange.emit({file, url: reader.result})
+      }
       reader.readAsDataURL(file);
     })
   }

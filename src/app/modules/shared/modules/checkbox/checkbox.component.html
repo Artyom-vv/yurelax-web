@@ -1,0 +1,9 @@
+<label class="flex gap-8 checkbox w100">
+  <input type="checkbox" [checked]="value" (change)="onCheckboxChange($event)" class="checkbox-input">
+  <span [class.checked]="value" class="checkbox-control flex flex_center" [ngClass]="'checkbox-control_'+size">
+    <yrx-icon [stroked]="true" icon="check"></yrx-icon>
+  </span>
+  <p class="text text_body regular">
+    <ng-content></ng-content>
+  </p>
+</label>
