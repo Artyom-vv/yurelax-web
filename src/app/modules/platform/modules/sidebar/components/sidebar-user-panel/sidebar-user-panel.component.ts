@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../../../store/app.store";
-import {first, interval, Subscription, switchMap, tap} from "rxjs";
+import {first, interval, retry, retryWhen, Subscription, switchMap, tap} from "rxjs";
 import {UserStoreInterface} from "../../../../../../store/interfaces/user-store.interface";
 import {ToolsService} from "../../../../../shared/services/tools.service";
 import {UserService} from "../../../../services/user.service";
@@ -38,22 +38,25 @@ export class SidebarUserPanelComponent implements OnInit, OnDestroy {
           this.dataLoading = false;
           this.cdr.detectChanges()
         }),
-        switchMap(() => interval(5000).pipe(
-          switchMap(() => this.userService.getUserOnline({
-            login: this.userStore?.user.login as string,
-            userId: this.userStore?.user.userId as string,
-          })),
-          tap(({lastOnlineDate, isOnline}) => {
-            if (this.userStore) this.appStore.setUser({
-              ...this.userStore,
-              userInfo: {
-                ...this.userStore.userInfo,
-                lastOnlineDate,
-                isOnline
-              }
-            })
+      ).subscribe()
+    )
+    this.subscriptions.push(
+      interval(5000).pipe(
+        switchMap(() => this.userService.getUserOnline({
+          login: this.userStore?.user.login as string,
+          userId: this.userStore?.user.userId as string,
+        })),
+        tap(({lastOnlineDate, isOnline}) => {
+          if (this.userStore) this.appStore.setUser({
+            ...this.userStore,
+            userInfo: {
+              ...this.userStore.userInfo,
+              lastOnlineDate,
+              isOnline
+            }
           })
-        )),
+        }),
+        retryWhen(errors => errors.pipe(retry(1)))
       ).subscribe()
     )
   }

@@ -44,23 +44,23 @@ export class AppComponent implements OnInit, OnDestroy {
     this.dataFields()
     this.appStore.setNavigation([
       {link: '/platform', name: 'О проекте', isLogged: false},
-      {link: '/platform/wiki', name: 'Вики', isLogged: false},
-      {link: '/platform/store', name: 'Магазин', isLogged: true},
-      {link: '/platform/games', name: 'Мини-игры', isLogged: true},
+      // {link: '/platform/wiki', name: 'Вики', isLogged: false},
+      // {link: '/platform/store', name: 'Магазин', isLogged: true},
+      // {link: '/platform/games', name: 'Мини-игры', isLogged: true},
     ])
 
     this.appStore.setProfileNavigation([
       [
         {isButton: false, link: '/platform/profile/home', name: 'Главная', icon: 'home', iconStroked: true},
         {isButton: false, link: '/platform/profile/wallet', name: 'Кошелек', icon: 'wallet', iconStroked: true},
-        {isButton: false, link: '/platform/profile/store', name: 'Магазин', icon: 'shopping-bag', iconStroked: true},
-        {isButton: false, link: '/platform/profile/games', name: 'Мини-игры', icon: 'box', iconStroked: true},
-        {isButton: false, link: '/platform/profile/referrals', name: 'Реферальная система', icon: 'user-plus', iconStroked: true},
+        // {isButton: false, link: '/platform/profile/store', name: 'Магазин', icon: 'shopping-bag', iconStroked: true},
+        // {isButton: false, link: '/platform/profile/games', name: 'Мини-игры', icon: 'box', iconStroked: true},
+        // {isButton: false, link: '/platform/profile/referrals', name: 'Реферальная система', icon: 'user-plus', iconStroked: true},
       ],
-      [
-        {isButton: false, link: '/platform/profile/settings', name: 'Настройка аккаунта', icon: 'settings', iconStroked: true},
-        {isButton: false, link: '/platform/profile/restrictions', name: 'Баны и предупреждения', icon: 'alert-triangle', iconStroked: true},
-      ],
+      // [
+      //   {isButton: false, link: '/platform/profile/settings', name: 'Настройка аккаунта', icon: 'settings', iconStroked: true},
+      //   {isButton: false, link: '/platform/profile/restrictions', name: 'Баны и предупреждения', icon: 'alert-triangle', iconStroked: true},
+      // ],
       [
         {isButton: true, name: 'Выйти со всех устройств', icon: 'laptop', iconStroked: true, callback: () => {this.logoutFromAllDevices()}},
         {isButton: true, name: 'Выйти', icon: 'logout', iconStroked: true, callback: () => {this.appStore.setIsExit(true)}},
