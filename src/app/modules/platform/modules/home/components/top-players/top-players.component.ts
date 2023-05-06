@@ -28,21 +28,26 @@ export class TopPlayersComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = []
 
-  columns: string[] = []
-  tableData: RatingTableInterface[] = []
+  public columns: string[] = []
+  public tableData: RatingTableInterface[] = []
   public currentMonth: number = new Date().getMonth() + 1
   public month: string = ''
   public miniGames: MiniGameResponseInterface[] = []
   public miniGameKey: string = ''
   public miniGameLoadingKey: string | null = null
+  public dataLoading: boolean = false;
 
   ngOnInit() {
     this.month = this.getMonthString()
+    this.dataLoading = true;
     this.subscriptions.push(
       this.miniGamesService.getMiniGames().pipe(
         tap((response) => {
           this.miniGames = response
           if (this.miniGames.length > 0) this.selectTab(response[0])
+        }),
+        finalize(() => {
+          this.dataLoading = false;
         })
       ).subscribe()
     )
@@ -85,6 +90,7 @@ export class TopPlayersComponent implements OnInit, OnDestroy {
   }
 
   public selectTab(game: MiniGameResponseInterface) {
+    this.dataLoading = true;
     this.miniGameKey = game.miniGameKey
     this.miniGameLoadingKey = game.miniGameKey
     this.userStatisticsService.getTopPlayers({
@@ -111,6 +117,7 @@ export class TopPlayersComponent implements OnInit, OnDestroy {
       }),
       finalize(() => {
         this.miniGameLoadingKey = null
+        this.dataLoading = false;
       }),
       catchError((err) => {
         this._snackBar.open(err.error.message,"Закрыть")

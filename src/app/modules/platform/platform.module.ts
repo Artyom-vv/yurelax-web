@@ -9,6 +9,7 @@ import {RoleGuard} from "../shared/services/guards/role-guard.service";
 import {SpacingModule} from "../shared/modules/spacing/spacing.module";
 import {UserService} from "./services/user.service";
 import {AuthGuard} from "../shared/services/guards/auth.guard";
+import {ToolsService} from "../shared/services/tools.service";
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import {AuthGuard} from "../shared/services/guards/auth.guard";
     HomeModule,
     SpacingModule
   ],
-  providers: [RoleGuard, UserService, AuthGuard]
+  providers: [RoleGuard, UserService, AuthGuard, ToolsService]
 })
 export class PlatformModule {
 }

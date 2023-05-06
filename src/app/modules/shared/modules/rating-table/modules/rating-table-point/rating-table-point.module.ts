@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RatingTablePointComponent} from './rating-table-point.component';
+import {SkeletonModule} from "../../../skeleton/skeleton.module";
 
 @NgModule({
   declarations: [
@@ -9,9 +10,10 @@ import {RatingTablePointComponent} from './rating-table-point.component';
   exports: [
     RatingTablePointComponent
   ],
-  imports: [
-    CommonModule,
-  ]
+    imports: [
+        CommonModule,
+        SkeletonModule,
+    ]
 })
 export class RatingTablePointModule {
 }

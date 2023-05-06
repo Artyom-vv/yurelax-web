@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {Properties} from "csstype";
 
 @Component({
   selector: 'yrx-skeleton',
@@ -6,6 +7,6 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./skeleton.component.scss']
 })
 export class SkeletonComponent {
-  @Input() styles: any = {};
-  @Input() theme: 'light' | 'dark' | 'white' = 'light';
+  @Input() styles: Properties = {};
+  @Input() theme: 'light' | 'dark' | 'white' | 'bright' = 'light';
 }

@@ -2,6 +2,11 @@ import {Injectable} from "@angular/core";
 
 @Injectable()
 export class ToolsService {
+
+  public getRandomInt(max: number): number {
+    return Math.floor(Math.random() * max);
+  }
+
   public tokenExpired(token: string): boolean {
     if (token) {
       const expiry = (JSON.parse(window.atob(token.split('.')[1]))).exp;

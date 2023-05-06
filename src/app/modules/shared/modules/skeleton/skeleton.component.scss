@@ -17,6 +17,12 @@
     background-size: 400% 400%;
   }
 
+  &.bright {
+    background: linear-gradient(-45deg, map-get($project-colors, "gradation", 800),darken(map-get($project-colors, "gradation", 800), 2), map-get($project-colors, "gradation", 700));
+    background-size: 400% 400%;
+  }
+
+
   animation: gradient $skeleton infinite;
 }
 
