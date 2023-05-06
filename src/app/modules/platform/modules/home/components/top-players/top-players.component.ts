@@ -42,7 +42,7 @@ export class TopPlayersComponent implements OnInit, OnDestroy {
       this.miniGamesService.getMiniGames().pipe(
         tap((response) => {
           this.miniGames = response
-          this.selectTab(response[0])
+          if (this.miniGames.length > 0) this.selectTab(response[0])
         })
       ).subscribe()
     )

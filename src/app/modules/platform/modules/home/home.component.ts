@@ -4,6 +4,8 @@ import {filter, finalize, Subscription, switchMap, tap} from "rxjs";
 import {SystemUserService} from "../../../shared/services/system-user.service";
 import {ContentLayoutInterface} from "./components/content-layout/interfaces/content-layout.interface";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {MiniGamesService} from "../../../shared/services/mini-games.service";
+import {MiniGameResponseInterface} from "../../../shared/interfaces/mini-game-response.interface";
 
 @Component({
   selector: 'yrx-home',
@@ -15,7 +17,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private appStore: AppStore,
     private systemUserService: SystemUserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private miniGamesService: MiniGamesService
   ) {
   }
 
@@ -28,6 +31,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public dataLoading: boolean = true;
   public messageLoading: boolean = false;
   public access_token: boolean = false;
+  public miniGames: MiniGameResponseInterface[] = []
   public content_blocks: ContentLayoutInterface[] = [{
     img: {
       src: 'assets/content/landing/rpg.png',
@@ -94,6 +98,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         filter((val) => val),
         switchMap(() => this.appStore.user$),
         tap((user) => this.form.patchValue({email: user?.user.email})),
+        switchMap(() => this.miniGamesService.getMiniGames()),
+        tap((list) => this.miniGames = list),
         finalize(() => this.dataLoading = false)
       ).subscribe()
     )
@@ -111,5 +117,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       email: [null, [Validators.email, Validators.required]],
       message: [null, [Validators.required, Validators.maxLength(512)]]
     })
+  }
+
+  public getMiniGamesText(): string {
+    const length: number = this.miniGames.length
+    let output: string = 'На нашем сервере вы найдете много увлекательных режимов. Играйте сами и зовите друзей.'
+    if (length > 2) output = `На нашем сервере вы найдете более ${length-1} увлекательных режимов. Играйте сами и зовите друзей.`
+    return output
   }
 }

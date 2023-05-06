@@ -62,7 +62,7 @@ export class AppComponent implements OnInit, OnDestroy {
       //   {isButton: false, link: '/platform/profile/restrictions', name: 'Баны и предупреждения', icon: 'alert-triangle', iconStroked: true},
       // ],
       [
-        {isButton: true, name: 'Выйти со всех устройств', icon: 'laptop', iconStroked: true, callback: () => {this.logoutFromAllDevices()}},
+        // {isButton: true, name: 'Выйти со всех устройств', icon: 'laptop', iconStroked: true, callback: () => {this.logoutFromAllDevices()}},
         {isButton: true, name: 'Выйти', icon: 'logout', iconStroked: true, callback: () => {this.appStore.setIsExit(true)}},
       ]
     ])
@@ -77,7 +77,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.appStore.setSocials([
       {link: 'https://vk.com/yurelax', name: 'Вконтакте', icon: 'vk'},
       {link: 'https://discord.gg/xTWx7T4y6W', name: 'Дискорд', icon: 'dc'},
-      {link: '', name: 'Телеграм', icon: 'tg'},
+      // {link: '', name: 'Телеграм', icon: 'tg'},
     ])
   }
 

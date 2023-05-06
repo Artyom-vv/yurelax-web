@@ -1,3 +1,11 @@
 <h3>Мини-игры</h3>
 <yrx-spacing type="S"></yrx-spacing>
-<yrx-mini-games-create></yrx-mini-games-create>
+<yrx-mini-games-create (onCreate)="onCreate($event)"></yrx-mini-games-create>
+<yrx-spacing type="M"></yrx-spacing>
+<div class="overflow">
+  <ng-container *ngFor="let miniGame of miniGames; let idx = index">
+    <yrx-mini-games-item [index]="idx" (onUpdate)="onUpdate($event)" (onDelete)="onDelete($event)" [data]="miniGame"></yrx-mini-games-item>
+    <yrx-spacing *ngIf="idx !== miniGames.length-1" type="XS"></yrx-spacing>
+  </ng-container>
+</div>
+<p *ngIf="miniGames.length === 0 && !dataLoading" class="text text_body regular c-gradation-300">Пока что нет ни одной мини-игры</p>

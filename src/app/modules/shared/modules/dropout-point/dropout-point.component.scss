@@ -62,8 +62,8 @@ $text_selectors: "&, span";
   width: 100%;
   cursor: pointer;
 
+  border-radius: 6px;
   transition: $trs;
-  border-radius: 0;
   background-color: map-get($project-colors, "gradation", 800);
   border-bottom: 1px solid transparent;
   &_underlined {
@@ -113,7 +113,6 @@ $text_selectors: "&, span";
   &_active {
     border-bottom-color: transparent;
     background-color: map-get($project-colors, "gradation", 700);
-    border-radius: 6px;
     .icon:not(.icon_stroke) {
       fill: map-get($project-colors, "gradation", 100);
     }

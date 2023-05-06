@@ -14,6 +14,7 @@ import {TokenInterceptor} from "./modules/shared/services/guards/token.intercept
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
 import localeRu from '@angular/common/locales/ru';
 import {registerLocaleData} from "@angular/common";
+import {AdminModule} from "./modules/admin/admin.module";
 registerLocaleData(localeRu)
 
 @NgModule({
@@ -25,6 +26,7 @@ registerLocaleData(localeRu)
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
+    AdminModule,
     HttpClientModule
   ],
   providers: [

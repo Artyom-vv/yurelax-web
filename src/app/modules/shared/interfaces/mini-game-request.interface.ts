@@ -1,5 +1,5 @@
 export interface MiniGameRequestInterface {
-  image: File
+  image: File | null
   miniGameKey: string
   name: string
   description: string

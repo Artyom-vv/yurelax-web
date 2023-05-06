@@ -1,6 +1,6 @@
-import {Injectable} from "@angular/core";
+import {ElementRef, Injectable} from "@angular/core";
 import {ChildrenOutletContexts, RouterOutlet} from "@angular/router";
-import {AnimationBuilder, AnimationMetadata, AnimationPlayer} from "@angular/animations";
+import {animate, AnimationBuilder, AnimationMetadata, AnimationPlayer, style} from "@angular/animations";
 
 @Injectable()
 export class AnimationsService {
@@ -20,5 +20,32 @@ export class AnimationsService {
     const player: AnimationPlayer = this.builder.build(animation).create(element);
     player.play()
     return player
+  }
+
+  public slideAnimation(duration: number, element: ElementRef) {
+    this.playAnimation([
+      style({
+        opacity: 0,
+        transform: 'translateY(-15px)'
+      }),
+      animate(duration + 'ms ease-out', style({
+        opacity: 1,
+        transform: 'translateY(0px)'
+      })),
+    ], element.nativeElement)
+  }
+
+  public deleteAnimation(duration: number, element: ElementRef) {
+    this.playAnimation([
+      style({
+        opacity: 1
+      }),
+      animate(duration + 'ms ease-in-out', style({
+        opacity: 0,
+        zIndex: 1,
+        position: 'relative',
+        marginTop: '-' + element.nativeElement.getBoundingClientRect().height + 'px',
+      })),
+    ], element.nativeElement)
   }
 }

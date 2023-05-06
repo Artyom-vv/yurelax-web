@@ -1,29 +1,20 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import {StatisticsResponseInterface} from "../../../../../shared/interfaces/statistics-response.interface";
-import {StatisticsService} from "../../../../../shared/services/statistics.service";
-import {delay, finalize, first, tap} from "rxjs";
-import {catchError} from "rxjs/operators";
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {AnimationsService} from "../../../../../shared/animations/services/animations.service";
+import {MiniGamesService} from "../../../../../shared/services/mini-games.service";
+import {MiniGameResponseInterface} from "../../../../../shared/interfaces/mini-game-response.interface";
+import {delay, finalize, first, tap} from "rxjs";
 import {DELETE_DURATION} from "../../../../admin.constants";
+import {catchError} from "rxjs/operators";
 
 @Component({
-  selector: 'yrx-statistics-item',
-  templateUrl: './statistics-item.component.html',
-  styleUrls: ['./statistics-item.component.scss'],
+  selector: 'yrx-mini-games-item',
+  templateUrl: './mini-games-item.component.html',
+  styleUrls: ['./mini-games-item.component.scss']
 })
-export class StatisticsItemComponent implements AfterViewInit {
-
+export class MiniGamesItemComponent {
   constructor(
-    private statisticsService: StatisticsService,
+    private miniGamesService: MiniGamesService,
     private _snackBar: MatSnackBar,
     private animationsService: AnimationsService
   ) {
@@ -31,9 +22,9 @@ export class StatisticsItemComponent implements AfterViewInit {
 
   @ViewChild('item') item!: ElementRef
   @Input() index: number = 0;
-  @Input() data!: StatisticsResponseInterface
-  @Output() onUpdate: EventEmitter<StatisticsResponseInterface> = new EventEmitter<StatisticsResponseInterface>()
-  @Output() onDelete: EventEmitter<StatisticsResponseInterface> = new EventEmitter<StatisticsResponseInterface>()
+  @Input() data!: MiniGameResponseInterface
+  @Output() onUpdate: EventEmitter<MiniGameResponseInterface> = new EventEmitter<MiniGameResponseInterface>()
+  @Output() onDelete: EventEmitter<MiniGameResponseInterface> = new EventEmitter<MiniGameResponseInterface>()
 
   public isEdit: boolean = false
   public isDelete: boolean = false;
@@ -57,7 +48,7 @@ export class StatisticsItemComponent implements AfterViewInit {
     this.isDelete = false
   }
 
-  public onUpdateHandler($event: StatisticsResponseInterface) {
+  public onUpdateHandler($event: MiniGameResponseInterface) {
     this.isEdit = false
     this.animationsService.slideAnimation(300, this.item)
     this.onUpdate.emit($event)
@@ -65,14 +56,14 @@ export class StatisticsItemComponent implements AfterViewInit {
 
   public deleteApi() {
     this.dataLoading = true
-    this.statisticsService.deleteStatistics(this.data.key).pipe(
+    this.miniGamesService.deleteMiniGame(this.data.miniGameKey).pipe(
       first(),
       tap(() => {
         this.isInit = false
         this.animationsService.deleteAnimation(DELETE_DURATION, this.item);
       }),
       delay(DELETE_DURATION - 5),
-      tap((res) => this.onDelete.emit(res)),
+      tap(() => this.onDelete.emit(this.data)),
       finalize(() => {
         this.dataLoading = false
         this.isDelete = false;

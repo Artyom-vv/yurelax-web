@@ -5,9 +5,9 @@
   <div class="flex flex_wrap gap-16">
     <yrx-selector-point style="flex-basis: 300px" *ngFor="let game of miniGames" [active]="game.miniGameKey === miniGameKey" [iconLoading]="game.miniGameKey === miniGameLoadingKey" (press)="selectTab(game)">
       <ng-container selector-point-icon>
-        <yrx-icon *ngIf="game.miniGameKey === miniGameLoadingKey; else iconLoading" [stroked]="true" icon="loader"></yrx-icon>
-        <ng-template #iconLoading>
-          <yrx-icon  [stroked]="game.iconStroked" [icon]="game.icon"></yrx-icon>
+        <yrx-icon *ngIf="game.miniGameKey === miniGameLoadingKey; else iconWithoutLoading" [stroked]="game.iconStroked" icon="loader"></yrx-icon>
+        <ng-template #iconWithoutLoading>
+          <yrx-icon [stroked]="game.iconStroked" [icon]="game.icon"></yrx-icon>
         </ng-template>
       </ng-container>
       <span>{{game.name}}</span>

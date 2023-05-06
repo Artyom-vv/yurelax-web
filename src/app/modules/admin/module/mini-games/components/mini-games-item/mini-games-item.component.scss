@@ -1,0 +1,12 @@
+@import "src/shared/styles/layout/colored-box";
+
+.mini-game-item {
+  @include colored-box;
+  height: 300px;
+}
+.preview {
+  max-width: 50%;
+  border-radius: 8px;
+  object-position: center;
+  object-fit: cover;
+}

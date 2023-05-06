@@ -1,4 +1,4 @@
-<button class="selector-point" (click)="press.emit($event)" mat-button [disableRipple]="true" [class.selector-point_active]="active" [class.selector-point_iconly]="icon.children.length > 0 && iconLoading === null || icon.children.length > 0 && iconLoading">
+<button class="selector-point" (click)="press.emit($event)" mat-button [disableRipple]="true" [class.selector-point_active]="active" [class.selector-point_iconly]="icon.children.length > 0 && !iconLoading || icon.children.length > 0 && iconLoading">
   <div class="icon-wrapper" #icon>
     <ng-content select="[selector-point-icon]"></ng-content>
   </div>

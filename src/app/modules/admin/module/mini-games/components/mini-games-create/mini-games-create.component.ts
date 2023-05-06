@@ -1,8 +1,17 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MiniGamesService} from "../../../../../shared/services/mini-games.service";
-import {debounceTime, distinctUntilChanged, finalize, first, Subscription, takeUntil, tap} from "rxjs";
+import {debounceTime, distinctUntilChanged, finalize, first, Subscription, switchMap, takeUntil, tap} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {KeyValidator} from "../../../../../shared/validators/key.validator";
 import {StatisticsResponseInterface} from "../../../../../shared/interfaces/statistics-response.interface";
@@ -20,7 +29,7 @@ import {ITagResponse} from "../../../../../shared/modules/tag/interfaces/tag.int
   templateUrl: './mini-games-create.component.html',
   styleUrls: ['./mini-games-create.component.scss']
 })
-export class MiniGamesCreateComponent implements OnInit {
+export class MiniGamesCreateComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private miniGamesService: MiniGamesService,
@@ -28,11 +37,10 @@ export class MiniGamesCreateComponent implements OnInit {
     private fb: FormBuilder,
     private requestsCancellerService: RequestsCancellerService,
     private _snackBar: MatSnackBar,
-    protected cdr: ChangeDetectorRef
   ) {
   }
 
-  @Input() data!: StatisticsResponseInterface;
+  @Input() data!: MiniGameResponseInterface;
   @Input() isEdit: boolean = false
   @Output() onCreate: EventEmitter<MiniGameResponseInterface> = new EventEmitter<MiniGameResponseInterface>();
   @Output() onUpdate: EventEmitter<MiniGameResponseInterface> = new EventEmitter<MiniGameResponseInterface>();
@@ -42,6 +50,7 @@ export class MiniGamesCreateComponent implements OnInit {
 
   public form!: FormGroup
   public dataLoading: boolean = false;
+  public imageLoading: boolean = false;
   public statisticsLoading: boolean = false;
   public dndResponse?: DropBoxOnChangeInterface;
   public statisticsList: StatisticsResponseInterface[] = []
@@ -52,6 +61,21 @@ export class MiniGamesCreateComponent implements OnInit {
     this.dataFields()
   }
 
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe())
+  }
+
+  ngAfterViewInit() {
+    if (this.isEdit) {
+      this.form.patchValue(this.data)
+      this.form.get('miniGameKey')?.disable()
+      this.dndResponse = {
+        file: new File([], this.data.name),
+        url: this.data.previewUrl
+      };
+    }
+  }
+
   get statisticsSelectedList(): StatisticsResponseInterface[] {
     return this.statisticsList.filter(statistics => this.form.getRawValue().keys.includes(statistics.key));
   }
@@ -59,16 +83,33 @@ export class MiniGamesCreateComponent implements OnInit {
   public create(): void {
     this.dataLoading = true;
     this.subscriptions.push(
-      this.miniGamesService.createMiniGame(this.form.getRawValue()).subscribe()
+      this.miniGamesService.createMiniGame(this.form.getRawValue()).pipe(
+        tap((data) => {
+          this.onCreate.emit(data);
+          this._snackBar.open(`Мини-игра "${data.name}" успешно создана`, 'Хорошо')
+        }),
+        finalize(() => {
+          this.dataLoading = false
+          this.form.reset()
+          this.form.patchValue({
+            keys: []
+          })
+        }),
+        catchError((err) => {
+          this._snackBar.open(err.error.message, 'Закрыть')
+          throw new Error(err.error.message)
+        })
+      ).subscribe()
     )
   }
 
   public edit() {
     this.dataLoading = true;
     this.subscriptions.push(
-      this.miniGamesService.updateMiniGame(this.form.getRawValue()).pipe(
+      this.miniGamesService.updateMiniGame(this.form.getRawValue(), this.data.miniGameKey).pipe(
         first(),
         tap((value) => {
+          this._snackBar.open(`Мини-игра "${value.name}" успешно обновлена`, 'Хорошо')
           this.onUpdate.emit(value);
         }),
         finalize(() => this.dataLoading = false),
@@ -83,7 +124,6 @@ export class MiniGamesCreateComponent implements OnInit {
   public cancel() {
     this.onCancel.emit();
   }
-
 
   public getList(value: string | null) {
     this.statisticsLoading = true
@@ -101,11 +141,11 @@ export class MiniGamesCreateComponent implements OnInit {
   }
 
   public onPreviewSelect($event: DropBoxOnChangeInterface) {
+    this.imageLoading = false;
     this.form.patchValue({
       image: $event.file
     })
     this.dndResponse = $event
-    console.log($event)
   }
 
   public onSelectTag($event: ITagResponse<any>) {
@@ -123,7 +163,7 @@ export class MiniGamesCreateComponent implements OnInit {
 
   private initForms(): void {
     this.form = this.fb.group({
-      image: [null, [Validators.required]],
+      image: [null],
       name: [null, [Validators.required]],
       description: [null, [Validators.required]],
       icon: [null, [Validators.required]],
@@ -140,7 +180,7 @@ export class MiniGamesCreateComponent implements OnInit {
       this.statisticsService.getStatisticsList({value: null}).pipe(
         tap((statistics) => {
           this.statisticsList = statistics
-        })
+        }),
       ).subscribe()
     )
   }

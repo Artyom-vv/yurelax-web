@@ -22,31 +22,33 @@ import {StatisticsService} from "../../../shared/services/statistics.service";
 import {RequestsCancellerService} from "../../../shared/services/requests-canceller.service";
 import {TagModule} from "../../../shared/modules/tag/tag.module";
 import {SelectModule} from "../../../shared/modules/select/select.module";
+import { MiniGamesItemComponent } from './components/mini-games-item/mini-games-item.component';
 
 
 @NgModule({
   declarations: [
     MiniGamesComponent,
-    MiniGamesCreateComponent
+    MiniGamesCreateComponent,
+    MiniGamesItemComponent,
   ],
-    imports: [
-        CommonModule,
-        SpacingModule,
-        MiniGamesRoutingModule,
-        ReactiveFormsModule,
-        MatInputModule,
-        ErrorHintWrapperModule,
-        ErrorHintConditionModule,
-        ButtonModule,
-        IconModule,
-        MatSlideToggleModule,
-        MatSnackBarModule,
-        MatCheckboxModule,
-        CheckboxModule,
-        DragAndDropModule,
-        TagModule,
-        SelectModule
-    ],
+  imports: [
+    CommonModule,
+    SpacingModule,
+    MiniGamesRoutingModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    ErrorHintWrapperModule,
+    ErrorHintConditionModule,
+    ButtonModule,
+    IconModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatCheckboxModule,
+    CheckboxModule,
+    DragAndDropModule,
+    TagModule,
+    SelectModule
+  ],
   providers: [
     MiniGamesService,
     StatisticsService,

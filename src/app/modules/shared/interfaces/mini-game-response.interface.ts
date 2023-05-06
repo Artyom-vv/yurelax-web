@@ -6,4 +6,5 @@ export interface MiniGameResponseInterface {
   iconStroked: boolean
   filteredByKey: string
   keys: string[]
+  previewUrl: string
 }

@@ -1,7 +1,7 @@
 <div class="mini-games-create flex flex_column" [formGroup]="form" [class.mini-games-create_editing]="isEdit">
   <div class="flex flex_column gap-12">
     <div class="flex gap-24">
-      <yrx-drag-and-drop [fullHeight]="true" [accept]="['image/png','image/jpg','image/jpeg']" class="flex_grow" (onChange)="onPreviewSelect($event)" icon="file" [iconStroked]="true"></yrx-drag-and-drop>
+      <yrx-drag-and-drop [loading]="imageLoading" (onLoad)="imageLoading = true" [fullHeight]="true" [accept]="['image/png','image/jpg','image/jpeg']" class="flex_grow" (onChange)="onPreviewSelect($event)" icon="file" [iconStroked]="true"></yrx-drag-and-drop>
       <div class="preview flex_grow">
         <img *ngIf="dndResponse" [src]="dndResponse?.url" [alt]="dndResponse?.file?.name">
       </div>
@@ -18,13 +18,6 @@
         <yrx-error-hint-condition [condition]="['required']">Это обязательное поле</yrx-error-hint-condition>
       </yrx-error-hint-wrapper>
     </div>
-    <div class="box box_input">
-      <input formControlName="icon" class="input_normal input_iconly input_dark" matInput placeholder="Иконка мини-игры">
-      <yrx-error-hint-wrapper [control]="form.get('icon')">
-        <yrx-error-hint-condition [condition]="['required']">Это обязательное поле</yrx-error-hint-condition>
-      </yrx-error-hint-wrapper>
-    </div>
-    <yrx-select placeholder="использовать iconStroked?" custom="dark" formControlName="iconStroked" [options]="[{text: 'Да', value: true}, {text: 'Нет', value: false}]"></yrx-select>
     <div>
       <div class="flex flex_column gap-8">
         <p class="text text_body regular">Ключи статистики топа</p>
@@ -33,7 +26,7 @@
           <yrx-icon [hover]="false" [stroked]="true" [icon]="statisticsLoading ? 'loader' : 'search'"></yrx-icon>
         </div>
         <div *ngIf="statisticsList.length > 0" class="flex gap-8 flex_wrap">
-          <yrx-tag [disabled]="this.form.getRawValue().keys.length >= 3" *ngFor="let statistics of statisticsList" (onSelect)="onSelectTag($event)" [value]="statistics.key">{{statistics.title}}</yrx-tag>
+          <yrx-tag [disabled]="form.getRawValue().keys.length >= 3" *ngFor="let statistics of statisticsList" (onSelect)="onSelectTag($event)" [defaultSelect]="form.get('keys')?.value.includes(statistics.key)" [value]="statistics.key">{{statistics.title}}</yrx-tag>
         </div>
         <p *ngIf="statisticsList.length === 0 && !statisticsLoading" class="text text_body regular c-gradation-300">Нет результатов</p>
       </div>
@@ -43,7 +36,7 @@
       <div class="flex flex_column gap-8">
         <p class="text text_body regular">Ключ фильтрации топа</p>
         <div *ngIf="statisticsSelectedList.length > 0" class="flex gap-8 flex_wrap">
-          <yrx-tag [disabled]="!!this.form.get('filteredByKey')?.valid" *ngFor="let statistics of statisticsSelectedList" (onSelect)="onSelectFilteredByKeyTag($event)" [value]="statistics.key">{{statistics.title}}</yrx-tag>
+          <yrx-tag [disabled]="!!form.get('filteredByKey')?.valid" *ngFor="let statistics of statisticsSelectedList" (onSelect)="onSelectFilteredByKeyTag($event)" [defaultSelect]="statistics.key === form.get('filteredByKey')?.value" [value]="statistics.key">{{statistics.title}}</yrx-tag>
         </div>
         <p *ngIf="statisticsSelectedList.length === 0" class="text text_body regular c-gradation-300">Нет результатов</p>
       </div>
@@ -57,6 +50,15 @@
         <yrx-error-hint-condition [condition]="['notAllowedSymbol']">Ключ содержит недопустимые символы</yrx-error-hint-condition>
       </yrx-error-hint-wrapper>
     </div>
+    <div class="box box_input">
+      <input formControlName="icon" class="input_normal input_iconly input_dark" matInput placeholder="Иконка мини-игры">
+      <yrx-error-hint-wrapper [control]="form.get('icon')">
+        <yrx-error-hint-condition [condition]="['required']">Это обязательное поле</yrx-error-hint-condition>
+      </yrx-error-hint-wrapper>
+    </div>
+    <yrx-checkbox formControlName="iconStroked">
+      использовать iconStroked
+    </yrx-checkbox>
   </div>
   <yrx-spacing type="S"></yrx-spacing>
   <yrx-button *ngIf="!isEdit; else editTemplate" (press)="create()" class="flex_align-self-end" [disabled]="dataLoading || form.pending || form.invalid" [iconLoading]="dataLoading">
