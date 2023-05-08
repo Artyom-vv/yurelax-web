@@ -4,10 +4,7 @@ import {MiniGamesService} from "../../../../../shared/services/mini-games.servic
 import {EMPTY, finalize, first, forkJoin, map, Observable, Subscription, switchMap, tap} from "rxjs";
 import {MiniGameResponseInterface} from "../../../../../shared/interfaces/mini-game-response.interface";
 import {UserStatisticsService} from "../../../../../shared/services/user-statistics.service";
-import {StatisticsResponseInterface} from "../../../../../shared/interfaces/statistics-response.interface";
 import {StatisticsService} from "../../../../../shared/services/statistics.service";
-import {UserStatisticsResponseInterface} from "../../../../../shared/interfaces/user-statistics-response.interface";
-import {GetTopPlayersItemResponseInterface} from "../../../../../shared/interfaces/get-top-players-response.interface";
 import {catchError} from "rxjs/operators";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
@@ -22,7 +19,7 @@ export class TopPlayersComponent implements OnInit, OnDestroy {
     private miniGamesService: MiniGamesService,
     private userStatisticsService: UserStatisticsService,
     private statisticsService: StatisticsService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
   ) {
   }
 

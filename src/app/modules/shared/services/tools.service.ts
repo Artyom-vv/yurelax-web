@@ -29,7 +29,7 @@ export class ToolsService {
     const num = value % 10;
     if (value > 10 && value < 20) return words[2]; // Род. п. мн. ч
     if (num > 1 && num < 5) return words[1]; // Род. п. ед. ч
-    if (num == 1) return words[0]; // Им. п.
+    if (num == 1) return words[0]; // Им. п. ед.ч
     return words[2];
   }
 }

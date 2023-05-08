@@ -1,9 +1,11 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../../../store/app.store";
-import {first, interval, retry, retryWhen, Subscription, switchMap, tap} from "rxjs";
+import {filter, interval, Observable, retry, retryWhen, Subscription, switchMap, tap} from "rxjs";
 import {UserStoreInterface} from "../../../../../../store/interfaces/user-store.interface";
 import {ToolsService} from "../../../../../shared/services/tools.service";
 import {UserService} from "../../../../services/user.service";
+import {GetUserOnlineResponseInterface} from "../../../../interfaces/get-user-online-response.interface";
+import {GetUserOnlineRequestInterface} from "../../../../interfaces/get-user-online-request.interface";
 
 @Component({
   selector: 'yrx-sidebar-user-panel',
@@ -25,8 +27,21 @@ export class SidebarUserPanelComponent implements OnInit, OnDestroy {
   public userStore: UserStoreInterface | null = null
   public dataLoading: boolean = true;
   public lastOnlineStatus: string = ''
+  public pingPlayerRequest$: (_: GetUserOnlineRequestInterface) => Observable<GetUserOnlineResponseInterface> = (_: GetUserOnlineRequestInterface) => this.userService.getUserOnline(_).pipe(
+    tap(({lastOnlineDate, isOnline}) => {
+      if (this.userStore) this.appStore.setUser({
+        ...this.userStore,
+        userInfo: {
+          ...this.userStore.userInfo,
+          lastOnlineDate,
+          isOnline
+        }
+      })
+    })
+  )
 
   ngOnInit() {
+    let request!: GetUserOnlineRequestInterface;
     this.subscriptions.push(
       this.appStore.user$.pipe(
         tap((user) => {
@@ -34,28 +49,21 @@ export class SidebarUserPanelComponent implements OnInit, OnDestroy {
           if (user) {
             const {lastOnlineDate, isOnline} = user.userInfo
             this.lastOnlineStatus = this.getLastOnlineStatus(lastOnlineDate, isOnline)
+            request = {
+              login: this.userStore?.user.login as string,
+              userId: this.userStore?.user.userId as string,
+            }
           }
           this.dataLoading = false;
           this.cdr.detectChanges()
         }),
+        filter((i, n) => n === 0),
+        switchMap(() => this.pingPlayerRequest$(request))
       ).subscribe()
     )
     this.subscriptions.push(
       interval(5000).pipe(
-        switchMap(() => this.userService.getUserOnline({
-          login: this.userStore?.user.login as string,
-          userId: this.userStore?.user.userId as string,
-        })),
-        tap(({lastOnlineDate, isOnline}) => {
-          if (this.userStore) this.appStore.setUser({
-            ...this.userStore,
-            userInfo: {
-              ...this.userStore.userInfo,
-              lastOnlineDate,
-              isOnline
-            }
-          })
-        }),
+        switchMap(() => this.pingPlayerRequest$(request)),
         retryWhen(errors => errors.pipe(retry(1)))
       ).subscribe()
     )

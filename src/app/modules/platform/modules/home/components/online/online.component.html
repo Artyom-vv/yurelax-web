@@ -2,15 +2,18 @@
   <img class="parrot" src="assets/content/landing/online/parrot.png" alt="Описание для юрелакс">
   <img class="bee" src="assets/content/landing/online/bee.png" alt="Описание для юрелакс">
   <yrx-spacing type="M"></yrx-spacing>
-  <div class="flex flex_justify-between w100">
+  <div class="flex flex_align-center flex_justify-between w100">
     <h3>Онлайн на сервере</h3>
-    <div class="flex flex_align-center gap-16">
-      <div class="floating">
-        <span></span>
-        <span></span>
+    <yrx-icon *ngIf="dataLoading; else content" [stroked]="true" icon="loader"></yrx-icon>
+    <ng-template #content>
+      <div class="flex flex_align-center gap-16">
+        <div class="floating">
+          <span></span>
+          <span></span>
+        </div>
+        <h3>{{online}} {{toolsService.declineWord(online, ['Игрок', 'Игрока', 'Игроков'])}}</h3>
       </div>
-      <h3>{{online}} игроков</h3>
-    </div>
+    </ng-template>
   </div>
   <yrx-spacing type="M"></yrx-spacing>
 </div>

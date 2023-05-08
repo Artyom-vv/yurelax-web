@@ -6,13 +6,32 @@
   display: block;
   transition: $trs;
 
-  &-dc, &-tg, &-vk {
+  &-dc, &-tg, &-vk, &-yt {
     @include icon-size(24px);
     fill: map-get($project-colors, "gradation", 500);
     cursor: pointer;
+  }
 
+  &-dc {
     &:hover {
-      fill: map-get($project-colors, "gradation", 400);
+      fill: #0088CC;
+    }
+  }
+  &-vk {
+    &:hover {
+      fill: #0077FF
+    }
+  }
+
+  &-yt {
+    &:hover {
+      fill: #CD201F;
+    }
+  }
+
+  &-dc {
+    &:hover {
+      fill: #5865F2;
     }
   }
 
@@ -271,6 +290,12 @@
   }
 
   &-cross {
+    @include icon-size(24px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
+
+  &-external-link {
     @include icon-size(24px);
     stroke: map-get($project-colors, "gradation", 100);
     fill: none;
