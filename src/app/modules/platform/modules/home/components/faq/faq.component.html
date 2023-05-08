@@ -1,10 +1,18 @@
 <yrx-spacing type="XL"></yrx-spacing>
-<div class="flex flex_align-center gap-24">
-  <div class="faq flex flex_column">
+<div class="flex gap-24">
+  <div class="faq flex_grow flex flex_column">
     <h3>Ответы на вопросы</h3>
-    <yrx-accordion>
-      <yrx-accordion-item></yrx-accordion-item>
+    <yrx-spacing type="S"></yrx-spacing>
+    <yrx-accordion class="faq-accordion">
+      <yrx-accordion-item *ngFor="let faq of data">
+        <ng-container accordion-title>{{faq.question}}</ng-container>
+        <p accordion-body class="text text_body regular c-gradation-300">{{faq.answer}}</p>
+      </yrx-accordion-item>
     </yrx-accordion>
+  </div>
+  <div class="flex_grow">
+    <yrx-spacing type="M"></yrx-spacing>
+    <yrx-spacing type="S"></yrx-spacing>
   </div>
 </div>
 <yrx-spacing type="XL"></yrx-spacing>

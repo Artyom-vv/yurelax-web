@@ -3,6 +3,10 @@ import {Injectable} from "@angular/core";
 @Injectable()
 export class ToolsService {
 
+  public generateId = () => {
+    return `f${(~~(Math.random() * 1e8)).toString(16)}`;
+  };
+
   public getRandomInt(max: number): number {
     return Math.floor(Math.random() * max);
   }

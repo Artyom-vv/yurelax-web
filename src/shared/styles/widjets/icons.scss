@@ -269,6 +269,12 @@
     stroke: map-get($project-colors, "gradation", 100);
     fill: none;
   }
+
+  &-cross {
+    @include icon-size(24px);
+    stroke: map-get($project-colors, "gradation", 100);
+    fill: none;
+  }
 }
 
 .icon {

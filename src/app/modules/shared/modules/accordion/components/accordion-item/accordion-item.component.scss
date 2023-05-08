@@ -1,0 +1,30 @@
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/vars.animations";
+
+:host {
+  width: 100%;
+}
+.accordion-item {
+  user-select: none;
+  transition: $trs;
+
+  cursor: pointer;
+
+  width: 100%;
+  background-color: map-get($project-colors, "gradation", 800);
+  border-bottom: 1px solid map-get($project-colors, "gradation", 600);
+
+  &:hover {
+    background-color: map-get($project-colors, "gradation", 700);
+  }
+
+  &_open {
+    //yrx-icon {
+    //  transform: translateY(3px);
+    //}
+  }
+
+  &-content {
+    overflow: hidden;
+  }
+}

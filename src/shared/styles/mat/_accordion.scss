@@ -1,0 +1,15 @@
+@import "src/shared/styles/widjets/icon_tools";
+@import "src/shared/styles/vars.colors";
+
+.accordion-item {
+  .icon {
+    @include icon-size(24px);
+  }
+  #{$unique_stroke_icons} {
+    stroke: map-get($project-colors, "gradation", 300);
+  }
+
+  .icon:not(#{$unique_stroke_icons}) {
+    fill: map-get($project-colors, "gradation", 300);
+  }
+}

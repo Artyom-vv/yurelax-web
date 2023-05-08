@@ -1,1 +1,17 @@
-<p>accordion-item works!</p>
+<ng-template #accordionItem>
+  <div (click)="onClickHandler()" class="accordion-item" [class.accordion-item_open]="open">
+    <yrx-spacing type="S"></yrx-spacing>
+    <div class="accordion-item-content">
+      <div class="accordion-item-header flex flex_align-center flex_justify-between">
+        <h4><ng-content select="[accordion-title]"></ng-content></h4>
+        <yrx-icon [stroked]="true" [icon]="open ? 'chevron-arrow-up' : 'chevron-arrow-down'"></yrx-icon>
+      </div>
+      <div [@open]="open" class="accordion-item-body">
+        <yrx-spacing type="XS2"></yrx-spacing>
+        <ng-content select="[accordion-body]"></ng-content>
+      </div>
+    </div>
+    <yrx-spacing type="S"></yrx-spacing>
+  </div>
+
+</ng-template>

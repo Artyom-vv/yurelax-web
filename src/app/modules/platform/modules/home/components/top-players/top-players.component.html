@@ -14,14 +14,8 @@
     </yrx-selector-point>
   </div>
   <yrx-spacing type="XS"></yrx-spacing>
-  <ng-container *ngIf="dataLoading; else content">
-    <yrx-skeleton [styles]="{height: '128px', borderRadius: '8px'}" theme="dark"></yrx-skeleton>
-  </ng-container>
-  <ng-template #content>
-    <yrx-rating-table *ngIf="tableData.length > 0; else emptyTemplate" [columns]="columns" [data]="tableData"></yrx-rating-table>
-    <ng-template #emptyTemplate>
-      <p class="text text_body regular c-gradation-300">За этот месяц в эту игру никто не играл :c</p>
-    </ng-template>
-  </ng-template>
+  <yrx-rating-table [columns]="columns" [data]="tableData"></yrx-rating-table>
+  <yrx-spacing type="XS2"></yrx-spacing>
+  <p *ngIf="tableData.length === 0" class="text text_body regular c-gradation-300">В этом месяце никто не успел набрать счёт в этом режиме. Поспешите и займите топ первым! </p>
   <yrx-spacing type="L"></yrx-spacing>
 </div>
