@@ -1,0 +1,16 @@
+@import "src/shared/styles/widjets/icon_tools";
+@import "src/shared/styles/vars.colors";
+
+.social-panel {
+  .icon-wrapper .icon {
+    @include icon-size(32px)
+  }
+  .icon-external-link {
+    stroke: map-get($project-colors, "gradation", 400);
+  }
+  &:hover {
+    .icon-external-link {
+      stroke: map-get($project-colors, "gradation", 300);
+    }
+  }
+}

@@ -1,8 +1,8 @@
 <yrx-spacing type="XL"></yrx-spacing>
+<h3>Ответы на вопросы</h3>
+<yrx-spacing type="S"></yrx-spacing>
 <div class="flex gap-24">
   <div class="faq flex_grow flex flex_column">
-    <h3>Ответы на вопросы</h3>
-    <yrx-spacing type="S"></yrx-spacing>
     <yrx-accordion class="faq-accordion">
       <yrx-accordion-item *ngFor="let faq of data">
         <ng-container accordion-title>{{faq.question}}</ng-container>
@@ -11,8 +11,20 @@
     </yrx-accordion>
   </div>
   <div class="flex_grow">
-    <yrx-spacing type="M"></yrx-spacing>
-    <yrx-spacing type="S"></yrx-spacing>
+    <div class="flex gap-24 flex_wrap">
+      <yrx-social-panel type="tg">
+        <ng-container social-panel-title>Поддержка в Telegram</ng-container>
+        <ng-container social-panel-text>Отвечаем в течении 24 часов</ng-container>
+      </yrx-social-panel>
+      <yrx-social-panel type="vk">
+        <ng-container social-panel-title>Поддержка во Вконтакте</ng-container>
+        <ng-container social-panel-text>Отвечаем в течении 24 часов</ng-container>
+      </yrx-social-panel>
+      <yrx-social-panel type="dc">
+        <ng-container social-panel-title>Остались вопросы?</ng-container>
+        <ng-container social-panel-text>Присоединяйтесь к нам в Discord</ng-container>
+      </yrx-social-panel>
+    </div>
   </div>
 </div>
 <yrx-spacing type="XL"></yrx-spacing>

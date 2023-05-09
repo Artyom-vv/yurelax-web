@@ -1,3 +1,13 @@
-<div class="social-panel">
-
-</div>
+<a [href]="social?.link" target="_blank" class="social-panel flex flex_column">
+  <yrx-spacing type="S"></yrx-spacing>
+  <div class="flex flex_justify-between">
+    <div class="icon-wrapper flex flex_center" [ngStyle]="{background: social?.color}">
+      <yrx-icon [hover]="false" color="gradation-100" [icon]="type"></yrx-icon>
+    </div>
+    <yrx-icon [stroked]="true" icon="external-link"></yrx-icon>
+  </div>
+  <yrx-spacing type="XS"></yrx-spacing>
+  <h5><ng-content select="[social-panel-title]"></ng-content></h5>
+  <p class="text text_body regular c-gradation-300"><ng-content select="[social-panel-text]"></ng-content></p>
+  <yrx-spacing type="S"></yrx-spacing>
+</a>

@@ -1,5 +1,5 @@
 @import "src/shared/styles/vars.colors";
-@import "src/shared/styles/mat/button";
+@import "src/shared/styles/components/button";
 
 .mat-mdc-snack-bar-container .mdc-snackbar__surface {
   background-color: map-get($project-colors, "gradation", 600) !important;

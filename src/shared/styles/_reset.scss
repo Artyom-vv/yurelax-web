@@ -1,11 +1,12 @@
 @import "normolize";
 
-@import "mat/button";
-@import "mat/input";
-@import "mat/select";
-@import "mat/snackbar";
-@import "mat/selector-point";
-@import "mat/accordion";
+@import "components/button";
+@import "components/input";
+@import "components/select";
+@import "components/snackbar";
+@import "components/selector-point";
+@import "components/accordion";
+@import "components/social-panel";
 
 html {
   box-sizing: border-box;

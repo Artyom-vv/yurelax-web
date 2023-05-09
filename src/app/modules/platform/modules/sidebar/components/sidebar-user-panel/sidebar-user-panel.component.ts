@@ -1,6 +1,17 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../../../store/app.store";
-import {filter, interval, Observable, retry, retryWhen, Subscription, switchMap, tap} from "rxjs";
+import {
+  EMPTY, filter,
+  iif,
+  interval,
+  MonoTypeOperatorFunction,
+  Observable,
+  retry,
+  retryWhen,
+  Subscription,
+  switchMap,
+  tap
+} from "rxjs";
 import {UserStoreInterface} from "../../../../../../store/interfaces/user-store.interface";
 import {ToolsService} from "../../../../../shared/services/tools.service";
 import {UserService} from "../../../../services/user.service";
@@ -11,13 +22,11 @@ import {GetUserOnlineRequestInterface} from "../../../../interfaces/get-user-onl
   selector: 'yrx-sidebar-user-panel',
   templateUrl: './sidebar-user-panel.component.html',
   styleUrls: ['./sidebar-user-panel.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarUserPanelComponent implements OnInit, OnDestroy {
   constructor(
     private appStore: AppStore,
     private toolsService: ToolsService,
-    private cdr: ChangeDetectorRef,
     private userService: UserService
   ) {
   }
@@ -37,7 +46,8 @@ export class SidebarUserPanelComponent implements OnInit, OnDestroy {
           isOnline
         }
       })
-    })
+    }),
+    retryWhen(errors => errors.pipe(retry(1)))
   )
 
   ngOnInit() {
@@ -55,15 +65,13 @@ export class SidebarUserPanelComponent implements OnInit, OnDestroy {
             }
           }
           this.dataLoading = false;
-          this.cdr.detectChanges()
         }),
-        switchMap(() => this.pingPlayerRequest$(request))
-      ).subscribe()
+        filter((x, i) => i === 0),
+        switchMap(() => this.pingPlayerRequest$(request))).subscribe()
     )
     this.subscriptions.push(
       interval(5000).pipe(
-        switchMap(() => this.pingPlayerRequest$(request)),
-        retryWhen(errors => errors.pipe(retry(1)))
+        switchMap(() => this.pingPlayerRequest$(request))
       ).subscribe()
     )
   }

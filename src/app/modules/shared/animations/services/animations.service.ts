@@ -22,11 +22,11 @@ export class AnimationsService {
     return player
   }
 
-  public slideAnimation(duration: number, element: ElementRef) {
+  public slideAnimation(duration: number, element: ElementRef, y: number = -15) {
     this.playAnimation([
       style({
         opacity: 0,
-        transform: 'translateY(-15px)'
+        transform: `translateY(${y}px)`
       }),
       animate(duration + 'ms ease-out', style({
         opacity: 1,

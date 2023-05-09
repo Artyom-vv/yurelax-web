@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SocialPanelComponent } from './social-panel.component';
+import {SpacingModule} from "../spacing/spacing.module";
+import {IconModule} from "../icon/icon.module";
 
 
 
@@ -8,8 +10,13 @@ import { SocialPanelComponent } from './social-panel.component';
   declarations: [
     SocialPanelComponent
   ],
+  exports: [
+    SocialPanelComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    SpacingModule,
+    IconModule
   ]
 })
 export class SocialPanelModule { }

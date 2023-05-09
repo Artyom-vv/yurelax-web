@@ -12,26 +12,26 @@
     cursor: pointer;
   }
 
-  &-dc {
-    &:hover {
-      fill: #0088CC;
+  &-hover {
+    &-tg {
+      &:hover {
+        fill: #0088CC;
+      }
     }
-  }
-  &-vk {
-    &:hover {
-      fill: #0077FF
+    &-vk {
+      &:hover {
+        fill: #0077FF
+      }
     }
-  }
-
-  &-yt {
-    &:hover {
-      fill: #CD201F;
+    &-yt {
+      &:hover {
+        fill: #CD201F;
+      }
     }
-  }
-
-  &-dc {
-    &:hover {
-      fill: #5865F2;
+    &-dc {
+      &:hover {
+        fill: #5865F2;
+      }
     }
   }
 

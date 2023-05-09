@@ -1,5 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FaqInterface} from "./interfaces/faq.interface";
+import {AppStore} from "../../../../../../store/app.store";
+import {Subscription, tap} from "rxjs";
+import {SocialStoreInterface} from "../../../../../../store/interfaces/socials-store.interface";
 
 @Component({
   selector: 'yrx-faq',
