@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {RatingTableInterface} from "./interfaces/rating-table.interface";
+import {IRatingTableColumn, RatingTableInterface} from "./interfaces/rating-table.interface";
 import {ToolsService} from "../../services/tools.service";
 
 @Component({
@@ -8,6 +8,6 @@ import {ToolsService} from "../../services/tools.service";
   styleUrls: ['./rating-table.component.scss']
 })
 export class RatingTableComponent {
-  @Input() data: RatingTableInterface[] = []
-  @Input() columns: string[] = []
+  @Input() data!: RatingTableInterface;
+  @Input() columns: IRatingTableColumn[] = []
 }

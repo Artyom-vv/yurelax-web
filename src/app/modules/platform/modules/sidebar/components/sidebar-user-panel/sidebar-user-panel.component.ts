@@ -57,7 +57,6 @@ export class SidebarUserPanelComponent implements OnInit, OnDestroy {
           this.dataLoading = false;
           this.cdr.detectChanges()
         }),
-        filter((i, n) => n === 0),
         switchMap(() => this.pingPlayerRequest$(request))
       ).subscribe()
     )

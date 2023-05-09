@@ -1,5 +1,6 @@
 .content-layout-img {
   overflow: hidden;
-  object-fit: cover;
+  // TODO: Изменить обратно на cover
+  object-fit: contain;
   height: 460px;
 }

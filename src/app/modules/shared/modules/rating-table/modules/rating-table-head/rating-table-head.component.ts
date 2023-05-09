@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {IRatingTableColumn} from "../../interfaces/rating-table.interface";
 
 @Component({
   selector: 'yrx-rating-table-head',
@@ -6,5 +7,6 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./rating-table-head.component.scss']
 })
 export class RatingTableHeadComponent {
-  @Input() columns: string[] = []
+  @Input() filteredByKey!: string | undefined
+  @Input() columns: IRatingTableColumn[] = []
 }

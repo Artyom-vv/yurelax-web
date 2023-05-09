@@ -2,7 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../../../store/app.store";
 import {Subscription, tap} from "rxjs";
 import {UserStoreInterface} from "../../../../../../store/interfaces/user-store.interface";
-import {RatingTableInterface} from "../../interfaces/rating-table.interface";
+import {IRatingRow, RatingTableInterface} from "../../interfaces/rating-table.interface";
 
 @Component({
   selector: 'yrx-rating-table-point',
@@ -16,7 +16,7 @@ export class RatingTablePointComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  @Input() data!: RatingTableInterface
+  @Input() data!: IRatingRow
   @Input() index!: number
   @Input() theme: 'dark' | 'bright' = 'dark'
 

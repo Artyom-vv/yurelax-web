@@ -10,3 +10,8 @@
     background-color: map-get($project-colors, "gradation", 700);
   }
 }
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+}

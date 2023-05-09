@@ -1,5 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {RatingTableInterface} from "../../../../../shared/modules/rating-table/interfaces/rating-table.interface";
+import {
+  IRatingRow,
+  IRatingTableColumn,
+  RatingTableInterface
+} from "../../../../../shared/modules/rating-table/interfaces/rating-table.interface";
 import {MiniGamesService} from "../../../../../shared/services/mini-games.service";
 import {EMPTY, finalize, first, forkJoin, map, Observable, Subscription, switchMap, tap} from "rxjs";
 import {MiniGameResponseInterface} from "../../../../../shared/interfaces/mini-game-response.interface";
@@ -25,8 +29,8 @@ export class TopPlayersComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = []
 
-  public columns: string[] = []
-  public tableData: RatingTableInterface[] = []
+  public columns: IRatingTableColumn[] = []
+  public tableData!: RatingTableInterface
   public currentMonth: number = new Date().getMonth() + 1
   public month: string = ''
   public miniGames: MiniGameResponseInterface[] = []
@@ -98,15 +102,22 @@ export class TopPlayersComponent implements OnInit, OnDestroy {
     }).pipe(
       first(),
       switchMap((statistics) => {
-        const observables: Observable<string>[] = []
+        const observables: Observable<IRatingTableColumn>[] = []
         game.keys.forEach((key) => {
-          observables.push(this.statisticsService.getStatistics(key).pipe(map((res) => res.title)))
+          observables.push(this.statisticsService.getStatistics(key).pipe(map((res) => ({
+            key: res.key,
+            text: res.title
+          }))))
         })
         return observables.length > 0 ? forkJoin(observables).pipe(tap(() => {
-          this.tableData = statistics.map(item => ({
-            login: item.login,
-            values: item.statistics.map(x => x.monthlyValue)
-          }))
+          this.tableData = {
+            filteredByKey: game.filteredByKey,
+            values: statistics.map(item => ({
+              avatarUrl: item.avatarUrl,
+              login: item.login,
+              values: item.statistics.map(x => x.monthlyValue)
+            }))
+          }
         })) : EMPTY
       }),
       tap((columns) => {
@@ -117,7 +128,7 @@ export class TopPlayersComponent implements OnInit, OnDestroy {
         this.dataLoading = false;
       }),
       catchError((err) => {
-        this._snackBar.open(err.error.message,"Закрыть")
+        this._snackBar.open(err.error.message, "Закрыть")
         throw Error(err)
       })
     ).subscribe()
