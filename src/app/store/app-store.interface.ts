@@ -1,10 +1,10 @@
-import {UserStoreInterface} from "./interfaces/user-store.interface";
 import {NavigationStoreInterface} from "./interfaces/navigation-store.interface";
 import {SocialStoreInterface} from "./interfaces/socials-store.interface";
 import {SidebarNavigationInterface} from "../modules/platform/modules/sidebar/interfaces/sidebar-navigation.interface";
+import {UserRes} from "../modules/platform/interfaces/user.interface";
 
 export interface AppState {
-  user: UserStoreInterface | null
+  user: UserRes | null
   isExit: boolean
   navigation: NavigationStoreInterface[]
   profileNavigation: SidebarNavigationInterface[][]

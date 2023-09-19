@@ -2,10 +2,10 @@ import {Injectable} from "@angular/core";
 import {ComponentStore} from "@ngrx/component-store";
 import {AppState, DEFAULT_STATE} from "./app-store.interface";
 import {Observable} from "rxjs";
-import {UserStoreInterface} from "./interfaces/user-store.interface";
 import {NavigationStoreInterface} from "./interfaces/navigation-store.interface";
 import {SocialStoreInterface} from "./interfaces/socials-store.interface";
 import {SidebarNavigationInterface} from "../modules/platform/modules/sidebar/interfaces/sidebar-navigation.interface";
+import {UserRes} from "../modules/platform/interfaces/user.interface";
 
 @Injectable()
 export class AppStore extends ComponentStore<AppState> {
@@ -14,7 +14,7 @@ export class AppStore extends ComponentStore<AppState> {
     super(DEFAULT_STATE);
   }
 
-  readonly user$: Observable<UserStoreInterface | null> = this.select(state => state.user);
+  readonly user$: Observable<UserRes | null> = this.select(state => state.user);
   readonly isExit$: Observable<boolean> = this.select(state => state.isExit);
   readonly isLogged$: Observable<boolean> = this.select(state => state.isLogged);
 
@@ -66,7 +66,7 @@ export class AppStore extends ComponentStore<AppState> {
     navigation
   }));
 
-  readonly setUser = this.updater((state, user: UserStoreInterface | null) => ({
+  readonly setUser = this.updater((state, user: UserRes | null) => ({
     ...state,
     user
   }));

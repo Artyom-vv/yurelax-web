@@ -2,8 +2,8 @@
   <div class="flex_grow flex gap-24 flex_align-center">
     <p class="text text_body medium c-gradation-100">{{index}}.</p>
     <div class="flex_grow flex flex_align-center gap-12">
-      <img class="avatar" [src]="data.avatarUrl" [alt]="'Аватар игрока ' + userStore?.user?.login">
-      <p class="text text_body medium" [ngClass]="userStore?.user?.login === data.login ? 'c-purple-300' : 'c-gradation-100'">{{data.login}}</p>
+      <img class="avatar" [src]="data.avatarUrl" [alt]="'Аватар игрока ' + userStore?.login">
+      <p class="text text_body medium" [ngClass]="userStore?.login === data.login ? 'c-purple-300' : 'c-gradation-100'">{{data.login}}</p>
     </div>
   </div>
   <div class="flex_grow flex">

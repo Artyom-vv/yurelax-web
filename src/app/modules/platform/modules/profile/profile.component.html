@@ -12,7 +12,7 @@
           <yrx-spacing type="S"></yrx-spacing>
           <yrx-sidebar-user-panel></yrx-sidebar-user-panel>
           <yrx-spacing type="XS"></yrx-spacing>
-          <yrx-button *ngIf="userStore?.user?.role === RolesEnum.ADMIN" type="secondary" [routerLink]="['/admin']">
+          <yrx-button *ngIf="userStore?.role === RolesEnum.ADMIN" type="secondary" [routerLink]="['/admin']">
             <span>Дэшборд</span>
             <yrx-icon btn-icon [stroked]="true" icon="arrow-right"></yrx-icon>
           </yrx-button>

@@ -3,8 +3,8 @@ import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterSta
 import {Injectable} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {RolesEnum} from "../../enums/roles.enum";
-import {UserStoreInterface} from "../../../../store/interfaces/user-store.interface";
 import {SystemUserService} from "../system-user.service";
+import {UserRes} from "../../../platform/interfaces/user.interface";
 
 @Injectable()
 export class CheckAuthGuard implements CanActivate, CanActivateChild {
@@ -12,12 +12,12 @@ export class CheckAuthGuard implements CanActivate, CanActivateChild {
   }
 
   canActivate = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => this.appStore.user$.pipe(
-    switchMap((userStore: UserStoreInterface | null) => {
+    switchMap((userStore: UserRes | null) => {
       if (this.systemUser.getAccessToken()) {
-        if (userStore?.user?.role === RolesEnum.DEFAULT) {
+        if (userStore?.role === RolesEnum.DEFAULT) {
           this.router.navigate(['/auth/email-verify']);
           return of(false)
-        } else if (userStore?.user?.role === RolesEnum.USER || userStore?.user?.role === RolesEnum.ADMIN) {
+        } else if (userStore?.role === RolesEnum.USER || userStore?.role === RolesEnum.ADMIN) {
           this.router.navigate(['/platform']);
           return of(false)
         }

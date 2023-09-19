@@ -11,12 +11,12 @@ import {DropBoxOnChangeInterface} from "../../../../../shared/modules/drag-and-d
 import {SkinsService} from "../../../../../shared/services/skins.service";
 import {AppStore} from "../../../../../../store/app.store";
 import {Subscription, tap} from "rxjs";
-import {UserStoreInterface} from "../../../../../../store/interfaces/user-store.interface";
 import {ModelService} from "../../../../../shared/services/model.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {SkinViewer, WalkingAnimation} from "skinview3d";
 import {catchError} from "rxjs/operators";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {UserRes} from "../../../../interfaces/user.interface";
 
 @Component({
   selector: 'yrx-skins-viewer',
@@ -42,7 +42,7 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public dataLoading: boolean = false;
   public form!: FormGroup
-  public userStore: UserStoreInterface | null = null
+  public userStore: UserRes | null = null
   public skin: SkinViewer | null = null;
   public modelLoading: boolean = true;
 
@@ -50,7 +50,7 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscriptions.push(
       this.appStore.user$.pipe(
         tap((userStore) => {
-          if (this.userStore?.userInfo.skinUrl !== userStore?.userInfo.skinUrl) {
+          if (this.userStore?.userInfoRef.skinUrl !== userStore?.userInfoRef.skinUrl) {
           this.modelLoading = true;
             setTimeout(() => {
               this.skin = new SkinViewer({
@@ -58,8 +58,8 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
                 width: 293,
                 height: 320,
                 zoom: 0.8,
-                model: userStore?.userInfo.skinType,
-                skin: userStore?.userInfo.skinUrl as string
+                model: userStore?.userInfoRef.skinType,
+                skin: userStore?.userInfoRef.skinUrl as string
               })
               this.skin.controls.enableZoom = false
               this.skin.animation = new WalkingAnimation()
@@ -84,15 +84,15 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onSelectFile($event: DropBoxOnChangeInterface) {
-    if (this.userStore?.user?.userId) {
+    if (this.userStore?._id) {
       this.dataLoading = true;
-      this.skinsService.uploadSkin(this.userStore!.user!.userId, $event.file).pipe(
+      this.skinsService.uploadSkin(this.userStore!._id, $event.file).pipe(
         tap((res) => {
           if (this.userStore) {
             this.appStore.setUser({
               ...this.userStore,
-              userInfo: {
-                ...this.userStore.userInfo,
+              userInfoRef: {
+                ...this.userStore.userInfoRef,
                 ...res
               }
             })

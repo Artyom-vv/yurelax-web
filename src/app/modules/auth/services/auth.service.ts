@@ -1,21 +1,20 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, throwError, of, tap} from "rxjs";
-import {UserResponseInterface} from "../../platform/interfaces/user.interface";
+import {UserRes} from "../../platform/interfaces/user.interface";
 import {environment} from "../../../../environments/environment";
 import {catchError} from "rxjs/operators";
 import {LoginRequestInterface} from "../interfaces/login-request.interface";
-import {LoginResponseInterface} from "../interfaces/login-response.interface";
+import {LoginRes} from "../interfaces/login.res";
 import {RegisterRequestInterface} from "../interfaces/register-request.interface";
-import {RegisterResponseInterface} from "../interfaces/register-response.interface";
+import {RegisterRes} from "../interfaces/register.res";
 import {TokensResponseInterface} from "../interfaces/tokens-response.interface";
 import {PersistenceService} from "../../shared/services/persistence.service";
 import {AppStore} from "../../../store/app.store";
 import {CookieService} from "ngx-cookie-service";
 import {JwtMaResponseInterface} from "../interfaces/jwt-ma-response.interface";
 import {JwtMaAuthResponseInterface} from "../interfaces/jwt-ma-auth-response.interface";
-import {UserStoreInterface} from "../../../store/interfaces/user-store.interface";
-import {GetMeResponseInterface} from "../interfaces/get-me-response.interface";
+import {GetMeRes} from "../interfaces/get-me.res";
 import {RecoverPasswordRequestInterface} from "../interfaces/recover-password-request.interface";
 import {RecoverPasswordResponseInterface} from "../interfaces/recover-password-response.interface";
 
@@ -43,19 +42,19 @@ export class AuthService {
     })
   }
 
-  saveUserData(user: UserStoreInterface) {
+  saveUserData(user: UserRes) {
     this.persistenceService.set('user', user)
     this.appStore.setUser(user);
   }
 
-  saveData(res: LoginResponseInterface | RegisterResponseInterface): void {
-    const {tokens, ...userdata} = res;
+  saveData(res: LoginRes | RegisterRes): void {
+    const {tokens, user} = res;
     this.saveCookies(res.tokens)
-    this.saveUserData(userdata)
+    this.saveUserData(user)
   }
 
-  login(data: LoginRequestInterface): Observable<LoginResponseInterface> {
-    return this.http.post<LoginResponseInterface>(`${environment.apiUrl}/auth/login`, data).pipe(
+  login(data: LoginRequestInterface): Observable<LoginRes> {
+    return this.http.post<LoginRes>(`${environment.apiUrl}/auth/login`, data).pipe(
       tap((res) => {
         this.saveData(res)
         this.appStore.setIsLogged(true);
@@ -64,14 +63,14 @@ export class AuthService {
     )
   }
 
-  adminLogin(data: LoginRequestInterface): Observable<LoginResponseInterface> {
-    return this.http.post<LoginResponseInterface>(`${environment.apiUrl}/auth/login`, data).pipe(
+  adminLogin(data: LoginRequestInterface): Observable<LoginRes> {
+    return this.http.post<LoginRes>(`${environment.apiUrl}/auth/login`, data).pipe(
       catchError((err) => throwError(err))
     )
   }
 
-  register(data: RegisterRequestInterface): Observable<RegisterResponseInterface> {
-    return this.http.post<RegisterResponseInterface>(`${environment.apiUrl}/auth/register`, data).pipe(
+  register(data: RegisterRequestInterface): Observable<RegisterRes> {
+    return this.http.post<RegisterRes>(`${environment.apiUrl}/auth/register`, data).pipe(
       tap((res) => {
         this.saveData(res)
       }),
@@ -82,7 +81,7 @@ export class AuthService {
   }
 
   recoverPassword(data: RecoverPasswordRequestInterface): Observable<RecoverPasswordResponseInterface> {
-    return this.http.post<RegisterResponseInterface>(`${environment.apiUrl}/auth/recover-password`, data).pipe(
+    return this.http.post<RegisterRes>(`${environment.apiUrl}/auth/recover-password`, data).pipe(
       catchError((err) => {
         throw new Error(err.message);
       })
@@ -121,8 +120,8 @@ export class AuthService {
     )
   }
 
-  getMe(): Observable<GetMeResponseInterface> {
-    return this.http.get<GetMeResponseInterface>(`${environment.apiUrl}/auth/get-me`).pipe(
+  getMe(): Observable<GetMeRes> {
+    return this.http.get<GetMeRes>(`${environment.apiUrl}/auth/get-me`).pipe(
       tap((res) => {
         this.saveUserData(res)
       }),
@@ -130,8 +129,8 @@ export class AuthService {
     )
   }
 
-  logout(): Observable<UserResponseInterface> {
-    return this.http.get<UserResponseInterface>(`${environment.apiUrl}/auth/logout`).pipe(
+  logout(): Observable<UserRes> {
+    return this.http.get<UserRes>(`${environment.apiUrl}/auth/logout`).pipe(
       catchError((err) => throwError(err))
     )
   }

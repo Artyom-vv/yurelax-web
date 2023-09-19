@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AppStore} from "../../../../../../store/app.store";
 import {Subscription, tap} from "rxjs";
-import {UserStoreInterface} from "../../../../../../store/interfaces/user-store.interface";
 import {IRatingRow, RatingTableInterface} from "../../interfaces/rating-table.interface";
 import {AnimationsService} from "../../../../animations/services/animations.service";
+import {UserRes} from "../../../../../platform/interfaces/user.interface";
 
 @Component({
   selector: 'yrx-rating-table-point',
@@ -25,7 +25,7 @@ export class RatingTablePointComponent implements OnInit, OnDestroy, AfterViewIn
 
   private subscriptions: Subscription[] = []
 
-  public userStore: UserStoreInterface | null = null;
+  public userStore: UserRes | null = null;
 
   ngOnInit() {
     this.subscriptions.push(

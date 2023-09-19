@@ -4,12 +4,12 @@
 
 <ng-template #userLoaded>
   <div [@fadeAnimation]="error || !greeting || successMA || isWaitingForMA || transitionToLogin" class="text-center">
-    <h3 *ngIf="userStore; else userEmpty">Привет, <span class="c-purple-300">{{userStore?.user?.login}}</span>!</h3>
+    <h3 *ngIf="userStore; else userEmpty">Привет, <span class="c-purple-300">{{userStore?.login}}</span>!</h3>
     <ng-template #userEmpty>
       <h3>Привет!</h3>
     </ng-template>
     <yrx-spacing type="XS"></yrx-spacing>
-    <p class="text text_big regular flex flex_center gap-8"><span>Прямо сейчас мы авторизируем тебя, осталось немного</span><yrx-icon icon="loader"></yrx-icon></p>
+    <p class="text text_big regular flex flex_center gap-8"><span>Прямо сейчас мы авторизуем тебя, осталось немного</span><yrx-icon icon="loader"></yrx-icon></p>
   </div>
   <div [@fadeAnimation]="!error || successMA" class="text-center">
     <h3>Сессия недействительна 😥</h3>

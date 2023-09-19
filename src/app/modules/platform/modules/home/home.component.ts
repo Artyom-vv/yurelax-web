@@ -60,8 +60,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   },
     {
       img: {
-        //assets/content/landing/history-points.png
-        src: '',
+        src: 'assets/content/landing/history-points.png',
         alt: ''
       },
       info: {
@@ -97,7 +96,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         }),
         filter((val) => val),
         switchMap(() => this.appStore.user$),
-        tap((user) => this.form.patchValue({email: user?.user.email})),
+        tap((user) => this.form.patchValue({email: user?.email})),
         switchMap(() => this.miniGamesService.getMiniGames()),
         tap((list) => this.miniGames = list),
         finalize(() => this.dataLoading = false)

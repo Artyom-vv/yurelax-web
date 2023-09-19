@@ -4,8 +4,8 @@ import {Subscription, switchMap, tap} from "rxjs";
 import {SidebarNavigationInterface} from "../sidebar/interfaces/sidebar-navigation.interface";
 import {AppearanceAnimation} from "../../../shared/animations/redirect.animation";
 import {AnimationsService} from "../../../shared/animations/services/animations.service";
-import {UserStoreInterface} from "../../../../store/interfaces/user-store.interface";
 import {RolesEnum} from "../../../shared/enums/roles.enum";
+import {UserRes} from "../../interfaces/user.interface";
 
 @Component({
   selector: 'yrx-profile',
@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public styles: {
     [key: string]: string
   } = {}
-  public userStore: UserStoreInterface | null = null
+  public userStore: UserRes | null = null
   public RolesEnum = RolesEnum
 
   ngOnInit() {

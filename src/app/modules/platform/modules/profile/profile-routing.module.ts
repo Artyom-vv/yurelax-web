@@ -7,12 +7,12 @@ const routes: Routes = [
   {
     path: 'home',
     component: ProfileContentComponent,
-    loadChildren: () => import('./modules/profile-home/profile-home.module').then(m => m.ProfileHomeModule)
+    loadChildren: () => import('./pages/profile-home/profile-home.module').then(m => m.ProfileHomeModule)
   },
   {
     path: 'wallet',
     component: ProfileContentComponent,
-    loadChildren: () => import('./modules/profile-wallet/profile-wallet.module').then(m => m.ProfileWalletModule)
+    loadChildren: () => import('./pages/profile-wallet/profile-wallet.module').then(m => m.ProfileWalletModule)
   },
 ];
 

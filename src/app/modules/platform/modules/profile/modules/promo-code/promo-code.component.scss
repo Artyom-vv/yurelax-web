@@ -1,0 +1,10 @@
+@import "src/shared/styles/vars.colors";
+
+.promo-code {
+  padding: 16px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  background-color: map-get($project-colors, "gradation", 750);
+}

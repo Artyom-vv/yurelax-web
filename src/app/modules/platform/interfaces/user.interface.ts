@@ -1,13 +1,14 @@
 import {RolesEnum} from "../../shared/enums/roles.enum";
+import {UserInfo} from "./user.info";
 
-export interface UserResponseInterface {
+export interface UserRes {
+  _id: string
   login: string
-  userInvitedId: string
+  userInvitedRef: string
   email: string
   emailVerify: boolean
   role: RolesEnum
   subscription: string
-  userId: string
-  userInfoId: string
-  userStatisticId: string
+  userInfoRef: UserInfo
+  userStatisticRef: string
 }

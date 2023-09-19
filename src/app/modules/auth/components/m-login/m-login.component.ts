@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
-import {UserResponseInterface} from "../../../platform/interfaces/user.interface";
+import {UserRes} from "../../../platform/interfaces/user.interface";
 import {filter, iif, mergeMap, of, Subscription, switchMap, tap} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -11,7 +11,6 @@ import {JwtMaAuthResponseInterface} from "../../interfaces/jwt-ma-auth-response.
 import {AuthStore} from "../../store/auth.store";
 import {ToolsService} from "../../../shared/services/tools.service";
 import {PersistenceService} from "../../../shared/services/persistence.service";
-import {UserStoreInterface} from "../../../../store/interfaces/user-store.interface";
 
 @Component({
   selector: 'yrx-m-login',
@@ -71,7 +70,7 @@ export class MLoginComponent implements OnInit, OnDestroy {
   public transitionToLogin: boolean = false;
   public isWaitingForMA: boolean = false;
   public error: boolean = false;
-  public userStore: UserStoreInterface | null = null
+  public userStore: UserRes | null = null
 
   ngOnInit() {
     this.dataFields()

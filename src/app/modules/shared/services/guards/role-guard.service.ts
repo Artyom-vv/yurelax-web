@@ -3,7 +3,7 @@ import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterSta
 import {Injectable} from '@angular/core';
 import {RolesEnum} from "../../enums/roles.enum";
 import {AppStore} from "../../../../store/app.store";
-import {UserStoreInterface} from "../../../../store/interfaces/user-store.interface";
+import {UserRes} from "../../../platform/interfaces/user.interface";
 
 @Injectable()
 export class RoleGuard implements CanActivate, CanActivateChild {
@@ -11,8 +11,8 @@ export class RoleGuard implements CanActivate, CanActivateChild {
   }
 
   canActivate = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => this.appStore.user$.pipe(
-    switchMap((userStore: UserStoreInterface | null) => {
-      if (route.data["roles"].includes(userStore?.user?.role)) return of(true);
+    switchMap((userStore: UserRes | null) => {
+      if (route.data["roles"].includes(userStore?.role)) return of(true);
       this.router.navigate(['/platform'])
       return of(false);
     })

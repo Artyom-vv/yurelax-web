@@ -7,13 +7,13 @@
 }
 .feature {
   transition: $trs;
-  background-color: map-get($project-colors, "gradation", 800);
+  background-color: map-get($project-colors, "tint", 45);
   border-radius: 12px;
   padding: 16px;
   height: 152px;
   cursor: pointer;
   &:hover {
-    background-color: map-get($project-colors, "gradation", 700);
+    background-color: map-get($project-colors, "tint", 60);
   }
 }
 .background {

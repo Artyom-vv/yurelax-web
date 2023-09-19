@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../../../store/app.store";
 import {Subscription, tap} from "rxjs";
-import {UserStoreInterface} from "../../../../../../store/interfaces/user-store.interface";
+import {UserRes} from "../../../../interfaces/user.interface";
 
 @Component({
   selector: 'yrx-profile-user-panel',
@@ -18,7 +18,7 @@ export class ProfileUserPanelComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = []
 
   public dataLoading: boolean = true;
-  public userStore: UserStoreInterface | null = null;
+  public userStore: UserRes | null = null;
 
   ngOnInit() {
     this.subscriptions.push(

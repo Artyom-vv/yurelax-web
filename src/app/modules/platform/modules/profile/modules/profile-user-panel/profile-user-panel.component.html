@@ -3,9 +3,9 @@
     <div class="flex flex_align-center gap-16">
       <yrx-skeleton *ngIf="dataLoading; else avatarTemplate" [styles]="{width: '48px', height: '48px', borderRadius: '6px'}" theme="dark"></yrx-skeleton>
       <ng-template #avatarTemplate>
-        <img [src]="userStore?.userInfo?.avatarUrl ? userStore?.userInfo?.avatarUrl : 'assets/content/header/default-avatar.png'" [alt]="'Аватар игрока '+userStore?.user?.login+' yurelax'" class="avatar">
+        <img [src]="userStore?.userInfoRef?.avatarUrl ?? 'assets/content/header/default-avatar.png'" [alt]="'Аватар игрока '+userStore?.login+' yurelax'" class="avatar">
       </ng-template>
-      <h4>{{userStore?.user?.login}}</h4>
+      <h4>{{userStore?.login}}</h4>
     </div>
     <p class="tag text text_body medium c-gradation-300 flex_align-self-start">Обычный тариф</p>
   </div>
@@ -13,11 +13,11 @@
   <div class="flex flex_column gap-8">
     <div class="flex gap-4">
       <p class="text text_body regular c-gradation-300">Почта:</p>
-      <p class="text text_body regular c-gradation-100">{{userStore?.user?.email}}</p>
+      <p class="text text_body regular c-gradation-100">{{userStore?.email}}</p>
     </div>
     <div class="flex gap-4">
       <p class="text text_body regular c-gradation-300">Дата регистрации:</p>
-      <p class="text text_body regular c-gradation-100">{{userStore?.userInfo?.createdAt | date: 'dd.MM.YY'}}</p>
+      <p class="text text_body regular c-gradation-100">{{userStore?.userInfoRef?.createdAt | date: 'dd.MM.YY'}}</p>
     </div>
     <div class="flex gap-4">
       <p class="text text_body regular c-gradation-300">2-ух факторная верификация:</p>

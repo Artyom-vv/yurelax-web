@@ -5,12 +5,12 @@ import {environment} from "../../../../environments/environment";
 import {catchError} from "rxjs/operators";
 import {CheckUserExistsResponseInterface} from "../interfaces/check-user-exists-response.interface";
 import {CheckUserExistsRequestInterface} from "../interfaces/check-user-exists-request.interface";
-import {UserInfoInterface} from "../interfaces/user-info.interface";
+import {UserInfo} from "../interfaces/user.info";
 import {GetUserOnlineResponseInterface} from "../interfaces/get-user-online-response.interface";
-import {UserResponseInterface} from "../interfaces/user.interface";
+import {UserRes} from "../interfaces/user.interface";
 import {AuthService} from "../../auth/services/auth.service";
 import {AppStore} from "../../../store/app.store";
-import {GetUserOnlineRequestInterface} from "../interfaces/get-user-online-request.interface";
+import {GetUserOnlineReq} from "../interfaces/get-user-online.req";
 
 @Injectable()
 export class UserService {
@@ -21,19 +21,19 @@ export class UserService {
   ) {
   }
 
-  getUser(userId: string): Observable<UserResponseInterface> {
-    return this.http.get<UserResponseInterface>(`${environment.apiUrl}/user/get-user/${userId}`).pipe(
+  getUser(userId: string): Observable<UserRes> {
+    return this.http.get<UserRes>(`${environment.apiUrl}/user/get-user/${userId}`).pipe(
       catchError((err) => throwError(err.error))
     )
   }
 
-  getUserInfo(userId: string): Observable<UserInfoInterface> {
-    return this.http.get<UserInfoInterface>(`${environment.apiUrl}/user-info/get-info/${userId}`).pipe(
+  getUserInfo(userId: string): Observable<UserInfo> {
+    return this.http.get<UserInfo>(`${environment.apiUrl}/user-info/get-info/${userId}`).pipe(
       catchError((err) => throwError(err.error))
     )
   }
 
-  getUserOnline(data: GetUserOnlineRequestInterface): Observable<GetUserOnlineResponseInterface> {
+  getUserOnline(data: GetUserOnlineReq): Observable<GetUserOnlineResponseInterface> {
     return this.http.post<GetUserOnlineResponseInterface>(`${environment.apiUrl}/shared/ping-player`, data).pipe(
       catchError((err) => throwError(err.error))
     )
@@ -45,13 +45,13 @@ export class UserService {
     )
   }
 
-  setEmailConfirmed(): Observable<UserResponseInterface> {
-    return this.http.post<UserResponseInterface>(`${environment.apiUrl}/user/set-email-confirmed`, null).pipe(
+  setEmailConfirmed(): Observable<UserRes> {
+    return this.http.post<UserRes>(`${environment.apiUrl}/user/set-email-confirmed`, null).pipe(
       switchMap((updatedUser) => this.appStore.user$.pipe(first(),map((userStore) => ({updatedUser, userStore})))),
       map(({userStore, updatedUser}) => {
         if (userStore) this.authService.saveUserData({
           ...userStore,
-          user: updatedUser
+          ...updatedUser
         })
         return updatedUser
       }),

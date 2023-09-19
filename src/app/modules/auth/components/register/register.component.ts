@@ -97,8 +97,8 @@ export class RegisterComponent {
         filter((data) => data['ref']),
         switchMap((data) => this.userService.getUser(data['ref'])),
         tap((user) => {
-          this.persistenceService.set('userInvitedId', user.userId);
-          this.form.patchValue({userInvitedId: user.userId}, {emitEvent: false});
+          this.persistenceService.set('userInvitedId', user._id);
+          this.form.patchValue({userInvitedId: user._id}, {emitEvent: false});
           this._snackBar.open('Вы были приглашены ' + user.login, 'Хорошо')
         })
       ).subscribe()

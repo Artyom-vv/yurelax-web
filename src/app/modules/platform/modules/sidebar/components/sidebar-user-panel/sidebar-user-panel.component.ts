@@ -12,11 +12,11 @@ import {
   switchMap,
   tap
 } from "rxjs";
-import {UserStoreInterface} from "../../../../../../store/interfaces/user-store.interface";
 import {ToolsService} from "../../../../../shared/services/tools.service";
 import {UserService} from "../../../../services/user.service";
 import {GetUserOnlineResponseInterface} from "../../../../interfaces/get-user-online-response.interface";
-import {GetUserOnlineRequestInterface} from "../../../../interfaces/get-user-online-request.interface";
+import {GetUserOnlineReq} from "../../../../interfaces/get-user-online.req";
+import {UserRes} from "../../../../interfaces/user.interface";
 
 @Component({
   selector: 'yrx-sidebar-user-panel',
@@ -33,15 +33,15 @@ export class SidebarUserPanelComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = []
 
-  public userStore: UserStoreInterface | null = null
+  public userStore: UserRes | null = null
   public dataLoading: boolean = true;
   public lastOnlineStatus: string = ''
-  public pingPlayerRequest$: (_: GetUserOnlineRequestInterface) => Observable<GetUserOnlineResponseInterface> = (_: GetUserOnlineRequestInterface) => this.userService.getUserOnline(_).pipe(
+  public pingPlayerRequest$: (_: GetUserOnlineReq) => Observable<GetUserOnlineResponseInterface> = (_: GetUserOnlineReq) => this.userService.getUserOnline(_).pipe(
     tap(({lastOnlineDate, isOnline}) => {
       if (this.userStore) this.appStore.setUser({
         ...this.userStore,
-        userInfo: {
-          ...this.userStore.userInfo,
+        userInfoRef: {
+          ...this.userStore.userInfoRef,
           lastOnlineDate,
           isOnline
         }
@@ -51,17 +51,17 @@ export class SidebarUserPanelComponent implements OnInit, OnDestroy {
   )
 
   ngOnInit() {
-    let request!: GetUserOnlineRequestInterface;
+    let request!: GetUserOnlineReq;
     this.subscriptions.push(
       this.appStore.user$.pipe(
         tap((user) => {
           this.userStore = user
           if (user) {
-            const {lastOnlineDate, isOnline} = user.userInfo
+            const {lastOnlineDate, isOnline} = user.userInfoRef
             this.lastOnlineStatus = this.getLastOnlineStatus(lastOnlineDate, isOnline)
             request = {
-              login: this.userStore?.user.login as string,
-              userId: this.userStore?.user.userId as string,
+              login: this.userStore?.login as string,
+              userId: this.userStore?._id as string,
             }
           }
           this.dataLoading = false;

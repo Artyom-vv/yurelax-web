@@ -1,8 +1,8 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../../../store/app.store";
 import { Subscription, switchMap, tap} from "rxjs";
-import {UserStoreInterface} from "../../../../../../store/interfaces/user-store.interface";
 import {SkinsService} from "../../../../services/skins.service";
+import {UserRes} from "../../../../../platform/interfaces/user.interface";
 
 @Component({
   selector: 'yrx-header-profile-panel',
@@ -21,7 +21,7 @@ export class HeaderProfilePanelComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = []
 
-  public userStore: UserStoreInterface | null = null
+  public userStore: UserRes | null = null
   public isLogged: boolean = false
   public dataLoading: boolean = true;
 

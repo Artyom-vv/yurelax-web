@@ -1,4 +1,4 @@
-export interface UserInfoInterface {
+export interface UserInfo {
   level: number
   pouches: number
   coins: number
