@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SalesOfferComponent } from './sales-offer.component';
 import {ButtonModule} from "../../../../../shared/modules/button/button.module";
+import {CoinModule} from "../../../../../shared/modules/coin/coin.module";
 
 
 
@@ -12,9 +13,10 @@ import {ButtonModule} from "../../../../../shared/modules/button/button.module";
   exports: [
     SalesOfferComponent
   ],
-  imports: [
-    CommonModule,
-    ButtonModule
-  ]
+    imports: [
+        CommonModule,
+        ButtonModule,
+        CoinModule
+    ]
 })
 export class SalesOfferModule { }

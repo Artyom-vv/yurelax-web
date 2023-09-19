@@ -1,0 +1,11 @@
+<div class="donate-panel flex flex_column gap-24">
+  <yrx-coin></yrx-coin>
+  <div class="flex flex_column gap-12">
+    <p class="text text_body c-gradation-300">Сумма пополнения:</p>
+    <div class="flex flex_align-center gap-8">
+      <h3 class="c-gradation-100">{{cost}}</h3>
+      <yrx-icon [stroked]="true" icon="ucoin"></yrx-icon>
+    </div>
+  </div>
+  <yrx-button>Оплатить {{cost}} руб.</yrx-button>
+</div>

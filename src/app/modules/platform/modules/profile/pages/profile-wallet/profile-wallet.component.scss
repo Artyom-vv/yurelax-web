@@ -3,3 +3,6 @@
 .colored-box {
   @include colored-box;
 }
+yrx-donate-panel {
+  flex-basis: calc(50% - 12px);
+}

@@ -1,0 +1,5 @@
+@import "src/shared/styles/vars.colors";
+
+.colored-box {
+  background-color: map-get($project-colors, "gradation", 700);
+}

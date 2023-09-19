@@ -4,17 +4,19 @@ import {ProfileWalletComponent} from './profile-wallet.component';
 import {ProfileWalletRoutingModule} from "./profile-wallet-routing.module";
 import {SpacingModule} from "../../../../../shared/modules/spacing/spacing.module";
 import {PromoCodeModule} from "../../modules/promo-code/promo-code.module";
+import {DonatePanelModule} from "./modules/donate-panel/donate-panel.module";
 
 @NgModule({
   declarations: [
     ProfileWalletComponent,
   ],
-  imports: [
-    CommonModule,
-    ProfileWalletRoutingModule,
-    SpacingModule,
-    PromoCodeModule,
-  ]
+    imports: [
+        CommonModule,
+        ProfileWalletRoutingModule,
+        SpacingModule,
+        PromoCodeModule,
+        DonatePanelModule,
+    ]
 })
 export class ProfileWalletModule {
 }
