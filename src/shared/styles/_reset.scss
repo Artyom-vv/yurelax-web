@@ -1,12 +1,13 @@
-@import "normolize";
+@import "./normolize";
 
-@import "components/button";
-@import "components/input";
-@import "components/select";
-@import "components/snackbar";
-@import "components/selector-point";
-@import "components/accordion";
-@import "components/social-panel";
+@import "./components/button";
+@import "./components/input";
+@import "./components/select";
+@import "./components/snackbar";
+@import "./components/selector-point";
+@import "./components/accordion";
+@import "./components/social-panel";
+@import "./components/donate-panel";
 
 html {
   box-sizing: border-box;

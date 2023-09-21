@@ -5,6 +5,7 @@ import {ProfileWalletRoutingModule} from "./profile-wallet-routing.module";
 import {SpacingModule} from "../../../../../shared/modules/spacing/spacing.module";
 import {PromoCodeModule} from "../../modules/promo-code/promo-code.module";
 import {DonatePanelModule} from "./modules/donate-panel/donate-panel.module";
+import {RefIconModule} from "../../../../../shared/modules/ref-icon/ref-icon.module";
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import {DonatePanelModule} from "./modules/donate-panel/donate-panel.module";
         SpacingModule,
         PromoCodeModule,
         DonatePanelModule,
+        RefIconModule,
     ]
 })
 export class ProfileWalletModule {

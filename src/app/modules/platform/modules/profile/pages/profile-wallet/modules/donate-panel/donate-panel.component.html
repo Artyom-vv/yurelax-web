@@ -2,9 +2,15 @@
   <yrx-coin></yrx-coin>
   <div class="flex flex_column gap-12">
     <p class="text text_body c-gradation-300">Сумма пополнения:</p>
-    <div class="flex flex_align-center gap-8">
-      <h3 class="c-gradation-100">{{cost}}</h3>
-      <yrx-icon [stroked]="true" icon="ucoin"></yrx-icon>
+    <div class="flex flex_align-center gap-16">
+      <div *ngIf="oldCost as oldCost" class="old-cost flex flex_align-center gap-6">
+        <h4 class="c-gradation-400">{{oldCost}}</h4>
+        <yrx-ref-icon name="ucoin"></yrx-ref-icon>
+      </div>
+      <div class="flex flex_align-center gap-8">
+        <h3 class="c-gradation-100">{{cost}}</h3>
+        <yrx-ref-icon name="ucoin"></yrx-ref-icon>
+      </div>
     </div>
   </div>
   <yrx-button>Оплатить {{cost}} руб.</yrx-button>

@@ -1,0 +1,13 @@
+@import "src/shared/styles/widjets/icon_tools";
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/vars.animations";
+
+:host {
+  transition: $trs;
+  @include icon-color(map-get($project-colors, "gradation", 100));
+}
+
+.icon-ref-wrapper {
+  max-width: 100%;
+  max-height: 100%;
+}

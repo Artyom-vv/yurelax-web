@@ -6,6 +6,7 @@ import {filter, Subscription, switchMap, tap} from "rxjs";
 import {AuthService} from "./modules/auth/services/auth.service";
 import {catchError} from "rxjs/operators";
 import {Router} from "@angular/router";
+import {RefIconService} from "./modules/shared/modules/ref-icon/services/ref-icon.service";
 
 @Component({
   selector: 'yrx-root',
@@ -19,7 +20,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private appStore: AppStore,
     private systemUser: SystemUserService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private refIconService: RefIconService
   ) {
   }
 
@@ -35,7 +37,16 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = []
 
-  ngOnInit() {
+  public icons: {name: string, pathName: string}[] = [
+    {name: 'ucoin', pathName: 'ucoin'},
+    {name: 'login', pathName: 'log-in'},
+  ]
+
+  async ngOnInit() {
+    for (const icon of this.icons) {
+      await this.refIconService.registerIconFromAssets(icon.name, `assets/${icon.pathName}.svg`)
+    }
+
     this.systemUser.removeMAToken()
     const user = this.persistenceService.get('user');
     if (user) {

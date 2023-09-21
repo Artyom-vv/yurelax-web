@@ -19,24 +19,16 @@
   $second_color: map-get($project-colors, "gradation", 100);
   $default_color: map-get($project-colors, "gradation", 300);
 
-  #{$unique_stroke_icons} {
-    stroke: $default_color;
-  }
-
-  .icon:not(#{$unique_stroke_icons}) {
-    fill: $default_color;
+  yrx-ref-icon {
+    @include icon-color($default_color)
   }
 
   &:not(&_active):hover, &_active {
     .mdc-button__label &, span{
       color: $second_color;
     }
-    #{$unique_stroke_icons} {
-      stroke: $second_color;
-    }
-
-    .icon:not(#{$unique_stroke_icons}) {
-      fill: $second_color;
+    yrx-ref-icon {
+      @include icon-color($second_color)
     }
   }
   &:not(&_active):hover {

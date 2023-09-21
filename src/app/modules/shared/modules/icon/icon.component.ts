@@ -13,6 +13,7 @@ export class IconComponent implements AfterViewInit {
   @Input() fill: string = ''
   @Input() color: string = ''
   @Input() stroked: boolean = false;
+  @Input() path: boolean = false;
   @Input() hover: boolean = true
 
   styles: any = {

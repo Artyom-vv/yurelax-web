@@ -26,7 +26,7 @@ button.mat-button {
       @include span-text-big();
     }
   }
-  .icon:not(#{$unique_stroke_icons}) {
+  yrx-ref-icon {
     @include icon-size(24px);
   }
 }
@@ -40,7 +40,7 @@ button.mat-button {
       @include span-text-default();
     }
   }
-  .icon:not(#{$unique_stroke_icons}) {
+  yrx-ref-icon {
     @include icon-size(20px);
   }
 }
@@ -54,7 +54,7 @@ button.mat-button {
       @include span-text-small();
     }
   }
-  .icon:not(#{$unique_stroke_icons}) {
+  yrx-ref-icon {
     @include icon-size(16px);
   }
 }
@@ -73,12 +73,8 @@ button.mat-button {
   }
 
   &.btn_iconly {
-    #{$unique_stroke_icons} {
-      stroke: $default_color;
-    }
-
-    .icon:not(#{$unique_stroke_icons}) {
-      fill: $default_color;
+    yrx-ref-icon {
+      @include icon-color($default_color);
     }
   }
   &_loading {
@@ -89,12 +85,8 @@ button.mat-button {
       color: map-get($project-colors, "purple", 200);
     }
 
-    #{$unique_stroke_icons} {
-      stroke: map-get($project-colors, "purple", 200);
-    }
-
-    .icon:not(#{$unique_stroke_icons}) {
-      fill: map-get($project-colors, "purple", 200);
+    yrx-ref-icon {
+      @include icon-color(map-get($project-colors, "purple", 200));
     }
   }
   &:not(:disabled):hover {
@@ -122,12 +114,8 @@ button.mat-button {
 
 
   &.btn_iconly {
-    #{$unique_stroke_icons} {
-      stroke: $default_color;
-    }
-
-    .icon:not(#{$unique_stroke_icons}) {
-      fill: $default_color;
+    yrx-ref-icon {
+      @include icon-color($default_color);
     }
   }
   &_loading {
@@ -138,16 +126,15 @@ button.mat-button {
       color: map-get($project-colors, "gradation", 300);
     }
 
-    #{$unique_stroke_icons} {
-      stroke: map-get($project-colors, "gradation", 300);
-    }
-
-    .icon:not(#{$unique_stroke_icons}) {
-      fill: map-get($project-colors, "gradation", 300);
+    yrx-ref-icon {
+      @include icon-color(map-get($project-colors, "gradation", 300));
     }
   }
   &:not(:disabled):hover {
     background-color: map-get($project-colors, "gradation", 600);
+    yrx-ref-icon {
+      @include icon-color($default_color);
+    }
   }
   &:focus {
   }
@@ -162,11 +149,8 @@ button.mat-button {
   &, span {
     color: map-get($project-colors, "gradation", 600);
   }
-  #{$unique_stroke_icons} {
-    stroke: map-get($project-colors, "gradation", 600);
-  }
-  .icon:not(#{$unique_stroke_icons}) {
-    fill: map-get($project-colors, "gradation", 600);
+  yrx-ref-icon {
+    @include icon-color(map-get($project-colors, "gradation", 600));
   }
 }
 
@@ -186,12 +170,8 @@ button.mat-button {
 
 
   &.btn_iconly {
-    #{$unique_stroke_icons} {
-      stroke: $default_color;
-    }
-
-    .icon:not(#{$unique_stroke_icons}) {
-      fill: $default_color;
+    yrx-ref-icon {
+      @include icon-color($default_color);
     }
   }
 
@@ -219,12 +199,8 @@ button.mat-button {
 
 
   &.btn_iconly {
-    #{$unique_stroke_icons} {
-      stroke: $default_color;
-    }
-
-    .icon:not(#{$unique_stroke_icons}) {
-      fill: $default_color;
+    yrx-ref-icon {
+      @include icon-color($default_color);
     }
   }
 
@@ -251,12 +227,8 @@ button.mat-button {
   }
 
   &.btn_iconly {
-    #{$unique_stroke_icons} {
-      stroke: $default_color;
-    }
-
-    .icon:not(#{$unique_stroke_icons}) {
-      fill: $default_color;
+    yrx-ref-icon {
+      @include icon-color($default_color);
     }
   }
 

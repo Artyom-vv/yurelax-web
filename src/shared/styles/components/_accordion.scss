@@ -5,11 +5,7 @@
   .icon {
     @include icon-size(24px);
   }
-  #{$unique_stroke_icons} {
-    stroke: map-get($project-colors, "gradation", 300);
-  }
-
-  .icon:not(#{$unique_stroke_icons}) {
-    fill: map-get($project-colors, "gradation", 300);
+  yrx-ref-icon {
+    @include icon-color(map-get($project-colors, "gradation", 300))
   }
 }

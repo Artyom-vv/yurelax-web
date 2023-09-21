@@ -1,0 +1,24 @@
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/widjets/icon_tools";
+
+yrx-ref-icon {
+  @include icon-color(map-get($project-colors, "gradation", 100));
+  @include icon-size(32px);
+}
+.old-cost {
+  position: relative;
+  yrx-ref-icon {
+    @include icon-color(map-get($project-colors, "gradation", 400));
+    @include icon-size(24px);
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    height: 3px;
+    background-color: map-get($project-colors, "red", 400);
+    width: calc(100% + 8px);
+    top: 50%;
+    left: -4px;
+    transform: translateY(-50%);
+  }
+}
