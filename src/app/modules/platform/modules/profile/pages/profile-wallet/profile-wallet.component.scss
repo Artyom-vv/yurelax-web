@@ -6,3 +6,7 @@
 yrx-donate-panel {
   flex-basis: calc(50% - 12px);
 }
+.without-bottom-borders {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}

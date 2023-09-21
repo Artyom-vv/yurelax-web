@@ -6,10 +6,12 @@ import {SpacingModule} from "../../../../../shared/modules/spacing/spacing.modul
 import {PromoCodeModule} from "../../modules/promo-code/promo-code.module";
 import {DonatePanelModule} from "./modules/donate-panel/donate-panel.module";
 import {RefIconModule} from "../../../../../shared/modules/ref-icon/ref-icon.module";
+import { TransactionPanelComponent } from './components/transaction-panel/transaction-panel.component';
 
 @NgModule({
   declarations: [
     ProfileWalletComponent,
+    TransactionPanelComponent,
   ],
     imports: [
         CommonModule,

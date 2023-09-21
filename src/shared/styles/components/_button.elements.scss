@@ -1,0 +1,64 @@
+@import "src/shared/styles/components/button";
+
+button.mat-mdc-button.btn {
+
+  @include btn;
+
+  &[custom="light"]:disabled,
+  &[custom="white"]:disabled,
+  &[custom="red"]:disabled,
+  &:disabled {
+    @include btn-disabled;
+  }
+
+  &:not(&_iconly) {
+    .icon-wrapper {
+      display: none;
+    }
+  }
+
+  &[custom="light"] {
+    @include btn-custom-light;
+  }
+
+  &[custom="white"] {
+    @include btn-custom-white;
+  }
+  &[custom="red"] {
+    @include btn-custom-red;
+  }
+
+  &_primary {
+    @include btn-primary;
+  }
+
+  &_secondary {
+    @include btn-secondary;
+  }
+
+  &_big {
+    @include btn-big;
+  }
+
+  &_normal {
+    @include btn-normal;
+  }
+
+  &_small {
+    @include btn-small;
+  }
+}
+
+button.mat-button {
+  cursor: pointer;
+  line-height: 100%;
+}
+
+.mdc-button__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &, span {
+    @include span-text
+  }
+}

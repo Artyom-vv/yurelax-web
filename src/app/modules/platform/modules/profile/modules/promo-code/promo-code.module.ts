@@ -5,6 +5,7 @@ import {SpacingModule} from "../../../../../shared/modules/spacing/spacing.modul
 import {ButtonModule} from "../../../../../shared/modules/button/button.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
+import {RefIconModule} from "../../../../../shared/modules/ref-icon/ref-icon.module";
 
 
 
@@ -15,13 +16,14 @@ import {MatInputModule} from "@angular/material/input";
   exports: [
     PromoCodeComponent
   ],
-  imports: [
-    CommonModule,
-    SpacingModule,
-    ButtonModule,
-    FormsModule,
-    MatInputModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        SpacingModule,
+        ButtonModule,
+        FormsModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        RefIconModule
+    ]
 })
 export class PromoCodeModule { }

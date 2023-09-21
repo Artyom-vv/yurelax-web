@@ -1,0 +1,27 @@
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/widjets/icon_tools";
+
+@mixin transaction {
+  background-color: map-get($project-colors, "gradation", 700);
+  &.even {
+    background-color: map-get($project-colors, "gradation", 750);
+  }
+  padding: 0 24px;
+}
+
+.transaction {
+  @include transaction
+}
+
+yrx-ref-icon {
+  @include icon-size(24px)
+}
+
+:host {
+  &:has(.income) ::ng-deep yrx-ref-icon {
+    @include icon-color(map-get($project-colors, "green", 300))
+  }
+  &:has(.outcome) ::ng-deep yrx-ref-icon {
+    @include icon-color(map-get($project-colors, "red", 300))
+  }
+}

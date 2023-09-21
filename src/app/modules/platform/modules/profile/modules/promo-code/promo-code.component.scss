@@ -1,4 +1,5 @@
 @import "src/shared/styles/vars.colors";
+@import "src/shared/styles/widjets/icon_tools";
 
 .promo-code {
   padding: 16px;
@@ -7,4 +8,55 @@
   border-radius: 12px;
   border: 1px solid map-get($project-colors, "gradation", 600);
   background-color: map-get($project-colors, "gradation", 750);
+}
+
+
+.success {
+  min-height: 96px;
+  padding: 16px;
+  background-color: map-get($project-colors, "green", 400);
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  yrx-ref-icon {
+    position: absolute;
+    @include icon-color(map-get($project-colors, "green", 300));
+    @include icon-size(160px);
+    top: 50%;
+    transform: translateY(-50%);
+    right: 16px;
+  }
+}
+
+.conclusion {
+  position: relative;
+  min-height: 96px;
+  padding: 16px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  overflow: hidden;
+  yrx-ref-icon {
+    position: absolute;
+    @include icon-size(160px);
+    top: 50%;
+    transform: translateY(-50%);
+    right: 16px;
+  }
+}
+
+.success {
+  background-color: map-get($project-colors, "green", 400);
+  yrx-ref-icon {
+    @include icon-color(map-get($project-colors, "green", 300));
+  }
+}
+
+.not-found {
+  background-color: map-get($project-colors, "red", 600);
+  yrx-ref-icon {
+    @include icon-color(map-get($project-colors, "red", 400));
+  }
 }

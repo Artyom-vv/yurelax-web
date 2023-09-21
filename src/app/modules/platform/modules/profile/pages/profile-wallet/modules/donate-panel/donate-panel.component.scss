@@ -4,15 +4,35 @@
   flex: 1;
 }
 
-.donate-panel {
+@mixin donate-panel {
   overflow: hidden;
-  background-color: map-get($project-colors, "gradation", 800);
-  border: 1px solid map-get($project-colors, "gradation", 600);
   -webkit-border-radius: 12px;
   -moz-border-radius: 12px;
   border-radius: 12px;
   padding: 24px;
   position: relative;
+}
+
+@mixin donate-panel-secondary {
+  background-color: map-get($project-colors, "gradation", 800);
+  border: 1px solid map-get($project-colors, "gradation", 600);
+}
+
+@mixin donate-panel-primary {
+  background-color: map-get($project-colors, "purple", 400);
+  border: 1px solid map-get($project-colors, "purple", 400);
+}
+
+@mixin donate-panel-sale {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  background-color: map-get($project-colors, "red", 400);
+  height: 32px;
+  padding: 12px;
 }
 
 yrx-coin {
@@ -21,4 +41,21 @@ yrx-coin {
   position: absolute;
   bottom: -24px;
   right: -48px;
+}
+
+.sale {
+  @include donate-panel-sale;
+}
+
+
+.donate-panel {
+  @include donate-panel;
+
+  &.primary {
+    @include donate-panel-primary
+  }
+
+  &.secondary {
+    @include donate-panel-secondary
+  }
 }

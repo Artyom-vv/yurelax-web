@@ -40,6 +40,8 @@ export class AppComponent implements OnInit, OnDestroy {
   public icons: {name: string, pathName: string}[] = [
     {name: 'ucoin', pathName: 'ucoin'},
     {name: 'login', pathName: 'log-in'},
+    {name: 'check-circle', pathName: 'check-circle'},
+    {name: 'x-circle', pathName: 'x-circle'},
   ]
 
   async ngOnInit() {

@@ -1,5 +1,6 @@
 @import "src/shared/styles/vars.colors";
 @import "src/shared/styles/widjets/icon_tools";
+@import "src/shared/styles/components/button";
 
 yrx-ref-icon {
   @include icon-color(map-get($project-colors, "gradation", 100));
@@ -20,5 +21,24 @@ yrx-ref-icon {
     top: 50%;
     left: -4px;
     transform: translateY(-50%);
+  }
+}
+.primary {
+  yrx-button {
+    .btn {
+      @include btn-custom-white;
+    }
+  }
+  yrx-coin {
+    img {
+      opacity: 0.3;
+    }
+  }
+}
+.secondary {
+  yrx-coin {
+    img {
+      opacity: 0.9;
+    }
   }
 }

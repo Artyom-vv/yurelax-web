@@ -54,10 +54,12 @@
   left: 0;
   z-index: 1;
   gap: 24px;
-  transform: translateX(calc(((((1296px - 24px*5)/4)*6 + 24px*5) - 100vw)/-2 - 6px));
+  //transform: translateX(calc(((((1296px - 24px*5)/4)*6 + 24px*5) - 100vw)/-2 - 6px));
+
   .column {
     position: relative;
-    flex: 1 0 calc((1296px - 24px*5)/4);
+    //flex: 1 0 calc((1296px - 24px*5)/4);
+    flex: 1 0 calc(calc(100% - 24px * 6) / 6);
     &::after, &::before {
       content: '';
       position: absolute;

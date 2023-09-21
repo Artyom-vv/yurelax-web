@@ -1,14 +1,25 @@
 <div class="colored-box">
   <h3>Пополнение кошелька</h3>
   <yrx-spacing type="XS"></yrx-spacing>
-  <p class="text text_body c-gradation-300">Лучший способ помочь проекту - поддержать его материально! Монеты начисляются в течении 1 рабочего дня в соответствии с суммой пополнения.</p>
-  <yrx-spacing type="XS"></yrx-spacing>
-  <yrx-promo-code></yrx-promo-code>
+  <p class="text text_body c-gradation-300">Лучший способ помочь проекту - поддержать его материально! Монеты
+    начисляются в течении 1 рабочего дня в соответствии с суммой пополнения.</p>
+  <yrx-spacing *ngIf="!promoCode.hide" type="XS"></yrx-spacing>
+  <yrx-promo-code #promoCode></yrx-promo-code>
   <yrx-spacing type="S"></yrx-spacing>
   <div class="flex flex_wrap gap-24">
-    <yrx-donate-panel></yrx-donate-panel>
-    <yrx-donate-panel [oldCost]="129" [cost]="49"></yrx-donate-panel>
-    <yrx-donate-panel></yrx-donate-panel>
-    <yrx-donate-panel></yrx-donate-panel>
+    <yrx-donate-panel [coins]="49" [cost]="49"></yrx-donate-panel>
+    <yrx-donate-panel [oldCoins]="99" [coins]="109" [cost]="99" type="primary"></yrx-donate-panel>
+    <yrx-donate-panel [oldCoins]="199" [coins]="249" [cost]="199"></yrx-donate-panel>
+    <yrx-donate-panel [oldCoins]="349" [coins]="499" [cost]="349"></yrx-donate-panel>
   </div>
+</div>
+<yrx-spacing type="S"></yrx-spacing>
+<div class="without-bottom-borders colored-box">
+  <h3>История транзакций</h3>
+  <yrx-spacing type="XS"></yrx-spacing>
+  <p class="text text_body c-gradation-300">Ниже представлен список совершенных Вами транзакций, если вы не совершали
+    транзакций, но они отображаются ниже - <a href="#" class="c-purple-300">Обратитесь в поддержку</a></p>
+</div>
+<div class="flex flex_column">
+  <yrx-transaction-panel [even]="idx % 2 === 0" *ngFor="let transaction of [1,2,3,4]; let idx = index"></yrx-transaction-panel>
 </div>
