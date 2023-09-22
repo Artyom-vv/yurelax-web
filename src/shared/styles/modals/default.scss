@@ -1,3 +1,8 @@
-@mixin defaultModal {
-
+@mixin default-modal {
+  div.mat-mdc-dialog-surface {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    background-color: transparent;
+  }
 }

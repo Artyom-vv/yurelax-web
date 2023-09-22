@@ -1,10 +1,8 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../../../store/app.store";
 import {
-  EMPTY, filter,
-  iif,
+  filter,
   interval,
-  MonoTypeOperatorFunction,
   Observable,
   retry,
   retryWhen,
@@ -17,6 +15,9 @@ import {UserService} from "../../../../services/user.service";
 import {GetUserOnlineResponseInterface} from "../../../../interfaces/get-user-online-response.interface";
 import {GetUserOnlineReq} from "../../../../interfaces/get-user-online.req";
 import {UserRes} from "../../../../interfaces/user.interface";
+import {
+  DonateModalService
+} from "../../../profile/pages/profile-wallet/modules/donate-modal/services/donate-modal.service";
 
 @Component({
   selector: 'yrx-sidebar-user-panel',
@@ -27,7 +28,8 @@ export class SidebarUserPanelComponent implements OnInit, OnDestroy {
   constructor(
     private appStore: AppStore,
     private toolsService: ToolsService,
-    private userService: UserService
+    private userService: UserService,
+    private donateModalService: DonateModalService
   ) {
   }
 
@@ -92,5 +94,9 @@ export class SidebarUserPanelComponent implements OnInit, OnDestroy {
     if (minutes < 60) return `Онлайн ${minutes} ${this.toolsService.declineWord(minutes, ['минуту', 'минуты', 'минут'])} назад`
     if (minutes < 1440) return `Онлайн ${hours} ${this.toolsService.declineWord(hours, ['час', 'часа', 'часов'])} назад`
     return `Онлайн ${days} ${this.toolsService.declineWord(days, ['день', 'дня', 'дней'])} назад`
+  }
+
+  openModal() {
+    this.donateModalService.open()
   }
 }

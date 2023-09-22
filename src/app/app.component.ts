@@ -42,6 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
     {name: 'login', pathName: 'log-in'},
     {name: 'check-circle', pathName: 'check-circle'},
     {name: 'x-circle', pathName: 'x-circle'},
+    {name: 'x', pathName: 'x'},
   ]
 
   async ngOnInit() {

@@ -1,11 +1,12 @@
-@import "dialog";
-@import "exampleModal";
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/modals/dialog";
+@import "src/shared/styles/modals/default";
 
 .cdk-overlay-backdrop {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(8px);
+  background: map-get($project-colors, "tint", 75);
 }
 
-.example {
-  @include exampleModal;
+div.donate-modal {
+  @include default-modal;
+  margin: 12px;
 }

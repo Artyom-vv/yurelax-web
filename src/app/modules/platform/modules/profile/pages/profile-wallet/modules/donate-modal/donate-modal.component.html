@@ -1,0 +1,19 @@
+<div class="colored-box flex flex_column">
+  <div class="flex w100">
+    <h4 class="flex_grow">Пополнение баланса</h4>
+    <yrx-ref-icon mat-dialog-close class="stroke cursor-pointer" name="x"></yrx-ref-icon>
+  </div>
+  <yrx-spacing type="XS2"></yrx-spacing>
+  <p class="text text_body c-gradation-300">Лучший способ помочь проекту - поддержать его материально! Монеты начисляются в течении 1 рабочего дня в соответствии с суммой пополнения.</p>
+  <yrx-spacing type="XS"></yrx-spacing>
+  <yrx-promo-code></yrx-promo-code>
+  <yrx-spacing type="S"></yrx-spacing>
+  <div class="flex flex_wrap gap-16">
+    <yrx-donate-panel [coins]="49" [cost]="49"></yrx-donate-panel>
+    <yrx-donate-panel [oldCoins]="99" [coins]="109" [cost]="99" type="primary"></yrx-donate-panel>
+    <yrx-donate-panel [oldCoins]="199" [coins]="249" [cost]="199"></yrx-donate-panel>
+    <yrx-donate-panel [oldCoins]="349" [coins]="499" [cost]="349"></yrx-donate-panel>
+  </div>
+  <yrx-spacing type="M"></yrx-spacing>
+  <yrx-link [iconStroked]="true" icon="arrow-right">История транзакций</yrx-link>
+</div>

@@ -12,6 +12,10 @@ body {
 @import "src/shared/styles/modals/main";
 @import "src/shared/styles/vars.colors";
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 img, svg {
   user-select: none;
   -webkit-user-drag: none;
