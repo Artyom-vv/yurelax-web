@@ -36,7 +36,9 @@ export class SocialPanelComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.social = this.getSocial(this.type);
+    setTimeout(() => {
+      this.social = this.getSocial(this.type);
+    })
   }
 
   ngOnDestroy() {

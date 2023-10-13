@@ -4,12 +4,13 @@ import {PlatformRoutingModule} from "./platform-routing.module";
 import {PlatformComponent} from './platform.component';
 import {LayoutModule} from "../shared/modules/layout/layout.module";
 import {HeaderModule} from "../shared/modules/header/header.module";
-import {HomeModule} from "./modules/home/home.module";
 import {RoleGuard} from "../shared/services/guards/role-guard.service";
 import {SpacingModule} from "../shared/modules/spacing/spacing.module";
 import {UserService} from "./services/user.service";
 import {AuthGuard} from "../shared/services/guards/auth.guard";
 import {ToolsService} from "../shared/services/tools.service";
+import {HomeModule} from "./pages/home/home.module";
+import {WikiModule} from "./pages/wiki/wiki.module";
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {ToolsService} from "../shared/services/tools.service";
     LayoutModule,
     HeaderModule,
     HomeModule,
-    SpacingModule
+    SpacingModule,
+    WikiModule
   ],
   providers: [RoleGuard, UserService, AuthGuard, ToolsService]
 })

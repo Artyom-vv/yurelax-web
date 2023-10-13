@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {PlatformComponent} from "./platform.component";
-import {HomeComponent} from "./modules/home/home.component";
 import {AuthGuard} from "../shared/services/guards/auth.guard";
-import {ProfileComponent} from "./modules/profile/profile.component";
 import {RoleGuard} from "../shared/services/guards/role-guard.service";
 import {RolesEnum} from "../shared/enums/roles.enum";
+import {ProfileComponent} from "./pages/profile/profile.component";
+import {HomeComponent} from "./pages/home/home.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -14,7 +14,7 @@ const routes: Routes = [
     component: ProfileComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: {roles: [RolesEnum.USER, RolesEnum.ADMIN]},
-    loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule)
+    loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule)
   },
   {
     path: 'home',
@@ -22,6 +22,16 @@ const routes: Routes = [
     children: [
       {path: '', component: HomeComponent},
     ]
+  },
+  {
+    path: 'wiki',
+    component: PlatformComponent,
+    data: {
+      header: {
+        light: false
+      }
+    },
+    loadChildren: () => import('./pages/wiki/wiki.module').then(m => m.WikiModule)
   },
 ];
 

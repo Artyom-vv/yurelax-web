@@ -9,9 +9,10 @@ import {DropoutPointModule} from "../../../shared/modules/dropout-point/dropout-
 import {SidebarUserPanelComponent} from "./components/sidebar-user-panel/sidebar-user-panel.component";
 import {SkeletonModule} from "../../../shared/modules/skeleton/skeleton.module";
 import {ButtonModule} from "../../../shared/modules/button/button.module";
-import {DonateModalModule} from "../profile/pages/profile-wallet/modules/donate-modal/donate-modal.module";
-import {DonateModalService} from "../profile/pages/profile-wallet/modules/donate-modal/services/donate-modal.service";
-
+import {DonateModalModule} from "../../pages/profile/pages/profile-wallet/modules/donate-modal/donate-modal.module";
+import {
+  DonateModalService
+} from "../../pages/profile/pages/profile-wallet/modules/donate-modal/services/donate-modal.service";
 
 @NgModule({
   declarations: [

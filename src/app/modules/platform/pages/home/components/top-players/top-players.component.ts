@@ -1,11 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {
-  IRatingRow,
   IRatingTableColumn,
   RatingTableInterface
 } from "../../../../../shared/modules/rating-table/interfaces/rating-table.interface";
 import {MiniGamesService} from "../../../../../shared/services/mini-games.service";
-import {EMPTY, finalize, first, forkJoin, map, Observable, Subscription, switchMap, tap} from "rxjs";
+import {EMPTY, finalize, first, zip, map, Observable, Subscription, switchMap, tap} from "rxjs";
 import {MiniGameResponseInterface} from "../../../../../shared/interfaces/mini-game-response.interface";
 import {UserStatisticsService} from "../../../../../shared/services/user-statistics.service";
 import {StatisticsService} from "../../../../../shared/services/statistics.service";
@@ -102,14 +101,11 @@ export class TopPlayersComponent implements OnInit, OnDestroy {
     }).pipe(
       first(),
       switchMap((statistics) => {
-        const observables: Observable<IRatingTableColumn>[] = []
-        game.keys.forEach((key) => {
-          observables.push(this.statisticsService.getStatistics(key).pipe(map((res) => ({
-            key: res.key,
-            text: res.title
-          }))))
-        })
-        return observables.length > 0 ? forkJoin(observables).pipe(tap(() => {
+        const observables: Observable<IRatingTableColumn>[] = game.keys.map(key => this.statisticsService.getStatistics(key).pipe(map(res => ({
+          key: res.key,
+          text: res.title
+        }))))
+        return zip(observables).pipe(tap(() => {
           this.tableData = {
             filteredByKey: game.filteredByKey,
             values: statistics.map(item => ({
@@ -118,7 +114,7 @@ export class TopPlayersComponent implements OnInit, OnDestroy {
               values: item.statistics.map(x => x.monthlyValue)
             }))
           }
-        })) : EMPTY
+        }))
       }),
       tap((columns) => {
         this.columns = columns

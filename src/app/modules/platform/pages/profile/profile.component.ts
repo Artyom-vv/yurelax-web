@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {Subscription, switchMap, tap} from "rxjs";
-import {SidebarNavigationInterface} from "../sidebar/interfaces/sidebar-navigation.interface";
 import {AppearanceAnimation} from "../../../shared/animations/redirect.animation";
 import {AnimationsService} from "../../../shared/animations/services/animations.service";
 import {RolesEnum} from "../../../shared/enums/roles.enum";
 import {UserRes} from "../../interfaces/user.interface";
+import {SidebarNav} from "../../modules/sidebar/interfaces/sidebar.nav";
 
 @Component({
   selector: 'yrx-profile',
@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = []
 
-  public profileNavigation: SidebarNavigationInterface[][] = []
+  public profileNavigation: SidebarNav[][] = []
   public styles: {
     [key: string]: string
   } = {}

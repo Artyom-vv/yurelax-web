@@ -43,6 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
     {name: 'check-circle', pathName: 'check-circle'},
     {name: 'x-circle', pathName: 'x-circle'},
     {name: 'x', pathName: 'x'},
+    {name: 'grid', pathName: 'layout-grid'},
   ]
 
   async ngOnInit() {
@@ -58,9 +59,15 @@ export class AppComponent implements OnInit, OnDestroy {
     this.dataFields()
     this.appStore.setNavigation([
       {link: '/platform', name: 'О проекте', isLogged: false},
-      // {link: '/platform/wiki', name: 'Вики', isLogged: false},
+      {link: '/platform/wiki', name: 'Вики', isLogged: false},
       // {link: '/platform/store', name: 'Магазин', isLogged: true},
       // {link: '/platform/games', name: 'Мини-игры', isLogged: true},
+    ])
+
+    this.appStore.setWikiNavigation([
+      [
+        {isButton: false, link: '/platform/wiki', name: 'Yurelax вики', icon: 'grid', iconStroked: true}
+      ],
     ])
 
     this.appStore.setProfileNavigation([

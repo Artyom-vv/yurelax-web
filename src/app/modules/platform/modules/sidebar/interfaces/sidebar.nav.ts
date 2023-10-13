@@ -1,4 +1,4 @@
-export interface SidebarNavigationInterface {
+export interface SidebarNav {
   name: string
   link?: string
   icon: string

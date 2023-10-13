@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Input} from '@angular/core';
-import {SidebarNavigationInterface} from "./interfaces/sidebar-navigation.interface";
+import {SidebarNav} from "./interfaces/sidebar.nav";
 import {Event, InitialNavigation, NavigationEnd, NavigationStart, Router, RouterEvent, Scroll} from "@angular/router";
 
 @Component({
@@ -14,7 +14,7 @@ export class SidebarComponent implements AfterViewInit {
   ) {
   }
 
-  @Input() navigation: SidebarNavigationInterface[][] = []
+  @Input() navigation: SidebarNav[][] = []
 
   public activeIndex: number = 0
 

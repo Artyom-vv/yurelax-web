@@ -6,13 +6,13 @@ import {HeaderModule} from "../../../shared/modules/header/header.module";
 import {LayoutModule} from "../../../shared/modules/layout/layout.module";
 import {ProfileHeaderModule} from "./modules/profile-header/profile-header.module";
 import {FooterModule} from "../../../shared/modules/footer/footer.module";
-import {SidebarModule} from "../sidebar/sidebar.module";
 import {SpacingModule} from "../../../shared/modules/spacing/spacing.module";
 import {LinkModule} from "../../../shared/modules/link/link.module";
 import {ButtonModule} from "../../../shared/modules/button/button.module";
 import {IconModule} from "../../../shared/modules/icon/icon.module";
 import {ProfileContentComponent} from './components/profile-content/profile-content.component';
 import {AnimationsService} from "../../../shared/animations/services/animations.service";
+import {SidebarModule} from "../../modules/sidebar/sidebar.module";
 
 @NgModule({
   declarations: [

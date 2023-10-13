@@ -1,6 +1,8 @@
-<button [attr.custom]="optionCustom" (click)="onClick($event)" class="dropout-point" [ngClass]="'dropout-point_'+size" [class.dropout-point_selected]="selected" [class.dropout-point_underlined]="underlined" [class.dropout-point_iconly]="icon" [routerLink]="link" routerLinkActive="dropout-point_active" #routerLinkActive="routerLinkActive">
+<button [attr.custom]="optionCustom" (click)="onClick($event)" class="dropout-point" [ngClass]="'dropout-point_'+size" [class.dropout-point_selected]="selected"
+        [class.dropout-point_underlined]="underlined" [class.dropout-point_iconly]="icon"
+        [routerLink]="link" routerLinkActive="dropout-point_active" #routerLinkActive="routerLinkActive">
   <span class="icon-wrapper">
-    <yrx-icon [stroked]="iconStroked" [color]="routerLinkActive.isActive ? 'gradation-300' : 'gradation-100'" [icon]="icon"></yrx-icon>
+    <yrx-ref-icon [class.stroke]="iconStroked" [name]="icon"></yrx-ref-icon>
   </span>
   <ng-content></ng-content>
 </button>

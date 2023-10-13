@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import {AppStore} from "../../store/app.store";
 import {Subscription, switchMap, tap} from "rxjs";
-import {SidebarNavigationInterface} from "../platform/modules/sidebar/interfaces/sidebar-navigation.interface";
+import {SidebarNav} from "../platform/modules/sidebar/interfaces/sidebar.nav";
 import {AnimationsService} from "../shared/animations/services/animations.service";
 import {AppearanceAnimation} from "../shared/animations/redirect.animation";
 import {AdminStore} from "./store/admin.store";
@@ -30,7 +30,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   private subscriptions: Subscription[] = []
-  public adminNavigation: SidebarNavigationInterface[][] = []
+  public adminNavigation: SidebarNav[][] = []
   public withoutScroll: boolean = this.toolsService.mobileAndTabletCheck();
 
   ngOnInit() {

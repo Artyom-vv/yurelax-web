@@ -2,9 +2,9 @@ import {Injectable} from "@angular/core";
 import {ComponentStore} from "@ngrx/component-store";
 import {AppState, DEFAULT_STATE} from "./app-store.interface";
 import {Observable} from "rxjs";
-import {NavigationStoreInterface} from "./interfaces/navigation-store.interface";
+import {NavStore} from "./interfaces/nav.store";
 import {SocialStoreInterface} from "./interfaces/socials-store.interface";
-import {SidebarNavigationInterface} from "../modules/platform/modules/sidebar/interfaces/sidebar-navigation.interface";
+import {SidebarNav} from "../modules/platform/modules/sidebar/interfaces/sidebar.nav";
 import {UserRes} from "../modules/platform/interfaces/user.interface";
 
 @Injectable()
@@ -19,9 +19,10 @@ export class AppStore extends ComponentStore<AppState> {
   readonly isLogged$: Observable<boolean> = this.select(state => state.isLogged);
 
   readonly preloading$: Observable<boolean> = this.select(state => state.preloading);
-  readonly navigation$: Observable<NavigationStoreInterface[]> = this.select(state => state.navigation);
-  readonly profileNavigation$: Observable<SidebarNavigationInterface[][]> = this.select(state => state.profileNavigation);
-  readonly adminNavigation$: Observable<SidebarNavigationInterface[][]> = this.select(state => state.adminNavigation);
+  readonly navigation$: Observable<NavStore[]> = this.select(state => state.navigation);
+  readonly profileNavigation$: Observable<SidebarNav[][]> = this.select(state => state.profileNavigation);
+  readonly wikiNavigation$: Observable<SidebarNav[][]> = this.select(state => state.wikiNavigation);
+  readonly adminNavigation$: Observable<SidebarNav[][]> = this.select(state => state.adminNavigation);
   readonly socials$: Observable<SocialStoreInterface[]> = this.select(state => state.socials);
   readonly footerHeight$: Observable<number> = this.select(state => state.footerHeight);
   readonly isHomePage$: Observable<boolean> = this.select(state => state.isHomePage);
@@ -51,17 +52,22 @@ export class AppStore extends ComponentStore<AppState> {
     socials
   }));
 
-  readonly setProfileNavigation = this.updater((state, profileNavigation: SidebarNavigationInterface[][]) => ({
+  readonly setProfileNavigation = this.updater((state, profileNavigation: SidebarNav[][]) => ({
     ...state,
     profileNavigation
   }));
 
-  readonly setAdminNavigation = this.updater((state, adminNavigation: SidebarNavigationInterface[][]) => ({
+  readonly setWikiNavigation = this.updater((state, wikiNavigation: SidebarNav[][]) => ({
+    ...state,
+    wikiNavigation
+  }));
+
+  readonly setAdminNavigation = this.updater((state, adminNavigation: SidebarNav[][]) => ({
     ...state,
     adminNavigation
   }));
 
-  readonly setNavigation = this.updater((state, navigation: NavigationStoreInterface[]) => ({
+  readonly setNavigation = this.updater((state, navigation: NavStore[]) => ({
     ...state,
     navigation
   }));

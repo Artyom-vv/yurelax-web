@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../../../store/app.store";
 import {
+  delay,
   filter,
-  interval,
   Observable,
   retry,
   retryWhen,
@@ -17,7 +17,7 @@ import {GetUserOnlineReq} from "../../../../interfaces/get-user-online.req";
 import {UserRes} from "../../../../interfaces/user.interface";
 import {
   DonateModalService
-} from "../../../profile/pages/profile-wallet/modules/donate-modal/services/donate-modal.service";
+} from "../../../../pages/profile/pages/profile-wallet/modules/donate-modal/services/donate-modal.service";
 
 @Component({
   selector: 'yrx-sidebar-user-panel',
@@ -49,7 +49,9 @@ export class SidebarUserPanelComponent implements OnInit, OnDestroy {
         }
       })
     }),
-    retryWhen(errors => errors.pipe(retry(1)))
+    delay(7000),
+    switchMap(() => this.pingPlayerRequest$(_)),
+    retryWhen(errors => errors.pipe(delay(60000),retry(1)))
   )
 
   ngOnInit() {
@@ -70,11 +72,6 @@ export class SidebarUserPanelComponent implements OnInit, OnDestroy {
         }),
         filter((x, i) => i === 0),
         switchMap(() => this.pingPlayerRequest$(request))).subscribe()
-    )
-    this.subscriptions.push(
-      interval(5000).pipe(
-        switchMap(() => this.pingPlayerRequest$(request))
-      ).subscribe()
     )
   }
 

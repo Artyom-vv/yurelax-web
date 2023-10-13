@@ -30,9 +30,7 @@ import {ServerService} from "../../../shared/services/server.service";
 import {FaqComponent} from './components/faq/faq.component';
 import {MatExpansionModule} from "@angular/material/expansion";
 import {AccordionModule} from "../../../shared/modules/accordion/accordion.module";
-import {ToolsService} from "../../../shared/services/tools.service";
 import {SocialPanelModule} from "../../../shared/modules/social-panel/social-panel.module";
-
 
 @NgModule({
   declarations: [
@@ -46,25 +44,25 @@ import {SocialPanelModule} from "../../../shared/modules/social-panel/social-pan
     TopPlayersComponent,
     FaqComponent
   ],
-    imports: [
-        CommonModule,
-        SpacingModule,
-        ButtonModule,
-        IconModule,
-        RouterLink,
-        SkeletonModule,
-        ClipboardModule,
-        ErrorHintWrapperModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        ErrorHintConditionModule,
-        RatingTableModule,
-        SelectorPointModule,
-        MatSnackBarModule,
-        MatExpansionModule,
-        AccordionModule,
-        SocialPanelModule,
-    ],
+  imports: [
+    CommonModule,
+    SpacingModule,
+    ButtonModule,
+    IconModule,
+    RouterLink,
+    SkeletonModule,
+    ClipboardModule,
+    ErrorHintWrapperModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    ErrorHintConditionModule,
+    RatingTableModule,
+    SelectorPointModule,
+    MatSnackBarModule,
+    MatExpansionModule,
+    AccordionModule,
+    SocialPanelModule,
+  ],
   providers: [
     MiniGamesService,
     StatisticsService,

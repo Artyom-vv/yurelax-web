@@ -30,7 +30,6 @@ export class AccordionComponent implements AfterContentInit, AfterViewInit, OnDe
   private subscriptions: Subscription[] = []
 
   ngAfterContentInit() {
-    console.log(this.items)
   }
 
   ngAfterViewInit() {

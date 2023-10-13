@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
-import {NavigationStoreInterface} from "../../../../store/interfaces/navigation-store.interface";
+import {NavStore} from "../../../../store/interfaces/nav.store";
 import {Subscription} from "rxjs";
 import {SocialStoreInterface} from "../../../../store/interfaces/socials-store.interface";
 import {SystemUserService} from "../../services/system-user.service";
@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = []
 
-  public routes: NavigationStoreInterface[] = []
+  public routes: NavStore[] = []
   public socials: SocialStoreInterface[] = []
   public isLogged: boolean = false
   public dataLoading: boolean = true

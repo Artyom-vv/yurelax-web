@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DropoutPointComponent } from './dropout-point.component';
 import {IconModule} from "../icon/icon.module";
 import {RouterLink, RouterLinkActive} from "@angular/router";
+import {RefIconModule} from "../ref-icon/ref-icon.module";
 
 
 
@@ -13,11 +14,12 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
   exports: [
     DropoutPointComponent
   ],
-  imports: [
-    CommonModule,
-    IconModule,
-    RouterLinkActive,
-    RouterLink
-  ]
+    imports: [
+        CommonModule,
+        IconModule,
+        RouterLinkActive,
+        RouterLink,
+        RefIconModule
+    ]
 })
 export class DropoutPointModule { }
