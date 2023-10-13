@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input} from '@angular/core';
 import {SidebarNav} from "./interfaces/sidebar.nav";
-import {Event, InitialNavigation, NavigationEnd, NavigationStart, Router, RouterEvent, Scroll} from "@angular/router";
+import {Router, Scroll} from "@angular/router";
 
 @Component({
   selector: 'yrx-sidebar',

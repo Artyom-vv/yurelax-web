@@ -8,7 +8,7 @@ $text_selectors: "&, span";
 @mixin dropout-point-big {
   height: 56px;
   padding: 0 12px;
-  .icon {
+  .icon-wrapper {
     @include icon-size(24px)
   }
   #{$text_selectors} {
@@ -19,7 +19,7 @@ $text_selectors: "&, span";
 @mixin dropout-point-normal {
   height: 48px;
   padding: 0 12px;
-  .icon {
+  .icon-wrapper {
     @include icon-size(20px)
   }
   #{$text_selectors} {
@@ -30,7 +30,7 @@ $text_selectors: "&, span";
 @mixin dropout-point-small {
   height: 40px;
   padding: 0 8px;
-  .icon {
+  .icon-wrapper {
     @include icon-size(20px)
   }
   #{$text_selectors} {
