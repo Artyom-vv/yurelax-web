@@ -6,7 +6,6 @@ import {RouterLinkActive} from "@angular/router";
   selector: 'yrx-dropout-point',
   templateUrl: './dropout-point.component.html',
   styleUrls: ['./dropout-point.component.scss'],
-  encapsulation: ViewEncapsulation.None
 })
 export class DropoutPointComponent {
   @Input() size: 'big' | 'normal' | 'small' = 'normal'

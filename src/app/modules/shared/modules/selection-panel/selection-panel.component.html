@@ -1,0 +1,13 @@
+<div class="selection-panel flex flex_column">
+  <yrx-spacing type="S"></yrx-spacing>
+  <div class="flex flex_justify-between">
+    <div class="flex flex_align-center gap-6">
+      <yrx-ref-icon class="stroke main-icon" [name]="icon"></yrx-ref-icon>
+      <h5><ng-content select="[selection-panel-title]"></ng-content></h5>
+    </div>
+    <yrx-ref-icon class="stroke nav-icon" name="chevron-right"></yrx-ref-icon>
+  </div>
+  <yrx-spacing *ngIf="text.children.length" type="XS"></yrx-spacing>
+  <p class="text text_body regular c-gradation-300" #text><ng-content select="[selection-panel-text]"></ng-content></p>
+  <yrx-spacing type="S"></yrx-spacing>
+</div>

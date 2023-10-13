@@ -14,12 +14,12 @@ import { TransactionPanelComponent } from './components/transaction-panel/transa
     TransactionPanelComponent,
   ],
     imports: [
-        CommonModule,
-        ProfileWalletRoutingModule,
-        SpacingModule,
-        PromoCodeModule,
-        DonatePanelModule,
-        RefIconModule,
+      CommonModule,
+      ProfileWalletRoutingModule,
+      SpacingModule,
+      PromoCodeModule,
+      DonatePanelModule,
+      RefIconModule,
     ]
 })
 export class ProfileWalletModule {

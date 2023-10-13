@@ -26,19 +26,17 @@ export class SocialPanelComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() type: string = ''
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
     this.subscriptions.push(
       this.appStore.socials$.pipe(
         tap((socials) => {
           this.socials = socials
+          this.social = this.getSocial(this.type);
         })
       ).subscribe()
     )
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.social = this.getSocial(this.type);
-    })
   }
 
   ngOnDestroy() {

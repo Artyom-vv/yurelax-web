@@ -1,0 +1,19 @@
+@import "src/shared/styles/widjets/icon_tools";
+@import "src/shared/styles/vars.colors";
+
+.head {
+    background-color: map-get($project-colors, "gradation", 800);
+    border: 1px solid map-get($project-colors, "gradation", 600);
+    border-radius: 6px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    yrx-ref-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        @include icon-size(120px);
+        @include icon-color(map-get($project-colors, "gradation", 700));
+    }
+}

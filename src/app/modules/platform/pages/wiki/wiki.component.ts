@@ -15,7 +15,10 @@ import { tap } from 'rxjs';
 })
 export class WikiComponent {
   public wikiNavigation: SidebarNav[][] = []
-  
+  public styles: {
+    [key: string]: string
+  } = {}
+
   constructor(
     private appStore: AppStore,
     public animationsService: AnimationsService,
@@ -23,6 +26,11 @@ export class WikiComponent {
   }
 
   ngOnInit(): void {
+    this.appStore.footerHeight$.pipe(
+      tap((footerHeight) => {
+        this.styles['minHeight'] = `calc(100vh + ${footerHeight}px`;
+      }),
+    ).subscribe
     this.appStore.wikiNavigation$.pipe(
       tap(data => {
         this.wikiNavigation = data

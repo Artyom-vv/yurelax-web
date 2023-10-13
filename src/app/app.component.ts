@@ -21,7 +21,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private systemUser: SystemUserService,
     private authService: AuthService,
     private router: Router,
-    private refIconService: RefIconService
   ) {
   }
 
@@ -37,20 +36,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = []
 
-  public icons: {name: string, pathName: string}[] = [
-    {name: 'ucoin', pathName: 'ucoin'},
-    {name: 'login', pathName: 'log-in'},
-    {name: 'check-circle', pathName: 'check-circle'},
-    {name: 'x-circle', pathName: 'x-circle'},
-    {name: 'x', pathName: 'x'},
-    {name: 'grid', pathName: 'layout-grid'},
-  ]
-
   async ngOnInit() {
-    for (const icon of this.icons) {
-      await this.refIconService.registerIconFromAssets(icon.name, `assets/${icon.pathName}.svg`)
-    }
-
     this.systemUser.removeMAToken()
     const user = this.persistenceService.get('user');
     if (user) {
@@ -66,7 +52,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.appStore.setWikiNavigation([
       [
-        {isButton: false, link: '/platform/wiki', name: 'Yurelax вики', icon: 'grid', iconStroked: true}
+        {isButton: false, link: '/platform/wiki/home', name: 'Yurelax вики', icon: 'grid', iconStroked: true}
+      ],
+      [
+        {isButton: false, link: '/platform/wiki/rules', name: 'Правила', icon: 'book', iconStroked: true},
+        {isButton: false, link: '/platform/wiki/commands', name: 'Команды и механики', icon: 'command', iconStroked: true}
       ],
     ])
 

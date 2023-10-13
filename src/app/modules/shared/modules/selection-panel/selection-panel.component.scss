@@ -1,0 +1,30 @@
+@import "src/shared/styles/vars.colors";
+@import "src/shared/styles/vars.animations";
+@import "src/shared/styles/widjets/_icon_tools";
+
+:host {
+  flex-basis: 294px;
+}
+
+.selection-panel {
+  transition: $trs;
+  border: 1px solid transparent;
+  height: 100%;
+  padding: 0 24px;
+  border-radius: 12px;
+  background-color: map-get($project-colors, "gradation", 700);
+  cursor: pointer;
+  &:hover {
+    border: 1px solid map-get($project-colors, "gradation", 600);
+    .nav-icon {
+      @include icon-color(map-get($project-colors, "gradation", 300))
+    }
+  }
+}
+.main-icon {
+  @include icon-size(20px);
+}
+.nav-icon {
+  @include icon-size(24px);
+  @include icon-color(map-get($project-colors, "gradation", 400))
+}

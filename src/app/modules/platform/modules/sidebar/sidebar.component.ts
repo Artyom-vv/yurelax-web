@@ -17,6 +17,10 @@ export class SidebarComponent implements AfterViewInit {
   @Input() navigation: SidebarNav[][] = []
 
   public activeIndex: number = 0
+  public hover = {
+    elementIdx: -1,
+    groupIdx: -1
+  }
 
   ngAfterViewInit() {
     this.router.events.subscribe(event => {

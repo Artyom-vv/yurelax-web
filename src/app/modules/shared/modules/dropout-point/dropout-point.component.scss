@@ -5,6 +5,14 @@
 
 $text_selectors: "&, span";
 
+:host {
+  &.before-hovered-point {
+    .dropout-point {
+      border-bottom-color: transparent;
+    }
+  }
+}
+
 @mixin dropout-point-big {
   height: 56px;
   padding: 0 12px;
@@ -40,9 +48,11 @@ $text_selectors: "&, span";
 }
 
 @mixin dropout-point-hover {
+  border-radius: 6px;
   &.dropout-point {
     &_underlined {
-      border-bottom-color: map-get($project-colors, "gradation", 600);
+      // map-get($project-colors, "gradation", 600)
+      border-bottom-color: transparent;
     }
   }
   background-color: map-get($project-colors, "gradation", 700);
@@ -59,8 +69,7 @@ $text_selectors: "&, span";
   width: 100%;
   cursor: pointer;
 
-  border-radius: 6px;
-  transition: $trs;
+  transition: color $trs, border-color $trs, background-color $trs;
   background-color: map-get($project-colors, "gradation", 800);
   border-bottom: 1px solid transparent;
   &_underlined {
@@ -106,6 +115,7 @@ $text_selectors: "&, span";
   }
 
   &_active {
+    border-radius: 6px;
     border-bottom-color: transparent;
     background-color: map-get($project-colors, "gradation", 700);
     yrx-ref-icon {
@@ -118,6 +128,7 @@ $text_selectors: "&, span";
   }
 
   &:hover:not(&_active) {
+    // transition: color $trs, background-color $trs;
     @include dropout-point-hover;
   }
 }

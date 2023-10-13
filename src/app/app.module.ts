@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -15,6 +15,8 @@ import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
 import localeRu from '@angular/common/locales/ru';
 import {registerLocaleData} from "@angular/common";
 import {AdminModule} from "./modules/admin/admin.module";
+import { appInitializer } from './modules/shared/factories/init.factory';
+import { IconsService } from './services/icons.service';
 registerLocaleData(localeRu)
 
 @NgModule({
@@ -35,12 +37,19 @@ registerLocaleData(localeRu)
     PersistenceService,
     SystemUserService,
     AuthService,
+    IconsService,
     {
       provide: HTTP_INTERCEPTORS,
       multi: true,
       useClass: TokenInterceptor,
     },
-    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 7000}}
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 7000}},
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializer,
+      multi: true,
+      deps: [IconsService]
+    }
   ],
   bootstrap: [AppComponent]
 })
