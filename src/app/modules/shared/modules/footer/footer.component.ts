@@ -53,8 +53,9 @@ export class FooterComponent implements OnInit, OnDestroy, AfterViewInit {
       const currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
       if (currentScroll > 0) {
         window.requestAnimationFrame(smoothScroll);
-        window.scrollTo(0, currentScroll - (currentScroll / 16));
+        window.scrollTo(0, Math.floor(currentScroll - (currentScroll / 16)));
       }
     })();
   }
+  
 }

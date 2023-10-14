@@ -1,11 +1,10 @@
 <section class="wiki-layout flex flex_column" [ngStyle]="styles">
-  <main [@routeAnimations]="animationsService.getRouteAnimationData(null, false)"
-        class="main flex_grow flex flex_column">
+  <main class="main flex_grow flex flex_column">
       <yrx-spacing type="L"></yrx-spacing>
       <div class="container flex gap-48">
         <yrx-sidebar [navigation]="wikiNavigation"></yrx-sidebar>
-        <div class="scrollable flex_grow">
-            <router-outlet></router-outlet>
+        <div [@routeAnimations]="animationsService.getRouteAnimationData(outlet)" class="scrollable flex_grow">
+            <router-outlet #outlet="outlet"></router-outlet>
         </div>
       </div>
       <yrx-spacing type="XL2"></yrx-spacing>
