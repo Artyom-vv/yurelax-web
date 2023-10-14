@@ -50,3 +50,6 @@ img, svg {
   -ms-user-select: none;
   user-select: none;
 }
+.cdk-overlay-transparent-backdrop {
+  transition: unset !important;
+}
