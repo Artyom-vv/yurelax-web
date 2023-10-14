@@ -7,6 +7,10 @@
   letter-spacing: 0.02em;
   margin: 0;
   color: #fff;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -130,6 +134,10 @@ h5 {
   font-family: $second_font;
   font-weight: 400;
   color: #fff;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }
 @mixin text-big {
   font-size: 16px;
@@ -182,6 +190,10 @@ h5 {
   font-weight: 400;
   color: #fff;
   letter-spacing: 0.015em;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
   @include span-text-default;
 }
 @mixin span-text-default {

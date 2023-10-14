@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {Subscription, switchMap, tap} from "rxjs";
-import {AppearanceAnimation} from "../../../shared/animations/redirect.animation";
 import {AnimationsService} from "../../../shared/animations/services/animations.service";
 import {RolesEnum} from "../../../shared/enums/roles.enum";
 import {UserRes} from "../../interfaces/user.interface";
@@ -11,9 +10,6 @@ import {SidebarNav} from "../../modules/sidebar/interfaces/sidebar.nav";
   selector: 'yrx-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
-  animations: [
-    AppearanceAnimation,
-  ]
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   constructor(

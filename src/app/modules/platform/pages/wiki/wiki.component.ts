@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {AppearanceAnimation} from "../../../shared/animations/redirect.animation";
 import {AppStore} from "../../../../store/app.store";
 import {AnimationsService} from "../../../shared/animations/services/animations.service";
-import { SidebarNav } from '../../modules/sidebar/interfaces/sidebar.nav';
-import { tap } from 'rxjs';
+import {SidebarNav} from '../../modules/sidebar/interfaces/sidebar.nav';
+import {combineLatest, tap} from 'rxjs';
 
 @Component({
   selector: 'yrx-wiki',
@@ -21,16 +21,16 @@ export class WikiComponent {
 
   constructor(
     private appStore: AppStore,
-    public animationsService: AnimationsService,
   ) {
   }
 
   ngOnInit(): void {
-    this.appStore.footerHeight$.pipe(
-      tap((footerHeight) => {
-        this.styles['minHeight'] = `calc(100vh + ${footerHeight}px`;
-      }),
-    ).subscribe
+    combineLatest([this.appStore.footerHeight$, this.appStore.headerHeight$]).pipe(
+      tap(([footerHeight,headerHeight]) => {
+        this.styles['minHeight'] = `calc(100vh - ${footerHeight}px + ${headerHeight}px`;
+        console.log(this.styles)
+      })
+    ).subscribe()
     this.appStore.wikiNavigation$.pipe(
       tap(data => {
         this.wikiNavigation = data

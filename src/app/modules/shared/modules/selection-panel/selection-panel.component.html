@@ -7,7 +7,7 @@
     </div>
     <yrx-ref-icon class="stroke nav-icon" name="chevron-right"></yrx-ref-icon>
   </div>
-  <yrx-spacing *ngIf="text.children.length" type="XS"></yrx-spacing>
+  <yrx-spacing *ngIf="text.innerText" type="XS"></yrx-spacing>
   <p class="text text_body regular c-gradation-300" #text><ng-content select="[selection-panel-text]"></ng-content></p>
   <yrx-spacing type="S"></yrx-spacing>
 </div>

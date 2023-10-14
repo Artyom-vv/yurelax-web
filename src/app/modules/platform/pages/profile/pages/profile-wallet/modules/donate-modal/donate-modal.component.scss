@@ -1,5 +1,11 @@
 @import "src/shared/styles/layout/colored-box";
 
+.scrollable {
+  margin: 16px;
+  overflow-y: scroll;
+  max-height: calc(100vh - 32px);
+}
+
 .colored-box {
   @include colored-box;
   -webkit-border-radius: 24px;

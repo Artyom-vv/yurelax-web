@@ -6,7 +6,6 @@ import {filter, Subscription, switchMap, tap} from "rxjs";
 import {AuthService} from "./modules/auth/services/auth.service";
 import {catchError} from "rxjs/operators";
 import {Router} from "@angular/router";
-import {RefIconService} from "./modules/shared/modules/ref-icon/services/ref-icon.service";
 
 @Component({
   selector: 'yrx-root',
@@ -46,8 +45,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.appStore.setNavigation([
       {link: '/platform', name: 'О проекте', isLogged: false},
       {link: '/platform/wiki', name: 'Вики', isLogged: false},
+      {link: '/platform/games', name: 'Мини-игры', isLogged: true},
       // {link: '/platform/store', name: 'Магазин', isLogged: true},
-      // {link: '/platform/games', name: 'Мини-игры', isLogged: true},
     ])
 
     this.appStore.setWikiNavigation([
@@ -58,22 +57,27 @@ export class AppComponent implements OnInit, OnDestroy {
         {isButton: false, link: '/platform/wiki/rules', name: 'Правила', icon: 'book', iconStroked: true},
         {isButton: false, link: '/platform/wiki/commands', name: 'Команды и механики', icon: 'command', iconStroked: true}
       ],
+      [
+        {isButton: false, link: '/platform/wiki/updates', name: 'Обновления', icon: 'download', iconStroked: true},
+        {isButton: false, link: '/platform/wiki/resources', name: 'Ресурс-паки', icon: 'box', iconStroked: true},
+        {isButton: false, link: '/platform/wiki/mods', name: 'Моды', icon: 'boxes', iconStroked: true}
+      ],
     ])
 
     this.appStore.setProfileNavigation([
       [
         {isButton: false, link: '/platform/profile/home', name: 'Главная', icon: 'home', iconStroked: true},
         {isButton: false, link: '/platform/profile/wallet', name: 'Кошелек', icon: 'wallet', iconStroked: true},
-        // {isButton: false, link: '/platform/profile/store', name: 'Магазин', icon: 'shopping-bag', iconStroked: true},
-        // {isButton: false, link: '/platform/profile/games', name: 'Мини-игры', icon: 'box', iconStroked: true},
-        // {isButton: false, link: '/platform/profile/referrals', name: 'Реферальная система', icon: 'user-plus', iconStroked: true},
+        {isButton: false, link: '/platform/profile/store', name: 'Магазин', icon: 'shopping-bag', iconStroked: true},
+        {isButton: false, link: '/platform/profile/games', name: 'Мини-игры', icon: 'box', iconStroked: true},
+        {isButton: false, link: '/platform/profile/referrals', name: 'Реферальная система', icon: 'user-plus', iconStroked: true},
       ],
-      // [
-      //   {isButton: false, link: '/platform/profile/settings', name: 'Настройка аккаунта', icon: 'settings', iconStroked: true},
-      //   {isButton: false, link: '/platform/profile/restrictions', name: 'Баны и предупреждения', icon: 'alert-triangle', iconStroked: true},
-      // ],
       [
-        // {isButton: true, name: 'Выйти со всех устройств', icon: 'laptop', iconStroked: true, callback: () => {this.logoutFromAllDevices()}},
+        {isButton: false, link: '/platform/profile/settings', name: 'Настройка аккаунта', icon: 'settings', iconStroked: true},
+        {isButton: false, link: '/platform/profile/restrictions', name: 'Баны и предупреждения', icon: 'alert-triangle', iconStroked: true},
+      ],
+      [
+        {isButton: true, name: 'Выйти со всех устройств', icon: 'laptop', iconStroked: true, callback: () => {this.logoutFromAllDevices()}},
         {isButton: true, name: 'Выйти', icon: 'logout', iconStroked: true, callback: () => {this.appStore.setIsExit(true)}},
       ]
     ])

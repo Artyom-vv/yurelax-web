@@ -25,6 +25,7 @@ export class AppStore extends ComponentStore<AppState> {
   readonly adminNavigation$: Observable<SidebarNav[][]> = this.select(state => state.adminNavigation);
   readonly socials$: Observable<SocialStoreInterface[]> = this.select(state => state.socials);
   readonly footerHeight$: Observable<number> = this.select(state => state.footerHeight);
+  readonly headerHeight$: Observable<number> = this.select(state => state.headerHeight);
   readonly isHomePage$: Observable<boolean> = this.select(state => state.isHomePage);
 
   readonly setIsLogged = this.updater((state, isLogged: boolean) => ({
@@ -45,6 +46,11 @@ export class AppStore extends ComponentStore<AppState> {
   readonly setFooterHeight = this.updater((state, footerHeight: number) => ({
     ...state,
     footerHeight
+  }));
+
+  readonly setHeaderHeight = this.updater((state, headerHeight: number) => ({
+    ...state,
+    headerHeight
   }));
 
   readonly setSocials = this.updater((state, socials: SocialStoreInterface[]) => ({

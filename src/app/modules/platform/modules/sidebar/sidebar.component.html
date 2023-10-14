@@ -3,12 +3,12 @@
   <div class="sections flex flex_column">
     <ng-container *ngFor="let group of navigation; let groupIdx = index">
       <ul class="flex flex_column">
-        <li (mouseenter)="hover = {groupIdx, elementIdx: idx}" (mouseleave)="hover = {groupIdx: -1, elementIdx: -1}" *ngFor="let link of group; let idx = index">
-          <yrx-dropout-point [class.before-hovered-point]="groupIdx === hover.groupIdx && hover.elementIdx-1 === idx" *ngIf="link.isButton; else linkTemplate" [underlined]="group.length-1 !== idx" (press)="link?.callback()" [icon]="link.icon" [iconStroked]="link.iconStroked">
+        <li *ngFor="let link of group; let idx = index">
+          <yrx-dropout-point *ngIf="link.isButton; else linkTemplate" [underlined]="group.length-1 !== idx" (press)="link?.callback()" [icon]="link.icon" [iconStroked]="link.iconStroked">
             <span>{{link.name}}</span>
           </yrx-dropout-point>
           <ng-template #linkTemplate>
-            <yrx-dropout-point [class.before-hovered-point]="groupIdx === hover.groupIdx && hover.elementIdx-1 === idx" [underlined]="group.length-1 !== idx && activeIndex-1 !== getLinkIndex(groupIdx, idx)" [link]="link.link" [icon]="link.icon" [iconStroked]="link.iconStroked">
+            <yrx-dropout-point [underlined]="group.length-1 !== idx && activeIndex-1 !== getLinkIndex(groupIdx, idx)" [link]="link.link" [icon]="link.icon" [iconStroked]="link.iconStroked">
               <span>{{link.name}}</span>
             </yrx-dropout-point>
           </ng-template>

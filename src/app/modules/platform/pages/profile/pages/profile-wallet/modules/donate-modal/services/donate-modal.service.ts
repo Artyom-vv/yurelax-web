@@ -12,7 +12,7 @@ export class DonateModalService {
   public config<T = any>(data?: T): MatDialogConfig<T> {
     return {
       panelClass: 'donate-modal',
-      maxWidth: 708,
+      maxWidth: 740,
       width: '100%',
       data
     }

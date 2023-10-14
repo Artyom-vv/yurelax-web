@@ -1,0 +1,9 @@
+@import "src/shared/styles/vars.colors";
+
+.wiki-layout {
+  background-color: map-get($project-colors, "gradation", 800);
+}
+
+.container {
+  position: relative;
+}

@@ -12,6 +12,7 @@ export interface AppState {
   adminNavigation: SidebarNav[][]
   socials: SocialStoreInterface[]
   footerHeight: number
+  headerHeight: number
   isHomePage: boolean
   isLogged: boolean
   preloading: boolean
@@ -25,6 +26,7 @@ export const DEFAULT_STATE: AppState = {
   adminNavigation: [],
   socials: [],
   footerHeight: 0,
+  headerHeight: 0,
   isHomePage: false,
   isLogged: false,
   preloading: true

@@ -7,7 +7,7 @@ export class IconsService {
         private refIconService: RefIconService
       ) {
       }
-    
+
       public icons: {name: string, pathName: string}[] = [
         {name: 'ucoin', pathName: 'ucoin'},
         {name: 'login', pathName: 'log-in'},
@@ -24,6 +24,11 @@ export class IconsService {
         {name: 'command', pathName: 'command'},
         {name: 'book', pathName: 'book'},
         {name: 'chevron-right', pathName: 'chevron-right'},
+        {name: 'shopping-bag', pathName: 'shopping-bag'},
+        {name: 'user-plus', pathName: 'user-plus'},
+        {name: 'settings', pathName: 'settings'},
+        {name: 'alert-triangle', pathName: 'alert-triangle'},
+        {name: 'laptop', pathName: 'laptop'},
       ]
 
       public async initIcons(): Promise<void> {

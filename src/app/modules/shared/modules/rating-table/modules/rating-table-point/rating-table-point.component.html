@@ -6,7 +6,7 @@
       <p class="text text_body medium" [ngClass]="userStore?.login === data.login ? 'c-purple-300' : 'c-gradation-100'">{{data.login}}</p>
     </div>
   </div>
-  <div class="flex_grow flex">
+  <div [style.flex-grow]="2" class="flex_grow flex">
     <p class="flex_grow text text_body regular c-gradation-300 text-center">{{data.values[0]}}</p>
     <p class="flex_grow text text_body regular c-gradation-300 text-center">{{data.values[1]}}</p>
     <p class="flex_grow text text_body regular c-gradation-300 text-center">{{data.values[2]}}</p>

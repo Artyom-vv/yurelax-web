@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'yrx-wiki-home',
@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./wiki-home.component.scss']
 })
 export class WikiHomeComponent implements OnInit {
-  
+
   ngOnInit(): void {
-    
+
   }
 }

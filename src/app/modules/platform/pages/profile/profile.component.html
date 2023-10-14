@@ -1,8 +1,7 @@
 <section class="profile-layout flex flex_column" [ngStyle]="styles">
   <yrx-profile-header></yrx-profile-header>
   <yrx-spacing type="L"></yrx-spacing>
-  <main [@routeAnimations]="animationsService.getRouteAnimationData(null, false)"
-        class="main flex_grow flex flex_column">
+  <main class="main flex_grow flex flex_column">
     <div class="container flex_grow flex gap-48">
       <yrx-sidebar [navigation]="profileNavigation">
         <ng-container sidebar-top-content>

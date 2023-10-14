@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {NavStore} from "../../../../store/interfaces/nav.store";
 import {Subscription} from "rxjs";
@@ -10,7 +10,7 @@ import {SystemUserService} from "../../services/system-user.service";
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private appStore: AppStore,
     private systemUserService: SystemUserService
@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   @Input() light: boolean = false;
+  @ViewChild('header') header!: ElementRef<HTMLElement>
 
   private subscriptions: Subscription[] = []
 
@@ -51,6 +52,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.preloading = val;
       })
     )
+  }
+
+  ngAfterViewInit() {
+    this.appStore.setHeaderHeight(this.header.nativeElement.clientHeight)
   }
 
   ngOnDestroy() {

@@ -43,3 +43,10 @@ img, svg {
   height: 1px;
   background-color: map-get($project-colors, "gradation", 600);
 }
+
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
