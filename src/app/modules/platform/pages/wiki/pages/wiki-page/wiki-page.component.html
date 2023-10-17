@@ -1,0 +1,16 @@
+<div [@routeAnimations]="pageName">
+  <yrx-skeleton *ngIf="loading$ | async; else content" theme="dark" [styles]="styles"></yrx-skeleton>
+  <ng-template #content>
+    <ng-container *ngIf="page as page">
+      <ng-container *ngFor="let slice of page.slices" [ngSwitch]="slice.type">
+        <yrx-spacing *ngSwitchCase="'spacing'" [type]="getSpacingType(slice.value)"></yrx-spacing>
+        <yrx-wiki-head *ngSwitchCase="'header'" [title]="slice.value" [icon]="page.metadata['icon']"></yrx-wiki-head>
+        <yrx-wiki-title *ngSwitchCase="'title'">{{slice.value}}</yrx-wiki-title>
+        <yrx-wiki-subtitle *ngSwitchCase="'subtitle'">{{slice.value}}</yrx-wiki-subtitle>
+        <yrx-wiki-paragraph *ngSwitchCase="'text'">{{slice.value}}</yrx-wiki-paragraph>
+        <yrx-wiki-picture *ngSwitchCase="'image'" [description]="slice.displayTitle ?? ''" [src]="slice.value" [alt]="slice.displayTitle ?? 'Википедия yurelax'"></yrx-wiki-picture>
+        <yrx-link [iconStroked]="true" icon="external-link" (press)="redirect(slice.value)" *ngSwitchCase="'link'">{{slice.displayTitle ?? slice.value}}</yrx-link>
+      </ng-container>
+    </ng-container>
+  </ng-template>
+</div>

@@ -4,7 +4,6 @@ import {WikiComponent} from './wiki.component';
 import {WikiRoutingModule} from "./wiki-routing.module";
 import {ButtonModule} from "../../../shared/modules/button/button.module";
 import {FooterModule} from "../../../shared/modules/footer/footer.module";
-import {IconModule} from "../../../shared/modules/icon/icon.module";
 import {LinkModule} from "../../../shared/modules/link/link.module";
 import {ProfileHeaderModule} from "../profile/modules/profile-header/profile-header.module";
 import {SidebarModule} from "../../modules/sidebar/sidebar.module";
@@ -13,33 +12,23 @@ import {SocialPanelModule} from 'src/app/modules/shared/modules/social-panel/soc
 import {SelectionModule} from 'src/app/modules/shared/modules/selection-panel/selection-panel.module';
 import {WikiHeadComponent} from './components/wiki-head/wiki-head.component';
 import {WikiHomeComponent} from './pages/wiki-home/wiki-home.component';
-import {RulesComponent} from './pages/rules/rules.component';
+import {WikiPageComponent} from './pages/wiki-page/wiki-page.component';
 import {RefIconModule} from 'src/app/modules/shared/modules/ref-icon/ref-icon.module';
-import {WikiContentComponent} from './components/wiki-content/wiki-content.component';
 import {WikiPictureComponent} from './components/wiki-picture/wiki-picture.component';
 import {SkeletonModule} from "../../../shared/modules/skeleton/skeleton.module";
 import {WikiParagraphComponent} from './components/wiki-paragraph/wiki-paragraph.component';
-import {WikiHeadlineComponent} from './components/wiki-headline/wiki-headline.component';
-import {CommandsComponent} from "./pages/commands/commands.component";
-import {ResourcesComponent} from "./pages/resources/resources.component";
-import {ModsComponent} from "./pages/mods/mods.component";
-import {UpdatesComponent} from "./pages/updates/updates.component";
+import {WikiSubtitleComponent} from './components/wiki-subtitle/wiki-subtitle.component';
 
 
 @NgModule({
   declarations: [
     WikiComponent,
     WikiHomeComponent,
-    RulesComponent,
-    CommandsComponent,
-    ResourcesComponent,
-    ModsComponent,
-    UpdatesComponent,
+    WikiPageComponent,
     WikiHeadComponent,
-    WikiContentComponent,
     WikiPictureComponent,
     WikiParagraphComponent,
-    WikiHeadlineComponent
+    WikiSubtitleComponent
   ],
   imports: [
     CommonModule,

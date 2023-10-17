@@ -15,8 +15,10 @@ import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
 import localeRu from '@angular/common/locales/ru';
 import {registerLocaleData} from "@angular/common";
 import {AdminModule} from "./modules/admin/admin.module";
-import { appInitializer } from './modules/shared/factories/init.factory';
-import { IconsService } from './services/icons.service';
+import {appInitializer} from './modules/shared/factories/init.factory';
+import {IconsService} from './services/icons.service';
+import {WikiService} from "./modules/platform/pages/wiki/services/wiki.service";
+
 registerLocaleData(localeRu)
 
 @NgModule({
@@ -29,13 +31,14 @@ registerLocaleData(localeRu)
     AppRoutingModule,
     SharedModule,
     AdminModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     AppStore,
     CookieService,
     PersistenceService,
     SystemUserService,
+    WikiService,
     AuthService,
     IconsService,
     {

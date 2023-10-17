@@ -1,44 +1,37 @@
-<yrx-wiki-content>
-  <h3>Вики yurelax</h3>
-  <yrx-spacing type="S"></yrx-spacing>
-  <div class="flex gap-24">
-    <yrx-selection-panel routerLink="../rules" icon="book">
-      <ng-container selection-panel-title>Правила</ng-container>
-      <ng-container selection-panel-text>Для игры на нашем проекте Вам стоит ознакомиться с правилами.</ng-container>
-    </yrx-selection-panel>
-    <yrx-selection-panel routerLink="../commands" icon="command">
-      <ng-container selection-panel-title>Команды и механики</ng-container>
-      <ng-container selection-panel-text>Для получения наилучшего опыта Вам стоит ознакомиться с механиками проекта.
-      </ng-container>
-    </yrx-selection-panel>
-  </div>
-  <yrx-spacing type="S"></yrx-spacing>
-  <div class="flex gap-24">
-    <yrx-selection-panel routerLink="../updates" icon="download">
-      <ng-container selection-panel-title>Обновления</ng-container>
-    </yrx-selection-panel>
-    <yrx-selection-panel routerLink="../resources" icon="box">
-      <ng-container selection-panel-title>Ресурс-паки</ng-container>
-    </yrx-selection-panel>
-    <yrx-selection-panel routerLink="../mods" icon="boxes">
-      <ng-container selection-panel-title>Моды</ng-container>
-    </yrx-selection-panel>
-  </div>
-  <yrx-spacing type="M"></yrx-spacing>
-  <h3>Обратная связь</h3>
-  <yrx-spacing type="S"></yrx-spacing>
-  <div class="flex gap-24 flex_wrap">
-    <yrx-social-panel type="tg">
-      <ng-container social-panel-title>Поддержка в Telegram</ng-container>
-      <ng-container social-panel-text>Отвечаем в течении 24 часов</ng-container>
-    </yrx-social-panel>
-    <yrx-social-panel type="vk">
-      <ng-container social-panel-title>Поддержка во Вконтакте</ng-container>
-      <ng-container social-panel-text>Отвечаем в течении 24 часов</ng-container>
-    </yrx-social-panel>
-    <yrx-social-panel type="dc">
-      <ng-container social-panel-title>Остались вопросы?</ng-container>
-      <ng-container social-panel-text>Присоединяйтесь к нам в Discord</ng-container>
-    </yrx-social-panel>
-  </div>
-</yrx-wiki-content>
+<ng-template #section let-item>
+  <yrx-selection-panel [routerLink]="'../'+item?.data?.page" [icon]="item?.data?.metadata?.['icon'] ?? 'book'">
+    <ng-container selection-panel-title>{{item?.name}}</ng-container>
+    <ng-container selection-panel-text>{{item?.data?.metadata?.['description']}}</ng-container>
+  </yrx-selection-panel>
+</ng-template>
+
+<h3>Вики yurelax</h3>
+<yrx-spacing type="S"></yrx-spacing>
+<div class="flex gap-24">
+  <ng-container *ngFor="let item of navigation.slice(0, 2)">
+    <ng-container *ngTemplateOutlet="section; context: {$implicit: item}"></ng-container>
+  </ng-container>
+</div>
+<yrx-spacing type="S"></yrx-spacing>
+<div class="flex gap-24">
+  <ng-container *ngFor="let item of navigation.slice(2)">
+    <ng-container *ngTemplateOutlet="section; context: {$implicit: item}"></ng-container>
+  </ng-container>
+</div>
+<yrx-spacing type="M"></yrx-spacing>
+<h3>Обратная связь</h3>
+<yrx-spacing type="S"></yrx-spacing>
+<div class="flex gap-24 flex_wrap">
+  <yrx-social-panel type="tg">
+    <ng-container social-panel-title>Поддержка в Telegram</ng-container>
+    <ng-container social-panel-text>Отвечаем в течении 24 часов</ng-container>
+  </yrx-social-panel>
+  <yrx-social-panel type="vk">
+    <ng-container social-panel-title>Поддержка во Вконтакте</ng-container>
+    <ng-container social-panel-text>Отвечаем в течении 24 часов</ng-container>
+  </yrx-social-panel>
+  <yrx-social-panel type="dc">
+    <ng-container social-panel-title>Остались вопросы?</ng-container>
+    <ng-container social-panel-text>Присоединяйтесь к нам в Discord</ng-container>
+  </yrx-social-panel>
+</div>

@@ -1,15 +1,15 @@
 import {NavStore} from "./interfaces/nav.store";
 import {SocialStoreInterface} from "./interfaces/socials-store.interface";
-import {SidebarNav} from "../modules/platform/modules/sidebar/interfaces/sidebar.nav";
+import {SidebarNavItem} from "../modules/platform/modules/sidebar/interfaces/sidebarNavItem";
 import {UserRes} from "../modules/platform/interfaces/user.interface";
 
 export interface AppState {
   user: UserRes | null
   isExit: boolean
   navigation: NavStore[]
-  profileNavigation: SidebarNav[][]
-  wikiNavigation: SidebarNav[][]
-  adminNavigation: SidebarNav[][]
+  profileNavigation: SidebarNavItem[][]
+  wikiNavigation: SidebarNavItem[][]
+  adminNavigation: SidebarNavItem[][]
   socials: SocialStoreInterface[]
   footerHeight: number
   headerHeight: number

@@ -1,4 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import {AppStore} from "../../../../../../store/app.store";
+import {tap} from "rxjs";
+import {SidebarNavItem} from "../../../../modules/sidebar/interfaces/sidebarNavItem";
+import {WikiNavigationItem} from "../../interfaces/wiki.interface";
 
 @Component({
   selector: 'yrx-wiki-home',
@@ -7,7 +11,18 @@ import {Component, OnInit} from '@angular/core';
 })
 export class WikiHomeComponent implements OnInit {
 
-  ngOnInit(): void {
+  public navigation: SidebarNavItem<WikiNavigationItem>[] = []
 
+  constructor(
+    private appStore: AppStore,
+  ) {
+  }
+
+  ngOnInit() {
+    this.appStore.wikiNavigation$.pipe(
+      tap(navigation => {
+        this.navigation = navigation.slice(1).flatMap(y => y.map(x => x))
+      })
+    ).subscribe()
   }
 }

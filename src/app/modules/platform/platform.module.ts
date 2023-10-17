@@ -11,6 +11,7 @@ import {AuthGuard} from "../shared/services/guards/auth.guard";
 import {ToolsService} from "../shared/services/tools.service";
 import {HomeModule} from "./pages/home/home.module";
 import {WikiModule} from "./pages/wiki/wiki.module";
+import {WikiService} from "./pages/wiki/services/wiki.service";
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import {WikiModule} from "./pages/wiki/wiki.module";
     SpacingModule,
     WikiModule
   ],
-  providers: [RoleGuard, UserService, AuthGuard, ToolsService]
+  providers: [RoleGuard, UserService, AuthGuard, ToolsService, WikiService]
 })
 export class PlatformModule {
 }

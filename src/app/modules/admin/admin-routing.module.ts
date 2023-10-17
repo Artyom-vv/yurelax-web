@@ -19,7 +19,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'statistics',
+        redirectTo: 'home',
         pathMatch: 'full'
       },
       {
@@ -31,6 +31,16 @@ const routes: Routes = [
         path: 'mini-games',
         component: AdminContentComponent,
         loadChildren: () => import('../admin/module/mini-games/mini-games.module').then(m => m.MiniGamesModule)
+      },
+      {
+        path: 'home',
+        component: AdminContentComponent,
+        loadChildren: () => import('../admin/module/home/admin-home.module').then(m => m.AdminHomeModule)
+      },
+      {
+        path: 'wiki',
+        component: AdminContentComponent,
+        loadChildren: () => import('../admin/module/wiki/wiki.module').then(m => m.WikiModule)
       }
     ]
   }

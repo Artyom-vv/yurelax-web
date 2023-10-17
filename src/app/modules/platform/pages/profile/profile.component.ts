@@ -4,7 +4,7 @@ import {Subscription, switchMap, tap} from "rxjs";
 import {AnimationsService} from "../../../shared/animations/services/animations.service";
 import {RolesEnum} from "../../../shared/enums/roles.enum";
 import {UserRes} from "../../interfaces/user.interface";
-import {SidebarNav} from "../../modules/sidebar/interfaces/sidebar.nav";
+import {SidebarNavItem} from "../../modules/sidebar/interfaces/sidebarNavItem";
 
 @Component({
   selector: 'yrx-profile',
@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = []
 
-  public profileNavigation: SidebarNav[][] = []
+  public profileNavigation: SidebarNavItem[][] = []
   public styles: {
     [key: string]: string
   } = {}

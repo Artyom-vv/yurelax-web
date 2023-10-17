@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {DonatePanelType} from "./interfaces/donate-panel.interface";
 
 @Component({
@@ -14,9 +14,15 @@ export class DonatePanelComponent implements AfterViewInit {
 
   public discount?: number
 
+  constructor(
+    private cdr: ChangeDetectorRef
+  ) {
+  }
+
   ngAfterViewInit() {
     if (this.oldCoins) {
       this.discount = +(this.coins / this.oldCoins * 100 - 100).toFixed(0)
+      this.cdr.detectChanges()
     }
   }
 }

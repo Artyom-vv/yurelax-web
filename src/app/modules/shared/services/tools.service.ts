@@ -3,6 +3,13 @@ import {Injectable} from "@angular/core";
 @Injectable()
 export class ToolsService {
 
+  redirect(url: string, target: string = '_blank') {
+    const a = document.createElement("a")
+    a.href = url
+    a.target = target
+    a.click()
+  }
+
   public generateId = () => {
     return `f${(~~(Math.random() * 1e8)).toString(16)}`;
   };

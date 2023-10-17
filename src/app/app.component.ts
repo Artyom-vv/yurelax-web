@@ -2,10 +2,12 @@ import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {PersistenceService} from "./modules/shared/services/persistence.service";
 import {AppStore} from "./store/app.store";
 import {SystemUserService} from "./modules/shared/services/system-user.service";
-import {filter, Subscription, switchMap, tap} from "rxjs";
+import {filter, finalize, Subscription, switchMap, tap} from "rxjs";
 import {AuthService} from "./modules/auth/services/auth.service";
 import {catchError} from "rxjs/operators";
 import {Router} from "@angular/router";
+import {WikiService} from "./modules/platform/pages/wiki/services/wiki.service";
+import {SidebarNavigation} from "./modules/platform/modules/sidebar/interfaces/sidebarNavItem";
 
 @Component({
   selector: 'yrx-root',
@@ -20,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private systemUser: SystemUserService,
     private authService: AuthService,
     private router: Router,
+    private wikiService: WikiService,
   ) {
   }
 
@@ -36,6 +39,30 @@ export class AppComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = []
 
   async ngOnInit() {
+    this.wikiService.loading$.next(true)
+    this.wikiService.getNavigation().pipe(
+      tap(navigation => {
+        const sidebarNavigation: SidebarNavigation = [
+          [{name: 'Вики yurelax', link: `/platform/wiki/home`, icon: 'grid', iconStroked: true, isButton: false}]
+        ]
+
+        navigation.forEach(group => {
+          sidebarNavigation.push(group.map(item => {
+            return {
+              name: item.metadata['title'],
+              link: `/platform/wiki/${item.page}`,
+              icon: item.metadata['icon'] ?? 'book',
+              iconStroked: true,
+              isButton: false,
+              data: item
+            }
+          }))
+        })
+
+        this.appStore.setWikiNavigation(sidebarNavigation)
+      }),
+      finalize(() => this.wikiService.loading$.next(false))
+    ).subscribe()
     this.systemUser.removeMAToken()
     const user = this.persistenceService.get('user');
     if (user) {
@@ -47,21 +74,6 @@ export class AppComponent implements OnInit, OnDestroy {
       {link: '/platform/wiki', name: 'Вики', isLogged: false},
       {link: '/platform/games', name: 'Мини-игры', isLogged: true},
       // {link: '/platform/store', name: 'Магазин', isLogged: true},
-    ])
-
-    this.appStore.setWikiNavigation([
-      [
-        {isButton: false, link: '/platform/wiki/home', name: 'Yurelax вики', icon: 'grid', iconStroked: true}
-      ],
-      [
-        {isButton: false, link: '/platform/wiki/rules', name: 'Правила', icon: 'book', iconStroked: true},
-        {isButton: false, link: '/platform/wiki/commands', name: 'Команды и механики', icon: 'command', iconStroked: true}
-      ],
-      [
-        {isButton: false, link: '/platform/wiki/updates', name: 'Обновления', icon: 'download', iconStroked: true},
-        {isButton: false, link: '/platform/wiki/resources', name: 'Ресурс-паки', icon: 'box', iconStroked: true},
-        {isButton: false, link: '/platform/wiki/mods', name: 'Моды', icon: 'boxes', iconStroked: true}
-      ],
     ])
 
     this.appStore.setProfileNavigation([
@@ -84,6 +96,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.appStore.setAdminNavigation([
       [
+        {isButton: false, link: '/admin/home', name: 'Домашняя', icon: 'home', iconStroked: true},
+        {isButton: false, link: '/admin/wiki', name: 'Вики', icon: 'book', iconStroked: true},
         {isButton: false, link: '/admin/statistics', name: 'Статистика', icon: 'file', iconStroked: true},
         {isButton: false, link: '/admin/mini-games', name: 'Мини-игры', icon: 'joystick', iconStroked: true},
       ],

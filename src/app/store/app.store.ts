@@ -4,8 +4,9 @@ import {AppState, DEFAULT_STATE} from "./app-store.interface";
 import {Observable} from "rxjs";
 import {NavStore} from "./interfaces/nav.store";
 import {SocialStoreInterface} from "./interfaces/socials-store.interface";
-import {SidebarNav} from "../modules/platform/modules/sidebar/interfaces/sidebar.nav";
+import {SidebarNavigation, SidebarNavItem} from "../modules/platform/modules/sidebar/interfaces/sidebarNavItem";
 import {UserRes} from "../modules/platform/interfaces/user.interface";
+import {WikiNavigationItem} from "../modules/platform/pages/wiki/interfaces/wiki.interface";
 
 @Injectable()
 export class AppStore extends ComponentStore<AppState> {
@@ -20,9 +21,9 @@ export class AppStore extends ComponentStore<AppState> {
 
   readonly preloading$: Observable<boolean> = this.select(state => state.preloading);
   readonly navigation$: Observable<NavStore[]> = this.select(state => state.navigation);
-  readonly profileNavigation$: Observable<SidebarNav[][]> = this.select(state => state.profileNavigation);
-  readonly wikiNavigation$: Observable<SidebarNav[][]> = this.select(state => state.wikiNavigation);
-  readonly adminNavigation$: Observable<SidebarNav[][]> = this.select(state => state.adminNavigation);
+  readonly profileNavigation$: Observable<SidebarNavigation> = this.select(state => state.profileNavigation);
+  readonly wikiNavigation$: Observable<SidebarNavigation<WikiNavigationItem>> = this.select(state => state.wikiNavigation);
+  readonly adminNavigation$: Observable<SidebarNavigation> = this.select(state => state.adminNavigation);
   readonly socials$: Observable<SocialStoreInterface[]> = this.select(state => state.socials);
   readonly footerHeight$: Observable<number> = this.select(state => state.footerHeight);
   readonly headerHeight$: Observable<number> = this.select(state => state.headerHeight);
@@ -58,17 +59,17 @@ export class AppStore extends ComponentStore<AppState> {
     socials
   }));
 
-  readonly setProfileNavigation = this.updater((state, profileNavigation: SidebarNav[][]) => ({
+  readonly setProfileNavigation = this.updater((state, profileNavigation: SidebarNavigation) => ({
     ...state,
     profileNavigation
   }));
 
-  readonly setWikiNavigation = this.updater((state, wikiNavigation: SidebarNav[][]) => ({
+  readonly setWikiNavigation = this.updater((state, wikiNavigation: SidebarNavigation) => ({
     ...state,
     wikiNavigation
   }));
 
-  readonly setAdminNavigation = this.updater((state, adminNavigation: SidebarNav[][]) => ({
+  readonly setAdminNavigation = this.updater((state, adminNavigation: SidebarNavigation) => ({
     ...state,
     adminNavigation
   }));

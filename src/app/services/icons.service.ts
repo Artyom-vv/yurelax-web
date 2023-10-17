@@ -29,6 +29,8 @@ export class IconsService {
         {name: 'settings', pathName: 'settings'},
         {name: 'alert-triangle', pathName: 'alert-triangle'},
         {name: 'laptop', pathName: 'laptop'},
+        {name: 'file', pathName: 'file'},
+        {name: 'joystick', pathName: 'joystick'},
       ]
 
       public async initIcons(): Promise<void> {
