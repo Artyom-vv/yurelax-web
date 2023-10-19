@@ -25,21 +25,25 @@ const routes: Routes = [
       {
         path: 'statistics',
         component: AdminContentComponent,
+        title: 'Дешборд — Статистики',
         loadChildren: () => import('../admin/module/statistics/statistics.module').then(m => m.StatisticsModule)
       },
       {
         path: 'mini-games',
         component: AdminContentComponent,
+        title: 'Дешборд — Мини-игры',
         loadChildren: () => import('../admin/module/mini-games/mini-games.module').then(m => m.MiniGamesModule)
       },
       {
         path: 'home',
         component: AdminContentComponent,
+        title: 'Дешборд — Домашняя',
         loadChildren: () => import('../admin/module/home/admin-home.module').then(m => m.AdminHomeModule)
       },
       {
         path: 'wiki',
         component: AdminContentComponent,
+        title: 'Дешборд — Вики',
         loadChildren: () => import('../admin/module/wiki/wiki.module').then(m => m.WikiModule)
       }
     ]

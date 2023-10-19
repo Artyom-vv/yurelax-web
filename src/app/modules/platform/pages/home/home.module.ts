@@ -31,6 +31,8 @@ import {FaqComponent} from './components/faq/faq.component';
 import {MatExpansionModule} from "@angular/material/expansion";
 import {AccordionModule} from "../../../shared/modules/accordion/accordion.module";
 import {SocialPanelModule} from "../../../shared/modules/social-panel/social-panel.module";
+import {InViewModule} from "../../../shared/directives/in-view/in-view.module";
+import {AnimationOpacityModule} from "../../../shared/modules/animation-opacity/animation-opacity.module";
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import {SocialPanelModule} from "../../../shared/modules/social-panel/social-pan
     MatExpansionModule,
     AccordionModule,
     SocialPanelModule,
+    InViewModule,
+    AnimationOpacityModule,
   ],
   providers: [
     MiniGamesService,

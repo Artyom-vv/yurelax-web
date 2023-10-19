@@ -11,7 +11,7 @@ const routes: Routes = [
     component: WikiComponent,
     children: [
       {path: '', redirectTo: 'home', pathMatch: 'full'},
-      {path: 'home', component: WikiHomeComponent, title: 'Вики'},
+      {path: 'home', component: WikiHomeComponent, title: 'Вики — Домашняя'},
       {path: ':page', component: WikiPageComponent},
     ]
   },

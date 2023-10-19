@@ -25,12 +25,6 @@ const routes: Routes = [
   },
   {
     path: 'wiki',
-    component: PlatformComponent,
-    data: {
-      header: {
-        light: false
-      }
-    },
     loadChildren: () => import('./pages/wiki/wiki.module').then(m => m.WikiModule)
   },
 ];

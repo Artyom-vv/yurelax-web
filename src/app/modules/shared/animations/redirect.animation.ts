@@ -1,5 +1,16 @@
 import {animate, animateChild, group, query, style, transition, trigger} from "@angular/animations";
 
+export const Opacity = trigger('opacity', [
+  transition('* => true', [
+    style({
+      opacity: 0
+    }),
+    animate('{{duration}}s ease', style({
+      opacity: 1
+    }))
+  ])
+])
+
 export const AppearanceAnimation = trigger('routeAnimations', [
   transition('* => *', [
     style({

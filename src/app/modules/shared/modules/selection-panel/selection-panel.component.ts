@@ -10,10 +10,11 @@ import {Component, OnInit, Input} from '@angular/core';
 })
 export class SelectionPanelComponent implements OnInit {
 
-@Input() icon: string = ''
+  @Input() icon: string = ''
+  @Input() reverse: boolean = false
+  @Input() navIcon: string = 'chevron-right'
 
-  constructor(
-  ) {
+  constructor() {
   }
 
   ngOnInit() {

@@ -1,11 +1,14 @@
-<section class="wiki-layout flex flex_column" [ngStyle]="styles">
-  <main class="main flex_grow flex flex_column">
+<yrx-layout>
+  <yrx-header [light]="false" header></yrx-header>
+  <section content class="wiki-layout flex flex_column" [ngStyle]="styles">
+    <main class="main flex_grow flex flex_column">
       <yrx-spacing type="L"></yrx-spacing>
-      <div class="container flex gap-48">
+      <div class="container flex_grow flex gap-48">
         <yrx-sidebar [navigation]="wikiNavigation"></yrx-sidebar>
         <div class="scrollable flex_grow">
-            <router-outlet></router-outlet>
+          <router-outlet></router-outlet>
         </div>
       </div>
-  </main>
-</section>
+    </main>
+  </section>
+</yrx-layout>

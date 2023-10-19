@@ -7,3 +7,7 @@
 .container {
   position: relative;
 }
+
+yrx-layout ::ng-deep .layout {
+  overflow-x: visible;
+}

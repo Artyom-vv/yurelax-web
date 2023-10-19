@@ -18,6 +18,8 @@ import {WikiPictureComponent} from './components/wiki-picture/wiki-picture.compo
 import {SkeletonModule} from "../../../shared/modules/skeleton/skeleton.module";
 import {WikiParagraphComponent} from './components/wiki-paragraph/wiki-paragraph.component';
 import {WikiSubtitleComponent} from './components/wiki-subtitle/wiki-subtitle.component';
+import {HeaderModule} from "../../../shared/modules/header/header.module";
+import {LayoutModule} from "../../../shared/modules/layout/layout.module";
 
 
 @NgModule({
@@ -42,7 +44,9 @@ import {WikiSubtitleComponent} from './components/wiki-subtitle/wiki-subtitle.co
     SocialPanelModule,
     SelectionModule,
     RefIconModule,
-    SkeletonModule
+    SkeletonModule,
+    HeaderModule,
+    LayoutModule
   ]
 })
 export class WikiModule {

@@ -38,7 +38,7 @@ export class WikiPageComponent implements OnInit {
       }),
       tap(data => {
         this.page = data;
-        this.titleService.setTitle(`Вики | ${data.metadata['title']}`);
+        this.titleService.setTitle(`Вики — ${data.metadata['title']}`);
       }),
     ).subscribe();
   }

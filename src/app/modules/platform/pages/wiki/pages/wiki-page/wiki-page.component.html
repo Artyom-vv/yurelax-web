@@ -12,5 +12,13 @@
         <yrx-link [iconStroked]="true" icon="external-link" (press)="redirect(slice.value)" *ngSwitchCase="'link'">{{slice.displayTitle ?? slice.value}}</yrx-link>
       </ng-container>
     </ng-container>
+    <div class="flex gap-12">
+      <yrx-selection-panel navIcon="chevron-left" [reverse]="true">
+        <ng-container selection-panel-title>Назад</ng-container>
+      </yrx-selection-panel>
+      <yrx-selection-panel>
+        <ng-container selection-panel-title>Вперёд</ng-container>
+      </yrx-selection-panel>
+    </div>
   </ng-template>
 </div>

@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     info: {
       headline: 'RPG-система',
       text: 'Мы используем простую и понятную RPG-систему, состоящую всего из трех пунктов:',
+      delay: (idx, len) => 0.3 + (idx+1) * 0.2,
       activities: [{
         headline: 'Повышай',
         text: 'Повышайте свой уровень',
@@ -66,6 +67,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       info: {
         headline: 'Очки сюжета',
         text: 'За каждую выигранную игру вы получаете очки сюжета, которые можно использовать для прохождения увлекательной истории.',
+        delay: (idx, len) => 0.3 + len * 0.2 - (idx+1) * 0.2,
         activities: [{
           headline: 'Побеждай',
           text: 'Побеждай игроков в мини-играх',

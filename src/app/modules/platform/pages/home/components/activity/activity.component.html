@@ -1,4 +1,4 @@
-<div class="activity flex flex_column gap-8">
+<div yrxInView (onEntry)="onEntry($event)" class="activity flex flex_column gap-8" [@slideDown]="{value: animate, params: {delay}}">
   <div class="flex flex_align-center gap-8">
     <ng-content select="[activity-icon]"></ng-content>
     <p class="headline"><ng-content select="[headline]"></ng-content></p>
