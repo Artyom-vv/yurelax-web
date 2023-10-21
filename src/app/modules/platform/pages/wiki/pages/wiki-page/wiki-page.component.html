@@ -1,4 +1,4 @@
-<div [@routeAnimations]="pageName">
+<div class="page" [@routeAnimations]="pageName">
   <yrx-skeleton *ngIf="loading$ | async; else content" theme="dark" [styles]="styles"></yrx-skeleton>
   <ng-template #content>
     <ng-container *ngIf="page as page">
