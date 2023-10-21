@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {Properties} from "csstype";
 
@@ -20,8 +20,14 @@ export class WikiPictureComponent implements AfterViewInit {
     height: '288px',
   };
 
+  constructor(
+    private cdr: ChangeDetectorRef
+  ) {
+  }
+
   ngAfterViewInit() {
     this.loading$.next(!!this.src)
+    this.cdr.detectChanges()
   }
 
   onLoad() {

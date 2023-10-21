@@ -3,7 +3,7 @@
   <img class="bee" src="assets/content/landing/online/bee.png" alt="Описание для юрелакс">
   <yrx-spacing type="M"></yrx-spacing>
   <div class="flex flex_align-center flex_justify-between w100">
-    <yrx-animation-opacity [always]="false"><h3>Онлайн на сервере</h3></yrx-animation-opacity>
+    <h3 yrxAnimateOpacity>Онлайн на сервере</h3>
     <yrx-icon *ngIf="dataLoading; else content" [stroked]="true" icon="loader"></yrx-icon>
     <ng-template #content>
       <div class="flex flex_align-center gap-16">

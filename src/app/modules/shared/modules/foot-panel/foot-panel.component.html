@@ -1,0 +1,18 @@
+<ng-container [ngSwitch]="type">
+  <div *ngSwitchCase="'back'" class="foot-panel flex flex_justify-between flex_align-center gap-12">
+    <yrx-ref-icon class="stroke normal icon-normal first-icon" name="chevron-left"></yrx-ref-icon>
+    <yrx-ref-icon class="stroke normal icon-normal second-icon" name="arrow-left"></yrx-ref-icon>
+    <div class="flex flex_column gap-4">
+      <span class="span c-gradation-300 flex_align-self-end">Назад</span>
+      <p class="headline c-gradation-100">{{title}}</p>
+    </div>
+  </div>
+  <div *ngSwitchCase="'forward'" class="foot-panel flex flex_row-reverse flex_justify-between flex_align-center gap-12">
+    <yrx-ref-icon class="stroke normal icon-normal first-icon" name="chevron-right"></yrx-ref-icon>
+    <yrx-ref-icon class="stroke normal icon-normal second-icon" name="arrow-right"></yrx-ref-icon>
+    <div class="flex flex_column gap-4">
+      <span class="span c-gradation-300">Вперед</span>
+      <p class="headline c-gradation-100">{{title}}</p>
+    </div>
+  </div>
+</ng-container>

@@ -22,6 +22,10 @@
   }
 }
 .title {
+  &::selection {
+    background-color: map-get($project-colors, "purple", 300);
+  }
+
   max-width: 612px;
 }
 .show {

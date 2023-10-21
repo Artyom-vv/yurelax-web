@@ -12,7 +12,7 @@
   <section class="hero">
     <div class="container flex_column flex flex_align-center">
       <yrx-spacing type="L"></yrx-spacing>
-      <yrx-animation-opacity [always]="false"><h1 class="text-center title">yurelax — необычный сервер с сюжетом и мини-играми</h1></yrx-animation-opacity>
+      <h1 class="text-center title" yrxAnimateOpacity>yurelax — необычный сервер с сюжетом и мини-играми</h1>
       <yrx-spacing type="M"></yrx-spacing>
       <yrx-skeleton *ngIf="preloading && access_token" [styles]="{height: '56px', width: '175px', borderRadius: '6px'}"
                     theme="light"></yrx-skeleton>
@@ -79,7 +79,7 @@
         <yrx-spacing type="XL"></yrx-spacing>
       </ng-container>
       <yrx-content-layout [img]="{src: 'assets/content/landing/events.png', alt: ''}" [reversed]="true">
-        <yrx-animation-opacity [always]="false"><h2>Внутриигровые события</h2></yrx-animation-opacity>
+        <h2 yrxAnimateOpacity>Внутриигровые события</h2>
         <yrx-spacing type="XS"></yrx-spacing>
         <p class="text text_big regular c-gradation-300">Мы проводим ивенты каждую неделю, участие в них позволит завладеть редкими предметами, которые невозможно получить иначе! Участвуйте в ивентах вместе с друзьями и получайте командные награды.</p>
         <yrx-spacing type="M"></yrx-spacing>
@@ -96,7 +96,7 @@
       <yrx-spacing type="XL"></yrx-spacing>
       <yrx-content-layout [img]="{src: 'assets/content/landing/ideas.webp', alt: ''}">
         <div class="flex flex_column" [formGroup]="form">
-          <yrx-animation-opacity [always]="false"><h2>Делитесь идеями!</h2></yrx-animation-opacity>
+          <h2 yrxAnimateOpacity>Делитесь идеями!</h2>
           <yrx-spacing type="XS"></yrx-spacing>
           <p class="text text_big regular c-gradation-300">Мы всегда рады обратной связи от наших игроков. Направляйте нам интересные идеи по развитию проекта и получайте приятные бонусы!</p>
           <yrx-spacing type="XS"></yrx-spacing>

@@ -16,10 +16,10 @@ import {WikiPageComponent} from './pages/wiki-page/wiki-page.component';
 import {RefIconModule} from 'src/app/modules/shared/modules/ref-icon/ref-icon.module';
 import {WikiPictureComponent} from './components/wiki-picture/wiki-picture.component';
 import {SkeletonModule} from "../../../shared/modules/skeleton/skeleton.module";
-import {WikiParagraphComponent} from './components/wiki-paragraph/wiki-paragraph.component';
-import {WikiSubtitleComponent} from './components/wiki-subtitle/wiki-subtitle.component';
-import {HeaderModule} from "../../../shared/modules/header/header.module";
 import {LayoutModule} from "../../../shared/modules/layout/layout.module";
+import {AnimationOpacityModule} from "../../../shared/modules/animation-opacity/animation-opacity.module";
+import {HeaderModule} from "../../../shared/modules/header/header.module";
+import {FootPanelModule} from "../../../shared/modules/foot-panel/foot-panel.module";
 
 
 @NgModule({
@@ -29,8 +29,6 @@ import {LayoutModule} from "../../../shared/modules/layout/layout.module";
     WikiPageComponent,
     WikiHeadComponent,
     WikiPictureComponent,
-    WikiParagraphComponent,
-    WikiSubtitleComponent
   ],
   imports: [
     CommonModule,
@@ -46,7 +44,9 @@ import {LayoutModule} from "../../../shared/modules/layout/layout.module";
     RefIconModule,
     SkeletonModule,
     HeaderModule,
-    LayoutModule
+    LayoutModule,
+    AnimationOpacityModule,
+    FootPanelModule,
   ]
 })
 export class WikiModule {

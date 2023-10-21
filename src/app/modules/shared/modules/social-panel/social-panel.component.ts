@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {Subscription, tap} from "rxjs";
 import {SocialStoreInterface} from "../../../../store/interfaces/socials-store.interface";
@@ -14,7 +14,8 @@ import {SocialStoreInterface} from "../../../../store/interfaces/socials-store.i
 export class SocialPanelComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
-    private appStore: AppStore
+    private appStore: AppStore,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
@@ -37,6 +38,7 @@ export class SocialPanelComponent implements OnInit, OnDestroy, AfterViewInit {
         })
       ).subscribe()
     )
+    this.cdr.detectChanges()
   }
 
   ngOnDestroy() {

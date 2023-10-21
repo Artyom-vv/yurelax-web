@@ -583,3 +583,9 @@
     }
   }
 }
+
+.icon {
+  &-normal {
+    @include icon-size(20px);
+  }
+}

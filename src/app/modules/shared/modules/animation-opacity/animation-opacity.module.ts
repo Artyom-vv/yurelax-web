@@ -1,19 +1,17 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AnimationOpacityComponent} from './animation-opacity.component';
-import {InViewModule} from "../../directives/in-view/in-view.module";
+import {AnimationOpacityDirective} from "./animation-opacity.directive";
 
 
 @NgModule({
   declarations: [
-    AnimationOpacityComponent
+    AnimationOpacityDirective
   ],
   exports: [
-    AnimationOpacityComponent
+    AnimationOpacityDirective
   ],
   imports: [
-    CommonModule,
-    InViewModule
+    CommonModule
   ]
 })
 export class AnimationOpacityModule {
