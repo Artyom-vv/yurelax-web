@@ -16,6 +16,12 @@ const routes: Routes = [
     title: 'Профиль — Кошелёк',
     loadChildren: () => import('./pages/profile-wallet/profile-wallet.module').then(m => m.ProfileWalletModule)
   },
+  {
+    path: 'store',
+    component: ProfileContentComponent,
+    title: 'Профиль — Магазин',
+    loadChildren: () => import('./pages/profile-store/profile-store.module').then(m => m.ProfileStoreModule)
+  },
 ];
 
 @NgModule({

@@ -16,6 +16,6 @@
       <yrx-donate-panel [oldCoins]="349" [coins]="499" [cost]="349"></yrx-donate-panel>
     </div>
     <yrx-spacing type="M"></yrx-spacing>
-    <yrx-link [iconStroked]="true" icon="arrow-right">История транзакций</yrx-link>
+    <yrx-link (press)="transactionsRedirect()" routerLink="platform/profile/wallet" [queryParams]="{scrollId: 'transactions'}" [iconStroked]="true" icon="arrow-right">История транзакций</yrx-link>
   </div>
 </div>

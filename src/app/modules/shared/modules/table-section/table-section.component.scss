@@ -1,0 +1,9 @@
+@import "src/shared/styles/vars.colors";
+
+.table-section {
+  padding: 14px 24px;
+  background-color: map-get($project-colors, "gradation", 700);
+  &.even {
+    background-color: map-get($project-colors, "gradation", 750);
+  }
+}

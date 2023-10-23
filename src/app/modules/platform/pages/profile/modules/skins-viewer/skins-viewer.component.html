@@ -7,8 +7,7 @@
         <p class="text text_body medium c-gradation-500">360°</p>
         <yrx-icon [stroked]="true" icon="refresh-ccw" color="gradation-500"></yrx-icon>
       </div>
-      <div class="scrollbar" [formGroup]="form">
-      </div>
+      <yrx-slider (change)="rotationChange($event)" [min]="0" [max]="6.28" [thumbSize]="30"></yrx-slider>
     </div>
   </div>
   <div class="loader flex_grow">

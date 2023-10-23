@@ -45,9 +45,9 @@
     height: 100%;
   }
   &-actions {
-    position: relative;
   }
   &-interactive {
-    display: none;
+    position: relative;
+    z-index: 1;
   }
 }

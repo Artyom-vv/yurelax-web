@@ -21,6 +21,7 @@ export class StatisticComponent implements OnInit, OnDestroy {
     {text: 'Stay Alive статистика', value: 3, icon: 'laptop', iconStroked: true},
     {text: 'Tower Defence статистика', value: 4, icon: 'settings', iconStroked: true},
   ]
+  public statistics: any[] = [1,2,3,4,5,6]
 
   private subscriptions: Subscription[] = []
 

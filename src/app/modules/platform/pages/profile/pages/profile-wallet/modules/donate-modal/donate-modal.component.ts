@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {DonateModalService} from "./services/donate-modal.service";
 
 @Component({
   selector: 'yrx-donate-modal',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class DonateModalComponent {
 
+  constructor(
+    private donateModalService: DonateModalService
+  ) {
+  }
+
+  transactionsRedirect() {
+    this.donateModalService.close()
+  }
 }

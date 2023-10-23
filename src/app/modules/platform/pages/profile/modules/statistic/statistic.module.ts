@@ -5,6 +5,7 @@ import {SpacingModule} from "../../../../../shared/modules/spacing/spacing.modul
 import {SelectModule} from "../../../../../shared/modules/select/select.module";
 import {IconModule} from "../../../../../shared/modules/icon/icon.module";
 import {ReactiveFormsModule} from "@angular/forms";
+import {TableSectionModule} from "../../../../../shared/modules/table-section/table-section.module";
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import {ReactiveFormsModule} from "@angular/forms";
         SelectModule,
         IconModule,
         ReactiveFormsModule,
+        TableSectionModule,
     ]
 })
 export class StatisticModule {

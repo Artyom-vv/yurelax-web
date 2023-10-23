@@ -14,12 +14,14 @@
   </div>
 </div>
 <yrx-spacing type="S"></yrx-spacing>
-<div class="without-bottom-borders colored-box">
-  <h3>История транзакций</h3>
-  <yrx-spacing type="XS"></yrx-spacing>
-  <p class="text text_body c-gradation-300">Ниже представлен список совершенных Вами транзакций, если вы не совершали
-    транзакций, но они отображаются ниже - <a href="#" class="c-purple-300">Обратитесь в поддержку</a></p>
-</div>
-<div class="flex flex_column">
-  <yrx-transaction-panel [even]="idx % 2 === 0" *ngFor="let transaction of [1,2,3,4]; let idx = index"></yrx-transaction-panel>
+<div class="borders">
+  <div class="without-borders colored-box" id="transactions">
+    <h3>История транзакций</h3>
+    <yrx-spacing type="XS"></yrx-spacing>
+    <p class="text text_body c-gradation-300">Ниже представлен список совершенных Вами транзакций, если вы не совершали
+      транзакций, но они отображаются ниже - <a href="#" class="c-purple-300">Обратитесь в поддержку</a></p>
+  </div>
+  <div class="flex flex_column">
+    <yrx-transaction-panel [even]="idx % 2 === 0" *ngFor="let transaction of [1,2,3,4]; let idx = index"></yrx-transaction-panel>
+  </div>
 </div>

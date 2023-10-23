@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {TransitionPanelType} from "./interfaces/transition-panel.interface";
 
 @Component({
@@ -14,7 +14,13 @@ export class TransactionPanelComponent implements AfterViewInit {
   public readonly Math = Math;
   public amountPrefix: string = ''
 
+  constructor(
+    private cdr: ChangeDetectorRef
+  ) {
+  }
+
   ngAfterViewInit() {
     this.amountPrefix = this.amount >= 0 ? '+' : '-'
+    this.cdr.detectChanges()
   }
 }

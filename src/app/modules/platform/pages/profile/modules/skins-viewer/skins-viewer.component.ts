@@ -45,6 +45,7 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
   public userStore: UserRes | null = null
   public skin: SkinViewer | null = null;
   public modelLoading: boolean = true;
+  public rotationValue: any;
 
   ngAfterViewInit() {
     this.subscriptions.push(
@@ -114,5 +115,11 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.form = this.fb.group({
       rotation: [null]
     })
+  }
+
+  rotationChange($event: number) {
+    if (this.skin && this.skin.camera) {
+      this.skin.playerObject.rotation.y = $event
+    }
   }
 }

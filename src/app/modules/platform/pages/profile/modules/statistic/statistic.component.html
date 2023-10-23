@@ -1,5 +1,11 @@
-<div class="statistic" [formGroup]="form">
-  <h3>Ваша статистика</h3>
-  <yrx-spacing type="XS"></yrx-spacing>
-  <yrx-select placeholder="Выберите опцию" formControlName="statisticType" [options]="options" custom="dark"></yrx-select>
+<div class="border-radius">
+  <div class="statistic" [formGroup]="form">
+    <h3>Ваша статистика</h3>
+    <yrx-spacing type="XS"></yrx-spacing>
+    <yrx-select placeholder="Выберите опцию" formControlName="statisticType" [options]="options" custom="dark"></yrx-select>
+  </div>
+  <yrx-table-section [even]="idx % 2 === 0" *ngFor="let statistic of statistics; let idx = index" class="flex_justify-between">
+    <p class="text text_regular c-gradation-100">Сыграно игр</p>
+    <p class="text text_regular c-gradation-100">128</p>
+  </yrx-table-section>
 </div>

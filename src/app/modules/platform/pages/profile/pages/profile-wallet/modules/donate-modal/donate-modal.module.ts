@@ -7,21 +7,23 @@ import {SpacingModule} from "../../../../../../../shared/modules/spacing/spacing
 import {PromoCodeModule} from "../../../../modules/promo-code/promo-code.module";
 import {DonatePanelModule} from "../donate-panel/donate-panel.module";
 import {LinkModule} from "../../../../../../../shared/modules/link/link.module";
+import {RouterLink} from "@angular/router";
 
 
 @NgModule({
   declarations: [
     DonateModalComponent,
   ],
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    RefIconModule,
-    SpacingModule,
-    PromoCodeModule,
-    DonatePanelModule,
-    LinkModule
-  ],
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        RefIconModule,
+        SpacingModule,
+        PromoCodeModule,
+        DonatePanelModule,
+        LinkModule,
+        RouterLink
+    ],
 })
 export class DonateModalModule {
 }

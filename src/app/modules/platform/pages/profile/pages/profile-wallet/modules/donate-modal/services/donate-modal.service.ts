@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
 import {DonateModalComponent} from "../donate-modal.component";
 
 @Injectable()
@@ -8,6 +8,8 @@ export class DonateModalService {
     private dialog: MatDialog,
   ) {
   }
+
+  private dialogRef?: MatDialogRef<DonateModalComponent>
 
   public config<T = any>(data?: T): MatDialogConfig<T> {
     return {
@@ -19,6 +21,11 @@ export class DonateModalService {
   }
 
   open<T>(data?: T) {
-    return this.dialog.open(DonateModalComponent, this.config(data))
+    this.dialogRef = this.dialog.open(DonateModalComponent, this.config(data))
+    return this.dialogRef
+  }
+
+  close() {
+    this.dialogRef?.close()
   }
 }

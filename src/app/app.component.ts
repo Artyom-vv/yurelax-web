@@ -1,11 +1,11 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, NgZone, OnDestroy, OnInit} from '@angular/core';
 import {PersistenceService} from "./modules/shared/services/persistence.service";
 import {AppStore} from "./store/app.store";
 import {SystemUserService} from "./modules/shared/services/system-user.service";
 import {filter, finalize, Subscription, switchMap, tap} from "rxjs";
 import {AuthService} from "./modules/auth/services/auth.service";
 import {catchError} from "rxjs/operators";
-import {Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 import {WikiService} from "./modules/platform/pages/wiki/services/wiki.service";
 import {SidebarNavigation} from "./modules/platform/modules/sidebar/interfaces/sidebarNavItem";
 
@@ -23,8 +23,66 @@ export class AppComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private wikiService: WikiService,
+    private ngZone: NgZone
   ) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      const queryParams = this.router.routerState.snapshot.root.queryParams;
+      const elementId = queryParams['scrollId'];
+      if (elementId) {
+        this.ngZone.runOutsideAngular(() => {
+          setTimeout(() => {
+            this.ngZone.run(() => {
+              const element = document.getElementById(elementId);
+              element?.scrollIntoView({ behavior: 'smooth' });
+            });
+          }, 200); // увеличь время, если не работает
+        });
+      }
+    });
   }
+
+  scrollToElement(elementId: string): void {
+    setTimeout(() => {
+      const element = document.getElementById(elementId);
+      element?.scrollIntoView({ behavior: 'smooth' });
+    })
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Tab') {
+      this.ngZone.runOutsideAngular(() => {
+        requestAnimationFrame(() => {
+          const activeElement: any = document.activeElement;
+          const rect = activeElement.getBoundingClientRect();
+          const isInView = rect.top <= window.pageYOffset + window.innerHeight && rect.top >= window.pageYOffset;
+          const isShiftTab = event.shiftKey;
+
+          console.log(isInView); // For debugging
+
+          if (!isInView || isShiftTab) {
+
+            let targetPosition;
+            if (event.shiftKey) {  // Проверяем, нажата ли клавиша Shift
+              targetPosition = window.pageYOffset + rect.top - window.innerHeight + rect.height + 20;
+            } else {
+              targetPosition = window.pageYOffset + rect.top - 20; // 20px offset
+            }
+
+            if (!isInView) {
+              window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+              });
+            }
+          }
+        });
+      });
+    }
+  }
+
 
   @HostListener('window:storage',['$event'])
   public storageUpdate(event: StorageEvent): void {
