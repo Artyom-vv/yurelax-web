@@ -54,20 +54,21 @@ img, svg {
   transition: unset !important;
 }
 
-li {
-  padding-left: 20px;
-  position: relative;
-}
-
-ul li::before {
-  position: absolute;
-  content: '';
-  left: 9px;
-  top: 0.5em;
-  width: 3px;
-  height: 3px;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-  background-color: map-get($project-colors, "gradation", 300);
+ul.list {
+  li {
+    padding-left: 20px;
+    position: relative;
+    &::before {
+      position: absolute;
+      content: '';
+      left: 9px;
+      top: 0.5em;
+      width: 3px;
+      height: 3px;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      background-color: map-get($project-colors, "gradation", 300);
+    }
+  }
 }
