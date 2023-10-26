@@ -94,6 +94,7 @@ export class MLoginComponent implements OnInit, OnDestroy {
     const jwtMaPrepare$ = this.route.queryParams.pipe(
       filter(({authToken}) => {
         MATToken = authToken;
+        this.persistenceService.set('MATToken', MATToken)
         return authToken
       }),
       filter(() => {
@@ -103,7 +104,7 @@ export class MLoginComponent implements OnInit, OnDestroy {
         const accessTokenExpired = this.toolsService.tokenExpired(accessToken);
         const refreshTokenExpired = this.toolsService.tokenExpired(refreshToken);
 
-        const authNotAvailable: boolean = accessToken ? accessTokenExpired : refreshToken ? refreshTokenExpired : true
+        const authNotAvailable: boolean = accessToken ? accessTokenExpired : (refreshToken ? refreshTokenExpired : true)
         if (authNotAvailable) {
           setTimeout(() => {
             this.transitionToLogin = true;
@@ -141,7 +142,10 @@ export class MLoginComponent implements OnInit, OnDestroy {
           return this.authStore.isWaitingForMA$.pipe(
             mergeMap((isWaitingForMA) => {
               this.isWaitingForMA = isWaitingForMA;
-              if (isWaitingForMA) this.greeting = false;
+              if (isWaitingForMA) {
+                this.greeting = false;
+                MATToken = this.persistenceService.get('MATToken')
+              }
               return iif(() => isWaitingForMA, jwtMaAuth$, jwtMaPrepare$)
             }),
           )

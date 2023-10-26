@@ -49,7 +49,7 @@ export class AuthService {
 
   saveData(res: LoginRes | RegisterRes): void {
     const {tokens, user} = res;
-    this.saveCookies(res.tokens)
+    this.saveCookies(tokens)
     this.saveUserData(user)
   }
 

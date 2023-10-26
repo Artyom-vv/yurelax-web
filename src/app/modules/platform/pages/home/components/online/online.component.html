@@ -1,19 +1,21 @@
 <div class="online">
-  <img class="parrot" src="assets/content/landing/online/parrot.png" alt="Описание для юрелакс">
-  <img class="bee" src="assets/content/landing/online/bee.png" alt="Описание для юрелакс">
+  <img [style.right]="(dataLoading ? 205.83 : block.offsetWidth)-24 + 'px'" class="parrot" src="assets/content/landing/online/parrot.png" alt="Описание для юрелакс">
+  <img [style.right]="(dataLoading ? 205.83 : block.offsetWidth)+200 + 'px'" class="bee" src="assets/content/landing/online/bee.png" alt="Описание для юрелакс">
   <yrx-spacing type="M"></yrx-spacing>
   <div class="flex flex_align-center flex_justify-between w100">
     <h3 yrxAnimateOpacity>Онлайн на сервере</h3>
-    <yrx-icon *ngIf="dataLoading; else content" [stroked]="true" icon="loader"></yrx-icon>
-    <ng-template #content>
-      <div class="flex flex_align-center gap-16">
-        <div class="floating">
-          <span></span>
-          <span></span>
+    <div #block>
+      <yrx-icon *ngIf="dataLoading; else content" [stroked]="true" icon="loader"></yrx-icon>
+      <ng-template #content>
+        <div class="flex flex_align-center gap-16">
+          <div class="floating">
+            <span></span>
+            <span></span>
+          </div>
+          <h3>{{online}} {{toolsService.declineWord(online, ['Игрок', 'Игрока', 'Игроков'])}}</h3>
         </div>
-        <h3>{{online}} {{toolsService.declineWord(online, ['Игрок', 'Игрока', 'Игроков'])}}</h3>
-      </div>
-    </ng-template>
+      </ng-template>
+    </div>
   </div>
   <yrx-spacing type="M"></yrx-spacing>
 </div>

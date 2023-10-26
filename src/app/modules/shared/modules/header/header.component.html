@@ -20,7 +20,7 @@
           <yrx-icon [color]=" light ? 'purple-200' : ''" [icon]="social.icon"></yrx-icon>
         </a>
       </div>
-      <yrx-skeleton *ngIf="(dataLoading || preloading) && !access_token" [styles]="{height: '48px', width: '100px', borderRadius: '6px', padding: '0 16px 0 16px'}" [theme]="light ? 'light' : 'dark'">
+      <yrx-skeleton *ngIf="(dataLoading || preloading) && !access_token" [styles]="{height: '48px', width: '80px', borderRadius: '6px', padding: '0 16px 0 16px'}" [theme]="light ? 'light' : 'dark'">
         <div class="flex flex_center full-height w100">
           <yrx-skeleton class="w100" [styles]="{height: '20px', width: '100%', borderRadius: '6px'}" [theme]="light ? 'light' : 'dark'"></yrx-skeleton>
         </div>
