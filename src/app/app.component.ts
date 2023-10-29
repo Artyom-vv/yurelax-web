@@ -121,7 +121,6 @@ export class AppComponent implements OnInit, OnDestroy {
       }),
       finalize(() => this.wikiService.loading$.next(false))
     ).subscribe()
-    this.systemUser.removeMAToken()
     const user = this.persistenceService.get('user');
     if (user) {
       this.appStore.setUser(user)

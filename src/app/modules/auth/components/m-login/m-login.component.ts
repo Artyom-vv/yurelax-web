@@ -1,13 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {UserRes} from "../../../platform/interfaces/user.interface";
-import {filter, iif, mergeMap, of, Subscription, switchMap, tap} from "rxjs";
+import {defer, filter, iif, mergeMap, of, Subscription, switchMap, take, tap} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SystemUserService} from "../../../shared/services/system-user.service";
 import {AuthService} from "../../services/auth.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
-import {JwtMaAuthResponseInterface} from "../../interfaces/jwt-ma-auth-response.interface";
 import {AuthStore} from "../../store/auth.store";
 import {ToolsService} from "../../../shared/services/tools.service";
 import {PersistenceService} from "../../../shared/services/persistence.service";
@@ -68,34 +67,26 @@ export class MLoginComponent implements OnInit, OnDestroy {
   public userLoading: boolean = true;
   public successMA: boolean = false;
   public transitionToLogin: boolean = false;
-  public isWaitingForMA: boolean = false;
   public error: boolean = false;
   public userStore: UserRes | null = null
 
+  public MAKey: string = '';
   ngOnInit() {
     this.dataFields()
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
-    this.setFalseIsWaitingForMA()
-  }
-
-  public setFalseIsWaitingForMA() {
-    if (this.successMA) {
-      this.authStore.setIsWaitingForMA(false)
-    }
   }
 
   private dataFields(): void {
 
-    let MATToken: string = ''
+    let tempKey: string = ''
 
-    const jwtMaPrepare$ = this.route.queryParams.pipe(
-      filter(({authToken}) => {
-        MATToken = authToken;
-        this.persistenceService.set('MATToken', MATToken)
-        return authToken
+    const MaAuthPrepare$ = this.route.queryParams.pipe(
+      filter(({key}) => {
+        tempKey = key;
+        return key
       }),
       filter(() => {
         const accessToken: string = this.systemUser.getAccessToken();
@@ -104,6 +95,7 @@ export class MLoginComponent implements OnInit, OnDestroy {
         const accessTokenExpired = this.toolsService.tokenExpired(accessToken);
         const refreshTokenExpired = this.toolsService.tokenExpired(refreshToken);
 
+        // Проверка, что игрока не получится сразу авторизовать на сервере
         const authNotAvailable: boolean = accessToken ? accessTokenExpired : (refreshToken ? refreshTokenExpired : true)
         if (authNotAvailable) {
           setTimeout(() => {
@@ -111,42 +103,38 @@ export class MLoginComponent implements OnInit, OnDestroy {
           }, 600)
           setTimeout(() => {
             this.greeting = false;
-            this.authStore.setIsWaitingForMA(true);
+            this.authStore.setMAKey(tempKey);
             this.router.navigate(['/auth/login'])
           }, 1800)
         }
+        this.MAKey = tempKey
         return !authNotAvailable
       }),
-      switchMap(() => jwtMaAuth$)
+      switchMap(() => MaAuth$)
     )
 
-    const jwtMaAuth$ =
-      of(false).pipe(
-        tap(() => {
-          this.dataLoading = true
-        }),
-        switchMap(() => this.authService.jwtMa(MATToken).pipe(
-          switchMap((res) => this.authService.jwtMaAuth(res.login)),
-          tap((res: JwtMaAuthResponseInterface) => {
-            this.successMA = res.success
-            this.dataLoading = false
-          }))
-        )
+    const MaAuth$ = defer(() => {
+      this.dataLoading = true
+      return this.authService.minecraftAuth(this.MAKey).pipe(
+        tap(status => {
+          this.successMA = status
+          this.dataLoading = false
+        })
       )
+    })
 
     this.subscriptions.push(
       this.appStore.user$.pipe(
+        take(1),
         switchMap(user => {
           this.userStore = user
           this.userLoading = false;
-          return this.authStore.isWaitingForMA$.pipe(
-            mergeMap((isWaitingForMA) => {
-              this.isWaitingForMA = isWaitingForMA;
-              if (isWaitingForMA) {
-                this.greeting = false;
-                MATToken = this.persistenceService.get('MATToken')
-              }
-              return iif(() => isWaitingForMA, jwtMaAuth$, jwtMaPrepare$)
+          return this.authStore.MAKey$.pipe(
+            take(1),
+            mergeMap(key => {
+              this.MAKey = key
+              if (key) this.greeting = false
+              return iif(() => !!key, MaAuth$, MaAuthPrepare$)
             }),
           )
         }),

@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public form!: FormGroup;
   public dataLoading: boolean = false;
-  public isWaitingForMA: boolean = false;
+  public MAKey: string = '';
   public transitionToMA: boolean = false;
   public MIN_PASSWORD_LENGTH = MIN_PASSWORD_LENGTH
 
@@ -66,15 +66,15 @@ export class LoginComponent implements OnInit, OnDestroy {
         tap(() => {
           this.dataLoading = false;
           this.cdr.detectChanges()
-          if (!this.isWaitingForMA) this.router.navigate(['/platform']);
+          if (!this.MAKey) this.router.navigate(['/platform']);
         }),
-        filter(() => this.isWaitingForMA),
+        filter(() => !!this.MAKey),
         tap(() => {
           this.transitionToMA = true;
           this.cdr.detectChanges()
           setTimeout(() => this.router.navigate(['/auth/minecraft'], {
             queryParams: {
-              authToken: ''
+              key: this.MAKey
             }
           }), 600)
         }),
@@ -102,9 +102,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private dataFields(): void {
     this.subscriptions.push(
-      this.authStore.isWaitingForMA$.pipe(
-        tap((val) => {
-          this.isWaitingForMA = val
+      this.authStore.MAKey$.pipe(
+        tap(key => {
+          this.MAKey = key
         })
       ).subscribe()
     )

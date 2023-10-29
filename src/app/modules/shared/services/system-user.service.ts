@@ -14,9 +14,6 @@ export class SystemUserService {
   ) {
   }
 
-  getMAToken = (): string => this.persistenceService.get('MAToken');
-  removeMAToken = () => this.persistenceService.set('MAToken', null);
-
   getAccessToken = (): string => this.cookieService.get('accessToken');
   getRefreshToken = (): string => this.cookieService.get('refreshToken');
 

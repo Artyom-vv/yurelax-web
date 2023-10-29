@@ -13,6 +13,7 @@ import {QueryParamGuard} from "../shared/services/guards/query-param.guard";
 import {RecoverStepGuard} from "../shared/services/guards/recover-step.guard";
 import {RecoverPasswordVerifyComponent} from "./components/recover-password-verify/recover-password-verify.component";
 import {RecoverPasswordComponent} from "./components/recover-password/recover-password.component";
+import {KeyGuard} from "./components/m-login/guards/minecraft-key.guard";
 
 const routes: Routes = [
   {
@@ -60,6 +61,7 @@ const routes: Routes = [
   {
     path: 'minecraft',
     component: MAuthLayoutComponent,
+    canActivate: [KeyGuard],
     children: [
       {
         path: '',

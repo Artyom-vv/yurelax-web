@@ -10,7 +10,7 @@ export class AuthStore extends ComponentStore<AuthState> {
     super(DEFAULT_STATE);
   }
 
-  readonly isWaitingForMA$: Observable<boolean> = this.select(state => state.isWaitingForMA);
+  readonly MAKey$: Observable<string> = this.select(state => state.MAKey);
   readonly isRecoveringPasswordStep$: Observable<RecoveringPasswordType> = this.select(state => state.isRecoveringPasswordStep);
   readonly recoveringPasswordEmail$: Observable<string> = this.select(state => state.recoveringPasswordEmail);
 
@@ -24,8 +24,8 @@ export class AuthStore extends ComponentStore<AuthState> {
     isRecoveringPasswordStep
   }));
 
-  readonly setIsWaitingForMA = this.updater((state, isWaitingForMA: boolean) => ({
+  readonly setMAKey = this.updater((state, MAKey: string) => ({
     ...state,
-    isWaitingForMA
+    MAKey
   }));
 }

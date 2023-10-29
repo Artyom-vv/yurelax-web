@@ -1,12 +1,12 @@
 export type RecoveringPasswordType = 'verify' | 'recover' | null;
 
 export interface AuthState {
-  isWaitingForMA: boolean
+  MAKey: string
   isRecoveringPasswordStep: RecoveringPasswordType
   recoveringPasswordEmail: string
 }
 export const DEFAULT_STATE: AuthState = {
-  isWaitingForMA: false,
+  MAKey: '',
   isRecoveringPasswordStep: null,
   recoveringPasswordEmail: ''
 };

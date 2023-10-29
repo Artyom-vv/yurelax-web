@@ -1,22 +1,20 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable, throwError, of, tap} from "rxjs";
 import {UserRes} from "../../platform/interfaces/user.interface";
 import {environment} from "../../../../environments/environment";
 import {catchError} from "rxjs/operators";
-import {LoginRequestInterface} from "../interfaces/login-request.interface";
-import {LoginRes} from "../interfaces/login.res";
-import {RegisterRequestInterface} from "../interfaces/register-request.interface";
-import {RegisterRes} from "../interfaces/register.res";
-import {TokensResponseInterface} from "../interfaces/tokens-response.interface";
 import {PersistenceService} from "../../shared/services/persistence.service";
 import {AppStore} from "../../../store/app.store";
 import {CookieService} from "ngx-cookie-service";
-import {JwtMaResponseInterface} from "../interfaces/jwt-ma-response.interface";
-import {JwtMaAuthResponseInterface} from "../interfaces/jwt-ma-auth-response.interface";
-import {GetMeRes} from "../interfaces/get-me.res";
-import {RecoverPasswordRequestInterface} from "../interfaces/recover-password-request.interface";
-import {RecoverPasswordResponseInterface} from "../interfaces/recover-password-response.interface";
+import {
+  GetMeRes,
+  LoginReq,
+  LoginRes, RecoverPasswordReq, RecoverPasswordRes,
+  RegisterReq,
+  RegisterRes,
+  TokensResponseInterface
+} from "../interfaces/auth.interface";
 
 @Injectable()
 export class AuthService {
@@ -53,7 +51,7 @@ export class AuthService {
     this.saveUserData(user)
   }
 
-  login(data: LoginRequestInterface): Observable<LoginRes> {
+  login(data: LoginReq): Observable<LoginRes> {
     return this.http.post<LoginRes>(`${environment.apiUrl}/auth/login`, data).pipe(
       tap((res) => {
         this.saveData(res)
@@ -63,13 +61,13 @@ export class AuthService {
     )
   }
 
-  adminLogin(data: LoginRequestInterface): Observable<LoginRes> {
+  adminLogin(data: LoginReq): Observable<LoginRes> {
     return this.http.post<LoginRes>(`${environment.apiUrl}/auth/login`, data).pipe(
       catchError((err) => throwError(err))
     )
   }
 
-  register(data: RegisterRequestInterface): Observable<RegisterRes> {
+  register(data: RegisterReq): Observable<RegisterRes> {
     return this.http.post<RegisterRes>(`${environment.apiUrl}/auth/register`, data).pipe(
       tap((res) => {
         this.saveData(res)
@@ -80,16 +78,12 @@ export class AuthService {
     )
   }
 
-  recoverPassword(data: RecoverPasswordRequestInterface): Observable<RecoverPasswordResponseInterface> {
+  recoverPassword(data: RecoverPasswordReq): Observable<RecoverPasswordRes> {
     return this.http.post<RegisterRes>(`${environment.apiUrl}/auth/recover-password`, data).pipe(
       catchError((err) => {
         throw new Error(err.message);
       })
     )
-  }
-
-  kickWaitingPlayer(login: string): Observable<any> {
-    return this.http.post(`${environment.javaApiUrl}/auth/kick-waiting-player`, {login}).pipe(catchError((err) => throwError(err)))
   }
 
   logoutFromAllDevices(): Observable<any> {
@@ -108,16 +102,8 @@ export class AuthService {
     )
   }
 
-  jwtMaAuth(login: string): Observable<JwtMaAuthResponseInterface> {
-    return this.http.post<JwtMaAuthResponseInterface>(`${environment.apiUrl}/auth/jwt-ma-auth`, {login}).pipe(
-      catchError((err) => throwError(err.error))
-    )
-  }
-
-  jwtMa(jwt: string): Observable<JwtMaResponseInterface> {
-    return this.http.post<JwtMaResponseInterface>(`${environment.apiUrl}/auth/jwt-ma`, {jwt}).pipe(
-      catchError((err) => throwError(err.error))
-    )
+  minecraftAuth(token: string): Observable<boolean> {
+    return this.http.post<boolean>(`${environment.apiUrl}/auth/minecraft/${token}`, null)
   }
 
   getMe(): Observable<GetMeRes> {
