@@ -1,14 +1,28 @@
 @import "src/shared/styles/vars.colors";
 @import "src/shared/styles/modals/dialog";
-@import "src/shared/styles/modals/default";
 
 .cdk-overlay-backdrop {
   background: map-get($project-colors, "tint", 75);
 }
 
-div.donate-modal {
-  @include default-modal;
+div.yrx-modal {
+  div.mat-mdc-dialog-surface {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    background-color: transparent;
+    box-shadow: unset;
+    display: flex;
+    justify-content: center;
+    & > * {
+      min-height: 0;
+    }
+  }
 }
+
+div.donate-modal {
+}
+
 .mdc-dialog {
   &__container {
     height: auto;
@@ -16,5 +30,7 @@ div.donate-modal {
 }
 
 .cdk-global-overlay-wrapper {
-  align-items: unset !important;
+  &:has(.yrx-modal) {
+    align-items: unset !important;
+  }
 }

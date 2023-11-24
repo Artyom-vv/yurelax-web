@@ -1,18 +1,18 @@
 <div class="subscription flex flex_column">
   <div class="top flex_grow">
     <div class="header flex flex_center">
-      <h4>Премиум</h4>
+      <h4 [style.color]="data.color">{{data.name}}</h4>
     </div>
     <yrx-spacing type="S"></yrx-spacing>
     <ul class="list flex flex_column gap-8">
-      <li class="text text_body c-gradation-300">Открывается доступ ко всем мини-играм</li>
-      <li class="text text_body c-gradation-300">Доступен ежедневный кит бустеров</li>
-      <li class="text text_body c-gradation-300">Открывается доступ к миссиям компании</li>
+      <li *ngFor="let information of data.information" class="text text_body">
+        <span *ngFor="let item of information" [ngClass]="getClasses(item)">{{item.text}}</span>
+      </li>
     </ul>
   </div>
   <div class="bottom flex flex_column">
     <div class="flex flex_align-center gap-6">
-      <h4>229</h4>
+      <h4>{{data.cost}}</h4>
       <yrx-ref-icon name="ucoin"></yrx-ref-icon>
     </div>
     <yrx-spacing type="XS"></yrx-spacing>

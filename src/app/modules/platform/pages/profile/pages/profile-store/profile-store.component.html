@@ -1,7 +1,5 @@
 <h3>Доступные подписки</h3>
 <yrx-spacing type="S"></yrx-spacing>
 <div class="subscriptions flex gap-24">
-  <yrx-subscription></yrx-subscription>
-  <yrx-subscription></yrx-subscription>
-  <yrx-subscription></yrx-subscription>
+  <yrx-subscription *ngFor="let subscription of subscriptions" [data]="subscription"></yrx-subscription>
 </div>
