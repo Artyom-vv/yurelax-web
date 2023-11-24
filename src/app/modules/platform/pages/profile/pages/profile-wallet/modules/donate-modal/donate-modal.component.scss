@@ -1,9 +1,6 @@
 @import "src/shared/styles/layout/colored-box";
 
 .scrollable {
-  margin: 16px;
-  overflow-y: scroll;
-  max-height: calc(100vh - 32px);
 }
 
 .colored-box {
@@ -15,6 +12,12 @@
 
 :host {
   width: 100%;
+  display: block;
+  &::after, &::before {
+    content: '';
+    display: block;
+    height: 24px;
+  }
 }
 
 yrx-donate-panel {

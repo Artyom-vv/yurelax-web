@@ -6,24 +6,15 @@ import {MIN_PASSWORD_LENGTH} from "../../auth.constants";
 import {catchError} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {AuthStore} from "../../store/auth.store";
-import {animate, style, transition, trigger} from "@angular/animations";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {OpacityAnimation} from "../../animations/opacity.animation";
 
 @Component({
   selector: 'yrx-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   animations: [
-    trigger('fadeAnimation', [
-      transition('false => true', [
-        style({
-          opacity: 1
-        }),
-        animate('600ms ease', style({
-          opacity: 0
-        })),
-      ])
-    ])
+    OpacityAnimation
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -8,5 +8,13 @@
 
 div.donate-modal {
   @include default-modal;
-  margin: 12px;
+}
+.mdc-dialog {
+  &__container {
+    height: auto;
+  }
+}
+
+.cdk-global-overlay-wrapper {
+  align-items: unset !important;
 }

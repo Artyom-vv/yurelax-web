@@ -1,17 +1,21 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MailerService} from "../../../shared/services/mailer.service";
 import {CodeResponseInterface} from "../../../shared/interfaces/code-response.interface";
-import {finalize, Observable, Subscription, switchMap, tap} from "rxjs";
+import {filter, finalize, Observable, Subscription, switchMap, tap} from "rxjs";
 import {UserService} from "../../../platform/services/user.service";
 import {catchError} from "rxjs/operators";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ActivatedRoute, Router} from "@angular/router";
-import {RecoverPasswordCodeRequestInterface} from "../../../shared/interfaces/recover-password-code-request.interface";
+import {OpacityAnimation} from "../../animations/opacity.animation";
+import {AuthStore} from "../../store/auth.store";
 
 @Component({
   selector: 'yrx-email-verify',
   templateUrl: './email-verify.component.html',
   styleUrls: ['./email-verify.component.scss'],
+  animations: [
+    OpacityAnimation
+  ],
 })
 export class EmailVerifyComponent implements OnInit, OnDestroy {
 
@@ -20,23 +24,21 @@ export class EmailVerifyComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private _snackBar: MatSnackBar,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authStore: AuthStore
   ) {
   }
 
   private subscriptions: Subscription[] = []
 
+  public MAKey: string = '';
+  public transitionToMA: boolean = false;
+
   public operationId!: string;
   public dataLoading: boolean = false;
 
   ngOnInit() {
-    this.subscriptions.push(
-      this.route.queryParams.pipe(
-        tap((value) => {
-          this.operationId = value["operationId"];
-        })
-      ).subscribe()
-    )
+    this.dataFields()
   }
 
   ngOnDestroy() {
@@ -49,8 +51,17 @@ export class EmailVerifyComponent implements OnInit, OnDestroy {
       this.mailerService.verifyCode({operationId: this.operationId, code}).pipe(
         switchMap(() => this.userService.setEmailConfirmed()),
         tap(() => {
-          this.router.navigate(['/platform/home'])
+          if (!this.MAKey) this.router.navigate(['/platform/home'])
           this._snackBar.open('Аккаунт подтверждён', 'Хорошо')
+        }),
+        filter(() => !!this.MAKey),
+        tap(() => {
+          this.transitionToMA = true;
+          setTimeout(() => this.router.navigate(['/auth/minecraft'], {
+            queryParams: {
+              key: this.MAKey
+            }
+          }), 600)
         }),
         finalize(() => this.dataLoading = false),
         catchError((err) => {
@@ -76,12 +87,30 @@ export class EmailVerifyComponent implements OnInit, OnDestroy {
       ).subscribe()
     )
   }
+
   createCode(): Observable<CodeResponseInterface> {
     return this.mailerService.confirmEmailCode().pipe(
       tap((response) => {
         this.operationId = response.operationId;
         this._snackBar.open('Код отправлен на вашу почту', 'Хорошо')
       })
+    )
+  }
+
+  private dataFields() {
+    this.subscriptions.push(
+      this.route.queryParams.pipe(
+        tap((value) => {
+          this.operationId = value["operationId"];
+        })
+      ).subscribe()
+    )
+    this.subscriptions.push(
+      this.authStore.MAKey$.pipe(
+        tap(key => {
+          this.MAKey = key
+        })
+      ).subscribe()
     )
   }
 }

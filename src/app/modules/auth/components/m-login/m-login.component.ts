@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {UserRes} from "../../../platform/interfaces/user.interface";
-import {defer, filter, iif, mergeMap, of, Subscription, switchMap, take, tap} from "rxjs";
+import {defer, filter, finalize, iif, mergeMap, of, Subscription, switchMap, take, tap} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SystemUserService} from "../../../shared/services/system-user.service";
@@ -136,6 +136,7 @@ export class MLoginComponent implements OnInit, OnDestroy {
               if (key) this.greeting = false
               return iif(() => !!key, MaAuth$, MaAuthPrepare$)
             }),
+            finalize(() => this.authStore.setMAKey(''))
           )
         }),
         catchError((err) => {
