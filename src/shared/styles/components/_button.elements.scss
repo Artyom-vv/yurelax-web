@@ -4,17 +4,12 @@ button.mat-mdc-button.btn {
 
   @include btn;
 
+
   &[custom="light"]:disabled,
   &[custom="white"]:disabled,
   &[custom="red"]:disabled,
   &:disabled {
     @include btn-disabled;
-  }
-
-  &:not(&_iconly) {
-    .icon-wrapper {
-      display: none;
-    }
   }
 
   &[custom="light"] {
@@ -62,3 +57,4 @@ button.mat-button {
     @include span-text
   }
 }
+

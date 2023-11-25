@@ -8,13 +8,13 @@
   </div>
   <div class="flex gap-8" *ngIf="!isDelete; else deleteTemplate">
     <yrx-button [disabled]="dataLoading" (press)="edit()" type="primary">Редактировать</yrx-button>
-    <yrx-button [disabled]="dataLoading" (press)="delete()" custom="red" [iconLoading]="dataLoading">
+    <yrx-button [disabled]="dataLoading" (press)="delete()" custom="red" [loading]="dataLoading">
       <span>Удалить</span>
       <yrx-icon btn-icon [stroked]="true" icon="loader"></yrx-icon>
     </yrx-button>
   </div>
   <ng-template #deleteTemplate>
-    <yrx-button [disabled]="dataLoading" [iconLoading]="dataLoading" (press)="deleteApi()" type="primary">
+    <yrx-button [disabled]="dataLoading" [loading]="dataLoading" (press)="deleteApi()" type="primary">
       <span>Подтвердить удаление</span>
       <yrx-icon btn-icon [stroked]="true" icon="loader"></yrx-icon>
     </yrx-button>

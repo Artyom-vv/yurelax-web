@@ -1,5 +1,5 @@
 <form [formGroup]="form">
-  <yrx-auth-header page="email-code">Вход в <br/>дашборд</yrx-auth-header>
+  <yrx-auth-header page="email-code">Вход в <br/>дешборд</yrx-auth-header>
   <yrx-spacing type="S"></yrx-spacing>
   <div class="box box_input">
     <input formControlName="email" class="input_normal input_iconly" matInput placeholder="Введите e-mail">
@@ -18,5 +18,5 @@
   </div>
   <yrx-spacing type="XS"></yrx-spacing>
   <yrx-spacing type="M"></yrx-spacing>
-  <yrx-button (press)="login()" class="w100" type="primary" [iconLoading]="dataLoading" [disabled]="dataLoading || form.invalid"><span>Войти</span><yrx-icon *ngIf="dataLoading" btn-icon icon="loader"></yrx-icon></yrx-button>
+  <yrx-button (press)="login()" class="w100" type="primary" [loading]="dataLoading" [disabled]="dataLoading || form.invalid"><span>Войти</span><yrx-icon *ngIf="dataLoading" btn-icon icon="loader"></yrx-icon></yrx-button>
 </form>

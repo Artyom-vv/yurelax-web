@@ -11,7 +11,7 @@ export class SubscriptionComponent {
 
   getClasses(item: any): {[key: string]: boolean} {
     return {
-      ['text_' + item.weight]: true,
+      [item.weight]: true,
       'c-gradation-100': item.weight === 'medium',
       'c-gradation-300': item.weight !== 'medium'
     };

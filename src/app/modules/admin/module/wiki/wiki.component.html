@@ -3,7 +3,7 @@
   <yrx-link (press)="toolsService.redirect('https://github.com/yurelax-minecraft/yurelax-wiki')" [iconStroked]="true" icon="external-link">yurelax-wiki</yrx-link>
 </div>
 <yrx-spacing type="S"></yrx-spacing>
-<yrx-button [disabled]="!!(updating$ | async)" [iconLoading]="updating$ | async" (press)="update()">
+<yrx-button [disabled]="!!(updating$ | async)" [loading]="updating$ | async" (press)="update()">
   Обновить с github
   <yrx-icon *ngIf="updating$ | async" btn-icon icon="loader"></yrx-icon>
 </yrx-button>

@@ -6,13 +6,16 @@
 @mixin btn-big {
   height: 56px;
   padding: 0 20px;
+  &.btn_only-iconly {
+    padding: 0 16px;
+  }
   .mdc-button__label {
     gap: 8px;
     &, span {
       @include span-text-big();
     }
   }
-  yrx-ref-icon {
+  yrx-ref-icon, .btn_icon-wrapper {
     @include icon-size(24px);
   }
 }
@@ -20,13 +23,16 @@
 @mixin btn-normal {
   height: 48px;
   padding: 0 16px;
+  &.btn_only-iconly {
+    padding: 0 14px;
+  }
   .mdc-button__label {
     gap: 6px;
     &, span {
       @include span-text-default();
     }
   }
-  yrx-ref-icon {
+  yrx-ref-icon, .btn_icon-wrapper {
     @include icon-size(20px);
   }
 }
@@ -34,13 +40,16 @@
 @mixin btn-small {
   height: 40px;
   padding: 0 12px;
+  &.btn_only-iconly {
+    padding: 0 12px;
+  }
   .mdc-button__label {
     gap: 4px;
     &, span {
       @include span-text-small();
     }
   }
-  yrx-ref-icon {
+  yrx-ref-icon, .btn_icon-wrapper {
     @include icon-size(16px);
   }
 }
@@ -233,10 +242,32 @@
 
 @mixin btn {
   width: 100%;
+  min-width: unset;
   transition: background-color $trs, color $trs;
   border-radius: 6px;
+  .mdc-button__label span {
+    user-select: none;
+  }
   span {
     transition: color $trs;
+  }
+
+  .btn {
+    &_icon-wrapper {
+      display: none;
+    }
+  }
+
+  &_left-iconly .btn_left-wrapper {
+    display: block;
+  }
+
+  &_right-iconly .btn_right-wrapper {
+    display: block;
+  }
+
+  &_only-iconly .btn_only-icon-wrapper {
+    display: block;
   }
 
   .mat-button-focus-overlay {

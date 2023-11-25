@@ -1,6 +1,26 @@
-<button [disabled]="disabled" (click)="press.emit($event)" [attr.custom]="custom" mat-button [disableRipple]="true" class="btn" [ngClass]="'btn_'+size+' btn_'+type+' btn_'+custom" [class.btn_iconly]="icon.children.length > 0 && iconLoading === null || icon.children.length > 0 && iconLoading">
-  <ng-content></ng-content>
-  <div class="icon-wrapper" #icon>
+<button
+  [disabled]="disabled"
+  (click)="press.emit($event)"
+  [attr.custom]="custom"
+  mat-button
+  [disableRipple]="true"
+  class="btn"
+  [ngClass]="'btn_'+size+' btn_'+type+' btn_'+custom"
+  [class.btn_left-iconly]="iconLeft.children.length" [class.btn_right-iconly]="iconRight.children.length"
+  [class.btn_only-iconly]="icon.children.length">
+
+  <div class="btn_icon-wrapper btn_left-wrapper" #iconLeft>
+    <ng-content select="[btn-left-icon]"></ng-content>
+  </div>
+  <span *ngIf="icon.children.length === 0">
+    <ng-content></ng-content>
+  </span>
+  <div class="btn_icon-wrapper btn_right-wrapper" #iconRight>
+    <ng-container *ngIf="!loading">
+      <ng-content select="[btn-right-icon]"></ng-content>
+    </ng-container>
+  </div>
+  <div class="btn_icon-wrapper btn_only-icon-wrapper" #icon>
     <ng-content select="[btn-icon]"></ng-content>
   </div>
 </button>

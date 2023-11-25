@@ -61,13 +61,13 @@
     </yrx-checkbox>
   </div>
   <yrx-spacing type="S"></yrx-spacing>
-  <yrx-button *ngIf="!isEdit; else editTemplate" (press)="create()" class="flex_align-self-end" [disabled]="dataLoading || form.pending || form.invalid" [iconLoading]="dataLoading">
+  <yrx-button *ngIf="!isEdit; else editTemplate" (press)="create()" class="flex_align-self-end" [disabled]="dataLoading || form.pending || form.invalid" [loading]="dataLoading">
     <span>Создать</span>
     <yrx-icon btn-icon [stroked]="true" icon="loader"></yrx-icon>
   </yrx-button>
   <ng-template #editTemplate>
     <div class="flex gap-8 flex_align-self-end">
-      <yrx-button (press)="edit()" [disabled]="dataLoading || form.pending || form.invalid" [iconLoading]="dataLoading">
+      <yrx-button (press)="edit()" [disabled]="dataLoading || form.pending || form.invalid" [loading]="dataLoading">
         <span>Сохранить</span>
         <yrx-icon btn-icon [stroked]="true" icon="loader"></yrx-icon>
       </yrx-button>

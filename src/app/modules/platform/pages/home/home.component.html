@@ -26,7 +26,7 @@
         <ng-template #unloggedButton>
           <yrx-button clipboard value="mc.yurelax.ru" size="big" custom="white">
             <span>mc.yurelax.ru</span>
-            <yrx-icon btn-icon [stroked]="true" color="purple-400" icon="copy"></yrx-icon>
+            <yrx-ref-icon btn-right-icon class="stroke" name="copy"></yrx-ref-icon>
           </yrx-button>
         </ng-template>
       </div>
@@ -115,7 +115,7 @@
             </yrx-error-hint-wrapper>
           </div>
           <yrx-spacing type="S"></yrx-spacing>
-          <yrx-button [disabled]="messageLoading || form.invalid" [iconLoading]="messageLoading" class="flex_align-self-start" type="primary">
+          <yrx-button [disabled]="messageLoading || form.invalid" [loading]="messageLoading" class="flex_align-self-start" type="primary">
             <span>Отправить идею</span>
           </yrx-button>
         </div>

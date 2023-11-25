@@ -13,25 +13,27 @@ import {IconModule} from "../../../shared/modules/icon/icon.module";
 import {ProfileContentComponent} from './components/profile-content/profile-content.component';
 import {AnimationsService} from "../../../shared/animations/services/animations.service";
 import {SidebarModule} from "../../modules/sidebar/sidebar.module";
+import {RefIconModule} from "../../../shared/modules/ref-icon/ref-icon.module";
 
 @NgModule({
   declarations: [
     ProfileComponent,
     ProfileContentComponent,
   ],
-  imports: [
-    CommonModule,
-    ProfileRoutingModule,
-    HeaderModule,
-    LayoutModule,
-    ProfileHeaderModule,
-    FooterModule,
-    SidebarModule,
-    SpacingModule,
-    LinkModule,
-    ButtonModule,
-    IconModule,
-  ],
+    imports: [
+        CommonModule,
+        ProfileRoutingModule,
+        HeaderModule,
+        LayoutModule,
+        ProfileHeaderModule,
+        FooterModule,
+        SidebarModule,
+        SpacingModule,
+        LinkModule,
+        ButtonModule,
+        IconModule,
+        RefIconModule,
+    ],
   providers: [
     AnimationsService
   ],

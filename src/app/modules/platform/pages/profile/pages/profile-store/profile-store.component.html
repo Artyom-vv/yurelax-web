@@ -1,4 +1,14 @@
-<h3>Доступные подписки</h3>
+<div class="flex flex_align-center flex_justify-between">
+  <h3>Доступные подписки</h3>
+  <div class="flex gap-12">
+    <yrx-button type="secondary">
+      <yrx-ref-icon btn-icon class="stroke" name="chevron-left"></yrx-ref-icon>
+    </yrx-button>
+    <yrx-button type="secondary">
+      <yrx-ref-icon btn-icon class="stroke" name="chevron-right"></yrx-ref-icon>
+    </yrx-button>
+  </div>
+</div>
 <yrx-spacing type="S"></yrx-spacing>
 <div class="subscriptions flex gap-24">
   <yrx-subscription *ngFor="let subscription of subscriptions" [data]="subscription"></yrx-subscription>

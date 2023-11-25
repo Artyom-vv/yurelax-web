@@ -33,6 +33,7 @@ import {AccordionModule} from "../../../shared/modules/accordion/accordion.modul
 import {SocialPanelModule} from "../../../shared/modules/social-panel/social-panel.module";
 import {InViewModule} from "../../../shared/directives/in-view/in-view.module";
 import {AnimationOpacityModule} from "../../../shared/modules/animation-opacity/animation-opacity.module";
+import {RefIconModule} from "../../../shared/modules/ref-icon/ref-icon.module";
 
 @NgModule({
   declarations: [
@@ -46,27 +47,28 @@ import {AnimationOpacityModule} from "../../../shared/modules/animation-opacity/
     TopPlayersComponent,
     FaqComponent
   ],
-  imports: [
-    CommonModule,
-    SpacingModule,
-    ButtonModule,
-    IconModule,
-    RouterLink,
-    SkeletonModule,
-    ClipboardModule,
-    ErrorHintWrapperModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    ErrorHintConditionModule,
-    RatingTableModule,
-    SelectorPointModule,
-    MatSnackBarModule,
-    MatExpansionModule,
-    AccordionModule,
-    SocialPanelModule,
-    InViewModule,
-    AnimationOpacityModule,
-  ],
+    imports: [
+        CommonModule,
+        SpacingModule,
+        ButtonModule,
+        IconModule,
+        RouterLink,
+        SkeletonModule,
+        ClipboardModule,
+        ErrorHintWrapperModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        ErrorHintConditionModule,
+        RatingTableModule,
+        SelectorPointModule,
+        MatSnackBarModule,
+        MatExpansionModule,
+        AccordionModule,
+        SocialPanelModule,
+        InViewModule,
+        AnimationOpacityModule,
+        RefIconModule,
+    ],
   providers: [
     MiniGamesService,
     StatisticsService,

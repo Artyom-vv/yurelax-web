@@ -2,11 +2,17 @@
   <div class="top flex_grow">
     <div class="header flex flex_center">
       <h4 [style.color]="data.color">{{data.name}}</h4>
+      <img class="decoration decoration_blur decoration-first" [src]="data.decorationFirst" alt="">
+      <img class="decoration decoration_blur decoration-second" [src]="data.decorationSecond" alt="">
+      <img class="decoration decoration_blur decoration-third" [src]="data.decorationThird" alt="">
+      <img class="decoration decoration-first" [src]="data.decorationFirst" alt="">
+      <img class="decoration decoration-second" [src]="data.decorationSecond" alt="">
+      <img class="decoration decoration-third" [src]="data.decorationThird" alt="">
     </div>
     <yrx-spacing type="S"></yrx-spacing>
     <ul class="list flex flex_column gap-8">
       <li *ngFor="let information of data.information" class="text text_body">
-        <span *ngFor="let item of information" [ngClass]="getClasses(item)">{{item.text}}</span>
+        <span class="text" *ngFor="let item of information" [ngClass]="getClasses(item)">{{item.text}}</span>
       </li>
     </ul>
   </div>

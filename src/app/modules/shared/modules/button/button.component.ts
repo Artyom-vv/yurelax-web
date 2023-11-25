@@ -19,7 +19,7 @@ export class ButtonComponent implements AfterViewInit, DoCheck {
   @Input() size: 'big' | 'normal' | 'small' = 'normal';
   @Input() type: 'primary' | 'secondary' = 'primary'
   @Input() custom: string = ''
-  @Input() iconLoading: boolean | null = null
+  @Input() loading: boolean | null = false
   @Input() disabled: boolean = false
   @Output() press: EventEmitter<any> = new EventEmitter<any>()
 

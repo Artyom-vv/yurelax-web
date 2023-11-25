@@ -12,6 +12,6 @@
     </yrx-error-hint-wrapper>
   </div>
   <yrx-spacing type="M"></yrx-spacing>
-  <yrx-button (press)="send()" class="w100" type="primary" [iconLoading]="dataLoading" [disabled]="dataLoading || form.invalid"><span>Отправить</span><yrx-icon *ngIf="dataLoading" btn-icon icon="loader"></yrx-icon></yrx-button>
+  <yrx-button (press)="send()" class="w100" type="primary" [loading]="dataLoading" [disabled]="dataLoading || form.invalid"><span>Отправить</span><yrx-icon *ngIf="dataLoading" btn-icon icon="loader"></yrx-icon></yrx-button>
   <yrx-spacing type="XS"></yrx-spacing>
 </form>

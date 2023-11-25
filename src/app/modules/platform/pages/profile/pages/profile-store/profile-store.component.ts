@@ -12,9 +12,9 @@ export class ProfileStoreComponent {
       name: 'Продвинутый',
       cost: 229,
       color: '#FFD071',
-      decorationFirst: 'assets/content/blocks/golden-block/1.png',
-      decorationSecond: 'assets/content/blocks/golden-block/2.png',
-      decorationThird: 'assets/content/blocks/golden-block/3.png',
+      decorationFirst: 'assets/content/blocks/gold-block/3.png',
+      decorationSecond: 'assets/content/blocks/gold-block/2.png',
+      decorationThird: 'assets/content/blocks/gold-block/4.png',
       information: [
         [{
           text: 'Открывается доступ ко всем мини-играм',
@@ -35,8 +35,8 @@ export class ProfileStoreComponent {
       cost: 329,
       color: '#96C2EE',
       decorationFirst: 'assets/content/blocks/diamond-block/1.png',
-      decorationSecond: 'assets/content/blocks/diamond-block/2.png',
-      decorationThird: 'assets/content/blocks/diamond-block/3.png',
+      decorationSecond: 'assets/content/blocks/diamond-block/1.png',
+      decorationThird: 'assets/content/blocks/diamond-block/4.png',
       information: [
         [{
           text: 'Открывается доступ ко всем мини-играм',
@@ -66,7 +66,7 @@ export class ProfileStoreComponent {
       name: 'Мифический',
       cost: 729,
       color: '#F28A8E',
-      decorationFirst: 'assets/content/blocks/nether-block/1.png',
+      decorationFirst: 'assets/content/blocks/nether-block/2.png',
       decorationSecond: 'assets/content/blocks/nether-block/2.png',
       decorationThird: 'assets/content/blocks/nether-block/3.png',
       information: [

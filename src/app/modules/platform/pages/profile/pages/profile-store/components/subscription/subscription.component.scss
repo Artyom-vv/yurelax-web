@@ -1,3 +1,4 @@
+@import "src/shared/styles/widjets/icon_tools";
 @import "src/shared/styles/vars.colors";
 
 :host {
@@ -16,7 +17,9 @@
   border-radius: 12px;
   overflow: hidden;
 }
-
+h4 {
+  z-index: 1;
+}
 .top {
   padding: 20px;
 }
@@ -37,4 +40,37 @@
   -moz-border-radius: 6px;
   border-radius: 6px;
   border: 1px solid map-get($project-colors, "gradation", 600);
+  overflow: hidden;
+  position: relative;
+}
+
+.decoration {
+  @include icon-size(80px);
+  position: absolute;
+  filter: blur(1px);
+  z-index: 0;
+
+  &_blur {
+    filter: blur(50px);
+  }
+
+  &-first {
+    top: -28px;
+    left: -28px;
+    transform: rotate(-30deg);
+    opacity: 0.6;
+  }
+  &-second {
+    bottom: -43px;
+    left: 50%;
+    transform: translateX(-50%) rotate(15deg);
+    opacity: 0.9;
+    filter: unset;
+  }
+  &-third {
+    top: -32px;
+    right: -32px;
+    transform: rotate(-45deg);
+    opacity: 0.3;
+  }
 }
