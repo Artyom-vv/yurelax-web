@@ -27,6 +27,7 @@ export class IconsService {
     {name: 'chevron-left', pathName: 'chevron-left'},
     {name: 'arrow-right', pathName: 'arrow-right'},
     {name: 'arrow-left', pathName: 'arrow-left'},
+    {name: 'arrow-up', pathName: 'arrow-up'},
     {name: 'shopping-bag', pathName: 'shopping-bag'},
     {name: 'user-plus', pathName: 'user-plus'},
     {name: 'settings', pathName: 'settings'},

@@ -5,6 +5,7 @@ import {RouterLink} from "@angular/router";
 import {IconModule} from "../icon/icon.module";
 import {SpacingModule} from "../spacing/spacing.module";
 import {ButtonModule} from "../button/button.module";
+import {RefIconModule} from "../ref-icon/ref-icon.module";
 
 
 
@@ -20,7 +21,8 @@ import {ButtonModule} from "../button/button.module";
         RouterLink,
         IconModule,
         SpacingModule,
-        ButtonModule
+        ButtonModule,
+        RefIconModule
     ]
 })
 export class FooterModule { }
