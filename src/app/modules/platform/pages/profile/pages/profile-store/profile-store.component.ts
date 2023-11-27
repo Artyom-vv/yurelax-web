@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SubscriptionRes} from "./interfaces/subscription.interface";
 
 @Component({
@@ -6,7 +6,7 @@ import {SubscriptionRes} from "./interfaces/subscription.interface";
   templateUrl: './profile-store.component.html',
   styleUrls: ['./profile-store.component.scss']
 })
-export class ProfileStoreComponent {
+export class ProfileStoreComponent implements OnInit {
   public subscriptions: SubscriptionRes[] = [
     {
       name: 'Продвинутый',
@@ -89,6 +89,65 @@ export class ProfileStoreComponent {
           weight: 'regular'
         }],
       ]
-    }
+    },
+    {
+      name: 'Клоунская',
+      cost: 1990,
+      color: '#f184ff',
+      decorationFirst: 'assets/content/blocks/dirt-block/3.png',
+      decorationSecond: 'assets/content/blocks/dirt-block/1.png',
+      decorationThird: 'assets/content/blocks/dirt-block/4.png',
+      information: [
+        [{
+          text: 'Вы платите исключительно из-за своей клоуности ',
+          weight: 'regular'
+        }, {
+          text: '(Не иначе!)',
+          weight: 'medium'
+        }],
+        [{
+          text: 'Доступен ежедневный бан с 00:00 по 23:00',
+          weight: 'regular'
+        }],
+        [{
+          text: 'Открывается доступ к ',
+          weight: 'regular'
+        }, {
+          text: 'возможности разбана за деньги',
+          weight: 'medium'
+        }],
+      ]
+    },
   ]
+
+  public step: number = 0;
+  public subscriptionsPerPage: number = 3;
+  public totalSubscriptions: number = this.subscriptions.length;
+  public indexes: number[] = [];
+
+  ngOnInit() {
+    this.updateIndexes();
+  }
+
+  offset(n: number) {
+    const newStep = this.step + n;
+
+    if (newStep >= 0 && newStep <= this.totalSubscriptions - this.subscriptionsPerPage) {
+      this.step = newStep;
+      this.updateIndexes();
+    }
+  }
+
+  next() {
+    this.offset(1);
+  }
+
+  prev() {
+    this.offset(-1);
+  }
+
+  updateIndexes() {
+    const start = this.step;
+    this.indexes = Array.from({length: this.subscriptionsPerPage}, (_, i) => start + i);
+  }
 }

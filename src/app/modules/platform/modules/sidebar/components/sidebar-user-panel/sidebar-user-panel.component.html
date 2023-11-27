@@ -2,7 +2,7 @@
   <div class="flex gap-12 flex_align-center">
     <yrx-skeleton *ngIf="dataLoading; else avatarTemplate" [styles]="{width: '40px', height: '40px', borderRadius: '6px'}" theme="dark"></yrx-skeleton>
     <ng-template #avatarTemplate>
-      <img [src]="userStore?.userInfoRef?.avatarUrl ?? 'assets/content/header/default-avatar.png'" [alt]="'Аватар игрока '+userStore?.login+' yurelax'" class="avatar">
+      <img routerLink="/platform/profile/home" [src]="userStore?.userInfoRef?.avatarUrl ?? 'assets/content/header/default-avatar.png'" [alt]="'Аватар игрока '+userStore?.login+' yurelax'" class="avatar cursor-pointer">
     </ng-template>
     <div class="flex flex_column">
       <p class="text text_big medium c-gradation-100">{{userStore?.login}}</p>
