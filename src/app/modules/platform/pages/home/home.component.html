@@ -21,7 +21,7 @@
       <div class="show" *ngIf="!preloading">
         <yrx-button *ngIf="!isLogged; else unloggedButton" [routerLink]="['/auth/register']" size="big" custom="white">
           <span>Зарегистрироваться</span>
-          <yrx-icon [stroked]="true" color="purple-400" icon="login"></yrx-icon>
+          <yrx-ref-icon btn-right-icon class="stroke" name="login"></yrx-ref-icon>
         </yrx-button>
         <ng-template #unloggedButton>
           <yrx-button clipboard value="mc.yurelax.ru" size="big" custom="white">
@@ -86,7 +86,7 @@
         <div class="flex gap-16">
           <yrx-button type="primary">
             <span>Начать игру</span>
-            <yrx-icon [stroked]="true" icon="arrow-right-circle"></yrx-icon>
+            <yrx-ref-icon btn-right-icon class="stroke" name="arrow-right-circle"></yrx-ref-icon>
           </yrx-button>
           <yrx-button type="secondary">Узнать больше</yrx-button>
         </div>

@@ -182,22 +182,22 @@
   }
 }
 
-@mixin btn-custom-white {
-  $default_color: map-get($project-colors, "purple", 400);
-  background-color: map-get($project-colors, "gradation", 100);
-
+@mixin btn-color($color) {
   .mdc-button__label {
     &, span {
-      color: $default_color;
+      color: $color;
     }
   }
 
-
-  &.btn_iconly {
-    yrx-ref-icon {
-      @include icon-color($default_color);
-    }
+  yrx-ref-icon {
+    @include icon-color($color);
   }
+}
+
+@mixin btn-custom-white {
+  background-color: map-get($project-colors, "gradation", 100);
+
+  @include btn-color(map-get($project-colors, "purple", 400));
 
   &:not(:disabled):hover {
     background-color: map-get($project-colors, "purple", 100);

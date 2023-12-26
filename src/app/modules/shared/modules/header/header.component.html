@@ -26,7 +26,7 @@
         </div>
       </yrx-skeleton>
       <ng-container *ngIf="!dataLoading && !preloading">
-        <yrx-button *ngIf="!isLogged; else profilePanel" [custom]="light ? 'light' : ''" [routerLink]="['/auth/login']" type="secondary"><span>Войти</span><yrx-ref-icon class="stroke" btn-icon name="login"></yrx-ref-icon></yrx-button>
+        <yrx-button *ngIf="!isLogged; else profilePanel" [custom]="light ? 'light' : ''" [routerLink]="['/auth/login']" type="secondary">Войти<yrx-ref-icon class="stroke" btn-right-icon name="login"></yrx-ref-icon></yrx-button>
       </ng-container>
       <yrx-skeleton *ngIf="(dataLoading || preloading) && access_token" [styles]="{height: '64px', width: '190px', borderRadius: '8px', padding: '0 12px 0 12px'}" [theme]="light ? 'light' : 'dark'">
         <div class="flex gap-12 flex_align-center full-height">

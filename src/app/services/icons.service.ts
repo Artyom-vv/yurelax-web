@@ -36,6 +36,7 @@ export class IconsService {
     {name: 'file', pathName: 'file'},
     {name: 'joystick', pathName: 'joystick'},
     {name: 'copy', pathName: 'copy'},
+    {name: 'arrow-right-circle', pathName: 'arrow-right-circle'},
   ]
 
   public async initIcons(): Promise<void> {
