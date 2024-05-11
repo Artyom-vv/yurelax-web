@@ -9,9 +9,3 @@ export const environment = {
   crafatarApiUrl: 'https://crafatar.com',
   minecraftApiUrl: 'https://minecraft-api.com/api'
 };
-
-interface WikiSlice {
-  type: 'text' | 'image' | 'header' | 'title' | 'link'
-  displayTitle?: string
-  value: string
-}
