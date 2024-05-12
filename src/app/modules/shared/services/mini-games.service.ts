@@ -2,8 +2,8 @@ import {Observable, throwError} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
-import {MiniGameResponseInterface} from "../interfaces/mini-game-response.interface";
-import {MiniGameRequestInterface} from "../interfaces/mini-game-request.interface";
+import {MiniGameResponseInterface} from "../interfaces/old/mini-game-response.interface";
+import {MiniGameRequestInterface} from "../interfaces/old/mini-game-request.interface";
 import {catchError} from "rxjs/operators";
 
 @Injectable()

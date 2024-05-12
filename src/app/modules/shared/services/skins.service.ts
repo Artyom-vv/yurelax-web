@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {map, Observable, switchMap, throwError} from "rxjs";
 import {environment} from "../../../../environments/environment";
-import {SkinsUploadResponseInterface} from "../interfaces/skins-upload-response.interface";
+import {SkinsUploadResponseInterface} from "../interfaces/old/skins-upload-response.interface";
 import {catchError} from "rxjs/operators";
 
 @Injectable()

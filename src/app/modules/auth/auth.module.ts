@@ -17,16 +17,12 @@ import {SpacingModule} from "../shared/modules/spacing/spacing.module";
 import {ButtonModule} from "../shared/modules/button/button.module";
 import {LinkModule} from "../shared/modules/link/link.module";
 import {MatInputModule} from "@angular/material/input";
-import {IconModule} from "../shared/modules/icon/icon.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {AuthLayoutComponent} from './components/auth-layout/auth-layout.component';
 import {AnimationsService} from "../shared/animations/services/animations.service";
 import {MLoginComponent} from './components/m-login/m-login.component';
 import {MAuthLayoutComponent} from './components/m-login/components/m-auth-layout/m-auth-layout.component';
 import {AuthStore} from "./store/auth.store";
-import {
-  ErrorHintConditionModule
-} from "../shared/modules/error-hint-wrapper/modules/error-hint-condition/error-hint-condition.module";
 import {ErrorHintWrapperModule} from "../shared/modules/error-hint-wrapper/error-hint-wrapper.module";
 import {UserService} from "../platform/services/user.service";
 import {PasswordStrengthModule} from "./modules/password-strength/password-strength.module";
@@ -40,6 +36,9 @@ import {PersistenceService} from "../shared/services/persistence.service";
 import {MailerService} from "../shared/services/mailer.service";
 import {QueryParamGuard} from "../shared/services/guards/query-param.guard";
 import {RecoverStepGuard} from "../shared/services/guards/recover-step.guard";
+import {InputModule} from "../shared/modules/text-fields/modules/input/input.module";
+import {RefIconModule} from "../shared/modules/ref-icon/ref-icon.module";
+import {IconModule} from "../shared/directives/icon/icon.module";
 
 @NgModule({
   declarations: [
@@ -66,12 +65,14 @@ import {RecoverStepGuard} from "../shared/services/guards/recover-step.guard";
     MatInputModule,
     IconModule,
     ReactiveFormsModule,
-    ErrorHintConditionModule,
     ErrorHintWrapperModule,
     PasswordStrengthModule,
     EmailCodeVerificationModule,
     MatSnackBarModule,
-    PasswordHiderModule
+    PasswordHiderModule,
+    InputModule,
+    RefIconModule,
+    IconModule
   ],
   providers: [
     AnimationsService,

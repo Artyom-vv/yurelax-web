@@ -39,4 +39,14 @@ export class ToolsService {
     if (num == 1) return words[0]; // Им. п. ед.ч
     return words[2];
   }
+
+  parseClassesObject(classesObj: TClassList, callback: (string: string) => void) {
+    Object.keys(classesObj).forEach(className => {
+      if (classesObj[className]) {
+        callback(className)
+      }
+    });
+  }
 }
+
+export type TClassList = { [key: string]: boolean }

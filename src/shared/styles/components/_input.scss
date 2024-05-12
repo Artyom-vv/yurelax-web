@@ -1,159 +1,46 @@
+@import "src/app/modules/shared/modules/text-fields/components/input-base/input-base.vars";
 @import "src/shared/styles/layout/typography";
 @import "src/shared/styles/vars.colors";
 @import "src/shared/styles/vars.animations";
 @import "src/shared/styles/widjets/icon_tools";
 
-mat-form-field.mat-form-field {
-  background-color: transparent;
-  padding: 0;
-  margin: 0;
-  height: auto;
-}
 
-$icon_selector: ".input_iconly + yrx-icon .icon";
-
-@mixin input-big {
-  height: 56px;
-  @include text-big;
-}
-@mixin input-normal {
-  height: 48px;
-  @include text-body;
-}
-@mixin input-small {
-  height: 40px;
-  @include text-body;
-  #{$icon_selector} {
-    @include icon-size(16px);
-  }
-}
-
-@mixin input-iconly {
-  padding-right: 32px;
-  & + yrx-icon {
-    display: block;
-    .icon {
-      @include icon-size(20px);
-      &:not(.icon_colored) {
-        fill: map-get($project-colors, "gradation", 300);
-        &.icon_stroke {
-          fill: transparent;
-          stroke: map-get($project-colors, "gradation", 300);
-        }
-      }
-      &-hover {
-        &:not(.icon_colored):not(.icon_stroke):hover {
-          fill: map-get($project-colors, "gradation", 100);
-        }
-        &.icon_stroke:not(.icon_colored):hover {
-          stroke: map-get($project-colors, "gradation", 100);
-        }
-      }
-    }
-  }
-}
-
-@mixin input-auto-filled {
-  & + yrx-icon {
-    .icon {
-      &:not(.icon_colored) {
-        fill: map-get($project-colors, "gradation", 800);
-        &.icon_stroke {
-          fill: transparent;
-          stroke: map-get($project-colors, "gradation", 800);
-        }
-      }
-      &-hover {
-        &:not(.icon_colored):not(.icon_stroke):hover {
-          fill: map-get($project-colors, "gradation", 600);
-        }
-        &.icon_stroke:not(.icon_colored):hover {
-          stroke: map-get($project-colors, "gradation", 600);
-        }
-      }
-    }
-  }
-}
+//@mixin input-auto-filled {
+//  & + yrx-icon {
+//    .icon {
+//      &:not(.icon_colored) {
+//        fill: map-get($project-colors, "gradation", 800);
+//        &.icon_stroke {
+//          fill: transparent;
+//          stroke: map-get($project-colors, "gradation", 800);
+//        }
+//      }
+//      &-hover {
+//        &:not(.icon_colored):not(.icon_stroke):hover {
+//          fill: map-get($project-colors, "gradation", 600);
+//        }
+//        &.icon_stroke:not(.icon_colored):hover {
+//          stroke: map-get($project-colors, "gradation", 600);
+//        }
+//      }
+//    }
+//  }
+//}
 
 @mixin input-dark {
   background-color: map-get($project-colors, "gradation", 750);
   -webkit-box-shadow: 0 0 0 50px map-get($project-colors, "gradation", 750) inset;
 }
 
-input.mat-mdc-input-element, textarea.mat-mdc-input-element {
-  resize: none;
-  width: 100%;
-  transition: $trs;
-  border-radius: 6px;
-  padding: 0 16px;
-  @include text;
-  @include weight-regular;
-  color: map-get($project-colors, "gradation", 100);
-  &:-webkit-autofill {
-    -webkit-text-fill-color: map-get($project-colors, "gradation", 100) !important;
-  }
-  caret-color: map-get($project-colors, "purple", 400);
-  background-color: map-get($project-colors, "gradation", 700);
-  -webkit-box-shadow: 0 0 0 50px map-get($project-colors, "gradation", 700) inset;
-  border: 1px solid transparent;
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+input {
 
-  &[type=number] {
-    -moz-appearance:textfield;
-  }
-  &::placeholder {
-    color: map-get($project-colors, "gradation", 400);
-  }
-  &:not(.ng-touched.ng-invalid):focus {
-    background-color: map-get($project-colors, "purple", 500);
-    -webkit-box-shadow: 0 0 0 50px map-get($project-colors, "purple", 500) inset;
-    border-color: map-get($project-colors, "purple", 400);
-  }
-  &.ng-touched {
-    &.ng-invalid {
-      color: map-get($project-colors, "gradation", 300);
-      border-color: map-get($project-colors, "red", 400);
-      &:-webkit-autofill {
-        -webkit-text-fill-color: map-get($project-colors, "gradation", 300) !important;
-      }
-    }
-    &.ng-valid {
-      color: map-get($project-colors, "gradation", 300);
-      border-color: map-get($project-colors, "green", 400);
-      &:-webkit-autofill {
-        -webkit-text-fill-color: map-get($project-colors, "gradation", 300) !important;
-      }
-    }
-  }
-
-  &.input {
-    &_big {
-      @include input-big;
-    }
-    &_normal {
-      @include input-normal;
-    }
-    &_small {
-      @include input-small;
-    }
-    &_iconly {
-      @include input-iconly;
-    }
-    &_dark {
-      @include input-dark
-    }
-  }
-  &.textarea {
-    height: auto;
-  }
 }
-textarea.mat-mdc-input-element {
+textarea {
+  resize: none;
+  height: auto;
   padding-top: 14px;
   padding-bottom: 14px;
+
   &::-webkit-scrollbar {
     background-color: map-get($project-colors, "gradation", 700);
     width: 12px;
@@ -163,5 +50,77 @@ textarea.mat-mdc-input-element {
     border: 3px solid map-get($project-colors, "gradation", 700);
     background-color: map-get($project-colors, "gradation", 500);
     border-radius: 4px;
+  }
+}
+
+.input {
+  width: 100%;
+  transition: $trs;
+
+  border-radius: 6px;
+  padding: 0 16px;
+
+  color: var(--gradation-100);
+  caret-color: var(--purple-400);
+  background-color: var(--gradation-700);
+  border: 1px solid transparent;
+
+  @include text;
+  @include weight-regular;
+
+  //&:-webkit-autofill {
+  //  -webkit-text-fill-color: var(--gradation-100) !important;
+  //}
+
+  //-webkit-box-shadow: 0 0 0 50px var(--gradation-700) inset;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &[type=number] {
+    -moz-appearance:textfield;
+  }
+  &::placeholder {
+    color: var(--gradation-400);
+  }
+  &:not(.ng-invalid):focus {
+    background-color: var(--purple-500);
+    //-webkit-box-shadow: 0 0 0 50px var(--purple-500) inset;
+    border-color: var(--purple-400)
+  }
+  &.ng-touched {
+    &.ng-invalid {
+      color: var(--gradation-300);
+      border-color: var(--red-400);
+      //&:-webkit-autofill {
+      //  -webkit-text-fill-color: var(--gradation-300) !important;
+      //}
+    }
+    //&.ng-valid {
+    //  color: var(--gradation-300);
+    //  border-color: var(--gradation-400);
+    //  //&:-webkit-autofill {
+    //  //  -webkit-text-fill-color: var(--gradation-300) !important;
+    //  //}
+    //}
+  }
+
+  &_iconly {
+    padding-right: 32px;
+    & + yrx-ref-icon {
+      display: block;
+      @include icon-color(var(--gradation-300));
+    }
+  }
+
+  &_big {
+    @include input-size-big;
+  }
+  &_normal {
+    @include input-size-normal;
+  }
+  &_small {
+    @include input-size-small;
   }
 }

@@ -1,0 +1,19 @@
+<div class="box-wrapper flex flex_column">
+	<span class="box-label text c-bti-tertiary">
+		<ng-content select="[input-base-label]"></ng-content>
+	</span>
+  <div
+    [class.box-right-iconly]="baseComponent.isRightIcon"
+    [class.box-left-iconly]="baseComponent.isLeftIcon"
+    class="box" [ngClass]="classes"
+  >
+    <ng-content></ng-content>
+<!--    <span class="box-description text_body text c-bti-tertiary">-->
+<!--			<ng-content select="[input-description]"></ng-content>-->
+<!--		</span>-->
+    <div *ngIf="baseComponent.icon" class="icon-wrapper" [ngClass]="iconWrapperClasses">
+      <ng-content select="[yrxIcon]"></ng-content>
+    </div>
+  </div>
+</div>
+<yrx-error-hint-wrapper></yrx-error-hint-wrapper>

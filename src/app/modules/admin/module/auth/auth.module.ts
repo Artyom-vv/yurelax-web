@@ -11,12 +11,10 @@ import {SpacingModule} from "../../../shared/modules/spacing/spacing.module";
 import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ErrorHintWrapperModule} from "../../../shared/modules/error-hint-wrapper/error-hint-wrapper.module";
-import {
-  ErrorHintConditionModule
-} from "../../../shared/modules/error-hint-wrapper/modules/error-hint-condition/error-hint-condition.module";
 import {ButtonModule} from "../../../shared/modules/button/button.module";
 import {IconModule} from "../../../shared/modules/icon/icon.module";
 import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
+import {InputModule} from "../../../shared/modules/text-fields/modules/input/input.module";
 
 
 @NgModule({
@@ -34,10 +32,10 @@ import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
     MatInputModule,
     ReactiveFormsModule,
     ErrorHintWrapperModule,
-    ErrorHintConditionModule,
     ButtonModule,
     MatSnackBarModule,
-    IconModule
+    IconModule,
+    InputModule
   ],
   providers: [CheckAuthGuard]
 })

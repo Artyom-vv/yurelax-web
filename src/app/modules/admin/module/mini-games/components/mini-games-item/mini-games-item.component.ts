@@ -2,7 +2,7 @@ import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@an
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {AnimationsService} from "../../../../../shared/animations/services/animations.service";
 import {MiniGamesService} from "../../../../../shared/services/mini-games.service";
-import {MiniGameResponseInterface} from "../../../../../shared/interfaces/mini-game-response.interface";
+import {MiniGameResponseInterface} from "../../../../../shared/interfaces/old/mini-game-response.interface";
 import {delay, finalize, first, tap} from "rxjs";
 import {DELETE_DURATION} from "../../../../admin.constants";
 import {catchError} from "rxjs/operators";

@@ -7,9 +7,9 @@
   <div class="column"></div>
 </div>
 <div class="background"></div>
-<img class="home-img" src="assets/content/hero.png" alt="yurelax — необычный сервер с сюжетом и мини-играми">
 <div class="home">
   <section class="hero">
+    <img class="hero-img" src="assets/content/hero.png" alt="yurelax — необычный сервер с сюжетом и мини-играми">
     <div class="container flex_column flex flex_align-center">
       <yrx-spacing type="L"></yrx-spacing>
       <h1 class="text-center title" yrxAnimateOpacity>yurelax — необычный сервер с сюжетом и мини-играми</h1>
@@ -34,8 +34,8 @@
     </div>
   </section>
   <section class="features flex flex_align-center">
-<!--    <img class="features-img" src="assets/content/hero.webp" alt="yurelax — необычный сервер с сюжетом и мини-играми">-->
-<!--    <img class="features-img" src="assets/content/hero.webp" alt="yurelax — необычный сервер с сюжетом и мини-играми">-->
+    <!--    <img class="features-img" src="assets/content/hero.webp" alt="yurelax — необычный сервер с сюжетом и мини-играми">-->
+    <!--    <img class="features-img" src="assets/content/hero.webp" alt="yurelax — необычный сервер с сюжетом и мини-играми">-->
     <div class="container flex gap-24">
       <yrx-feature>
         <span header>Уникальные ивенты</span>
@@ -49,7 +49,7 @@
       </yrx-feature>
       <yrx-feature>
         <span header>Мини-игры</span>
-        <span text>{{getMiniGamesText()}}</span>
+        <span text>{{ getMiniGamesText() }}</span>
         <yrx-icon [width]="24" [height]="24" [stroked]="true" icon="joystick" feature-icon></yrx-icon>
       </yrx-feature>
       <yrx-feature>
@@ -67,11 +67,12 @@
       <ng-container *ngFor="let content of content_blocks; let idx = index;">
         <yrx-content-layout [img]="content.img" [reversed]="(idx+1)%2!==0">
           <yrx-info-layout>
-            <span headline>{{content.info.headline}}</span>
-            <span text>{{content.info.text}}</span>
-            <yrx-activity activities *ngFor="let activity of content.info.activities; let idx = index" [delay]="content.info.delay(idx, content.info.activities.length)">
-              <span headline>{{activity.headline}}</span>
-              <span text>{{activity.text}}</span>
+            <span headline>{{ content.info.headline }}</span>
+            <span text>{{ content.info.text }}</span>
+            <yrx-activity activities *ngFor="let activity of content.info.activities; let idx = index"
+                          [delay]="content.info.delay(idx, content.info.activities.length)">
+              <span headline>{{ activity.headline }}</span>
+              <span text>{{ activity.text }}</span>
               <yrx-icon activity-icon [icon]="activity.icon" [stroked]="activity.iconStroked"></yrx-icon>
             </yrx-activity>
           </yrx-info-layout>
@@ -81,7 +82,9 @@
       <yrx-content-layout [img]="{src: 'assets/content/landing/events.png', alt: ''}" [reversed]="true">
         <h2 yrxAnimateOpacity>Внутриигровые события</h2>
         <yrx-spacing type="XS"></yrx-spacing>
-        <p class="text text_big regular c-gradation-300">Мы проводим ивенты каждую неделю, участие в них позволит завладеть редкими предметами, которые невозможно получить иначе! Участвуйте в ивентах вместе с друзьями и получайте командные награды.</p>
+        <p class="text text_big regular c-gradation-300">Мы проводим ивенты каждую неделю, участие в них позволит
+          завладеть редкими предметами, которые невозможно получить иначе! Участвуйте в ивентах вместе с друзьями и
+          получайте командные награды.</p>
         <yrx-spacing type="M"></yrx-spacing>
         <div class="flex gap-16">
           <yrx-button type="primary">
@@ -98,24 +101,28 @@
         <div class="flex flex_column" [formGroup]="form">
           <h2 yrxAnimateOpacity>Делитесь идеями!</h2>
           <yrx-spacing type="XS"></yrx-spacing>
-          <p class="text text_big regular c-gradation-300">Мы всегда рады обратной связи от наших игроков. Направляйте нам интересные идеи по развитию проекта и получайте приятные бонусы!</p>
+          <p class="text text_big regular c-gradation-300">Мы всегда рады обратной связи от наших игроков. Направляйте
+            нам интересные идеи по развитию проекта и получайте приятные бонусы!</p>
           <yrx-spacing type="XS"></yrx-spacing>
-          <div class="box box_input">
-            <input formControlName="email" class="input_normal input_iconly" matInput placeholder="E-mail для обратной связи">
-            <yrx-error-hint-wrapper [control]="form.get('email')">
-              <yrx-error-hint-condition [condition]="['required']">Почта не должна быть пустой</yrx-error-hint-condition>
-              <yrx-error-hint-condition [condition]="['email']">Указанная почта имеет неверный формат</yrx-error-hint-condition>
-            </yrx-error-hint-wrapper>
-          </div>
+
+          <yrx-input>
+            <input formControlName="email" yrxInput placeholder="E-mail для обратной связи">
+            <yrx-error-hint-field field="required">Почта не должна быть пустой</yrx-error-hint-field>
+            <yrx-error-hint-field field="email">Указанная почта имеет неверный формат</yrx-error-hint-field>
+          </yrx-input>
           <yrx-spacing type="XS2"></yrx-spacing>
-          <div class="box box_textarea">
-            <textarea cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="8" [maxlength]="512" formControlName="message" class="input_normal input_iconly textarea" matInput placeholder="Кратко изложите свою идею (до 512 символов)"></textarea>
-            <yrx-error-hint-wrapper [control]="form.get('message')">
-              <yrx-error-hint-condition [condition]="['required']">Это обязательное поле</yrx-error-hint-condition>
-            </yrx-error-hint-wrapper>
-          </div>
+
+          <yrx-text-area>
+            <textarea cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="8" [maxlength]="512"
+                      formControlName="message" yrxTextArea
+                      placeholder="Кратко изложите свою идею (до 512 символов)"></textarea>
+            <yrx-error-hint-field field="required">Это обязательное поле</yrx-error-hint-field>
+          </yrx-text-area>
+
+
           <yrx-spacing type="S"></yrx-spacing>
-          <yrx-button [disabled]="messageLoading || form.invalid" [loading]="messageLoading" class="flex_align-self-start" type="primary">
+          <yrx-button [disabled]="messageLoading || form.invalid" [loading]="messageLoading"
+                      class="flex_align-self-start" type="primary">
             <span>Отправить идею</span>
           </yrx-button>
         </div>

@@ -14,8 +14,8 @@ import {MiniGamesService} from "../../../../../shared/services/mini-games.servic
 import {debounceTime, distinctUntilChanged, finalize, first, Subscription, switchMap, takeUntil, tap} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {KeyValidator} from "../../../../../shared/validators/key.validator";
-import {StatisticsResponseInterface} from "../../../../../shared/interfaces/statistics-response.interface";
-import {MiniGameResponseInterface} from "../../../../../shared/interfaces/mini-game-response.interface";
+import {StatisticsResponseInterface} from "../../../../../shared/interfaces/old/statistics-response.interface";
+import {MiniGameResponseInterface} from "../../../../../shared/interfaces/old/mini-game-response.interface";
 import {ExistingMiniGameValidator} from "../../../../../shared/validators/existing-mini-game.validator";
 import {
   DropBoxOnChangeInterface

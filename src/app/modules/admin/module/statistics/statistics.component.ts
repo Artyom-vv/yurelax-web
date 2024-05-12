@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {StatisticsResponseInterface} from "../../../shared/interfaces/statistics-response.interface";
+import {StatisticsResponseInterface} from "../../../shared/interfaces/old/statistics-response.interface";
 import {StatisticsService} from "../../../shared/services/statistics.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {debounceTime, distinctUntilChanged, finalize, takeUntil, tap} from "rxjs";

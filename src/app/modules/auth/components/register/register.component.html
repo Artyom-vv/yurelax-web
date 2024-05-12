@@ -1,53 +1,51 @@
 <form [formGroup]="form">
   <yrx-auth-header page="register">Регистрация</yrx-auth-header>
   <yrx-spacing type="S"></yrx-spacing>
-  <div class="box box_input">
-    <input autocomplete="nickname" formControlName="login" class="input_normal input_iconly" matInput placeholder="Введите логин">
-    <yrx-error-hint-wrapper [control]="form.get('login')">
-      <yrx-error-hint-condition [condition]="['required']">Логин не должен быть пустым</yrx-error-hint-condition>
-      <yrx-error-hint-condition [condition]="['minlength', 'maxlength']">Длина логина должна быть от {{MIN_LOGIN_LENGTH}} до {{MAX_LOGIN_LENGTH}} символов</yrx-error-hint-condition>
-      <yrx-error-hint-condition [condition]="['pattern']">Логин содержит недопустимые символы</yrx-error-hint-condition>
-      <yrx-error-hint-condition [condition]="['alreadyUse']">Такой логин уже существует</yrx-error-hint-condition>
-    </yrx-error-hint-wrapper>
-  </div>
+
+  <yrx-input>
+    <input autocomplete="nickname" formControlName="login" yrxInput placeholder="Введите логин">
+    <yrx-error-hint-field field="required">Логин не должен быть пустым</yrx-error-hint-field>
+    <yrx-error-hint-field [field]="['minlength', 'maxlength']">Длина логина должна быть от {{MIN_LOGIN_LENGTH}} до {{MAX_LOGIN_LENGTH}} символов</yrx-error-hint-field>
+    <yrx-error-hint-field field="pattern">Логин содержит недопустимые символы</yrx-error-hint-field>
+    <yrx-error-hint-field field="alreadyUse">Такой логин уже существует</yrx-error-hint-field>
+  </yrx-input>
+
   <yrx-spacing type="XS"></yrx-spacing>
-  <div class="box box_input">
-    <input autocomplete="email" formControlName="email" class="input_normal input_iconly" matInput placeholder="Введите e-mail">
-    <yrx-error-hint-wrapper [control]="form.get('email')">
-      <yrx-error-hint-condition [condition]="['required']">Почта не должна быть пустой</yrx-error-hint-condition>
-      <yrx-error-hint-condition [condition]="['email']">Указанная почта имеет неверный формат</yrx-error-hint-condition>
-      <yrx-error-hint-condition [condition]="['alreadyUse']">Такая почта уже существует</yrx-error-hint-condition>
-    </yrx-error-hint-wrapper>
-  </div>
+
+  <yrx-input>
+    <input autocomplete="email" formControlName="email" yrxInput placeholder="Введите e-mail">
+    <yrx-error-hint-field field="required">Почта не должна быть пустой</yrx-error-hint-field>
+    <yrx-error-hint-field field="email">Указанная почта имеет неверный формат</yrx-error-hint-field>
+    <yrx-error-hint-field field="alreadyUse">Такая почта уже существует</yrx-error-hint-field>
+  </yrx-input>
+
   <yrx-spacing type="XS"></yrx-spacing>
-  <div class="box">
-    <div class="box box_input">
-      <input #passwordRef autocomplete="new-password" formControlName="password" type="password" class="input_normal input_iconly" matInput placeholder="Введите пароль">
-      <yrx-icon passwordHider [deps]="[passwordRef, passwordRepeatRef]" [stroked]="true" [icon]="passwordRef.type === 'password' ? 'eye-off' : 'eye'"></yrx-icon>
-    </div>
-    <yrx-error-hint-wrapper [control]="form.get('password')">
-      <yrx-error-hint-condition [condition]="['minlength']">Длина пароля должна быть больше {{MIN_PASSWORD_LENGTH}} символов</yrx-error-hint-condition>
-      <yrx-error-hint-condition [condition]="['required']">Пароль не должен быть пустым</yrx-error-hint-condition>
-    </yrx-error-hint-wrapper>
-  </div>
+
+  <yrx-input>
+    <input #passwordRef autocomplete="new-password" formControlName="password" type="password" yrxInput placeholder="Введите пароль">
+    <yrx-ref-icon yrxIcon [yrxPasswordHider]="[passwordRef, passwordRepeatRef]" [name]="passwordRef.type === 'password' ? 'eye-off' : 'eye'"></yrx-ref-icon>
+    <yrx-error-hint-field field="minlength">Длина пароля должна быть больше {{MIN_PASSWORD_LENGTH}} символов</yrx-error-hint-field>
+    <yrx-error-hint-field field="required">Пароль не должен быть пустым</yrx-error-hint-field>
+  </yrx-input>
+
   <yrx-spacing type="XS"></yrx-spacing>
-  <yrx-password-strength [control]="form.get('password')"></yrx-password-strength>
+  <yrx-password-strength></yrx-password-strength>
   <yrx-spacing type="XS"></yrx-spacing>
-  <div class="box">
-    <div class="box box_input">
-      <input #passwordRepeatRef autocomplete="password" formControlName="passwordRepeat" type="password" class="input_normal input_iconly" matInput placeholder="Повторите пароль">
-    </div>
-    <yrx-error-hint-wrapper [control]="form.get('passwordRepeat')" [isYandexCringe]="true">
-      <yrx-error-hint-condition [condition]="['notEquivalent']">Пароли не совпадают</yrx-error-hint-condition>
-    </yrx-error-hint-wrapper>
-  </div>
+
+  <yrx-input>
+    <input #passwordRepeatRef autocomplete="password" formControlName="passwordRepeat" type="password" yrxInput placeholder="Повторите пароль">
+    <yrx-error-hint-field field="notEquivalent">Пароли не совпадают</yrx-error-hint-field>
+  </yrx-input>
+
   <yrx-spacing type="S"></yrx-spacing>
   <p class="text text_table regular">
     Продолжая вы принимаете <a href="#" class="link c-purple-300 medium">условия пользования</a> и соглашаетесь с <a
     href="#" class="link c-purple-300 medium">политикой конфеденциальности</a>
   </p>
   <yrx-spacing type="M"></yrx-spacing>
-  <yrx-button [loading]="dataLoading" [disabled]="dataLoading || form.invalid || form.pending" (press)="register()" class="w100" type="primary"><span>Зарегистрироваться</span><yrx-icon *ngIf="dataLoading" btn-icon icon="loader"></yrx-icon></yrx-button>
+  <yrx-button [loading]="dataLoading" [disabled]="dataLoading || form.invalid || form.pending" (press)="register()" class="w100" type="primary">
+    Зарегистрироваться
+  </yrx-button>
   <yrx-spacing type="XS"></yrx-spacing>
   <div class="flex flex_center gap-6">
     <p class="text text_body regular">Уже есть аккаунт?</p>

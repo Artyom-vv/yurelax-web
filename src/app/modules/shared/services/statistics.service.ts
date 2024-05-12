@@ -1,11 +1,11 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Observable, throwError} from "rxjs";
-import {StatisticsResponseInterface} from "../interfaces/statistics-response.interface";
+import {StatisticsResponseInterface} from "../interfaces/old/statistics-response.interface";
 import {environment} from "../../../../environments/environment";
 import {catchError} from "rxjs/operators";
-import {CreateStatisticsRequestInterface} from "../interfaces/create-statistics-request.interface";
-import {StatisticsListRequestInterface} from "../interfaces/statistics-list-request.interface";
+import {CreateStatisticsRequestInterface} from "../interfaces/old/create-statistics-request.interface";
+import {StatisticsListRequestInterface} from "../interfaces/old/statistics-list-request.interface";
 
 @Injectable()
 export class StatisticsService {

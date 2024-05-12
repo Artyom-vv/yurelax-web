@@ -5,7 +5,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {ActivatedRoute, Router} from "@angular/router";
 import {finalize, Observable, Subscription, switchMap, tap} from "rxjs";
 import {catchError} from "rxjs/operators";
-import {CodeResponseInterface} from "../../../shared/interfaces/code-response.interface";
+import {CodeResponseInterface} from "../../../shared/interfaces/old/code-response.interface";
 import {AuthStore} from "../../store/auth.store";
 
 @Component({

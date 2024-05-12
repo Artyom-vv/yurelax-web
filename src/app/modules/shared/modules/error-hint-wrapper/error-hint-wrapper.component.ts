@@ -1,45 +1,41 @@
-import {
-  Component,
-  ContentChildren,
-  Input, OnDestroy, OnInit,
-  QueryList,
-} from '@angular/core';
-import {AbstractControl} from "@angular/forms";
-import {ErrorHintConditionComponent} from "./modules/error-hint-condition/error-hint-condition.component";
-import {debounceTime, Subscription, tap} from "rxjs";
+import {NgControl} from "@angular/forms";
+import {debounceTime, tap} from "rxjs";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {Component, Input, OnInit, Optional} from "@angular/core";
+import {BaseComponentInputDirective} from "../text-fields/directives/base-component-input.directive";
 
+@UntilDestroy()
 @Component({
   host: {
-    "[style.display]": "isYandexCringe ? display : control?.invalid && control?.touched ? 'block' : 'none'"
+    "[style.display]": "isYandexCringe ? display : this.control?.invalid && this.control?.touched ? 'block' : 'none'"
   },
   selector: 'yrx-error-hint-wrapper',
   templateUrl: './error-hint-wrapper.component.html',
   styleUrls: ['./error-hint-wrapper.component.scss'],
 })
-export class ErrorHintWrapperComponent implements OnInit, OnDestroy {
-  @Input() control: AbstractControl | null = null;
+export class ErrorHintWrapperComponent implements OnInit {
   @Input() isYandexCringe: boolean = false;
-  @ContentChildren(ErrorHintConditionComponent) hints!: QueryList<ErrorHintConditionComponent>;
 
-  private subscriptions: Subscription[] = []
-
-  public checkCondition = (condition: string[]): boolean => !!(condition.some(value => this.control?.errors?.[value]) && this.control?.touched)
   public display: string = 'none'
+
+  get control() {
+    return this.baseInput.baseDirective?.control
+  }
+
+  constructor(
+    public baseInput: BaseComponentInputDirective,
+  ) {
+  }
 
   ngOnInit() {
     if (this.isYandexCringe) {
-      this.subscriptions.push(
-        this.control?.valueChanges.pipe(
-          debounceTime(50),
-          tap(() => {
-            this.display = this.control?.invalid ? 'block' : 'none'
-          })
-        ).subscribe()!
-      )
+      this.control?.valueChanges.pipe(
+        debounceTime(50),
+        tap(() => {
+          this.display = this.control?.invalid ? 'block' : 'none'
+        }),
+        untilDestroyed(this)
+      ).subscribe()
     }
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub.unsubscribe())
   }
 }

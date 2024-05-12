@@ -1,32 +1,33 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {AbstractControl} from "@angular/forms";
-import {Subscription, tap} from "rxjs";
+import {Component, Input, OnInit} from '@angular/core';
+import {FormGroupDirective, NgControl} from "@angular/forms";
+import {tap} from "rxjs";
 import {PasswordStrengthEnum} from "../../enums/passwordStrengthEnum";
 import {passwordStrength} from "../../auth.constants";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
   selector: 'yrx-password-strength',
   templateUrl: './password-strength.component.html',
   styleUrls: ['./password-strength.component.scss']
 })
-export class PasswordStrengthComponent implements OnInit, OnDestroy {
-  @Input() control: AbstractControl | null = null;
+export class PasswordStrengthComponent implements OnInit {
 
-  private subscriptions: Subscription[] = []
+  @Input() control: string = 'password'
 
   public passwordStrength: PasswordStrengthEnum = PasswordStrengthEnum.BAD;
 
-  ngOnInit() {
-    this.subscriptions.push(
-      this.control?.valueChanges.pipe(
-        tap((password) => {
-          this.passwordStrength = passwordStrength(password);
-        })
-      ).subscribe()!
-    )
+  constructor(
+    private formGroupDirective: FormGroupDirective
+  ) {
   }
 
-  ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub.unsubscribe())
+  ngOnInit() {
+    this.formGroupDirective.control.get(this.control)?.valueChanges.pipe(
+      tap((password) => {
+        this.passwordStrength = passwordStrength(password);
+      }),
+      untilDestroyed(this)
+    ).subscribe()
   }
 }

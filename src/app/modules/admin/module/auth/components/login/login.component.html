@@ -1,22 +1,23 @@
 <form [formGroup]="form">
   <yrx-auth-header page="email-code">Вход в <br/>дешборд</yrx-auth-header>
   <yrx-spacing type="S"></yrx-spacing>
-  <div class="box box_input">
-    <input formControlName="email" class="input_normal input_iconly" matInput placeholder="Введите e-mail">
-    <yrx-error-hint-wrapper [control]="form.get('email')">
-      <yrx-error-hint-condition [condition]="['required']">Почта не должна быть пустой</yrx-error-hint-condition>
-      <yrx-error-hint-condition [condition]="['email']">Указанная почта имеет неверный формат</yrx-error-hint-condition>
-    </yrx-error-hint-wrapper>
-  </div>
+  <yrx-input>
+    <input formControlName="email" yrxInput placeholder="Введите e-mail">
+    <yrx-error-hint-field [field]="['required']">Почта не должна быть пустой</yrx-error-hint-field>
+    <yrx-error-hint-field [field]="['email']">Указанная почта имеет неверный формат</yrx-error-hint-field>
+  </yrx-input>
   <yrx-spacing type="XS"></yrx-spacing>
-  <div class="box box_input">
-    <input formControlName="password" type="password" class="input_normal input_iconly" matInput placeholder="Введите пароль">
-    <yrx-error-hint-wrapper [control]="form.get('password')">
-      <yrx-error-hint-condition [condition]="['minlength']">Длина пароля не может быть меньше {{MIN_PASSWORD_LENGTH}} символов</yrx-error-hint-condition>
-      <yrx-error-hint-condition [condition]="['required']">Пароль не должен быть пустым</yrx-error-hint-condition>
-    </yrx-error-hint-wrapper>
-  </div>
+  <yrx-input>
+    <input formControlName="password" type="password" yrxInput placeholder="Введите пароль">
+    <yrx-error-hint-field [field]="['minlength']">Длина пароля не может быть меньше {{ MIN_PASSWORD_LENGTH }}
+      символов
+    </yrx-error-hint-field>
+    <yrx-error-hint-field [field]="['required']">Пароль не должен быть пустым</yrx-error-hint-field>
+  </yrx-input>
   <yrx-spacing type="XS"></yrx-spacing>
   <yrx-spacing type="M"></yrx-spacing>
-  <yrx-button (press)="login()" class="w100" type="primary" [loading]="dataLoading" [disabled]="dataLoading || form.invalid"><span>Войти</span><yrx-icon *ngIf="dataLoading" btn-icon icon="loader"></yrx-icon></yrx-button>
+  <yrx-button (press)="login()" class="w100" type="primary" [loading]="dataLoading"
+              [disabled]="dataLoading || form.invalid"><span>Войти</span>
+    <yrx-icon *ngIf="dataLoading" btn-icon icon="loader"></yrx-icon>
+  </yrx-button>
 </form>

@@ -1,4 +1,1 @@
-export interface TimestampsDto {
-  createdAt: string
-  updatedAt: string
-}
+export type OptionalType<T> = T | undefined

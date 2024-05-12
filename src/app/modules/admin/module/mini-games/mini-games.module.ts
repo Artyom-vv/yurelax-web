@@ -7,9 +7,6 @@ import {MiniGamesCreateComponent} from './components/mini-games-create/mini-game
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {ErrorHintWrapperModule} from "../../../shared/modules/error-hint-wrapper/error-hint-wrapper.module";
-import {
-  ErrorHintConditionModule
-} from "../../../shared/modules/error-hint-wrapper/modules/error-hint-condition/error-hint-condition.module";
 import {ButtonModule} from "../../../shared/modules/button/button.module";
 import {IconModule} from "../../../shared/modules/icon/icon.module";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
@@ -23,6 +20,8 @@ import {RequestsCancellerService} from "../../../shared/services/requests-cancel
 import {TagModule} from "../../../shared/modules/tag/tag.module";
 import {SelectModule} from "../../../shared/modules/select/select.module";
 import { MiniGamesItemComponent } from './components/mini-games-item/mini-games-item.component';
+import {InputModule} from "../../../shared/modules/text-fields/modules/input/input.module";
+import {TextAreaModule} from "../../../shared/modules/text-fields/modules/text-area/text-area.module";
 
 
 @NgModule({
@@ -38,7 +37,6 @@ import { MiniGamesItemComponent } from './components/mini-games-item/mini-games-
     ReactiveFormsModule,
     MatInputModule,
     ErrorHintWrapperModule,
-    ErrorHintConditionModule,
     ButtonModule,
     IconModule,
     MatSlideToggleModule,
@@ -47,7 +45,9 @@ import { MiniGamesItemComponent } from './components/mini-games-item/mini-games-
     CheckboxModule,
     DragAndDropModule,
     TagModule,
-    SelectModule
+    SelectModule,
+    InputModule,
+    TextAreaModule
   ],
   providers: [
     MiniGamesService,

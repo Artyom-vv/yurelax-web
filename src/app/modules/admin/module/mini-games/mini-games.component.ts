@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {finalize, Subscription, takeUntil, tap} from "rxjs";
 import {MiniGamesService} from "../../../shared/services/mini-games.service";
-import {MiniGameResponseInterface} from "../../../shared/interfaces/mini-game-response.interface";
-import {StatisticsResponseInterface} from "../../../shared/interfaces/statistics-response.interface";
+import {MiniGameResponseInterface} from "../../../shared/interfaces/old/mini-game-response.interface";
+import {StatisticsResponseInterface} from "../../../shared/interfaces/old/statistics-response.interface";
 import {catchError} from "rxjs/operators";
 import {RequestsCancellerService} from "../../../shared/services/requests-canceller.service";
 import {MatSnackBar} from "@angular/material/snack-bar";

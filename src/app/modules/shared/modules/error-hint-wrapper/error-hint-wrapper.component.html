@@ -1,5 +1,5 @@
 <div class="error-hint-wrapper flex flex_column gap-4">
-  <ng-container *ngFor="let hint of hints">
-    <yrx-error-hint *ngIf="checkCondition(hint.condition)">{{hint.text.nativeElement.previousSibling.textContent}}</yrx-error-hint>
+  <ng-container *ngFor="let hint of baseInput.hints">
+    <yrx-error-hint *ngIf="hint.field | errorHintConditions | async">{{hint.text.nativeElement.previousSibling.textContent}}</yrx-error-hint>
   </ng-container>
 </div>

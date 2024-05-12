@@ -5,7 +5,7 @@ import {
 } from "../../../../../shared/modules/rating-table/interfaces/rating-table.interface";
 import {MiniGamesService} from "../../../../../shared/services/mini-games.service";
 import {EMPTY, finalize, first, zip, map, Observable, Subscription, switchMap, tap} from "rxjs";
-import {MiniGameResponseInterface} from "../../../../../shared/interfaces/mini-game-response.interface";
+import {MiniGameResponseInterface} from "../../../../../shared/interfaces/old/mini-game-response.interface";
 import {UserStatisticsService} from "../../../../../shared/services/user-statistics.service";
 import {StatisticsService} from "../../../../../shared/services/statistics.service";
 import {catchError} from "rxjs/operators";

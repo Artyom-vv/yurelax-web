@@ -1,0 +1,27 @@
+@import "src/shared/styles/layout/typography";
+
+@mixin input-size($height, $iconSize) {
+  height: $height;
+  yrx-ref-icon {
+    --icon-size: $iconSize;
+  }
+  @content
+}
+
+@mixin input-size-big {
+  @include input-size(56px, 20px) {
+    @include text-big;
+  }
+}
+
+@mixin input-size-normal {
+  @include input-size(48px, 20px) {
+    @include text-body;
+  }
+}
+
+@mixin input-size-small {
+  @include input-size(40px, 16px) {
+    @include text-body;
+  }
+}

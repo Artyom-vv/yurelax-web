@@ -1,5 +1,5 @@
 <ng-container *ngIf="userLoading; else userLoaded">
-  <yrx-icon icon="loader"></yrx-icon>
+  <yrx-ref-icon name="loader"></yrx-ref-icon>
 </ng-container>
 
 <ng-template #userLoaded>
@@ -9,7 +9,7 @@
       <h3>Привет!</h3>
     </ng-template>
     <yrx-spacing type="XS"></yrx-spacing>
-    <p class="text text_big regular flex flex_center gap-8"><span>Прямо сейчас мы авторизуем тебя, осталось немного</span><yrx-icon icon="loader"></yrx-icon></p>
+    <p class="text text_big regular flex flex_center gap-8"><span>Прямо сейчас мы авторизуем тебя, осталось немного</span><yrx-ref-icon name="loader"></yrx-ref-icon></p>
   </div>
   <div [@fadeAnimation]="!error || successMA" class="text-center">
     <h3>Сессия недействительна 😥</h3>
@@ -17,7 +17,7 @@
     <p class="text text_big regular">Получите новую ссылку и зайдите заново</p>
   </div>
   <div [@fadeAnimation]="error || !dataLoading || greeting" class="text-center">
-    <h3 class="flex flex_center gap-8"><span>Загрузка</span> <yrx-icon icon="loader"></yrx-icon></h3>
+    <h3 class="flex flex_center gap-8"><span>Загрузка</span> <yrx-ref-icon name="loader"></yrx-ref-icon></h3>
     <yrx-spacing type="XS"></yrx-spacing>
     <p class="text text_big regular">Проверяем твою сессию на актуальность</p>
   </div>

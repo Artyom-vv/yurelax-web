@@ -1,14 +1,17 @@
-import {Directive, HostListener, Input} from "@angular/core";
+import {Directive, HostBinding, HostListener, Input} from "@angular/core";
 
 @Directive({
-  selector: '[passwordHider]',
+  selector: '[yrxPasswordHider]',
+  host: {
+    '[class.cursor-pointer]': 'true'
+  }
 })
 export class PasswordHiderDirective {
-  @Input() deps?: HTMLInputElement[];
+  @Input() yrxPasswordHider?: HTMLInputElement[];
   @HostListener('click') onClick() {
-    if (Array.isArray(this.deps)) {
-      this.deps.forEach(dep => {
-        dep.type = dep.type === 'password' ? 'text' : 'password';
+    if (Array.isArray(this.yrxPasswordHider)) {
+      this.yrxPasswordHider.forEach(input => {
+        input.type = input.type === 'password' ? 'text' : 'password';
       })
     }
   }

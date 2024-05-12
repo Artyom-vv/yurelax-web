@@ -5,7 +5,7 @@ import {SystemUserService} from "../../../shared/services/system-user.service";
 import {ContentLayoutInterface} from "./components/content-layout/interfaces/content-layout.interface";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MiniGamesService} from "../../../shared/services/mini-games.service";
-import {MiniGameResponseInterface} from "../../../shared/interfaces/mini-game-response.interface";
+import {MiniGameResponseInterface} from "../../../shared/interfaces/old/mini-game-response.interface";
 
 @Component({
   selector: 'yrx-home',

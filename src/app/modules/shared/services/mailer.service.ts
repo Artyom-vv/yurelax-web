@@ -1,13 +1,13 @@
 import {Observable, throwError} from "rxjs";
-import {CodeResponseInterface} from "../interfaces/code-response.interface";
+import {CodeResponseInterface} from "../interfaces/old/code-response.interface";
 import {environment} from "../../../../environments/environment";
 import {catchError} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
-import {VerifyCodeResponseInterface} from "../interfaces/verify-code-response.interface";
-import {VerifyCodeRequestInterface} from "../interfaces/verify-code-request.interface";
-import {DeleteCodeRequestInterface} from "../interfaces/delete-code-request.interface";
-import {RecoverPasswordCodeRequestInterface} from "../interfaces/recover-password-code-request.interface";
+import {VerifyCodeResponseInterface} from "../interfaces/old/verify-code-response.interface";
+import {VerifyCodeRequestInterface} from "../interfaces/old/verify-code-request.interface";
+import {DeleteCodeRequestInterface} from "../interfaces/old/delete-code-request.interface";
+import {RecoverPasswordCodeRequestInterface} from "../interfaces/old/recover-password-code-request.interface";
 
 @Injectable()
 export class MailerService {

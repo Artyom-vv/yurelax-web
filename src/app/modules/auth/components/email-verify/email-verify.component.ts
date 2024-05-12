@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MailerService} from "../../../shared/services/mailer.service";
-import {CodeResponseInterface} from "../../../shared/interfaces/code-response.interface";
+import {CodeResponseInterface} from "../../../shared/interfaces/old/code-response.interface";
 import {filter, finalize, Observable, Subscription, switchMap, tap} from "rxjs";
 import {UserService} from "../../../platform/services/user.service";
 import {catchError} from "rxjs/operators";

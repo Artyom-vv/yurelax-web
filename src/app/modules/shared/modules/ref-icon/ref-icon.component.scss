@@ -4,7 +4,10 @@
 
 :host {
   transition: $trs;
-  @include icon-color(map-get($project-colors, "gradation", 100));
+  --icon-size: 20px;
+  display: block;
+  @include icon-color(var(--gradation-100));
+  @include icon-size(var(--icon-size));
 }
 
 .icon-ref-wrapper {

@@ -72,3 +72,57 @@ ul.list {
     }
   }
 }
+
+:root {
+  /* Fonts */
+  --main-font: 'Gilroy';
+  --second-font: 'Onest';
+
+  /* Gradation Colors */
+  --gradation-800: #090D11;
+  --gradation-750: #0B0F13;
+  --gradation-700: #101418;
+  --gradation-600: #232A2F;
+  --gradation-500: #5F676D;
+  --gradation-400: #94999E;
+  --gradation-300: #C9CDCF;
+  --gradation-200: #E4E6E7;
+  --gradation-100: #FFFFFF;
+
+  /* Red Colors */
+  --red-600: #120A0B;
+  --red-500: #290A0F;
+  --red-400: #C52636;
+  --red-300: #DF3A4A;
+  --red-200: #F28A8E;
+  --red-100: #FCE9E9;
+
+  /* Yellow Colors */
+  --yellow-600: #171003;
+  --yellow-500: #2E2005;
+  --yellow-400: #E5A11A;
+  --yellow-300: #FAB938;
+  --yellow-200: #FFD071;
+  --yellow-100: #FFF6E5;
+
+  /* Green Colors */
+  --green-600: #0D1603;
+  --green-500: #1F3409;
+  --green-400: #66AC20;
+  --green-300: #8CCB4D;
+  --green-200: #BFEC92;
+  --green-100: #E5F5D6;
+
+  /* Purple Colors */
+  --purple-600: #0B0A0F;
+  --purple-500: #151320;
+  --purple-400: #3D45B8;
+  --purple-300: #6C6CDA;
+  --purple-200: #969CEE;
+  --purple-100: #E9EAFC;
+
+  /* Tint Colors */
+  --tint-75: rgba(9, 13, 17, 0.75);
+  --tint-60: rgba(9, 13, 17, 0.6);
+  --tint-45: rgba(9, 13, 17, 0.45);
+}

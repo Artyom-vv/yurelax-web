@@ -16,9 +16,6 @@ import {OfferComponent} from './components/offer/offer.component';
 import {ErrorHintWrapperModule} from "../../../shared/modules/error-hint-wrapper/error-hint-wrapper.module";
 import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
-import {
-  ErrorHintConditionModule
-} from "../../../shared/modules/error-hint-wrapper/modules/error-hint-condition/error-hint-condition.module";
 import {TopPlayersComponent} from './components/top-players/top-players.component';
 import {RatingTableModule} from "../../../shared/modules/rating-table/rating-table.module";
 import {SelectorPointModule} from "../../../shared/modules/selector-point/selector-point.module";
@@ -34,6 +31,8 @@ import {SocialPanelModule} from "../../../shared/modules/social-panel/social-pan
 import {InViewModule} from "../../../shared/directives/in-view/in-view.module";
 import {AnimationOpacityModule} from "../../../shared/modules/animation-opacity/animation-opacity.module";
 import {RefIconModule} from "../../../shared/modules/ref-icon/ref-icon.module";
+import {TextAreaModule} from "../../../shared/modules/text-fields/modules/text-area/text-area.module";
+import {InputModule} from "../../../shared/modules/text-fields/modules/input/input.module";
 
 @NgModule({
   declarations: [
@@ -47,28 +46,29 @@ import {RefIconModule} from "../../../shared/modules/ref-icon/ref-icon.module";
     TopPlayersComponent,
     FaqComponent
   ],
-    imports: [
-        CommonModule,
-        SpacingModule,
-        ButtonModule,
-        IconModule,
-        RouterLink,
-        SkeletonModule,
-        ClipboardModule,
-        ErrorHintWrapperModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        ErrorHintConditionModule,
-        RatingTableModule,
-        SelectorPointModule,
-        MatSnackBarModule,
-        MatExpansionModule,
-        AccordionModule,
-        SocialPanelModule,
-        InViewModule,
-        AnimationOpacityModule,
-        RefIconModule,
-    ],
+  imports: [
+    CommonModule,
+    SpacingModule,
+    ButtonModule,
+    IconModule,
+    RouterLink,
+    SkeletonModule,
+    ClipboardModule,
+    ErrorHintWrapperModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    RatingTableModule,
+    SelectorPointModule,
+    MatSnackBarModule,
+    MatExpansionModule,
+    AccordionModule,
+    SocialPanelModule,
+    InViewModule,
+    AnimationOpacityModule,
+    RefIconModule,
+    TextAreaModule,
+    InputModule,
+  ],
   providers: [
     MiniGamesService,
     StatisticsService,

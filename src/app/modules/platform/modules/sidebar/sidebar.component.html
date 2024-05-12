@@ -4,7 +4,7 @@
     <ng-container *ngFor="let group of navigation; let groupIdx = index">
       <ul class="flex flex_column">
         <li *ngFor="let link of group; let idx = index">
-          <yrx-dropout-point *ngIf="link.isButton; else linkTemplate" [underlined]="group.length-1 !== idx" (press)="link?.callback()" [icon]="link.icon" [iconStroked]="link.iconStroked">
+          <yrx-dropout-point *ngIf="link.isButton; else linkTemplate" [underlined]="group.length-1 !== idx" (press)="link?.callback?.()" [icon]="link.icon" [iconStroked]="link.iconStroked">
             <span>{{link.name}}</span>
           </yrx-dropout-point>
           <ng-template #linkTemplate>

@@ -4,7 +4,7 @@ import {finalize, first, Subscription, tap} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ExistingStatisticsValidator} from "../../../../../shared/validators/existing-statistics.validator";
 import {KeyValidator} from "../../../../../shared/validators/key.validator";
-import {StatisticsResponseInterface} from "../../../../../shared/interfaces/statistics-response.interface";
+import {StatisticsResponseInterface} from "../../../../../shared/interfaces/old/statistics-response.interface";
 import {catchError} from "rxjs/operators";
 import {MatSnackBar} from "@angular/material/snack-bar";
 

@@ -1,4 +1,4 @@
-import {TimestampsDto} from "../../../../shared/interfaces/shared.interface";
+import {TimestampsDto} from "../../../../shared/interfaces/old/shared.interface";
 
 export interface WikiPage extends TimestampsDto {
   _id: string

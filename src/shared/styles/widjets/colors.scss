@@ -138,13 +138,3 @@ span.c, .text.c, .c {
     color: map-get($project-colors, "yellow", 100);
   }
 }
-.link {
-  transition: $trs;
-  &.c {
-    &-purple-300 {
-      &:hover {
-        color: map-get($project-colors, "purple", 200);
-      }
-    }
-  }
-}

@@ -2,12 +2,12 @@ import {Observable, throwError,} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
-import {SetUserStatisticsRequestInterface} from "../interfaces/set-user-statistics-request.interface";
-import {UserStatisticsResponseInterface} from "../interfaces/user-statistics-response.interface";
-import {GetUserStatisticsRequestInterface} from "../interfaces/get-user-statistics-request.interface";
-import {GetTopPlayersRequestInterface} from "../interfaces/get-top-players-request.interface";
+import {SetUserStatisticsRequestInterface} from "../interfaces/old/set-user-statistics-request.interface";
+import {UserStatisticsResponseInterface} from "../interfaces/old/user-statistics-response.interface";
+import {GetUserStatisticsRequestInterface} from "../interfaces/old/get-user-statistics-request.interface";
+import {GetTopPlayersRequestInterface} from "../interfaces/old/get-top-players-request.interface";
 import {catchError} from "rxjs/operators";
-import {GetTopPlayersItemResponseInterface} from "../interfaces/get-top-players-response.interface";
+import {GetTopPlayersItemResponseInterface} from "../interfaces/old/get-top-players-response.interface";
 
 @Injectable()
 export class UserStatisticsService {

@@ -7,7 +7,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import {StatisticsResponseInterface} from "../../../../../shared/interfaces/statistics-response.interface";
+import {StatisticsResponseInterface} from "../../../../../shared/interfaces/old/statistics-response.interface";
 import {StatisticsService} from "../../../../../shared/services/statistics.service";
 import {delay, finalize, first, tap} from "rxjs";
 import {catchError} from "rxjs/operators";
