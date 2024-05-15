@@ -1,8 +1,10 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {AbstractControl} from "@angular/forms";
-import {map, combineLatest, Observable} from "rxjs";
+import {map, combineLatest, Observable, tap} from "rxjs";
 import {BaseComponentInputDirective} from "../../text-fields/directives/base-component-input.directive";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Pipe({
   name: 'errorHintConditions'
 })
@@ -21,7 +23,8 @@ export class ErrorHintConditionsPipe implements PipeTransform {
     return this.control.valueChanges.pipe(
       map(() => {
         return Boolean(this.control?.errors?.[field])
-      })
+      }),
+      untilDestroyed(this)
     )
   }
 

@@ -38,7 +38,7 @@ import {QueryParamGuard} from "../shared/services/guards/query-param.guard";
 import {RecoverStepGuard} from "../shared/services/guards/recover-step.guard";
 import {InputModule} from "../shared/modules/text-fields/modules/input/input.module";
 import {RefIconModule} from "../shared/modules/ref-icon/ref-icon.module";
-import {IconModule} from "../shared/directives/icon/icon.module";
+import {IconRightDirective} from "../shared/directives/icon-right.directive";
 
 @NgModule({
   declarations: [
@@ -63,7 +63,6 @@ import {IconModule} from "../shared/directives/icon/icon.module";
     ButtonModule,
     LinkModule,
     MatInputModule,
-    IconModule,
     ReactiveFormsModule,
     ErrorHintWrapperModule,
     PasswordStrengthModule,
@@ -72,7 +71,7 @@ import {IconModule} from "../shared/directives/icon/icon.module";
     PasswordHiderModule,
     InputModule,
     RefIconModule,
-    IconModule
+    IconRightDirective
   ],
   providers: [
     AnimationsService,

@@ -1,8 +1,28 @@
 :host {
-  height: 18px;
+  display: block;
+  position: relative;
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 span {
-  width: 100%;
+  display: block;
+  animation: slideDown .2s ease;
+}
+
+.error-hint-overflow {
+  overflow: hidden;
   position: absolute;
+  top: 0;
+  left: 0;
+  padding-bottom: 4px;
 }

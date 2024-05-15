@@ -5,7 +5,7 @@ import {RouterModule} from "@angular/router";
 import {SvgSpritesComponent} from './components/svg-sprites/svg-sprites.component';
 import {ToolsService} from "./services/tools.service";
 import {HttpClientModule} from "@angular/common/http";
-import { PreloaderComponent } from './components/preloader/preloader.component';
+import {PreloaderComponent} from './components/preloader/preloader.component';
 import {IconModule} from "./modules/icon/icon.module";
 import {SpacingModule} from "./modules/spacing/spacing.module";
 

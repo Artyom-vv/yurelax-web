@@ -26,10 +26,4 @@ export class InputBaseComponent {
     }
   }
 
-  get iconWrapperClasses() {
-    return {
-      [`${this.baseComponent.icon?.yrxIcon}-wrapper`]: true
-    }
-  }
-
 }

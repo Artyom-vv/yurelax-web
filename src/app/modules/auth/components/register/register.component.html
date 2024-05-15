@@ -23,7 +23,7 @@
 
   <yrx-input>
     <input #passwordRef autocomplete="new-password" formControlName="password" type="password" yrxInput placeholder="Введите пароль">
-    <yrx-ref-icon yrxIcon [yrxPasswordHider]="[passwordRef, passwordRepeatRef]" [name]="passwordRef.type === 'password' ? 'eye-off' : 'eye'"></yrx-ref-icon>
+    <yrx-ref-icon yrxIconRight [yrxPasswordHider]="[passwordRef, passwordRepeatRef]" [name]="passwordRef.type === 'password' ? 'eye-off' : 'eye'"></yrx-ref-icon>
     <yrx-error-hint-field field="minlength">Длина пароля должна быть больше {{MIN_PASSWORD_LENGTH}} символов</yrx-error-hint-field>
     <yrx-error-hint-field field="required">Пароль не должен быть пустым</yrx-error-hint-field>
   </yrx-input>

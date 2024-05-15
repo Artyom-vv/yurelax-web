@@ -1,19 +1,19 @@
-<div class="box-wrapper flex flex_column">
-	<span class="box-label text c-bti-tertiary">
-		<ng-content select="[input-base-label]"></ng-content>
+<div class="box-wrapper flex flex_column gap-4">
+	<span *ngIf="baseComponent.label" class="box-label text c-bti-tertiary">
+		<ng-content select="[yrxLabel]"></ng-content>
 	</span>
   <div
-    [class.box-right-iconly]="baseComponent.isRightIcon"
-    [class.box-left-iconly]="baseComponent.isLeftIcon"
+    [class.box-right-iconly]="baseComponent.iconRight"
+    [class.box-left-iconly]="baseComponent.iconLeft"
     class="box" [ngClass]="classes"
   >
     <ng-content></ng-content>
-<!--    <span class="box-description text_body text c-bti-tertiary">-->
-<!--			<ng-content select="[input-description]"></ng-content>-->
-<!--		</span>-->
-    <div *ngIf="baseComponent.icon" class="icon-wrapper" [ngClass]="iconWrapperClasses">
-      <ng-content select="[yrxIcon]"></ng-content>
+    <div class="icon-wrapper" [class.right-wrapper]="baseComponent.iconRight">
+      <ng-content select="[yrxIconRight]"></ng-content>
+    </div>
+    <div class="icon-wrapper" [class.left-wrapper]="baseComponent.iconLeft">
+      <ng-content select="[yrxIconLeft]"></ng-content>
     </div>
   </div>
+  <yrx-error-hint-wrapper></yrx-error-hint-wrapper>
 </div>
-<yrx-error-hint-wrapper></yrx-error-hint-wrapper>

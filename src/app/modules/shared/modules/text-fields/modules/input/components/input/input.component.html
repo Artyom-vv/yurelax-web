@@ -1,6 +1,9 @@
 <yrx-input-base>
   <ng-content></ng-content>
-  <ng-container [yrxIcon]="directive?.icon?.yrxIcon">
-    <ng-content select="[yrxIcon]"></ng-content>
+  <ng-container yrxIconRight>
+    <ng-content select="[yrxIconRight]"></ng-content>
+  </ng-container>
+  <ng-container yrxIconLeft>
+    <ng-content select="[yrxIconLeft]"></ng-content>
   </ng-container>
 </yrx-input-base>

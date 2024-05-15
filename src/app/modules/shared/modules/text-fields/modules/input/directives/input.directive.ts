@@ -1,6 +1,6 @@
-import {Directive, HostBinding, Optional} from '@angular/core';
+import {Directive, Optional} from '@angular/core';
 import {BaseInputDirective} from "../../../directives/base-input.directive";
-import {IconDirective} from "../../../../../directives/icon/icon.directive";
+import {IconDirective} from "../../../../../directives/icon.directive";
 
 @Directive({
   selector: '[yrxInput]',
