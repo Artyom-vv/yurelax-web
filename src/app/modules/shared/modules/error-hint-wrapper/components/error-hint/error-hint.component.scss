@@ -1,6 +1,7 @@
 :host {
   display: block;
   position: relative;
+  overflow: hidden;
 }
 
 @keyframes slideDown {
@@ -20,9 +21,5 @@ span {
 }
 
 .error-hint-overflow {
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  left: 0;
   padding-bottom: 4px;
 }

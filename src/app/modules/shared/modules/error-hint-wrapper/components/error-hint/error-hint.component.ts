@@ -32,7 +32,7 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
         style({
           height: '{{endHeight}}px'
         }),
-        animate('.2s ease', style({
+        animate('.3s ease', style({
           height: '0px'
         })),
         query('.text', [
@@ -42,9 +42,9 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
           }),
           animate('.2s ease', style({
             opacity: 0,
-            transform: 'translateY(100%)'
+            transform: 'translateY(-100%)'
           })),
-        ])
+        ]),
       ]),
     ])
   ]
