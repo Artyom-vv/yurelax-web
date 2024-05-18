@@ -36,15 +36,12 @@ export class ErrorHintWrapperComponent implements OnInit, AfterViewInit {
   @Input() isYandexCringe: boolean = false;
 
   display: string = 'none'
-  errors = new BehaviorSubject<ValidationErrors>({})
-  errorsCount = 0
 
   get control() {
     return this.baseInput.baseDirective?.control
   }
 
   constructor(
-    private cdr: ChangeDetectorRef,
     public baseInput: BaseComponentInputDirective,
     @Inject(BASE_COMPONENT_INPUT_BLUR) private inputBlur: Observable<Event>
   ) {
@@ -52,25 +49,23 @@ export class ErrorHintWrapperComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     if (this.control) {
-      this.control.valueChanges.pipe(
-        tap(() => {
-          this.errors.next(this.control?.errors ?? {})
-          this.cdr.detectChanges()
-        })
-      ).subscribe();
+      combineLatest([this.inputBlur, this.control.statusChanges]).pipe(
+        switchMap(([, status]) =>
+          (this.isYandexCringe ? of(null).pipe(debounceTime(50)) : of(null)).pipe(
+            tap(() => {
+              if (this.checkConditions(this.control?.errors)) {
+                this.display = 'block'
+              } else {
+                setTimeout(() => {
+                  this.display = 'none'
+                }, 200)
+              }
+            })
+          )
+        ),
+        untilDestroyed(this)
+      ).subscribe()
     }
-
-    combineLatest([this.inputBlur, this.errors]).pipe(
-      switchMap(([, errors]) =>
-        (this.isYandexCringe ? of(null).pipe(debounceTime(50)) : of(null)).pipe(
-          tap(() => {
-            this.errorsCount = Object.keys(errors).length
-            this.display = this.checkConditions(errors) ? 'block' : 'none';
-          })
-        )
-      ),
-      untilDestroyed(this)
-    ).subscribe()
   }
 
   ngAfterViewInit() {

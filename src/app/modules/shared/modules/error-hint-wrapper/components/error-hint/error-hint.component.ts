@@ -26,21 +26,21 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
         height: '{{endHeight}}px'
       }), {params: {endHeight: 0}}),
       transition('default => slideDown', [
-        animate('.2s ease')
+        animate('.2s ease-in-out')
       ]),
       transition(':leave', [
         style({
           height: '{{endHeight}}px'
         }),
-        animate('.3s ease', style({
-          height: '0px'
+        animate('.2s 1ms ease-in-out', style({
+          height: '0px',
         })),
         query('.text', [
           style({
             opacity: 1,
             transform: 'translateY(0)'
           }),
-          animate('.2s ease', style({
+          animate('.2s ease-in-out', style({
             opacity: 0,
             transform: 'translateY(-100%)'
           })),
@@ -49,9 +49,9 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
     ])
   ]
 })
-export class ErrorHintComponent implements AfterViewInit, OnDestroy {
+export class ErrorHintComponent implements AfterViewInit {
 
-  @Input() text: string = ''
+  @Input({required: true}) text: string = ''
 
   animation: string = 'default';
   height: number = 0;
@@ -80,10 +80,6 @@ export class ErrorHintComponent implements AfterViewInit, OnDestroy {
       }),
       untilDestroyed(this)
     ).subscribe()
-  }
-
-  ngOnDestroy() {
-    this.animation = 'default';
   }
 
 }

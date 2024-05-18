@@ -20,7 +20,7 @@ export class ErrorHintConditionsPipe implements PipeTransform {
   }
 
   checkCondition = (field: string): Observable<boolean> => {
-    return this.control.valueChanges.pipe(
+    return this.control.statusChanges.pipe(
       map(() => {
         return Boolean(this.control?.errors?.[field])
       }),

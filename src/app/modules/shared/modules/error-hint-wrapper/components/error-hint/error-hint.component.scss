@@ -17,9 +17,5 @@
 
 span {
   display: block;
-  animation: slideDown .2s ease;
-}
-
-.error-hint-overflow {
-  padding-bottom: 4px;
+  animation: slideDown .2s linear;
 }
