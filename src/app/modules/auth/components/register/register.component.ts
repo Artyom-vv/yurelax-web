@@ -15,7 +15,9 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {PersistenceService} from "../../../shared/services/persistence.service";
 import {AppStore} from "../../../../store/app.store";
 import {CheckIfMatchingPasswordsValidator} from "../../validators/check-if-matching-passwords.validator";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
   selector: 'yrx-register',
   templateUrl: './register.component.html',
@@ -92,17 +94,16 @@ export class RegisterComponent {
   }
 
   private dataFields(): void {
-    this.subscriptions.push(
-      this.route.queryParams.pipe(
-        filter((data) => data['ref']),
-        switchMap((data) => this.userService.getUser(data['ref'])),
-        tap((user) => {
-          this.persistenceService.set('userInvitedId', user._id);
-          this.form.patchValue({userInvitedId: user._id}, {emitEvent: false});
-          this._snackBar.open('Вы были приглашены ' + user.login, 'Хорошо')
-        })
-      ).subscribe()
-    )
+    this.route.queryParams.pipe(
+      filter((data) => data['ref']),
+      switchMap((data) => this.userService.getUser(data['ref'])),
+      tap((user) => {
+        this.persistenceService.set('userInvitedId', user._id);
+        this.form.patchValue({userInvitedId: user._id}, {emitEvent: false});
+        this._snackBar.open('Вы были приглашены ' + user.login, 'Хорошо')
+      }),
+      untilDestroyed(this)
+    ).subscribe()
   }
 
   private watchForms(): void {

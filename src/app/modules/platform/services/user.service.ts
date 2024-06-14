@@ -22,31 +22,31 @@ export class UserService {
   }
 
   getUser(userId: string): Observable<UserRes> {
-    return this.http.get<UserRes>(`${environment.apiUrl}/user/get-user/${userId}`).pipe(
+    return this.http.get<UserRes>(`${environment.apiUrl}/users/get-user/${userId}`).pipe(
       catchError((err) => throwError(err.error))
     )
   }
 
   getUserInfo(userId: string): Observable<UserInfo> {
-    return this.http.get<UserInfo>(`${environment.apiUrl}/user-info/get-info/${userId}`).pipe(
+    return this.http.get<UserInfo>(`${environment.apiUrl}/users-info/get-info/${userId}`).pipe(
       catchError((err) => throwError(err.error))
     )
   }
 
   getUserOnline(data: GetUserOnlineReq): Observable<GetUserOnlineResponseInterface> {
-    return this.http.post<GetUserOnlineResponseInterface>(`${environment.apiUrl}/shared/ping-player`, data).pipe(
+    return this.http.post<GetUserOnlineResponseInterface>(`${environment.apiUrl}/server/ping-player`, data).pipe(
       catchError((err) => throwError(err.error))
     )
   }
 
   checkUserExists(data: CheckUserExistsRequestInterface): Observable<CheckUserExistsResponseInterface> {
-    return this.http.post<CheckUserExistsResponseInterface>(`${environment.apiUrl}/user/check-user-exists`, data).pipe(
+    return this.http.post<CheckUserExistsResponseInterface>(`${environment.apiUrl}/users/check-user-exists`, data).pipe(
       catchError((err) => throwError(err.error))
     )
   }
 
   setEmailConfirmed(): Observable<UserRes> {
-    return this.http.post<UserRes>(`${environment.apiUrl}/user/set-email-confirmed`, null).pipe(
+    return this.http.post<UserRes>(`${environment.apiUrl}/users/set-email-confirmed`, null).pipe(
       switchMap((updatedUser) => this.appStore.user$.pipe(first(),map((userStore) => ({updatedUser, userStore})))),
       map(({userStore, updatedUser}) => {
         if (userStore) this.authService.saveUserData({
