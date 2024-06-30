@@ -8,7 +8,7 @@ import {AppStore} from "./store/app.store";
 import {PersistenceService} from "./modules/shared/services/persistence.service";
 import {SystemUserService} from "./modules/shared/services/system-user.service";
 import {AuthService} from "./modules/auth/services/auth.service";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
 import {TokenInterceptor} from "./modules/shared/services/guards/token.interceptor";
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
@@ -25,13 +25,13 @@ registerLocaleData(localeRu)
   declarations: [
     AppComponent,
   ],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
-    AdminModule,
-    HttpClientModule,
+    AdminModule
   ],
   providers: [
     AppStore,
@@ -52,9 +52,9 @@ registerLocaleData(localeRu)
       useFactory: appInitializer,
       multi: true,
       deps: [IconsService]
-    }
-  ],
-  bootstrap: [AppComponent]
+    },
+    provideHttpClient(withInterceptorsFromDi())
+  ]
 })
 export class AppModule {
 

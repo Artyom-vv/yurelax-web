@@ -2,7 +2,7 @@ import {Observable, throwError} from "rxjs";
 import {CodeResponseInterface} from "../interfaces/old/code-response.interface";
 import {environment} from "../../../../environments/environment";
 import {catchError} from "rxjs/operators";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {VerifyCodeResponseInterface} from "../interfaces/old/verify-code-response.interface";
 import {VerifyCodeRequestInterface} from "../interfaces/old/verify-code-request.interface";

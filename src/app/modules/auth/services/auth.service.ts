@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {Observable, throwError, of, tap} from "rxjs";
 import {UserRes} from "../../platform/interfaces/user.interface";
 import {environment} from "../../../../environments/environment";
@@ -56,15 +56,12 @@ export class AuthService {
       tap((res) => {
         this.saveData(res)
         this.appStore.setIsLogged(true);
-      }),
-      catchError((err) => throwError(err))
+      })
     )
   }
 
   adminLogin(data: LoginReq): Observable<LoginRes> {
-    return this.http.post<LoginRes>(`${environment.apiUrl}/auth/login`, data).pipe(
-      catchError((err) => throwError(err))
-    )
+    return this.http.post<LoginRes>(`${environment.apiUrl}/auth/login`, data)
   }
 
   register(data: RegisterReq): Observable<RegisterRes> {

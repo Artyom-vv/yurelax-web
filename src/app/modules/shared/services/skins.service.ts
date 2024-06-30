@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {map, Observable, switchMap, throwError} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {SkinsUploadResponseInterface} from "../interfaces/old/skins-upload-response.interface";

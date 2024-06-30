@@ -1,6 +1,6 @@
 import {EMPTY, map, Observable, of, switchMap, tap, throwError} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,} from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import {catchError} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {SystemUserService} from '../system-user.service';

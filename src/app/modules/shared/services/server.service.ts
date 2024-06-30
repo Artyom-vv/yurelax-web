@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {GetOnlineResponseInterface} from "../interfaces/old/get-online-response.interface";
 import {environment} from "../../../../environments/environment";
