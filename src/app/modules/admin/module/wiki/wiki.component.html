@@ -5,5 +5,7 @@
 <yrx-spacing type="S"></yrx-spacing>
 <yrx-button [disabled]="!!(updating$ | async)" [loading]="updating$ | async" (press)="update()">
   Обновить с github
-  <yrx-icon *ngIf="updating$ | async" btn-icon icon="loader"></yrx-icon>
+  @if (updating$ | async) {
+    <yrx-icon btn-icon icon="loader"></yrx-icon>
+  }
 </yrx-button>

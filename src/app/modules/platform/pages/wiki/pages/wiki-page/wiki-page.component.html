@@ -1,35 +1,54 @@
 <div class="page" [@routeAnimations]="pageName">
-  <yrx-skeleton *ngIf="loading$ | async; else content" theme="dark" [styles]="styles"></yrx-skeleton>
-  <ng-template #content>
-    <ng-container *ngIf="page as page">
-      <ng-container *ngFor="let slice of page.slices; let idx = index" [ngSwitch]="slice.type">
-        <yrx-spacing *ngSwitchCase="'spacing'" [type]="getSpacingType(slice.value)"></yrx-spacing>
-        <ng-container *ngSwitchCase="'header'">
-          <yrx-wiki-head [title]="slice.value" [icon]="page.metadata['icon']"></yrx-wiki-head>
-          <yrx-spacing *ngIf="isNotLast(idx)" type="M"></yrx-spacing>
-        </ng-container>
-        <ng-container *ngSwitchCase="'title'">
-          <h3>{{slice.value}}</h3>
-          <yrx-spacing *ngIf="isNotLast(idx)" type="XS2"></yrx-spacing>
-        </ng-container>
-        <ng-container *ngSwitchCase="'subtitle'">
-          <p class="headline">{{slice.value}}</p>
-          <yrx-spacing *ngIf="isNotLast(idx)" type="XS2"></yrx-spacing>
-        </ng-container>
-        <ng-container *ngSwitchCase="'text'">
-          <p class="text text_big c-gradation-300">{{slice.value}}</p>
-          <yrx-spacing *ngIf="isNotLast(idx)" type="S"></yrx-spacing>
-        </ng-container>
-        <ng-container *ngSwitchCase="'image'">
-          <yrx-wiki-picture [description]="slice.displayTitle ?? ''" [src]="slice.value" [alt]="slice.displayTitle ?? 'Википедия yurelax'"></yrx-wiki-picture>
-          <yrx-spacing *ngIf="isNotLast(idx)" type="S"></yrx-spacing>
-        </ng-container>
-        <yrx-link [iconStroked]="true" icon="external-link" (press)="redirect(slice.value)" *ngSwitchCase="'link'">{{slice.displayTitle ?? slice.value}}</yrx-link>
-      </ng-container>
-    </ng-container>
+  @if (loading$ | async) {
+    <yrx-skeleton theme="dark" [styles]="styles"></yrx-skeleton>
+  } @else {
+    @if (page; as page) {
+      @for (slice of page.slices; track slice; let idx = $index) {
+        @switch (slice.type) {
+          @case ('spacing') {
+            <yrx-spacing [type]="getSpacingType(slice.value)"></yrx-spacing>
+          }
+          @case ('header') {
+            <yrx-wiki-head [title]="slice.value" [icon]="page.metadata['icon']"></yrx-wiki-head>
+            @if (isNotLast(idx)) {
+              <yrx-spacing type="M"></yrx-spacing>
+            }
+          }
+          @case ('title') {
+            <h3>{{slice.value}}</h3>
+            @if (isNotLast(idx)) {
+              <yrx-spacing type="XS2"></yrx-spacing>
+            }
+          }
+          @case ('subtitle') {
+            <p class="headline">{{slice.value}}</p>
+            @if (isNotLast(idx)) {
+              <yrx-spacing type="XS2"></yrx-spacing>
+            }
+          }
+          @case ('text') {
+            <p class="text text_big c-gradation-300">{{slice.value}}</p>
+            @if (isNotLast(idx)) {
+              <yrx-spacing type="S"></yrx-spacing>
+            }
+          }
+          @case ('image') {
+            <yrx-wiki-picture [description]="slice.displayTitle ?? ''" [src]="slice.value" [alt]="slice.displayTitle ?? 'Википедия yurelax'"></yrx-wiki-picture>
+            @if (isNotLast(idx)) {
+              <yrx-spacing type="S"></yrx-spacing>
+            }
+          }
+          @case ('link') {
+            <yrx-link [iconStroked]="true" icon="external-link" (press)="redirect(slice.value)">{{slice.displayTitle ?? slice.value}}</yrx-link>
+          }
+        }
+      }
+    }
     <yrx-spacing type="M"></yrx-spacing>
     <div class="flex gap-12">
-      <yrx-foot-panel *ngFor="let button of buttons" class="flex_grow" [routerLink]="'../'+button.data.page" [type]="button.type" [title]="button.data.metadata['title']"></yrx-foot-panel>
+      @for (button of buttons; track button) {
+        <yrx-foot-panel class="flex_grow" [routerLink]="'../'+button.data.page" [type]="button.type" [title]="button.data.metadata['title']"></yrx-foot-panel>
+      }
     </div>
-  </ng-template>
+  }
 </div>

@@ -11,5 +11,7 @@
 </div>
 <yrx-spacing type="S"></yrx-spacing>
 <div class="subscriptions flex gap-24">
-  <yrx-subscription *ngFor="let index of indexes" [data]="subscriptions[index]"></yrx-subscription>
+  @for (index of indexes; track index) {
+    <yrx-subscription [data]="subscriptions[index]"></yrx-subscription>
+  }
 </div>

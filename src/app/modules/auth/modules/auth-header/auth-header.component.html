@@ -1,27 +1,27 @@
 <div class="auth-header flex flex_align-center" [ngClass]="page">
-  <ng-container *ngIf="page === 'register'">
+  @if (page === 'register') {
     <img class="first-image" src="assets/content/auth/register/birch.png" alt="Регистрируясь на yurelax, вы можете играть в крутые мини-игры: BowMaster, Hunt, Tower Defence, Block Party, Bosses, Parkour Tag, Stay Alive, Board Games">
     <img class="second-image" src="assets/content/auth/register/grass.png" alt="На yurelax можно поучастовать в интересных событиях (ивентах), которые проходят каждый месяц. Регистрируйся и не упусти возможность принять участие в ивентах (событиях).">
     <img class="third-image" src="assets/content/auth/register/bee.png" alt="Регистрируйся на самом необычном майнкрафт (minecraft) сервере с мини-играми и крутой RPG-системой - yurelax ">
     <img class="third-image layer-blur-image" src="assets/content/auth/register/bee.png" alt="Регистрируйся на самом необычном майнкрафт (minecraft) сервере с мини-играми и крутой RPG-системой - yurelax ">
-  </ng-container>
-  <ng-container *ngIf="page === 'login'">
+  }
+  @if (page === 'login') {
     <img class="first-image" src="assets/content/auth/login/cookie.png" alt="Регистрируясь на yurelax, вы можете играть в крутые мини-игры: BowMaster, Hunt, Tower Defence, Block Party, Bosses, Parkour Tag, Stay Alive, Board Games">
     <img class="second-image" src="assets/content/auth/login/iron_block.png" alt="На yurelax можно поучастовать в интересных событиях (ивентах), которые проходят каждый месяц. Регистрируйся и не упусти возможность принять участие в ивентах (событиях).">
     <img class="third-image" src="assets/content/auth/login/bee.png" alt="Регистрируйся на самом необычном майнкрафт (minecraft) сервере с мини-играми и крутой RPG-системой - yurelax ">
     <img class="third-image layer-blur-image" src="assets/content/auth/login/bee.png" alt="Регистрируйся на самом необычном майнкрафт (minecraft) сервере с мини-играми и крутой RPG-системой - yurelax ">
-  </ng-container>
-  <ng-container *ngIf="page === 'recover-password'">
+  }
+  @if (page === 'recover-password') {
     <img class="first-image" src="assets/content/auth/recover-password/gold_block.png" alt="Регистрируясь на yurelax, вы можете играть в крутые мини-игры: BowMaster, Hunt, Tower Defence, Block Party, Bosses, Parkour Tag, Stay Alive, Board Games">
     <img class="second-image" src="assets/content/auth/recover-password/oak.png" alt="На yurelax можно поучастовать в интересных событиях (ивентах), которые проходят каждый месяц. Регистрируйся и не упусти возможность принять участие в ивентах (событиях).">
     <img class="third-image" src="assets/content/auth/recover-password/bee.png" alt="Регистрируйся на самом необычном майнкрафт (minecraft) сервере с мини-играми и крутой RPG-системой - yurelax ">
     <img class="third-image layer-blur-image" src="assets/content/auth/recover-password/bee.png" alt="Регистрируйся на самом необычном майнкрафт (minecraft) сервере с мини-играми и крутой RPG-системой - yurelax ">
-  </ng-container>
-  <ng-container *ngIf="page === 'email-code'">
+  }
+  @if (page === 'email-code') {
     <img class="first-image" src="assets/content/auth/email-code/tnt.png" alt="Регистрируясь на yurelax, вы можете играть в крутые мини-игры: BowMaster, Hunt, Tower Defence, Block Party, Bosses, Parkour Tag, Stay Alive, Board Games">
     <img class="second-image" src="assets/content/auth/email-code/dirt.png" alt="На yurelax можно поучастовать в интересных событиях (ивентах), которые проходят каждый месяц. Регистрируйся и не упусти возможность принять участие в ивентах (событиях).">
     <img class="third-image" src="assets/content/auth/email-code/bee.png" alt="Регистрируйся на самом необычном майнкрафт (minecraft) сервере с мини-играми и крутой RPG-системой - yurelax ">
     <img class="third-image layer-blur-image" src="assets/content/auth/email-code/bee.png" alt="Регистрируйся на самом необычном майнкрафт (minecraft) сервере с мини-играми и крутой RPG-системой - yurelax ">
-  </ng-container>
+  }
   <h3><ng-content></ng-content></h3>
 </div>

@@ -12,13 +12,15 @@
   <div class="btn_icon-wrapper btn_left-wrapper" #iconLeft>
     <ng-content select="[btn-left-icon]"></ng-content>
   </div>
-  <span *ngIf="icon.children.length === 0">
-    <ng-content></ng-content>
-  </span>
+  @if (icon.children.length === 0) {
+    <span>
+      <ng-content></ng-content>
+    </span>
+  }
   <div class="btn_icon-wrapper btn_right-wrapper" #iconRight>
-    <ng-container *ngIf="!loading">
+    @if (!loading) {
       <ng-content select="[btn-right-icon]"></ng-content>
-    </ng-container>
+    }
   </div>
   <div class="btn_icon-wrapper btn_only-icon-wrapper" #icon>
     <ng-content select="[btn-icon]"></ng-content>

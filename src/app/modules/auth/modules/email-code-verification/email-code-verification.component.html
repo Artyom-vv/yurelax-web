@@ -4,17 +4,21 @@
   </p>
   <yrx-spacing type="S"></yrx-spacing>
   <div class="flex gap-8 flex_align-center" [formGroup]="form">
-    <ng-container *ngFor="let inputId of inputs">
+    @for (inputId of inputs; track $index) {
       <div class="box box_input">
         <input #inputRefs [readonly]="!viewMounted" [control]="form.get('value'+(inputId+1))" [id]="inputId.toString()" type="number" inputEvent (onInput)="onInput($event)" autocomplete="off" [formControlName]="'value'+(inputId+1)" class="input_big" matInput placeholder="0">
       </div>
-      <p *ngIf="inputs.length / 2 === inputId + 1" class="text text_big regular c-gradation-400">—</p>
-    </ng-container>
+      @if (inputs.length / 2 === inputId + 1) {
+        <p class="text text_big regular c-gradation-400">—</p>
+      }
+    }
   </div>
   <yrx-spacing type="M"></yrx-spacing>
   <yrx-button [disabled]="dataLoading || form.invalid" (press)="onConfirm()" class="w100" type="primary">
     <span><ng-content></ng-content></span>
-    <yrx-icon btn-icon *ngIf="dataLoading" icon="loader"></yrx-icon>
+    @if (dataLoading) {
+      <yrx-icon btn-icon icon="loader"></yrx-icon>
+    }
   </yrx-button>
   <yrx-spacing type="XS"></yrx-spacing>
   <yrx-link [hover]="delay===0" [disabled]="delay>0" (press)="onResend()">Отправить повторно {{delay>0?'('+delay+'с)' : ''}}</yrx-link>

@@ -4,6 +4,8 @@
     <p class="flex_grow text text_body regular c-gradation-400">Никнейм игрока</p>
   </div>
   <div [style.flex-grow]="2" class="flex_grow flex">
-    <p *ngFor="let column of columns" class="flex_grow text text_body regular text-center" [ngClass]="column.key === filteredByKey ? 'c-purple-300' : 'c-gradation-400'">{{column.text}}</p>
+    @for (column of columns; track column) {
+      <p class="flex_grow text text_body regular text-center" [ngClass]="column.key === filteredByKey ? 'c-purple-300' : 'c-gradation-400'">{{column.text}}</p>
+    }
   </div>
 </div>

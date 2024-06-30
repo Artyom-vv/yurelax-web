@@ -11,10 +11,12 @@
           <yrx-spacing type="S"></yrx-spacing>
           <yrx-sidebar-user-panel></yrx-sidebar-user-panel>
           <yrx-spacing type="XS"></yrx-spacing>
-          <yrx-button *ngIf="userStore?.role === RolesEnum.ADMIN" type="secondary" [routerLink]="['/admin']">
-            <span>Дешборд</span>
-            <yrx-ref-icon btn-right-icon class="stroke" name="arrow-right"></yrx-ref-icon>
-          </yrx-button>
+          @if (userStore?.role === RolesEnum.ADMIN) {
+            <yrx-button type="secondary" [routerLink]="['/admin']">
+              <span>Дешборд</span>
+              <yrx-ref-icon btn-right-icon class="stroke" name="arrow-right"></yrx-ref-icon>
+            </yrx-button>
+          }
           <yrx-spacing type="XS"></yrx-spacing>
         </ng-container>
       </yrx-sidebar>

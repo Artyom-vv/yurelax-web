@@ -1,5 +1,5 @@
 <div class="accordion">
-  <ng-container *ngFor="let item of items">
+  @for (item of items; track item) {
     <ng-container *ngTemplateOutlet="item.template"></ng-container>
-  </ng-container>
+  }
 </div>

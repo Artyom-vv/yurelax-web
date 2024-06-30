@@ -3,19 +3,24 @@
   <h3 yrxAnimateOpacity>Топ-8 игроков за {{month}}</h3>
   <yrx-spacing type="M"></yrx-spacing>
   <div class="flex flex_wrap gap-16">
-    <yrx-selector-point style="flex-basis: 300px" *ngFor="let game of miniGames" [active]="game.miniGameKey === miniGameKey" [iconLoading]="game.miniGameKey === miniGameLoadingKey" (press)="selectTab(game)">
-      <ng-container selector-point-icon>
-        <yrx-icon *ngIf="game.miniGameKey === miniGameLoadingKey; else iconWithoutLoading" [stroked]="game.iconStroked" icon="loader"></yrx-icon>
-        <ng-template #iconWithoutLoading>
-          <yrx-icon [stroked]="game.iconStroked" [icon]="game.icon"></yrx-icon>
-        </ng-template>
-      </ng-container>
-      <span>{{game.name}}</span>
-    </yrx-selector-point>
+    @for (game of miniGames; track game) {
+      <yrx-selector-point style="flex-basis: 300px" [active]="game.miniGameKey === miniGameKey" [iconLoading]="game.miniGameKey === miniGameLoadingKey" (press)="selectTab(game)">
+        <ng-container selector-point-icon>
+          @if (game.miniGameKey === miniGameLoadingKey) {
+            <yrx-icon [stroked]="game.iconStroked" icon="loader"></yrx-icon>
+          } @else {
+            <yrx-icon [stroked]="game.iconStroked" [icon]="game.icon"></yrx-icon>
+          }
+        </ng-container>
+        <span>{{game.name}}</span>
+      </yrx-selector-point>
+    }
   </div>
   <yrx-spacing type="XS"></yrx-spacing>
   <yrx-rating-table [columns]="columns" [data]="tableData"></yrx-rating-table>
   <yrx-spacing type="XS"></yrx-spacing>
-  <p *ngIf="tableData?.values?.length === 0" class="text text_body regular c-gradation-300">Поспешите и займите топ первым! </p>
+  @if (tableData?.values?.length === 0) {
+    <p class="text text_body regular c-gradation-300">Поспешите и займите топ первым! </p>
+  }
   <yrx-spacing type="L"></yrx-spacing>
 </div>

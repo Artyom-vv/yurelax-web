@@ -9,37 +9,46 @@
         </div>
       </div>
       <ul class="flex gap-32 ">
-        <ng-container *ngFor="let route of routes">
-          <li *ngIf="isLogged || !route.isLogged" [routerLink]="route.link" routerLinkActive="active" class="link text text_body regular c-gradation-300">{{route.name}}</li>
-        </ng-container>
+        @for (route of routes; track route) {
+          @if (isLogged || !route.isLogged) {
+            <li [routerLink]="route.link" routerLinkActive="active" class="link text text_body regular c-gradation-300">{{route.name}}</li>
+          }
+        }
       </ul>
     </div>
     <div class="flex gap-24 flex_align-center">
       <div class="socials flex gap-12">
-        <a *ngFor="let social of socials" [href]="social.link" target="_blank">
-          <yrx-icon [color]=" light ? 'purple-200' : ''" [icon]="social.icon"></yrx-icon>
-        </a>
+        @for (social of socials; track social) {
+          <a [href]="social.link" target="_blank">
+            <yrx-icon [color]=" light ? 'purple-200' : ''" [icon]="social.icon"></yrx-icon>
+          </a>
+        }
       </div>
-      <yrx-skeleton *ngIf="(dataLoading || preloading) && !access_token" [styles]="{height: '48px', width: '80px', borderRadius: '6px', padding: '0 16px 0 16px'}" [theme]="light ? 'light' : 'dark'">
-        <div class="flex flex_center full-height w100">
-          <yrx-skeleton class="w100" [styles]="{height: '20px', width: '100%', borderRadius: '6px'}" [theme]="light ? 'light' : 'dark'"></yrx-skeleton>
-        </div>
-      </yrx-skeleton>
-      <ng-container *ngIf="!dataLoading && !preloading">
-        <yrx-button *ngIf="!isLogged; else profilePanel" [custom]="light ? 'light' : ''" [routerLink]="['/auth/login']" type="secondary">Войти<yrx-ref-icon class="stroke" btn-right-icon name="login"></yrx-ref-icon></yrx-button>
-      </ng-container>
-      <yrx-skeleton *ngIf="(dataLoading || preloading) && access_token" [styles]="{height: '64px', width: '190px', borderRadius: '8px', padding: '0 12px 0 12px'}" [theme]="light ? 'light' : 'dark'">
-        <div class="flex gap-12 flex_align-center full-height">
-          <yrx-skeleton [styles]="{height: '40px', width: '40px', borderRadius: '6px'}" [theme]="light ? 'light' : 'dark'"></yrx-skeleton>
-          <div class="flex flex_column w100 gap-3">
-            <yrx-skeleton class="w100" [styles]="{height: '18px', width: '100%', borderRadius: '6px'}" [theme]="light ? 'light' : 'dark'"></yrx-skeleton>
-            <yrx-skeleton class="w100" [styles]="{height: '18px', width: '100%', borderRadius: '6px'}" [theme]="light ? 'light' : 'dark'"></yrx-skeleton>
+      @if ((dataLoading || preloading) && !access_token) {
+        <yrx-skeleton [styles]="{height: '48px', width: '80px', borderRadius: '6px', padding: '0 16px 0 16px'}" [theme]="light ? 'light' : 'dark'">
+          <div class="flex flex_center full-height w100">
+            <yrx-skeleton class="w100" [styles]="{height: '20px', width: '100%', borderRadius: '6px'}" [theme]="light ? 'light' : 'dark'"></yrx-skeleton>
           </div>
-        </div>
-      </yrx-skeleton>
-      <ng-template #profilePanel>
-        <yrx-header-profile-panel [dark]="!light"></yrx-header-profile-panel>
-      </ng-template>
+        </yrx-skeleton>
+      }
+      @if (!dataLoading && !preloading) {
+        @if (!isLogged) {
+          <yrx-button [custom]="light ? 'light' : ''" [routerLink]="['/auth/login']" type="secondary">Войти<yrx-ref-icon class="stroke" btn-right-icon name="login"></yrx-ref-icon></yrx-button>
+        } @else {
+          <yrx-header-profile-panel [dark]="!light"></yrx-header-profile-panel>
+        }
+      }
+      @if ((dataLoading || preloading) && access_token) {
+        <yrx-skeleton [styles]="{height: '64px', width: '190px', borderRadius: '8px', padding: '0 12px 0 12px'}" [theme]="light ? 'light' : 'dark'">
+          <div class="flex gap-12 flex_align-center full-height">
+            <yrx-skeleton [styles]="{height: '40px', width: '40px', borderRadius: '6px'}" [theme]="light ? 'light' : 'dark'"></yrx-skeleton>
+            <div class="flex flex_column w100 gap-3">
+              <yrx-skeleton class="w100" [styles]="{height: '18px', width: '100%', borderRadius: '6px'}" [theme]="light ? 'light' : 'dark'"></yrx-skeleton>
+              <yrx-skeleton class="w100" [styles]="{height: '18px', width: '100%', borderRadius: '6px'}" [theme]="light ? 'light' : 'dark'"></yrx-skeleton>
+            </div>
+          </div>
+        </yrx-skeleton>
+      }
     </div>
   </div>
 </header>

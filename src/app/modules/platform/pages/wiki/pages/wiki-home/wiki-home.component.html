@@ -8,15 +8,15 @@
 <h3 yrxAnimateOpacity>Вики yurelax</h3>
 <yrx-spacing type="S"></yrx-spacing>
 <div class="flex gap-24">
-  <ng-container *ngFor="let item of navigation.slice(0, 2)">
+  @for (item of navigation.slice(0, 2); track item) {
     <ng-container *ngTemplateOutlet="section; context: {$implicit: item}"></ng-container>
-  </ng-container>
+  }
 </div>
 <yrx-spacing type="S"></yrx-spacing>
 <div class="flex gap-24">
-  <ng-container *ngFor="let item of navigation.slice(2)">
+  @for (item of navigation.slice(2); track item) {
     <ng-container *ngTemplateOutlet="section; context: {$implicit: item}"></ng-container>
-  </ng-container>
+  }
 </div>
 <yrx-spacing type="M"></yrx-spacing>
 <h3>Обратная связь</h3>

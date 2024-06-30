@@ -17,7 +17,9 @@
   <yrx-spacing type="XS"></yrx-spacing>
   <yrx-spacing type="M"></yrx-spacing>
   <yrx-button (press)="login()" class="w100" type="primary" [loading]="dataLoading"
-              [disabled]="dataLoading || form.invalid"><span>Войти</span>
-    <yrx-icon *ngIf="dataLoading" btn-icon icon="loader"></yrx-icon>
+    [disabled]="dataLoading || form.invalid"><span>Войти</span>
+    @if (dataLoading) {
+      <yrx-icon btn-icon icon="loader"></yrx-icon>
+    }
   </yrx-button>
 </form>

@@ -3,9 +3,13 @@
 <yrx-mini-games-create (onCreate)="onCreate($event)"></yrx-mini-games-create>
 <yrx-spacing type="M"></yrx-spacing>
 <div class="overflow">
-  <ng-container *ngFor="let miniGame of miniGames; let idx = index">
+  @for (miniGame of miniGames; track miniGame; let idx = $index) {
     <yrx-mini-games-item [index]="idx" (onUpdate)="onUpdate($event)" (onDelete)="onDelete($event)" [data]="miniGame"></yrx-mini-games-item>
-    <yrx-spacing *ngIf="idx !== miniGames.length-1" type="XS"></yrx-spacing>
-  </ng-container>
+    @if (idx !== miniGames.length-1) {
+      <yrx-spacing type="XS"></yrx-spacing>
+    }
+  }
 </div>
-<p *ngIf="miniGames.length === 0 && !dataLoading" class="text text_body regular c-gradation-300">Пока что нет ни одной мини-игры</p>
+@if (miniGames.length === 0 && !dataLoading) {
+  <p class="text text_body regular c-gradation-300">Пока что нет ни одной мини-игры</p>
+}

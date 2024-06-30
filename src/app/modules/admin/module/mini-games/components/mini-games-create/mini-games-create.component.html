@@ -3,7 +3,9 @@
     <div class="flex gap-24">
       <yrx-drag-and-drop [loading]="imageLoading" (onLoad)="imageLoading = true" [fullHeight]="true" [accept]="['image/png','image/jpg','image/jpeg']" class="flex_grow" (onChange)="onPreviewSelect($event)" icon="file" [iconStroked]="true"></yrx-drag-and-drop>
       <div class="preview flex_grow">
-        <img *ngIf="dndResponse" [src]="dndResponse?.url" [alt]="dndResponse?.file?.name">
+        @if (dndResponse) {
+          <img [src]="dndResponse?.url" [alt]="dndResponse?.file?.name">
+        }
       </div>
     </div>
 
@@ -23,20 +25,32 @@
           <input formControlName="statisticsSearch" class="input_normal input_iconly input_dark" matInput placeholder="Поиск по ключу">
           <yrx-icon [hover]="false" [stroked]="true" [icon]="statisticsLoading ? 'loader' : 'search'"></yrx-icon>
         </div>
-        <div *ngIf="statisticsList.length > 0" class="flex gap-8 flex_wrap">
-          <yrx-tag [disabled]="form.getRawValue().keys.length >= 3" *ngFor="let statistics of statisticsList" (onSelect)="onSelectTag($event)" [defaultSelect]="form.get('keys')?.value?.includes?.(statistics.key)" [value]="statistics.key">{{statistics.title}}</yrx-tag>
-        </div>
-        <p *ngIf="statisticsList.length === 0 && !statisticsLoading" class="text text_body regular c-gradation-300">Нет результатов</p>
+        @if (statisticsList.length > 0) {
+          <div class="flex gap-8 flex_wrap">
+            @for (statistics of statisticsList; track statistics) {
+              <yrx-tag [disabled]="form.getRawValue().keys.length >= 3" (onSelect)="onSelectTag($event)" [defaultSelect]="form.get('keys')?.value?.includes?.(statistics.key)" [value]="statistics.key">{{statistics.title}}</yrx-tag>
+            }
+          </div>
+        }
+        @if (statisticsList.length === 0 && !statisticsLoading) {
+          <p class="text text_body regular c-gradation-300">Нет результатов</p>
+        }
       </div>
       <yrx-spacing type="XS2"></yrx-spacing>
     </div>
     <div>
       <div class="flex flex_column gap-8">
         <p class="text text_body regular">Ключ фильтрации топа</p>
-        <div *ngIf="statisticsSelectedList.length > 0" class="flex gap-8 flex_wrap">
-          <yrx-tag [disabled]="!!form.get('filteredByKey')?.valid" *ngFor="let statistics of statisticsSelectedList" (onSelect)="onSelectFilteredByKeyTag($event)" [defaultSelect]="statistics.key === form.get('filteredByKey')?.value" [value]="statistics.key">{{statistics.title}}</yrx-tag>
-        </div>
-        <p *ngIf="statisticsSelectedList.length === 0" class="text text_body regular c-gradation-300">Нет результатов</p>
+        @if (statisticsSelectedList.length > 0) {
+          <div class="flex gap-8 flex_wrap">
+            @for (statistics of statisticsSelectedList; track statistics) {
+              <yrx-tag [disabled]="!!form.get('filteredByKey')?.valid" (onSelect)="onSelectFilteredByKeyTag($event)" [defaultSelect]="statistics.key === form.get('filteredByKey')?.value" [value]="statistics.key">{{statistics.title}}</yrx-tag>
+            }
+          </div>
+        }
+        @if (statisticsSelectedList.length === 0) {
+          <p class="text text_body regular c-gradation-300">Нет результатов</p>
+        }
       </div>
       <yrx-spacing type="XS2"></yrx-spacing>
     </div>
@@ -55,11 +69,12 @@
     </yrx-checkbox>
   </div>
   <yrx-spacing type="S"></yrx-spacing>
-  <yrx-button *ngIf="!isEdit; else editTemplate" (press)="create()" class="flex_align-self-end" [disabled]="dataLoading || form.pending || form.invalid" [loading]="dataLoading">
-    <span>Создать</span>
-    <yrx-icon btn-icon [stroked]="true" icon="loader"></yrx-icon>
-  </yrx-button>
-  <ng-template #editTemplate>
+  @if (!isEdit) {
+    <yrx-button (press)="create()" class="flex_align-self-end" [disabled]="dataLoading || form.pending || form.invalid" [loading]="dataLoading">
+      <span>Создать</span>
+      <yrx-icon btn-icon [stroked]="true" icon="loader"></yrx-icon>
+    </yrx-button>
+  } @else {
     <div class="flex gap-8 flex_align-self-end">
       <yrx-button (press)="edit()" [disabled]="dataLoading || form.pending || form.invalid" [loading]="dataLoading">
         <span>Сохранить</span>
@@ -67,5 +82,5 @@
       </yrx-button>
       <yrx-button (press)="cancel()" custom="red" [disabled]="dataLoading || form.pending || form.invalid"><span>Отменить</span></yrx-button>
     </div>
-  </ng-template>
+  }
 </div>

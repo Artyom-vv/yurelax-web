@@ -6,19 +6,22 @@
       <p class="text text_body regular c-gradation-300"><span class="c-gradation-100">Ключ:</span> {{data.key}}</p>
     </div>
   </div>
-  <div class="flex gap-8" *ngIf="!isDelete; else deleteTemplate">
-    <yrx-button [disabled]="dataLoading" (press)="edit()" type="primary">Редактировать</yrx-button>
-    <yrx-button [disabled]="dataLoading" (press)="delete()" custom="red" [loading]="dataLoading">
-      <span>Удалить</span>
-      <yrx-icon btn-icon [stroked]="true" icon="loader"></yrx-icon>
-    </yrx-button>
-  </div>
-  <ng-template #deleteTemplate>
+  @if (!isDelete) {
+    <div class="flex gap-8">
+      <yrx-button [disabled]="dataLoading" (press)="edit()" type="primary">Редактировать</yrx-button>
+      <yrx-button [disabled]="dataLoading" (press)="delete()" custom="red" [loading]="dataLoading">
+        <span>Удалить</span>
+        <yrx-icon btn-icon [stroked]="true" icon="loader"></yrx-icon>
+      </yrx-button>
+    </div>
+  } @else {
     <yrx-button [disabled]="dataLoading" [loading]="dataLoading" (press)="deleteApi()" type="primary">
       <span>Подтвердить удаление</span>
       <yrx-icon btn-icon [stroked]="true" icon="loader"></yrx-icon>
     </yrx-button>
     <yrx-button [disabled]="dataLoading" (press)="onCancel()" type="primary" custom="red"><span>Отменить</span></yrx-button>
-  </ng-template>
+  }
 </div>
-<yrx-statistics-create *ngIf="isEdit" (onCancel)="onCancel()" (onUpdate)="onUpdateHandler($event)" [isEdit]="isEdit" [data]="data"></yrx-statistics-create>
+@if (isEdit) {
+  <yrx-statistics-create (onCancel)="onCancel()" (onUpdate)="onUpdateHandler($event)" [isEdit]="isEdit" [data]="data"></yrx-statistics-create>
+}

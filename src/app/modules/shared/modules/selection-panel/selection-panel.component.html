@@ -2,12 +2,16 @@
   <yrx-spacing type="S"></yrx-spacing>
   <div class="flex flex_justify-between" [class.flex_row-reverse]="reverse">
     <div class="flex flex_align-center gap-6">
-      <yrx-ref-icon *ngIf="icon" class="stroke main-icon" [name]="icon"></yrx-ref-icon>
+      @if (icon) {
+        <yrx-ref-icon class="stroke main-icon" [name]="icon"></yrx-ref-icon>
+      }
       <h5><ng-content select="[selection-panel-title]"></ng-content></h5>
     </div>
     <yrx-ref-icon class="stroke nav-icon" [name]="navIcon"></yrx-ref-icon>
   </div>
-  <yrx-spacing *ngIf="text.innerText" type="XS"></yrx-spacing>
+  @if (text.innerText) {
+    <yrx-spacing type="XS"></yrx-spacing>
+  }
   <p class="text text_body regular c-gradation-300" #text><ng-content select="[selection-panel-text]"></ng-content></p>
   <yrx-spacing type="S"></yrx-spacing>
 </div>

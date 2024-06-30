@@ -11,9 +11,13 @@
     </div>
     <yrx-spacing type="S"></yrx-spacing>
     <ul class="list flex flex_column gap-8">
-      <li *ngFor="let information of data.information" class="text text_body">
-        <span class="text" *ngFor="let item of information" [ngClass]="getClasses(item)">{{item.text}}</span>
-      </li>
+      @for (information of data.information; track information) {
+        <li class="text text_body">
+          @for (item of information; track item) {
+            <span class="text" [ngClass]="getClasses(item)">{{item.text}}</span>
+          }
+        </li>
+      }
     </ul>
   </div>
   <div class="bottom flex flex_column">

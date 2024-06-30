@@ -3,5 +3,7 @@
   <main [@routeAnimations]="animationsService.getRouteAnimationData(null, false)" class="main flex_grow">
     <ng-content select="[content]"></ng-content>
   </main>
-  <yrx-footer *ngIf="!withoutFooter"></yrx-footer>
+  @if (!withoutFooter) {
+    <yrx-footer></yrx-footer>
+  }
 </div>

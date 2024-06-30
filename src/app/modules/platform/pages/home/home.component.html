@@ -14,22 +14,29 @@
       <yrx-spacing type="L"></yrx-spacing>
       <h1 class="text-center title" yrxAnimateOpacity>yurelax — необычный сервер с сюжетом и мини-играми</h1>
       <yrx-spacing type="M"></yrx-spacing>
-      <yrx-skeleton *ngIf="preloading && access_token" [styles]="{height: '56px', width: '175px', borderRadius: '6px'}"
-                    theme="light"></yrx-skeleton>
-      <yrx-skeleton *ngIf="preloading && !access_token" [styles]="{height: '56px', width: '236px', borderRadius: '6px'}"
-                    theme="light"></yrx-skeleton>
-      <div class="show" *ngIf="!preloading">
-        <yrx-button *ngIf="!isLogged; else unloggedButton" [routerLink]="['/auth/register']" size="big" custom="white">
-          <span>Зарегистрироваться</span>
-          <yrx-ref-icon btn-right-icon class="stroke" name="login"></yrx-ref-icon>
-        </yrx-button>
-        <ng-template #unloggedButton>
-          <yrx-button clipboard value="mc.yurelax.ru" size="big" custom="white">
-            <span>mc.yurelax.ru</span>
-            <yrx-ref-icon btn-right-icon class="stroke" name="copy"></yrx-ref-icon>
-          </yrx-button>
-        </ng-template>
-      </div>
+      @if (preloading && access_token) {
+        <yrx-skeleton [styles]="{height: '56px', width: '175px', borderRadius: '6px'}"
+        theme="light"></yrx-skeleton>
+      }
+      @if (preloading && !access_token) {
+        <yrx-skeleton [styles]="{height: '56px', width: '236px', borderRadius: '6px'}"
+        theme="light"></yrx-skeleton>
+      }
+      @if (!preloading) {
+        <div class="show">
+          @if (!isLogged) {
+            <yrx-button [routerLink]="['/auth/register']" size="big" custom="white">
+              <span>Зарегистрироваться</span>
+              <yrx-ref-icon btn-right-icon class="stroke" name="login"></yrx-ref-icon>
+            </yrx-button>
+          } @else {
+            <yrx-button clipboard value="mc.yurelax.ru" size="big" custom="white">
+              <span>mc.yurelax.ru</span>
+              <yrx-ref-icon btn-right-icon class="stroke" name="copy"></yrx-ref-icon>
+            </yrx-button>
+          }
+        </div>
+      }
       <yrx-spacing type="XS"></yrx-spacing>
     </div>
   </section>
@@ -64,27 +71,29 @@
       <yrx-spacing type="XL"></yrx-spacing>
       <yrx-online></yrx-online>
       <yrx-spacing type="XL"></yrx-spacing>
-      <ng-container *ngFor="let content of content_blocks; let idx = index;">
+      @for (content of content_blocks; track content; let idx = $index) {
         <yrx-content-layout [img]="content.img" [reversed]="(idx+1)%2!==0">
           <yrx-info-layout>
             <span headline>{{ content.info.headline }}</span>
             <span text>{{ content.info.text }}</span>
-            <yrx-activity activities *ngFor="let activity of content.info.activities; let idx = index"
-                          [delay]="content.info.delay(idx, content.info.activities.length)">
-              <span headline>{{ activity.headline }}</span>
-              <span text>{{ activity.text }}</span>
-              <yrx-icon activity-icon [icon]="activity.icon" [stroked]="activity.iconStroked"></yrx-icon>
-            </yrx-activity>
+            @for (activity of content.info.activities; track activity; let idx = $index) {
+              <yrx-activity activities
+                [delay]="content.info.delay(idx, content.info.activities.length)">
+                <span headline>{{ activity.headline }}</span>
+                <span text>{{ activity.text }}</span>
+                <yrx-icon activity-icon [icon]="activity.icon" [stroked]="activity.iconStroked"></yrx-icon>
+              </yrx-activity>
+            }
           </yrx-info-layout>
         </yrx-content-layout>
         <yrx-spacing type="XL"></yrx-spacing>
-      </ng-container>
+      }
       <yrx-content-layout [img]="{src: 'assets/content/landing/events.png', alt: ''}" [reversed]="true">
         <h2 yrxAnimateOpacity>Внутриигровые события</h2>
         <yrx-spacing type="XS"></yrx-spacing>
         <p class="text text_big regular c-gradation-300">Мы проводим ивенты каждую неделю, участие в них позволит
           завладеть редкими предметами, которые невозможно получить иначе! Участвуйте в ивентах вместе с друзьями и
-          получайте командные награды.</p>
+        получайте командные награды.</p>
         <yrx-spacing type="M"></yrx-spacing>
         <div class="flex gap-16">
           <yrx-button type="primary">
@@ -102,7 +111,7 @@
           <h2 yrxAnimateOpacity>Делитесь идеями!</h2>
           <yrx-spacing type="XS"></yrx-spacing>
           <p class="text text_big regular c-gradation-300">Мы всегда рады обратной связи от наших игроков. Направляйте
-            нам интересные идеи по развитию проекта и получайте приятные бонусы!</p>
+          нам интересные идеи по развитию проекта и получайте приятные бонусы!</p>
           <yrx-spacing type="XS"></yrx-spacing>
 
           <yrx-input>
@@ -114,15 +123,15 @@
 
           <yrx-text-area>
             <textarea cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="8" [maxlength]="512"
-                      formControlName="message" yrxTextArea
-                      placeholder="Кратко изложите свою идею (до 512 символов)"></textarea>
+              formControlName="message" yrxTextArea
+            placeholder="Кратко изложите свою идею (до 512 символов)"></textarea>
             <yrx-error-hint-field field="required">Это обязательное поле</yrx-error-hint-field>
           </yrx-text-area>
 
 
           <yrx-spacing type="S"></yrx-spacing>
           <yrx-button [disabled]="messageLoading || form.invalid" [loading]="messageLoading"
-                      class="flex_align-self-start" type="primary">
+            class="flex_align-self-start" type="primary">
             <span>Отправить идею</span>
           </yrx-button>
         </div>

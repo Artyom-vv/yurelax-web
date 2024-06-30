@@ -1,13 +1,12 @@
-<ng-container *ngIf="userLoading; else userLoaded">
+@if (userLoading) {
   <yrx-ref-icon name="loader"></yrx-ref-icon>
-</ng-container>
-
-<ng-template #userLoaded>
+} @else {
   <div [@fadeAnimation]="error || !greeting || successMA || !MAKey || transitionToLogin" class="text-center">
-    <h3 *ngIf="userStore; else userEmpty">Привет, <span class="c-purple-300">{{userStore?.login}}</span>!</h3>
-    <ng-template #userEmpty>
+    @if (userStore) {
+      <h3>Привет, <span class="c-purple-300">{{userStore?.login}}</span>!</h3>
+    } @else {
       <h3>Привет!</h3>
-    </ng-template>
+    }
     <yrx-spacing type="XS"></yrx-spacing>
     <p class="text text_big regular flex flex_center gap-8"><span>Прямо сейчас мы авторизуем тебя, осталось немного</span><yrx-ref-icon name="loader"></yrx-ref-icon></p>
   </div>
@@ -26,4 +25,5 @@
     <yrx-spacing type="XS"></yrx-spacing>
     <p class="text text_big regular">Вы можете закрыть это окно</p>
   </div>
-</ng-template>
+}
+

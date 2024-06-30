@@ -20,17 +20,22 @@
 
   </div>
   <yrx-spacing type="S"></yrx-spacing>
-  <yrx-button *ngIf="!isEdit; else editTemplate" (press)="create()" class="flex_align-self-end" [disabled]="dataLoading || form.pending || form.invalid" [loading]="dataLoading">
-    <span>Создать</span>
-    <yrx-icon *ngIf="dataLoading || form.pending" btn-icon [stroked]="true" icon="loader"></yrx-icon>
-  </yrx-button>
-  <ng-template #editTemplate>
+  @if (!isEdit) {
+    <yrx-button (press)="create()" class="flex_align-self-end" [disabled]="dataLoading || form.pending || form.invalid" [loading]="dataLoading">
+      <span>Создать</span>
+      @if (dataLoading || form.pending) {
+        <yrx-icon btn-icon [stroked]="true" icon="loader"></yrx-icon>
+      }
+    </yrx-button>
+  } @else {
     <div class="flex gap-8 flex_align-self-end">
       <yrx-button (press)="edit()" [disabled]="dataLoading || form.pending || form.invalid" [loading]="dataLoading">
         <span>Сохранить</span>
-        <yrx-icon *ngIf="dataLoading || form.pending" btn-icon [stroked]="true" icon="loader"></yrx-icon>
+        @if (dataLoading || form.pending) {
+          <yrx-icon btn-icon [stroked]="true" icon="loader"></yrx-icon>
+        }
       </yrx-button>
       <yrx-button (press)="cancel()" custom="red" [disabled]="dataLoading || form.pending || form.invalid"><span>Отменить</span></yrx-button>
     </div>
-  </ng-template>
+  }
 </div>

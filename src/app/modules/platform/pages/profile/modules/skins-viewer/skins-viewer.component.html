@@ -1,7 +1,9 @@
 <div class="skins-viewer flex gap-16 flex_align-center">
   <div class="viewer flex flex_column-reverse">
     <canvas #viewer></canvas>
-    <yrx-icon *ngIf="modelLoading" [stroked]="true" icon="loader" class="icon-loader edge" [class.edge]="skin"></yrx-icon>
+    @if (modelLoading) {
+      <yrx-icon [stroked]="true" icon="loader" class="icon-loader edge" [class.edge]="skin"></yrx-icon>
+    }
     <div class="viewer-interactive flex_justify-self-end flex flex_column gap-12">
       <div class="viewer-actions flex_align-self-end flex gap-4 flex_align-center">
         <p class="text text_body medium c-gradation-500">360°</p>
@@ -14,7 +16,7 @@
     <h3>Загрузить скин игрока</h3>
     <yrx-spacing type="S"></yrx-spacing>
     <p class="text text_body regular c-gradation-300">
-      Скин не должен превышать размеры 64x64 пикселя и содержать неприличный контент. За нарушение этих правил вас ждут санкции.</p>
+    Скин не должен превышать размеры 64x64 пикселя и содержать неприличный контент. За нарушение этих правил вас ждут санкции.</p>
     <yrx-spacing type="XS"></yrx-spacing>
     <yrx-drag-and-drop [loading]="dataLoading" (onChange)="onSelectFile($event)" [iconStroked]="true" icon="file" [accept]="['image/png','image/jpg','image/jpeg']"></yrx-drag-and-drop>
   </div>

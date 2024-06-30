@@ -1,23 +1,31 @@
-<ng-container *ngIf="!hide" [ngSwitch]="state">
-  <div *ngSwitchCase="PromoCodeEnum.DEFAULT" class="promo-code flex flex_column">
-    <div class="flex flex_column gap-4">
-      <p class="text text_table c-gradation-300">Введите промо-код (при наличии):</p>
-      <input autocomplete="off" class="input_normal" matInput placeholder="Введите промокод">
-    </div>
-    <yrx-spacing type="XS"></yrx-spacing>
-    <div class="flex gap-16">
-      <yrx-button (press)="handlerAccept()" class="w100" type="primary">Подтвердить</yrx-button>
-      <yrx-button (press)="handlerHide()" class="w100" type="secondary">Нет промо-кода</yrx-button>
-    </div>
-  </div>
-  <div *ngSwitchCase="PromoCodeEnum.SUCCESS" class="conclusion success flex flex_column gap-4">
-    <p class="headline">Активация промо-кода прошла успешно!</p>
-    <p class="text text_body">Промо-код на (условия) успешно активирован.</p>
-    <yrx-ref-icon class="stroke" name="check-circle"></yrx-ref-icon>
-  </div>
-  <div *ngSwitchCase="PromoCodeEnum.NOT_FOUND" class="conclusion not-found flex flex_column gap-4">
-    <p class="headline">Такого промо-кода не существует</p>
-    <p class="text text_body">Причины и советы по которым провалилась активация</p>
-    <yrx-ref-icon class="stroke" name="x-circle"></yrx-ref-icon>
-  </div>
-</ng-container>
+@if (!hide) {
+  @switch (state) {
+    @case (PromoCodeEnum.DEFAULT) {
+      <div class="promo-code flex flex_column">
+        <div class="flex flex_column gap-4">
+          <p class="text text_table c-gradation-300">Введите промо-код (при наличии):</p>
+          <input autocomplete="off" class="input_normal" matInput placeholder="Введите промокод">
+        </div>
+        <yrx-spacing type="XS"></yrx-spacing>
+        <div class="flex gap-16">
+          <yrx-button (press)="handlerAccept()" class="w100" type="primary">Подтвердить</yrx-button>
+          <yrx-button (press)="handlerHide()" class="w100" type="secondary">Нет промо-кода</yrx-button>
+        </div>
+      </div>
+    }
+    @case (PromoCodeEnum.SUCCESS) {
+      <div class="conclusion success flex flex_column gap-4">
+        <p class="headline">Активация промо-кода прошла успешно!</p>
+        <p class="text text_body">Промо-код на (условия) успешно активирован.</p>
+        <yrx-ref-icon class="stroke" name="check-circle"></yrx-ref-icon>
+      </div>
+    }
+    @case (PromoCodeEnum.NOT_FOUND) {
+      <div class="conclusion not-found flex flex_column gap-4">
+        <p class="headline">Такого промо-кода не существует</p>
+        <p class="text text_body">Причины и советы по которым провалилась активация</p>
+        <yrx-ref-icon class="stroke" name="x-circle"></yrx-ref-icon>
+      </div>
+    }
+  }
+}

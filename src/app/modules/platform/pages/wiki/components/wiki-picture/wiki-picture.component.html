@@ -1,6 +1,8 @@
-<yrx-skeleton *ngIf="loading$ | async" theme="dark" [styles]="styles"></yrx-skeleton>
+@if (loading$ | async) {
+  <yrx-skeleton theme="dark" [styles]="styles"></yrx-skeleton>
+}
 <img [style.display]="(loading$ | async) ? 'none' : ''" (load)="onLoad()" [src]="src" [alt]="alt">
-<ng-container *ngIf="description">
+@if (description) {
   <yrx-spacing type="XS2"></yrx-spacing>
   <p class="text text_table c-gradation-300">{{description}}</p>
-</ng-container>
+}

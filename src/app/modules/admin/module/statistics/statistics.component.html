@@ -8,9 +8,11 @@
     <yrx-icon [hover]="false" [stroked]="true" [icon]="dataLoading ? 'loader' : 'search'"></yrx-icon>
   </div>
   <yrx-spacing type="S"></yrx-spacing>
-  <ng-container *ngFor="let statistics of statisticsList; let idx = index">
+  @for (statistics of statisticsList; track statistics; let idx = $index) {
     <yrx-statistics-item [index]="idx" (onUpdate)="onUpdate($event)" (onDelete)="onDelete($event)" [data]="statistics"></yrx-statistics-item>
     <yrx-spacing type="XS"></yrx-spacing>
-  </ng-container>
-  <p *ngIf="statisticsList.length === 0 && !dataLoading" class="text text_body regular c-gradation-300">Нет результатов</p>
+  }
+  @if (statisticsList.length === 0 && !dataLoading) {
+    <p class="text text_body regular c-gradation-300">Нет результатов</p>
+  }
 </div>
