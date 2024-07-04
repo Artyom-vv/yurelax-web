@@ -6,7 +6,9 @@
     "types": []
   },
   "files": [
-    "src/main.ts"
+    "src/main.ts", // path to your file
+    "src/main.server.ts", // path to your file
+    "server.ts"
   ],
   "include": [
     "src/**/*.d.ts"
