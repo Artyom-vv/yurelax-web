@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 
-const routes: Routes = [
+export const routes: Routes = [
   {path: '', redirectTo: 'auth', pathMatch: 'full'},
   {
     path: "auth",
@@ -18,9 +17,3 @@ const routes: Routes = [
     loadChildren: () => import('../app/modules/admin/admin.module').then(m => m.AdminModule)
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }

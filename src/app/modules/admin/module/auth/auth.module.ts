@@ -37,7 +37,9 @@ import {InputModule} from "../../../shared/modules/text-fields/modules/input/inp
     IconModule,
     InputModule
   ],
-  providers: [CheckAuthGuard]
+  providers: [
+    CheckAuthGuard
+  ]
 })
 export class AuthModule {
 }

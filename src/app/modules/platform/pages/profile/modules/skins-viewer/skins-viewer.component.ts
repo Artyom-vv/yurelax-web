@@ -11,7 +11,6 @@ import {DropBoxOnChangeInterface} from "../../../../../shared/modules/drag-and-d
 import {SkinsService} from "../../../../../shared/services/skins.service";
 import {AppStore} from "../../../../../../store/app.store";
 import {Subscription, tap} from "rxjs";
-import {ModelService} from "../../../../../shared/services/model.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {SkinViewer, WalkingAnimation} from "skinview3d";
 import {catchError} from "rxjs/operators";
@@ -29,7 +28,6 @@ export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private skinsService: SkinsService,
     private appStore: AppStore,
-    private modelService: ModelService,
     private fb: FormBuilder,
     private _snackBar: MatSnackBar,
     private cdr: ChangeDetectorRef

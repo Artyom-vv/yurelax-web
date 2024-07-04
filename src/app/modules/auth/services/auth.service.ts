@@ -107,15 +107,12 @@ export class AuthService {
     return this.http.get<GetMeRes>(`${environment.apiUrl}/auth/get-me`).pipe(
       tap((res) => {
         this.saveUserData(res)
-      }),
-      catchError((err) => throwError(err))
+      })
     )
   }
 
-  logout(): Observable<UserRes> {
-    return this.http.get<UserRes>(`${environment.apiUrl}/auth/logout`).pipe(
-      catchError((err) => throwError(err))
-    )
+  logout() {
+    return this.http.get<UserRes>(`${environment.apiUrl}/auth/logout`)
   }
 
 }

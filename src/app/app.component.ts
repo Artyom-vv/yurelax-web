@@ -1,20 +1,40 @@
-import {Component, HostListener, NgZone, OnDestroy, OnInit} from '@angular/core';
+import {APP_INITIALIZER, Component, HostListener, NgZone, OnDestroy, OnInit} from '@angular/core';
 import {PersistenceService} from "./modules/shared/services/persistence.service";
 import {AppStore} from "./store/app.store";
 import {SystemUserService} from "./modules/shared/services/system-user.service";
-import {filter, finalize, Subscription, switchMap, tap} from "rxjs";
+import {filter, finalize, Subscription, switchMap, tap, throwError} from "rxjs";
 import {AuthService} from "./modules/auth/services/auth.service";
 import {catchError} from "rxjs/operators";
-import {NavigationEnd, Router} from "@angular/router";
+import {NavigationEnd, Router, RouterOutlet} from "@angular/router";
 import {WikiService} from "./modules/platform/pages/wiki/services/wiki.service";
 import {SidebarNavigation} from "./modules/platform/modules/sidebar/interfaces/sidebarNavItem";
+import {BrowserModule} from "@angular/platform-browser";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {AdminModule} from "./modules/admin/admin.module";
+import {registerLocaleData} from "@angular/common";
+import localeRu from '@angular/common/locales/ru';
+import {CookieService} from "ngx-cookie-service";
+import {IconsService} from "./services/icons.service";
+import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
+import {TokenInterceptor} from "./modules/shared/services/guards/token.interceptor";
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
+import {appInitializer} from "./modules/shared/factories/init.factory";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
+registerLocaleData(localeRu)
+
+@UntilDestroy()
 @Component({
   selector: 'yrx-root',
+  standalone: true,
+  imports: [
+    AdminModule,
+    RouterOutlet
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
 
   constructor(
     private persistenceService: PersistenceService,
@@ -94,8 +114,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  private subscriptions: Subscription[] = []
-
   async ngOnInit() {
     this.wikiService.loading$.next(true)
     this.wikiService.getNavigation().pipe(
@@ -168,48 +186,34 @@ export class AppComponent implements OnInit, OnDestroy {
     ])
   }
 
-  ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub.unsubscribe())
-  }
-
   private logoutFromAllDevices(): void {
-    this.subscriptions.push(
-      this.authService.logoutFromAllDevices().pipe(
-        tap(() => {
-          this.appStore.setIsExit(true);
-        })
-      ).subscribe()
-    )
+    this.authService.logoutFromAllDevices().pipe(
+      tap(() => {
+        this.appStore.setIsExit(true);
+      })
+    ).subscribe()
   }
 
   private dataFields(): void {
-    this.subscriptions.push(
-      this.authService.getMe().pipe(
-        tap(() => {
-          this.appStore.setIsLogged(true);
-          this.appStore.setPreloading(false);
-        }),
-        catchError((err) => {
-          this.systemUser.logout(false)
-          setTimeout(() => {
-            this.appStore.setPreloading(false);
-          }, 300)
-          throw new Error(err.error.message)
-        })
-      ).subscribe()
-    )
-    this.subscriptions.push(
-      this.appStore.isExit$.pipe(
-        filter(isExit => isExit),
-        switchMap(() => this.authService.logout()),
-        tap(() => {
-          this.systemUser.logout();
-          this.appStore.setIsExit(false);
-        }),
-        catchError((err) => {
-          throw new Error(err)
-        })
-      ).subscribe()
-    )
+    this.authService.getMe().pipe(
+      tap(() => {
+        this.appStore.setIsLogged(true);
+      }),
+      catchError((err) => {
+        this.systemUser.logout(false)
+        throw new Error(err.error.message)
+      }),
+      untilDestroyed(this)
+    ).subscribe()
+    this.appStore.isExit$.pipe(
+      filter(isExit => isExit),
+      switchMap(() => this.authService.logout()),
+      tap(() => {
+        this.systemUser.logout();
+        this.appStore.setIsExit(false);
+      }),
+      catchError((err) => throwError(() => err)),
+      untilDestroyed(this)
+    ).subscribe()
   }
 }

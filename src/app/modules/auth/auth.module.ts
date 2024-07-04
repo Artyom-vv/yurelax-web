@@ -39,6 +39,7 @@ import {RecoverStepGuard} from "../shared/services/guards/recover-step.guard";
 import {InputModule} from "../shared/modules/text-fields/modules/input/input.module";
 import {RefIconModule} from "../shared/modules/ref-icon/ref-icon.module";
 import {IconRightDirective} from "../shared/directives/icon-right.directive";
+import {AppStore} from "../../store/app.store";
 
 @NgModule({
   declarations: [

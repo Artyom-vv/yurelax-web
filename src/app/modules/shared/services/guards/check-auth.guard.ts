@@ -8,7 +8,11 @@ import {UserRes} from "../../../platform/interfaces/user.interface";
 
 @Injectable()
 export class CheckAuthGuard implements CanActivate, CanActivateChild {
-  constructor(private appStore: AppStore, private router: Router, private systemUser: SystemUserService) {
+  constructor(
+    private appStore: AppStore,
+    private router: Router,
+    private systemUser: SystemUserService
+  ) {
   }
 
   canActivate = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => this.appStore.user$.pipe(

@@ -1,6 +1,8 @@
 import {Injectable} from "@angular/core";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ToolsService {
 
   redirect(url: string, target: string = '_blank') {
