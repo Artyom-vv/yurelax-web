@@ -1,18 +1,66 @@
-<h3>Статистика</h3>
+<h3>Контракты статистики</h3>
+<yrx-spacing type="XS"></yrx-spacing>
+<p class="text text_body regular c-gradation-300">Контракт задает тип значения и способ агрегации. После создания он неизменяемый; деактивация запрещает новые факты, но сохраняет всю историю.</p>
 <yrx-spacing type="S"></yrx-spacing>
-<yrx-statistics-create (onCreate)="onCreate($event)" class="w100"></yrx-statistics-create>
-<yrx-spacing type="M"></yrx-spacing>
-<div class="overflow">
-  <div class="box box_input" [formGroup]="form">
-    <input formControlName="value" class="input_normal input_iconly" matInput placeholder="Поиск по ключу">
-    <yrx-icon [hover]="false" [stroked]="true" [icon]="dataLoading ? 'loader' : 'search'"></yrx-icon>
+
+<form class="contract-form flex flex_column gap-12" [formGroup]="form" (ngSubmit)="create()">
+  <div class="form-grid">
+    <div class="box box_input"><input formControlName="code" class="input_normal" placeholder="Код: hunt.kills"></div>
+    <div class="box box_input">
+      <select formControlName="valueKind" class="input_normal">
+        <option value="BIGINT">Целое число (BIGINT)</option>
+        <option value="NUMERIC">Точное число (NUMERIC)</option>
+        <option value="TEXT">Текст (TEXT)</option>
+        <option value="BOOL">Да / нет (BOOL)</option>
+      </select>
+    </div>
+    <div class="box box_input">
+      <select formControlName="aggregationKind" class="input_normal">
+        <option value="SUM">Суммировать (SUM)</option>
+        <option value="LAST">Последнее значение (LAST)</option>
+      </select>
+    </div>
+    <div class="box box_input"><input formControlName="unit" class="input_normal" placeholder="Единица, необязательно"></div>
   </div>
-  <yrx-spacing type="S"></yrx-spacing>
-  @for (statistics of statisticsList; track statistics; let idx = $index) {
-    <yrx-statistics-item [index]="idx" (onUpdate)="onUpdate($event)" (onDelete)="onDelete($event)" [data]="statistics"></yrx-statistics-item>
-    <yrx-spacing type="XS"></yrx-spacing>
-  }
-  @if (statisticsList.length === 0 && !dataLoading) {
-    <p class="text text_body regular c-gradation-300">Нет результатов</p>
-  }
+  <label class="text text_body c-gradation-300 flex flex_align-center gap-8">
+    <input type="checkbox" formControlName="allowNegative">
+    Разрешить отрицательные значения
+  </label>
+  <yrx-button type="primary" [disabled]="form.invalid || mutating" (press)="create()">Создать контракт</yrx-button>
+</form>
+
+<yrx-spacing type="M"></yrx-spacing>
+<div class="box box_input">
+  <input class="input_normal" [value]="search" (input)="search = $any($event.target).value" placeholder="Поиск по коду контракта">
 </div>
+<yrx-spacing type="S"></yrx-spacing>
+
+@if (loading) {
+  <p class="text text_body regular c-gradation-300">Загружаем опубликованные контракты…</p>
+} @else if (visibleDefinitions.length === 0) {
+  <p class="text text_body regular c-gradation-300">Контракты не найдены.</p>
+} @else {
+  <div class="contract-list">
+    @for (definition of visibleDefinitions; track definition.id) {
+      <article class="contract-card" [class.contract-card_inactive]="!definition.active">
+        <div class="flex flex_justify-between gap-24">
+          <div>
+            <div class="flex flex_align-center gap-8">
+              <h4>{{definition.code}}</h4>
+              <span class="state text text_small">{{definition.active ? 'активен' : 'деактивирован'}}</span>
+            </div>
+            <yrx-spacing type="XS2"></yrx-spacing>
+            <p class="text text_body regular c-gradation-300">
+              {{definition.valueKind}} · {{definition.aggregationKind}}
+              @if (definition.unit) { · {{definition.unit}} }
+              · отрицательные: {{definition.allowNegative ? 'разрешены' : 'запрещены'}}
+            </p>
+          </div>
+          @if (definition.active) {
+            <yrx-button custom="red" [disabled]="mutating" (press)="deactivate(definition)">Деактивировать</yrx-button>
+          }
+        </div>
+      </article>
+    }
+  </div>
+}

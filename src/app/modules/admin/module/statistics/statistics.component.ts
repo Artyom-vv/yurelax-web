@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {StatisticsResponseInterface} from "../../../shared/interfaces/old/statistics-response.interface";
-import {StatisticsService} from "../../../shared/services/statistics.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {debounceTime, distinctUntilChanged, finalize, takeUntil, tap} from "rxjs";
-import {catchError} from "rxjs/operators";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {RequestsCancellerService} from "../../../shared/services/requests-canceller.service";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {catchError, finalize, of, tap} from 'rxjs';
+import {
+  CreatePlatformStatDefinition,
+  PlatformStatDefinition,
+  StatisticsService,
+} from '../../../shared/services/statistics.service';
 
 @Component({
   selector: 'yrx-statistics',
@@ -13,64 +14,83 @@ import {RequestsCancellerService} from "../../../shared/services/requests-cancel
   styleUrls: ['./statistics.component.scss']
 })
 export class StatisticsComponent implements OnInit {
+  public definitions: PlatformStatDefinition[] = [];
+  public loading = true;
+  public mutating = false;
+  public search = '';
+  public form: FormGroup;
 
   constructor(
-    private statisticsService: StatisticsService,
-    private _snackBar: MatSnackBar,
-    private fb: FormBuilder,
-    private requestsCancellerService: RequestsCancellerService
+    private readonly statistics: StatisticsService,
+    private readonly snackBar: MatSnackBar,
+    formBuilder: FormBuilder,
   ) {
+    this.form = formBuilder.group({
+      code: ['', [Validators.required, Validators.pattern(/^[a-z][a-z0-9_.-]{1,127}$/)]],
+      valueKind: ['BIGINT', Validators.required],
+      aggregationKind: ['SUM', Validators.required],
+      unit: [''],
+      allowNegative: [false],
+    });
   }
 
-  public statisticsList: StatisticsResponseInterface[] = []
-  public dataLoading: boolean = false;
+  ngOnInit(): void { this.load(); }
 
-  public form!: FormGroup
-
-  ngOnInit() {
-    this.initForms()
-    this.watchForms()
-    this.getList()
+  get visibleDefinitions(): PlatformStatDefinition[] {
+    const query = this.search.trim().toLowerCase();
+    return query ? this.definitions.filter(item => item.code.includes(query)) : this.definitions;
   }
 
-  public onCreate($event: StatisticsResponseInterface) {
-    this.getList()
-  }
-  public onUpdate($event: StatisticsResponseInterface) {
-    this.statisticsList[this.statisticsList.findIndex(x => x.key === $event.key)] = $event
-  }
-  public onDelete($event: StatisticsResponseInterface) {
-    this.statisticsList = this.statisticsList.filter(x => x.key !== $event.key);
-  }
-
-  public getList() {
-    this.dataLoading = true
-    this.statisticsService.getStatisticsList({value: this.form.getRawValue().value}).pipe(
-      takeUntil(this.requestsCancellerService.destroy$),
-      tap((list) => {
-        this.statisticsList = list;
+  create(): void {
+    if (this.form.invalid || this.mutating) return;
+    const value = this.form.getRawValue();
+    const input: CreatePlatformStatDefinition = {
+      code: value.code,
+      valueKind: value.valueKind,
+      aggregationKind: value.aggregationKind,
+      allowNegative: value.allowNegative,
+      ...(value.unit?.trim() ? {unit: value.unit.trim()} : {}),
+    };
+    this.mutating = true;
+    this.statistics.create(input).pipe(
+      tap(created => {
+        this.definitions = [...this.definitions, created];
+        this.form.reset({valueKind: 'BIGINT', aggregationKind: 'SUM', allowNegative: false, unit: ''});
+        this.snackBar.open(`Контракт ${created.code} создан`, 'Хорошо');
       }),
-      finalize(() => this.dataLoading = false),
-      catchError((err) => {
-        this._snackBar.open(err.error.message, "Закрыть")
-        throw new Error(err)
-      })
-    ).subscribe()
+      catchError(error => {
+        this.snackBar.open(error?.error?.message ?? 'Не удалось создать контракт', 'Закрыть');
+        return of(null);
+      }),
+      finalize(() => this.mutating = false),
+    ).subscribe();
   }
 
-  private initForms(): void {
-    this.form = this.fb.group({
-      value: [null]
-    })
+  deactivate(definition: PlatformStatDefinition): void {
+    if (this.mutating || !definition.active) return;
+    this.mutating = true;
+    this.statistics.deactivate(definition.id, 'Retired from the web administration cabinet').pipe(
+      tap(updated => {
+        this.definitions = this.definitions.map(item => item.id === updated.id ? updated : item);
+        this.snackBar.open(`Контракт ${updated.code} деактивирован; история сохранена`, 'Хорошо');
+      }),
+      catchError(error => {
+        this.snackBar.open(error?.error?.message ?? 'Не удалось деактивировать контракт', 'Закрыть');
+        return of(null);
+      }),
+      finalize(() => this.mutating = false),
+    ).subscribe();
   }
-  private watchForms(): void {
-    this.form.get('value')?.valueChanges.pipe(
-      distinctUntilChanged(),
-      debounceTime(400),
-      tap(() => {
-        this.requestsCancellerService.cancel()
-        this.getList()
-      })
-    ).subscribe()
+
+  private load(): void {
+    this.loading = true;
+    this.statistics.list().pipe(
+      tap(page => this.definitions = page.items),
+      catchError(error => {
+        this.snackBar.open(error?.error?.message ?? 'Не удалось загрузить контракты', 'Закрыть');
+        return of(null);
+      }),
+      finalize(() => this.loading = false),
+    ).subscribe();
   }
 }

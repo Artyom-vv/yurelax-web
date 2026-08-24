@@ -8,3 +8,37 @@
 .overflow {
   overflow: hidden;
 }
+.contract-form,
+.contract-card {
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .03);
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.contract-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.contract-card_inactive {
+  opacity: .62;
+}
+.state {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .08);
+}
+select.input_normal {
+  width: 100%;
+}
+
+@media (max-width: 760px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
