@@ -1,118 +1,68 @@
-import {Injectable} from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import {Observable, throwError, of, tap} from "rxjs";
-import {UserRes} from "../../platform/interfaces/user.interface";
-import {environment} from "../../../../environments/environment";
-import {catchError} from "rxjs/operators";
-import {PersistenceService} from "../../shared/services/persistence.service";
-import {AppStore} from "../../../store/app.store";
-import {CookieService} from "ngx-cookie-service";
-import {
-  GetMeRes,
-  LoginReq,
-  LoginRes, RecoverPasswordReq, RecoverPasswordRes,
-  RegisterReq,
-  RegisterRes,
-  TokensResponseInterface
-} from "../interfaces/auth.interface";
+import {Injectable} from '@angular/core';
+import {map, Observable, of, tap} from 'rxjs';
+import {environment} from '../../../../environments/environment';
+import {AppStore} from '../../../store/app.store';
+import {UserRes} from '../../platform/interfaces/user.interface';
+import {RolesEnum} from '../../shared/enums/roles.enum';
+import {PersistenceService} from '../../shared/services/persistence.service';
+import {PlatformSessionService} from '../../shared/services/platform-session.service';
+import {GetMeRes} from '../interfaces/auth.interface';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private http: HttpClient,
-    private persistenceService: PersistenceService,
-    private cookieService: CookieService,
-    private appStore: AppStore,
-  ) {
-  }
+    private readonly persistence: PersistenceService,
+    private readonly appStore: AppStore,
+    private readonly platformSession: PlatformSessionService,
+  ) {}
 
-  deleteCookies() {
-    this.cookieService.delete('accessToken', '/')
-    this.cookieService.delete('refreshToken', '/')
-  }
-
-  saveCookies(tokens: TokensResponseInterface) {
-    this.cookieService.set('accessToken', tokens.accessToken, {
-      path: '/'
-    })
-    this.cookieService.set('refreshToken', tokens.refreshToken, {
-      path: '/'
-    })
-  }
-
-  saveUserData(user: UserRes) {
-    this.persistenceService.set('user', user)
+  saveUserData(user: UserRes): void {
+    this.persistence.set('user', user);
     this.appStore.setUser(user);
   }
 
-  saveData(res: LoginRes | RegisterRes): void {
-    const {tokens, user} = res;
-    this.saveCookies(tokens)
-    this.saveUserData(user)
-  }
-
-  login(data: LoginReq): Observable<LoginRes> {
-    return this.http.post<LoginRes>(`${environment.apiUrl}/auth/login`, data).pipe(
-      tap((res) => {
-        this.saveData(res)
-        this.appStore.setIsLogged(true);
-      })
-    )
-  }
-
-  adminLogin(data: LoginReq): Observable<LoginRes> {
-    return this.http.post<LoginRes>(`${environment.apiUrl}/auth/login`, data)
-  }
-
-  register(data: RegisterReq): Observable<RegisterRes> {
-    return this.http.post<RegisterRes>(`${environment.apiUrl}/auth/register`, data).pipe(
-      tap((res) => {
-        this.saveData(res)
-      }),
-      catchError((err) => {
-        throw new Error(err.message);
-      })
-    )
-  }
-
-  recoverPassword(data: RecoverPasswordReq): Observable<RecoverPasswordRes> {
-    return this.http.post<RegisterRes>(`${environment.apiUrl}/auth/recover-password`, data).pipe(
-      catchError((err) => {
-        throw new Error(err.message);
-      })
-    )
-  }
-
-  logoutFromAllDevices(): Observable<any> {
-    return of(false)
-  }
-
-  refreshToken(refreshToken: string): Observable<TokensResponseInterface> {
-    return this.http.post<TokensResponseInterface>(`${environment.apiUrl}/auth/refresh-token`, {refreshToken}, {headers: {'Anonymous': 'true'}}).pipe(
-      tap((tokens) => {
-        this.saveCookies(tokens)
-      }),
-      catchError((err) => {
-        this.deleteCookies();
-        throw new Error(err.error.message);
-      })
-    )
-  }
-
-  minecraftAuth(token: string): Observable<boolean> {
-    return this.http.post<boolean>(`${environment.apiUrl}/auth/minecraft/${token}`, null)
-  }
-
   getMe(): Observable<GetMeRes> {
-    return this.http.get<GetMeRes>(`${environment.apiUrl}/auth/get-me`).pipe(
-      tap((res) => {
-        this.saveUserData(res)
-      })
-    )
+    return this.platformSession.profile().pipe(
+      map(profile => {
+        const minecraft = profile.identities.find(identity => identity.provider === 'MINECRAFT');
+        const createdAt = profile.identities.map(identity => identity.verifiedAt).sort()[0]
+          ?? new Date(0).toISOString();
+        return {
+          _id: profile.playerId,
+          login: profile.currentName,
+          userInvitedRef: '',
+          email: '',
+          emailVerify: true,
+          role: RolesEnum.USER,
+          subscription: '',
+          userStatisticRef: '',
+          userInfoRef: {
+            level: 0,
+            pouches: 0,
+            coins: 0,
+            ucoins: 0,
+            prestigeScore: 0,
+            lastOnlineDate: 0,
+            isOnline: false,
+            skinType: 'default' as const,
+            skinUrl: null,
+            avatarUrl: minecraft ? `${environment.crafatarApiUrl}/avatars/${minecraft.externalId}` : null,
+            userInfoId: profile.playerId,
+            createdAt,
+            updatedAt: createdAt,
+          }
+        } satisfies GetMeRes;
+      }),
+      tap(user => this.saveUserData(user))
+    );
   }
 
-  logout() {
-    return this.http.get<UserRes>(`${environment.apiUrl}/auth/logout`)
+  logout(): Observable<void> {
+    return this.platformSession.logout();
   }
 
+  logoutFromAllDevices(): Observable<boolean> {
+    // The BFF currently exposes current-session revocation only.
+    return of(false);
+  }
 }

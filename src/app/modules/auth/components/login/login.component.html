@@ -1,26 +1,15 @@
-<form [@fadeAnimation]="transitionToMA" [formGroup]="form">
+<section [@fadeAnimation]="transitionToMA">
   <yrx-auth-header page="login">Вход</yrx-auth-header>
   <yrx-spacing type="S"></yrx-spacing>
-  <yrx-input>
-    <input autocomplete="email" formControlName="email" yrxInput placeholder="Введите e-mail">
-    <yrx-error-hint-field field="required">Почта не должна быть пустой</yrx-error-hint-field>
-    <yrx-error-hint-field field="email">Указанная почта имеет неверный формат</yrx-error-hint-field>
-  </yrx-input>
-  <yrx-spacing type="XS"></yrx-spacing>
-  <yrx-input>
-    <input autocomplete="current-password" formControlName="password" type="password" yrxInput placeholder="Введите пароль">
-    <yrx-error-hint-field field="minlength">Длина пароля не может быть меньше {{MIN_PASSWORD_LENGTH}} символов</yrx-error-hint-field>
-    <yrx-error-hint-field field="required">Пароль не должен быть пустым</yrx-error-hint-field>
-  </yrx-input>
-  <yrx-spacing type="XS"></yrx-spacing>
-  <yrx-link [routerLink]="['/auth/which-email-recover']" [underlined]="true">Забыли пароль?</yrx-link>
+  <p class="text text_body regular c-gradation-200">
+    Единый аккаунт Yurelax открывает профиль, покупки и игровые права. Пароль вводится только на защищённой странице авторизации.
+  </p>
   <yrx-spacing type="M"></yrx-spacing>
-  <yrx-button (press)="login()" class="w100" type="primary" [loading]="dataLoading" [disabled]="dataLoading || form.invalid">
-    Войти
+  <yrx-button (press)="login()" class="w100" type="primary" [loading]="dataLoading" [disabled]="dataLoading">
+    Войти через Yurelax ID
   </yrx-button>
   <yrx-spacing type="XS"></yrx-spacing>
-  <div class="flex flex_center gap-6">
-    <p class="text text_body regular">Нет аккаунта?</p>
-    <yrx-link [routerLink]="['/auth/register']">Зарегистрируйтесь</yrx-link>
-  </div>
-</form>
+  <p class="text text_table regular c-gradation-300">
+    Регистрация и восстановление доступа доступны на следующем шаге.
+  </p>
+</section>

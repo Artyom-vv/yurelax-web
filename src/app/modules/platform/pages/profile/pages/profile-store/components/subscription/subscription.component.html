@@ -19,15 +19,34 @@
         </li>
       }
     </ul>
+    @if (!data.eligible) {
+      <div class="eligibility text text_table regular">{{data.eligibilityText}}</div>
+    }
+    @if (detailsVisible) {
+      <div class="details flex flex_column gap-6">
+        <p class="text text_table medium c-gradation-100">Что входит</p>
+        @for (detail of data.details; track detail) {
+          <p class="text text_table regular c-gradation-300">{{detail}}</p>
+        }
+        <p class="text text_table regular c-gradation-300">Код: {{data.productCode}}</p>
+      </div>
+    }
   </div>
   <div class="bottom flex flex_column">
-    <div class="flex flex_align-center gap-6">
-      <h4>{{data.cost}}</h4>
-      <yrx-ref-icon name="ucoin"></yrx-ref-icon>
+    <div class="prices flex flex_column gap-6">
+      @for (price of data.prices; track price.currencyCode; let index = $index) {
+        <button class="price" type="button" [class.price_selected]="selectedPrice === index" (click)="selectPrice(index)">
+          <strong>{{price.amount}}</strong> {{price.currencyCode}}
+        </button>
+      }
     </div>
     <yrx-spacing type="XS"></yrx-spacing>
-    <yrx-button>Оформить подписку</yrx-button>
+    <yrx-button (press)="buy()" [loading]="loading" [disabled]="loading || !data.eligible || data.prices.length === 0">
+      {{data.eligible ? 'Купить' : 'Недоступно'}}
+    </yrx-button>
     <yrx-spacing type="XS"></yrx-spacing>
-    <yrx-button class="additional-information" type="secondary">Подробнее</yrx-button>
+    <yrx-button (press)="detailsVisible = !detailsVisible" class="additional-information" type="secondary">
+      {{detailsVisible ? 'Скрыть' : 'Подробнее'}}
+    </yrx-button>
   </div>
 </div>

@@ -3,15 +3,13 @@ import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
 import {provideClientHydration} from '@angular/platform-browser';
-import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
+import {provideHttpClient, withFetch, withInterceptorsFromDi} from "@angular/common/http";
 import {AppStore} from "./store/app.store";
-import {CookieService} from "ngx-cookie-service";
 import {PersistenceService} from "./modules/shared/services/persistence.service";
 import {SystemUserService} from "./modules/shared/services/system-user.service";
 import {WikiService} from "./modules/platform/pages/wiki/services/wiki.service";
 import {AuthService} from "./modules/auth/services/auth.service";
 import {IconsService} from "./services/icons.service";
-import {TokenInterceptor} from "./modules/shared/services/guards/token.interceptor";
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
 import {appInitializer} from "./modules/shared/factories/init.factory";
 import {provideAnimations} from "@angular/platform-browser/animations";
@@ -19,17 +17,11 @@ import {provideAnimations} from "@angular/platform-browser/animations";
 export const appConfig: ApplicationConfig = {
   providers: [
     AppStore,
-    CookieService,
     PersistenceService,
     SystemUserService,
     WikiService,
     AuthService,
     IconsService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      multi: true,
-      useClass: TokenInterceptor,
-    },
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
       useValue: {duration: 7000}
@@ -42,7 +34,7 @@ export const appConfig: ApplicationConfig = {
     },
     provideAnimations(),
     provideZoneChangeDetection({eventCoalescing: true}),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withFetch(), withInterceptorsFromDi()),
     provideRouter(routes),
     provideClientHydration()
   ]

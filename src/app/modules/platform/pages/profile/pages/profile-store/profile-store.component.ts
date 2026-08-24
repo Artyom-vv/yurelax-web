@@ -1,5 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {SubscriptionRes} from "./interfaces/subscription.interface";
+import {catchError, finalize, of, tap} from 'rxjs';
+import {CommerceEligibilityReason, CommerceOffer} from './interfaces/commerce.interface';
+import {SubscriptionPurchaseRequest, SubscriptionRes} from './interfaces/subscription.interface';
+import {PlatformCommerceService} from './services/platform-commerce.service';
+
+const CARD_THEMES = [
+  {color: '#FFD071', blocks: ['gold-block/3.png', 'gold-block/2.png', 'gold-block/4.png']},
+  {color: '#96C2EE', blocks: ['diamond-block/1.png', 'diamond-block/1.png', 'diamond-block/4.png']},
+  {color: '#F28A8E', blocks: ['nether-block/2.png', 'nether-block/2.png', 'nether-block/3.png']},
+] as const;
 
 @Component({
   selector: 'yrx-profile-store',
@@ -7,147 +16,115 @@ import {SubscriptionRes} from "./interfaces/subscription.interface";
   styleUrls: ['./profile-store.component.scss']
 })
 export class ProfileStoreComponent implements OnInit {
-  public subscriptions: SubscriptionRes[] = [
-    {
-      name: 'Продвинутый',
-      cost: 229,
-      color: '#FFD071',
-      decorationFirst: 'assets/content/blocks/gold-block/3.png',
-      decorationSecond: 'assets/content/blocks/gold-block/2.png',
-      decorationThird: 'assets/content/blocks/gold-block/4.png',
-      information: [
-        [{
-          text: 'Открывается доступ ко всем мини-играм',
-          weight: 'regular'
-        }],
-        [{
-          text: 'Доступен ежедневный кит бустеров',
-          weight: 'regular'
-        }],
-        [{
-          text: 'Открывается доступ к миссиям компании',
-          weight: 'regular'
-        }],
-      ]
-    },
-    {
-      name: 'Премиум',
-      cost: 329,
-      color: '#96C2EE',
-      decorationFirst: 'assets/content/blocks/diamond-block/1.png',
-      decorationSecond: 'assets/content/blocks/diamond-block/1.png',
-      decorationThird: 'assets/content/blocks/diamond-block/4.png',
-      information: [
-        [{
-          text: 'Открывается доступ ко всем мини-играм',
-          weight: 'regular'
-        }],
-        [
-          {
-            text: 'Доступен ежедневный ',
-            weight: 'regular'
-          },
-          {
-            text: 'кит редких бустеров',
-            weight: 'medium'
-          },
-        ],
-        [{
-          text: 'Открывается доступ к миссиям компании',
-          weight: 'regular'
-        }],
-        [{
-          text: 'Открывается подбор и пропуск миссий компаний',
-          weight: 'regular'
-        }],
-      ]
-    },
-    {
-      name: 'Мифический',
-      cost: 729,
-      color: '#F28A8E',
-      decorationFirst: 'assets/content/blocks/nether-block/2.png',
-      decorationSecond: 'assets/content/blocks/nether-block/2.png',
-      decorationThird: 'assets/content/blocks/nether-block/3.png',
-      information: [
-        [{
-          text: 'Полный доступ к тарифу “Премиум”',
-          weight: 'medium'
-        }],
-        [
-          {
-            text: 'Редчайший лут с боссов компании',
-            weight: 'regular'
-          },
-        ],
-        [{
-          text: 'Расширенная кастомизация (смена цвета ника, анимация при киллах и победах)',
-          weight: 'regular'
-        }],
-        [{
-          text: 'Доступ к оперативному каналу обратной связи',
-          weight: 'regular'
-        }],
-      ]
-    },
-    {
-      name: 'Клоунская',
-      cost: 1990,
-      color: '#f184ff',
-      decorationFirst: 'assets/content/blocks/dirt-block/3.png',
-      decorationSecond: 'assets/content/blocks/dirt-block/1.png',
-      decorationThird: 'assets/content/blocks/dirt-block/4.png',
-      information: [
-        [{
-          text: 'Вы платите исключительно из-за своей клоуности ',
-          weight: 'regular'
-        }, {
-          text: '(Не иначе!)',
-          weight: 'medium'
-        }],
-        [{
-          text: 'Доступен ежедневный бан с 00:00 по 23:00',
-          weight: 'regular'
-        }],
-        [{
-          text: 'Открывается доступ к ',
-          weight: 'regular'
-        }, {
-          text: 'возможности разбана за деньги',
-          weight: 'medium'
-        }],
-      ]
-    },
-  ]
-
-  public step: number = 0;
-  public subscriptionsPerPage: number = 3;
-  public totalSubscriptions: number = this.subscriptions.length;
+  public subscriptions: SubscriptionRes[] = [];
+  public step = 0;
+  public subscriptionsPerPage = 3;
   public indexes: number[] = [];
+  public loading = true;
+  public purchasingOffer: string | null = null;
+  public message = '';
+  public error = '';
 
-  ngOnInit() {
+  constructor(private readonly commerce: PlatformCommerceService) {}
+
+  ngOnInit(): void {
+    this.loadStorefront();
+  }
+
+  get totalSubscriptions(): number {
+    return this.subscriptions.length;
+  }
+
+  offset(amount: number): void {
+    const lastStart = Math.max(0, this.totalSubscriptions - this.subscriptionsPerPage);
+    const nextStep = Math.min(Math.max(0, this.step + amount), lastStart);
+    if (nextStep === this.step) return;
+    this.step = nextStep;
     this.updateIndexes();
   }
 
-  offset(n: number) {
-    const newStep = this.step + n;
+  next(): void { this.offset(1); }
+  prev(): void { this.offset(-1); }
 
-    if (newStep >= 0 && newStep <= this.totalSubscriptions - this.subscriptionsPerPage) {
-      this.step = newStep;
-      this.updateIndexes();
+  purchase(request: SubscriptionPurchaseRequest): void {
+    this.purchasingOffer = request.offerCode;
+    this.message = '';
+    this.error = '';
+    this.commerce.purchase(request.offerCode, request.currencyCode).pipe(
+      tap(result => {
+        this.message = result.replayed
+          ? 'Покупка уже была обработана — повторное списание не выполнено.'
+          : `Покупка подтверждена. Создано прав: ${result.entitlements.length}.`;
+        this.loadStorefront(false);
+      }),
+      catchError(error => {
+        this.error = error?.error?.message ?? 'Не удалось выполнить покупку. Попробуйте ещё раз.';
+        return of(null);
+      }),
+      finalize(() => this.purchasingOffer = null)
+    ).subscribe();
+  }
+
+  private loadStorefront(showLoading = true): void {
+    if (showLoading) this.loading = true;
+    this.commerce.storefront().pipe(
+      tap(response => {
+        this.subscriptions = response.items.map((offer, index) => this.card(offer, index));
+        this.step = Math.min(this.step, Math.max(0, this.totalSubscriptions - this.subscriptionsPerPage));
+        this.updateIndexes();
+      }),
+      catchError(error => {
+        this.error = error?.error?.message ?? 'Каталог сейчас недоступен.';
+        return of(null);
+      }),
+      finalize(() => this.loading = false)
+    ).subscribe();
+  }
+
+  private updateIndexes(): void {
+    const visible = Math.min(this.subscriptionsPerPage, Math.max(0, this.totalSubscriptions - this.step));
+    this.indexes = Array.from({length: visible}, (_, index) => this.step + index);
+  }
+
+  private card(offer: CommerceOffer, index: number): SubscriptionRes {
+    const theme = CARD_THEMES[index % CARD_THEMES.length];
+    const eligibility = offer.eligibility ?? {eligible: true, reasons: []};
+    return {
+      name: offer.productName,
+      offerCode: offer.code,
+      productCode: offer.productCode,
+      gameCode: offer.gameCode,
+      prices: offer.prices,
+      color: theme.color,
+      decorationFirst: `assets/content/blocks/${theme.blocks[0]}`,
+      decorationSecond: `assets/content/blocks/${theme.blocks[1]}`,
+      decorationThird: `assets/content/blocks/${theme.blocks[2]}`,
+      information: [[{text: offer.productDescription, weight: 'regular'}]],
+      eligible: eligibility.eligible,
+      eligibilityText: eligibility.reasons.map(reason => this.reason(reason)).join(' · '),
+      details: offer.grants.map(grant => {
+        const scope = grant.gameCode ? `режим ${grant.gameCode}` : 'весь сервер';
+        const delivery = grant.deliveryMode === 'ENTITLEMENT' ? 'право' : 'выдача';
+        return `${delivery}: ${grant.grantKey} · ${scope} · обработчик ${grant.providerCode}`;
+      })
+    };
+  }
+
+  private reason(reason: CommerceEligibilityReason): string {
+    const requirement = reason.requirement;
+    switch (reason.code) {
+      case 'PROGRESSION_LEVEL_REQUIRED':
+        return `Нужен уровень ${requirement['minimumLevel']} (${requirement['progressionCode']}), сейчас ${reason.actual ?? 'нет данных'}`;
+      case 'STAT_THRESHOLD_REQUIRED':
+        return `Нужно ${requirement['minimum']} по показателю ${requirement['statCode']}, сейчас ${reason.actual ?? 'нет данных'}`;
+      case 'GRANT_REQUIRED':
+        return `Требуется право ${requirement['grantKey']}`;
+      case 'PURCHASE_LIMIT_REACHED':
+        return `Достигнут лимит покупок: ${requirement['maximum']}`;
+      case 'NEGATED_REQUIREMENT_MATCHED':
+        return 'Условие несовместимости уже выполнено';
+      default:
+        return 'Платформа пока не может подтвердить условие покупки';
     }
-  }
-
-  next() {
-    this.offset(1);
-  }
-
-  prev() {
-    this.offset(-1);
-  }
-
-  updateIndexes() {
-    const start = this.step;
-    this.indexes = Array.from({length: this.subscriptionsPerPage}, (_, i) => start + i);
   }
 }

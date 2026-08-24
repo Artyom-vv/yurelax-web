@@ -8,10 +8,6 @@ import {AdminContentComponent} from "./components/admin-content/admin-content.co
 
 const routes: Routes = [
   {
-    path: 'auth',
-    loadChildren: () => import('../admin/module/auth/auth.module').then(m => m.AuthModule)
-  },
-  {
     path: '',
     canActivate: [AuthGuard, RoleGuard],
     component: AdminComponent,

@@ -12,8 +12,7 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AuthGuard, RoleGuard],
-    data: {roles: [RolesEnum.USER, RolesEnum.ADMIN]},
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule)
   },
   {

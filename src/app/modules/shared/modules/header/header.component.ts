@@ -3,7 +3,6 @@ import {AppStore} from "../../../../store/app.store";
 import {NavStore} from "../../../../store/interfaces/nav.store";
 import {Subscription} from "rxjs";
 import {SocialStoreInterface} from "../../../../store/interfaces/socials-store.interface";
-import {SystemUserService} from "../../services/system-user.service";
 
 @Component({
   selector: 'yrx-header',
@@ -13,7 +12,6 @@ import {SystemUserService} from "../../services/system-user.service";
 export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private appStore: AppStore,
-    private systemUserService: SystemUserService
   ) {
   }
 
@@ -30,7 +28,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   public access_token: boolean = false;
 
   ngOnInit() {
-    this.access_token = !!this.systemUserService.getAccessToken();
     this.subscriptions.push(
       this.appStore.navigation$.subscribe((navigation) => {
         this.routes = navigation
@@ -44,6 +41,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscriptions.push(
       this.appStore.isLogged$.subscribe((val) => {
         this.isLogged = val
+        this.access_token = val
         this.dataLoading = false;
       })
     )
