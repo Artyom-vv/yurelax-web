@@ -41,6 +41,12 @@ export class PlatformSessionService {
     this.document.location.assign(target);
   }
 
+  login(identifier: string, password: string): Observable<void> {
+    return this.http.post<void>(`${environment.platformApiUrl}/session/login`, {identifier, password}).pipe(
+      tap(() => this.currentStatus = null)
+    );
+  }
+
   logout(): Observable<void> {
     return this.status().pipe(
       switchMap(status => this.http.post<void>(`${environment.platformApiUrl}/session/logout`, null, {

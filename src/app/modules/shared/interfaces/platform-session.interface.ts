@@ -6,7 +6,7 @@ export interface PlatformSessionStatus {
 export interface PlatformLinkedIdentity {
   identityId: string;
   provider: 'KEYCLOAK' | 'MINECRAFT' | 'DISCORD';
-  externalId: string;
+  externalId?: string;
   verifiedAt: string;
 }
 

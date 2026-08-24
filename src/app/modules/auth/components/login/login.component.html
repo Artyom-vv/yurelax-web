@@ -1,15 +1,25 @@
-<section [@fadeAnimation]="transitionToMA">
+<form [@fadeAnimation]="transitionToMA" [formGroup]="form" (ngSubmit)="login()">
   <yrx-auth-header page="login">Вход</yrx-auth-header>
   <yrx-spacing type="S"></yrx-spacing>
-  <p class="text text_body regular c-gradation-200">
-    Единый аккаунт Yurelax открывает профиль, покупки и игровые права. Пароль вводится только на защищённой странице авторизации.
-  </p>
-  <yrx-spacing type="M"></yrx-spacing>
-  <yrx-button (press)="login()" class="w100" type="primary" [loading]="dataLoading" [disabled]="dataLoading">
-    Войти через Yurelax ID
-  </yrx-button>
+  <yrx-input>
+    <input autocomplete="username" formControlName="identifier" yrxInput placeholder="Логин или e-mail">
+    <yrx-error-hint-field field="required">Введите логин или e-mail</yrx-error-hint-field>
+    <yrx-error-hint-field field="minlength">Минимум 3 символа</yrx-error-hint-field>
+  </yrx-input>
   <yrx-spacing type="XS"></yrx-spacing>
-  <p class="text text_table regular c-gradation-300">
-    Регистрация и восстановление доступа доступны на следующем шаге.
-  </p>
-</section>
+  <yrx-input>
+    <input autocomplete="current-password" formControlName="password" type="password" yrxInput placeholder="Пароль">
+    <yrx-error-hint-field field="required">Введите пароль</yrx-error-hint-field>
+    <yrx-error-hint-field field="minlength">Минимум {{MIN_PASSWORD_LENGTH}} символов</yrx-error-hint-field>
+  </yrx-input>
+  <yrx-spacing type="M"></yrx-spacing>
+  @if ((platformAvailable$ | async) === false) {
+    <p class="text text_table regular c-red-300" role="alert">
+      Yurelax ID сейчас не отвечает. Проверьте подключение и повторите попытку — страница больше не будет ждать бесконечно.
+    </p>
+    <yrx-spacing type="XS"></yrx-spacing>
+  }
+  <yrx-button (press)="login()" class="w100" type="primary" [loading]="dataLoading" [disabled]="dataLoading || form.invalid">
+    Войти
+  </yrx-button>
+</form>

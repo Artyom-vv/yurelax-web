@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {forkJoin, map, Observable, of, tap} from 'rxjs';
+import {forkJoin, map, Observable, of, switchMap, tap} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {AppStore} from '../../../store/app.store';
 import {UserRes} from '../../platform/interfaces/user.interface';
@@ -49,7 +49,8 @@ export class AuthService {
             isOnline: false,
             skinType: 'default' as const,
             skinUrl: null,
-            avatarUrl: minecraft ? `${environment.crafatarApiUrl}/avatars/${minecraft.externalId}` : null,
+          avatarUrl: minecraft?.externalId ? `${environment.crafatarApiUrl}/avatars/${minecraft.externalId}` : null,
+          minecraftLinked: Boolean(minecraft),
             userInfoId: profile.playerId,
             createdAt,
             updatedAt: createdAt,
@@ -57,6 +58,13 @@ export class AuthService {
         } satisfies GetMeRes;
       }),
       tap(user => this.saveUserData(user))
+    );
+  }
+
+  login(credentials: {identifier: string; password: string}): Observable<GetMeRes> {
+    return this.platformSession.login(credentials.identifier, credentials.password).pipe(
+      switchMap(() => this.getMe()),
+      tap(() => this.appStore.setIsLogged(true))
     );
   }
 

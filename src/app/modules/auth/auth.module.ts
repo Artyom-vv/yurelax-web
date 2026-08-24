@@ -11,6 +11,10 @@ import {HeaderModule} from '../shared/modules/header/header.module';
 import {LayoutModule} from '../shared/modules/layout/layout.module';
 import {SpacingModule} from '../shared/modules/spacing/spacing.module';
 import {CheckAuthGuard} from '../shared/services/guards/check-auth.guard';
+import {ReactiveFormsModule} from '@angular/forms';
+import {InputModule} from '../shared/modules/text-fields/modules/input/input.module';
+import {ErrorHintWrapperModule} from '../shared/modules/error-hint-wrapper/error-hint-wrapper.module';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [AuthComponent, LoginComponent, AuthLayoutComponent],
@@ -22,6 +26,10 @@ import {CheckAuthGuard} from '../shared/services/guards/check-auth.guard';
     AuthHeaderModule,
     SpacingModule,
     ButtonModule,
+    ReactiveFormsModule,
+    InputModule,
+    ErrorHintWrapperModule,
+    MatSnackBarModule,
   ],
   providers: [AnimationsService, CheckAuthGuard]
 })

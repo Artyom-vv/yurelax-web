@@ -8,23 +8,25 @@
       }
       <h4>{{userStore?.login}}</h4>
     </div>
-    <p class="tag text text_body medium c-gradation-300 flex_align-self-start">Обычный тариф</p>
+    <p class="tag text text_body medium c-gradation-300 flex_align-self-start">Yurelax ID</p>
   </div>
   <yrx-spacing type="S"></yrx-spacing>
   <div class="flex flex_column gap-8">
     <div class="flex gap-4">
-      <p class="text text_body regular c-gradation-300">Почта:</p>
-      <p class="text text_body regular c-gradation-100">{{userStore?.email}}</p>
+      <p class="text text_body regular c-gradation-300">ID игрока:</p>
+      <p class="text text_body regular c-gradation-100">{{userStore?._id}}</p>
     </div>
     <div class="flex gap-4">
       <p class="text text_body regular c-gradation-300">Дата регистрации:</p>
       <p class="text text_body regular c-gradation-100">{{$safeNavigationMigration(userStore?.userInfoRef?.createdAt) | date: 'dd.MM.YY'}}</p>
     </div>
     <div class="flex gap-4">
-      <p class="text text_body regular c-gradation-300">2-ух факторная верификация:</p>
-      <p class="text text_body regular c-red-300">нет</p>
+      <p class="text text_body regular c-gradation-300">Minecraft:</p>
+      <p class="text text_body regular" [class.c-green-300]="userStore?.userInfoRef?.minecraftLinked" [class.c-gradation-300]="!userStore?.userInfoRef?.minecraftLinked">
+        {{userStore?.userInfoRef?.minecraftLinked ? 'подключён' : 'ещё не подключён'}}
+      </p>
     </div>
   </div>
   <yrx-spacing type="S"></yrx-spacing>
-  <yrx-link [iconStroked]="true" icon="arrow-right" size="small">Статистика по мини-играм</yrx-link>
+  <p class="text text_table regular c-gradation-300">Профиль создан платформой и одинаково используется сайтом, прокси и игровыми режимами.</p>
 </div>

@@ -9,6 +9,7 @@ export interface UserInfo {
   skinType: 'default' | 'slim'
   skinUrl: string | null
   avatarUrl: string | null
+  minecraftLinked?: boolean
   userInfoId: string
   createdAt: string
   updatedAt: string
