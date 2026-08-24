@@ -19,6 +19,7 @@ import {catchError} from "rxjs/operators";
   selector: 'yrx-email-code-verification',
   templateUrl: './email-code-verification.component.html',
   styleUrls: ['./email-code-verification.component.scss'],
+  standalone: false,
 })
 export class EmailCodeVerificationComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
@@ -30,6 +31,7 @@ export class EmailCodeVerificationComponent implements OnInit, OnDestroy, AfterV
 
   @Input() text: string = ''
   @Input() dataLoading: boolean = false
+  @Input() allowResend: boolean = true
   @Output() confirm: EventEmitter<any> = new EventEmitter<any>()
   @Output() resend: EventEmitter<any> = new EventEmitter<any>()
   @ViewChildren('inputRefs') inputRefs!: QueryList<ElementRef>

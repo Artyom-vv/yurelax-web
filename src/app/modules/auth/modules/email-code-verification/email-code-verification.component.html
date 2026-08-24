@@ -20,6 +20,8 @@
       <yrx-icon btn-icon icon="loader"></yrx-icon>
     }
   </yrx-button>
-  <yrx-spacing type="XS"></yrx-spacing>
-  <yrx-link [hover]="delay===0" [disabled]="delay>0" (press)="onResend()">Отправить повторно {{delay>0?'('+delay+'с)' : ''}}</yrx-link>
+  @if (allowResend) {
+    <yrx-spacing type="XS"></yrx-spacing>
+    <yrx-link [hover]="delay===0" [disabled]="delay>0" (press)="onResend()">Отправить повторно {{delay>0?'('+delay+'с)' : ''}}</yrx-link>
+  }
 </div>

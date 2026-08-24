@@ -1,116 +1,44 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MailerService} from "../../../shared/services/mailer.service";
-import {CodeResponseInterface} from "../../../shared/interfaces/old/code-response.interface";
-import {filter, finalize, Observable, Subscription, switchMap, tap} from "rxjs";
-import {UserService} from "../../../platform/services/user.service";
-import {catchError} from "rxjs/operators";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {ActivatedRoute, Router} from "@angular/router";
-import {OpacityAnimation} from "../../animations/opacity.animation";
-import {AuthStore} from "../../store/auth.store";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {finalize} from 'rxjs';
+import {PlatformAccountService} from '../../../shared/services/platform-account.service';
 
 @Component({
   selector: 'yrx-email-verify',
   templateUrl: './email-verify.component.html',
   styleUrls: ['./email-verify.component.scss'],
-  animations: [
-    OpacityAnimation
-  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
-export class EmailVerifyComponent implements OnInit, OnDestroy {
+export class EmailVerifyComponent implements OnInit {
+  public operationId = '';
+  public dataLoading = false;
 
   constructor(
-    private mailerService: MailerService,
-    private userService: UserService,
-    private _snackBar: MatSnackBar,
-    private router: Router,
-    private route: ActivatedRoute,
-    private authStore: AuthStore
-  ) {
-  }
+    private readonly accounts: PlatformAccountService,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly snackBar: MatSnackBar,
+    private readonly changeDetector: ChangeDetectorRef,
+  ) {}
 
-  private subscriptions: Subscription[] = []
-
-  public MAKey: string = '';
-  public transitionToMA: boolean = false;
-
-  public operationId!: string;
-  public dataLoading: boolean = false;
-
-  ngOnInit() {
-    this.dataFields()
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub.unsubscribe())
+  ngOnInit(): void {
+    this.operationId = this.route.snapshot.queryParamMap.get('operationId') ?? '';
+    if (!this.operationId) this.router.navigate(['/auth/register']);
   }
 
   onConfirm(code: number): void {
-    this.dataLoading = true
-    this.subscriptions.push(
-      this.mailerService.verifyCode({operationId: this.operationId, code}).pipe(
-        switchMap(() => this.userService.setEmailConfirmed()),
-        tap(() => {
-          if (!this.MAKey) this.router.navigate(['/platform/home'])
-          this._snackBar.open('Аккаунт подтверждён', 'Хорошо')
-        }),
-        filter(() => !!this.MAKey),
-        tap(() => {
-          this.transitionToMA = true;
-          setTimeout(() => this.router.navigate(['/auth/minecraft'], {
-            queryParams: {
-              key: this.MAKey
-            }
-          }), 600)
-        }),
-        finalize(() => this.dataLoading = false),
-        catchError((err) => {
-          this._snackBar.open(err.error.message, 'Закрыть')
-          console.log(err)
-          throw new Error(err)
-        })
-      ).subscribe()
-    )
-  }
-
-  onResend() {
-    this.dataLoading = true
-    this.subscriptions.push(
-      this.mailerService.deleteCode({
-        operationId: this.operationId
-      }).pipe(
-        switchMap(() => this.createCode()),
-        finalize(() => this.dataLoading = false),
-        catchError(() => {
-          return this.createCode()
-        })
-      ).subscribe()
-    )
-  }
-
-  createCode(): Observable<CodeResponseInterface> {
-    return this.mailerService.confirmEmailCode().pipe(
-      tap((response) => {
-        this.operationId = response.operationId;
-        this._snackBar.open('Код отправлен на вашу почту', 'Хорошо')
-      })
-    )
-  }
-
-  private dataFields() {
-    this.subscriptions.push(
-      this.route.queryParams.pipe(
-        tap((value) => {
-          this.operationId = value["operationId"];
-        })
-      ).subscribe()
-    )
-    this.subscriptions.push(
-      this.authStore.MAKey$.pipe(
-        tap(key => {
-          this.MAKey = key
-        })
-      ).subscribe()
-    )
+    if (this.dataLoading || !this.operationId) return;
+    this.dataLoading = true;
+    this.accounts.verifyRegistration(this.operationId, String(code).padStart(6, '0')).pipe(
+      finalize(() => { this.dataLoading = false; this.changeDetector.markForCheck(); }),
+    ).subscribe({
+      next: () => {
+        this.snackBar.open('Аккаунт подтверждён. Теперь можно войти.', 'Хорошо');
+        this.router.navigate(['/auth/login']);
+      },
+      error: () => this.snackBar.open('Код неверен или уже истёк', 'Закрыть'),
+    });
   }
 }

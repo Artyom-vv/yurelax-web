@@ -9,7 +9,8 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 @Component({
   selector: 'yrx-password-strength',
   templateUrl: './password-strength.component.html',
-  styleUrls: ['./password-strength.component.scss']
+  styleUrls: ['./password-strength.component.scss'],
+  standalone: false,
 })
 export class PasswordStrengthComponent implements OnInit {
 
