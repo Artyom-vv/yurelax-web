@@ -1,6 +1,6 @@
-import {DOCUMENT, isPlatformBrowser} from '@angular/common';
+import {isPlatformBrowser} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
-import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
+import {Inject, Injectable, PLATFORM_ID, DOCUMENT} from '@angular/core';
 import {Observable, of, switchMap, tap} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {

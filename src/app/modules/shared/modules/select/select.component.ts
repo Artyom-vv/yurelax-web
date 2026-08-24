@@ -4,14 +4,15 @@ import {
   ChangeDetectorRef,
   Component, ElementRef, forwardRef, Inject,
   Input,
-  ViewChild
+  ViewChild,
+  DOCUMENT
 } from '@angular/core';
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {OptionInterface} from "./interfaces/option.interface";
 import {MatSelect} from "@angular/material/select";
 import {OptionSelectOutputInterface} from "../dropout-point/interfaces/option-select-output.interface";
 import {SelectService} from "./services/select.service";
-import {DOCUMENT} from "@angular/common";
+
 
 @Component({
     selector: 'yrx-select',

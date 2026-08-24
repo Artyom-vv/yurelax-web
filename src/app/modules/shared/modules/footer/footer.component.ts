@@ -5,12 +5,13 @@ import {
   Inject,
   OnDestroy,
   OnInit,
-  ViewChild
+  ViewChild,
+  DOCUMENT
 } from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {Subscription} from "rxjs";
 import {SocialStoreInterface} from "../../../../store/interfaces/socials-store.interface";
-import {DOCUMENT} from "@angular/common";
+
 
 @Component({
     selector: 'yrx-footer',

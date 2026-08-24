@@ -1,7 +1,7 @@
-import {ChangeDetectorRef, Component, ElementRef, Inject, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Inject, ViewChild, DOCUMENT} from '@angular/core';
 import {AnimationsService} from "../../../shared/animations/services/animations.service";
 import {AppearanceAnimation} from "../../../shared/animations/redirect.animation";
-import {DOCUMENT} from "@angular/common";
+
 import {ToolsService} from "../../../shared/services/tools.service";
 import {AdminStore} from "../../store/admin.store";
 

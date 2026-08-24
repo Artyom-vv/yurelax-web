@@ -1,9 +1,9 @@
-import {ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID, DOCUMENT} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {Subscription} from "rxjs";
 import {AppearanceAnimation} from "../../animations/redirect.animation";
 import {AnimationsService} from "../../animations/services/animations.service";
-import {DOCUMENT, isPlatformBrowser} from "@angular/common";
+import {isPlatformBrowser} from "@angular/common";
 import {ToolsService} from "../../services/tools.service";
 
 @Component({
