@@ -8,9 +8,10 @@ import {RequestsCancellerService} from "../../../shared/services/requests-cancel
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
-  selector: 'yrx-mini-games',
-  templateUrl: './mini-games.component.html',
-  styleUrls: ['./mini-games.component.scss']
+    selector: 'yrx-mini-games',
+    templateUrl: './mini-games.component.html',
+    styleUrls: ['./mini-games.component.scss'],
+    standalone: false
 })
 export class MiniGamesComponent implements OnInit, OnDestroy {
   constructor(

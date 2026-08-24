@@ -18,10 +18,11 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {UserRes} from "../../../../interfaces/user.interface";
 
 @Component({
-  selector: 'yrx-skins-viewer',
-  templateUrl: './skins-viewer.component.html',
-  styleUrls: ['./skins-viewer.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'yrx-skins-viewer',
+    templateUrl: './skins-viewer.component.html',
+    styleUrls: ['./skins-viewer.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SkinsViewerComponent implements OnInit, OnDestroy, AfterViewInit {
 

@@ -1,10 +1,11 @@
 import {AfterViewInit, Component, Input, ViewEncapsulation} from '@angular/core';
 
 @Component({
-  selector: 'yrx-icon',
-  templateUrl: './icon.component.html',
-  styleUrls: ['./icon.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'yrx-icon',
+    templateUrl: './icon.component.html',
+    styleUrls: ['./icon.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class IconComponent implements AfterViewInit {
   @Input() icon: string = ''

@@ -3,13 +3,14 @@ import {OpacityAnimation} from "../../animations/opacity.animation";
 import {PlatformSessionService} from '../../../shared/services/platform-session.service';
 
 @Component({
-  selector: 'yrx-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  animations: [
-    OpacityAnimation
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'yrx-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    animations: [
+        OpacityAnimation
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class LoginComponent {
 

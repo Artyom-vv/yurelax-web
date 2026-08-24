@@ -2,9 +2,10 @@ import {Component, Input} from '@angular/core';
 import {Properties} from "csstype";
 
 @Component({
-  selector: 'yrx-skeleton',
-  templateUrl: './skeleton.component.html',
-  styleUrls: ['./skeleton.component.scss']
+    selector: 'yrx-skeleton',
+    templateUrl: './skeleton.component.html',
+    styleUrls: ['./skeleton.component.scss'],
+    standalone: false
 })
 export class SkeletonComponent {
   @Input() styles: Properties = {};

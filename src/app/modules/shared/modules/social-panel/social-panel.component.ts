@@ -4,12 +4,13 @@ import {Subscription, tap} from "rxjs";
 import {SocialStoreInterface} from "../../../../store/interfaces/socials-store.interface";
 
 @Component({
-  host: {
-    "class": "flex_grow"
-  },
-  selector: 'yrx-social-panel',
-  templateUrl: './social-panel.component.html',
-  styleUrls: ['./social-panel.component.scss']
+    host: {
+        "class": "flex_grow"
+    },
+    selector: 'yrx-social-panel',
+    templateUrl: './social-panel.component.html',
+    styleUrls: ['./social-panel.component.scss'],
+    standalone: false
 })
 export class SocialPanelComponent implements OnInit, OnDestroy, AfterViewInit {
 

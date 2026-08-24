@@ -14,40 +14,41 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
 @UntilDestroy()
 @Component({
-  selector: 'yrx-error-hint',
-  templateUrl: './error-hint.component.html',
-  styleUrls: ['./error-hint.component.scss'],
-  animations: [
-    trigger('dynamicHeight', [
-      state('default', style({
-        height: '0px'
-      })),
-      state('slideDown', style({
-        height: '{{endHeight}}px'
-      }), {params: {endHeight: 0}}),
-      transition('default => slideDown', [
-        animate('.2s ease-in-out')
-      ]),
-      transition(':leave', [
-        style({
-          height: '{{endHeight}}px'
-        }),
-        animate('.2s 1ms ease-in-out', style({
-          height: '0px',
-        })),
-        query('.text', [
-          style({
-            opacity: 1,
-            transform: 'translateY(0)'
-          }),
-          animate('.2s ease-in-out', style({
-            opacity: 0,
-            transform: 'translateY(-100%)'
-          })),
-        ]),
-      ]),
-    ])
-  ]
+    selector: 'yrx-error-hint',
+    templateUrl: './error-hint.component.html',
+    styleUrls: ['./error-hint.component.scss'],
+    animations: [
+        trigger('dynamicHeight', [
+            state('default', style({
+                height: '0px'
+            })),
+            state('slideDown', style({
+                height: '{{endHeight}}px'
+            }), { params: { endHeight: 0 } }),
+            transition('default => slideDown', [
+                animate('.2s ease-in-out')
+            ]),
+            transition(':leave', [
+                style({
+                    height: '{{endHeight}}px'
+                }),
+                animate('.2s 1ms ease-in-out', style({
+                    height: '0px',
+                })),
+                query('.text', [
+                    style({
+                        opacity: 1,
+                        transform: 'translateY(0)'
+                    }),
+                    animate('.2s ease-in-out', style({
+                        opacity: 0,
+                        transform: 'translateY(-100%)'
+                    })),
+                ]),
+            ]),
+        ])
+    ],
+    standalone: false
 })
 export class ErrorHintComponent implements AfterViewInit {
 

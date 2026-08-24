@@ -9,9 +9,10 @@ import {
 } from '../../../shared/services/statistics.service';
 
 @Component({
-  selector: 'yrx-statistics',
-  templateUrl: './statistics.component.html',
-  styleUrls: ['./statistics.component.scss']
+    selector: 'yrx-statistics',
+    templateUrl: './statistics.component.html',
+    styleUrls: ['./statistics.component.scss'],
+    standalone: false
 })
 export class StatisticsComponent implements OnInit {
   public definitions: PlatformStatDefinition[] = [];

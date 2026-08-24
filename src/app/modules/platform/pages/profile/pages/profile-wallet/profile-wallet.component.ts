@@ -4,9 +4,10 @@ import {PlayerWalletBalance} from '../profile-store/interfaces/commerce.interfac
 import {PlatformCommerceService} from '../profile-store/services/platform-commerce.service';
 
 @Component({
-  selector: 'yrx-profile-wallet',
-  templateUrl: './profile-wallet.component.html',
-  styleUrls: ['./profile-wallet.component.scss'],
+    selector: 'yrx-profile-wallet',
+    templateUrl: './profile-wallet.component.html',
+    styleUrls: ['./profile-wallet.component.scss'],
+    standalone: false
 })
 export class ProfileWalletComponent implements OnInit {
   public wallets: PlayerWalletBalance[] = [];

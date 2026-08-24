@@ -18,14 +18,13 @@ registerLocaleData(localeRu)
 
 @UntilDestroy()
 @Component({
-  selector: 'yrx-root',
-  standalone: true,
-  imports: [
-    AdminModule,
-    RouterOutlet
-  ],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+    selector: 'yrx-root',
+    imports: [
+        AdminModule,
+        RouterOutlet
+    ],
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
 

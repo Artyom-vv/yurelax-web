@@ -20,9 +20,10 @@ import {
 } from "../../../../pages/profile/pages/profile-wallet/modules/donate-modal/services/donate-modal.service";
 
 @Component({
-  selector: 'yrx-sidebar-user-panel',
-  templateUrl: './sidebar-user-panel.component.html',
-  styleUrls: ['./sidebar-user-panel.component.scss'],
+    selector: 'yrx-sidebar-user-panel',
+    templateUrl: './sidebar-user-panel.component.html',
+    styleUrls: ['./sidebar-user-panel.component.scss'],
+    standalone: false
 })
 export class SidebarUserPanelComponent implements OnInit, OnDestroy {
   constructor(

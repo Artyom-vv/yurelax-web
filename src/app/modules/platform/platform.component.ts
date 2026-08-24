@@ -3,9 +3,10 @@ import {ActivatedRoute} from "@angular/router";
 import {tap} from "rxjs";
 
 @Component({
-  selector: 'yrx-platform',
-  templateUrl: './platform.component.html',
-  styleUrls: ['./platform.component.scss']
+    selector: 'yrx-platform',
+    templateUrl: './platform.component.html',
+    styleUrls: ['./platform.component.scss'],
+    standalone: false
 })
 export class PlatformComponent implements OnInit {
 

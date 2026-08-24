@@ -7,9 +7,10 @@ import {MiniGamesService} from "../../../shared/services/mini-games.service";
 import {MiniGameResponseInterface} from "../../../shared/interfaces/old/mini-game-response.interface";
 
 @Component({
-  selector: 'yrx-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'yrx-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    standalone: false
 })
 export class HomeComponent implements OnInit, OnDestroy {
 

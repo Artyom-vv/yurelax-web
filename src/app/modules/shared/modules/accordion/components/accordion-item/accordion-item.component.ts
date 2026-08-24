@@ -8,20 +8,21 @@ import {BehaviorSubject} from "rxjs";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
-  selector: 'yrx-accordion-item',
-  templateUrl: './accordion-item.component.html',
-  styleUrls: ['./accordion-item.component.scss'],
-  animations: [
-    trigger('open', [
-      state('false', style({
-        height: '0px',
-      })),
-      state('true', style({
-        height: '*',
-      })),
-      transition('true <=> false', animate('0.15s ease-in-out')),
-    ])
-  ]
+    selector: 'yrx-accordion-item',
+    templateUrl: './accordion-item.component.html',
+    styleUrls: ['./accordion-item.component.scss'],
+    animations: [
+        trigger('open', [
+            state('false', style({
+                height: '0px',
+            })),
+            state('true', style({
+                height: '*',
+            })),
+            transition('true <=> false', animate('0.15s ease-in-out')),
+        ])
+    ],
+    standalone: false
 })
 export class AccordionItemComponent {
 

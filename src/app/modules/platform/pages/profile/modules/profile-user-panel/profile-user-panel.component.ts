@@ -4,9 +4,10 @@ import {Subscription, tap} from "rxjs";
 import {UserRes} from "../../../../interfaces/user.interface";
 
 @Component({
-  selector: 'yrx-profile-user-panel',
-  templateUrl: './profile-user-panel.component.html',
-  styleUrls: ['./profile-user-panel.component.scss']
+    selector: 'yrx-profile-user-panel',
+    templateUrl: './profile-user-panel.component.html',
+    styleUrls: ['./profile-user-panel.component.scss'],
+    standalone: false
 })
 export class ProfileUserPanelComponent implements OnInit, OnDestroy {
 

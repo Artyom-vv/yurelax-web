@@ -4,9 +4,10 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "
 import {Subscription, tap} from "rxjs";
 
 @Component({
-  selector: 'yrx-statistic',
-  templateUrl: './statistic.component.html',
-  styleUrls: ['./statistic.component.scss']
+    selector: 'yrx-statistic',
+    templateUrl: './statistic.component.html',
+    styleUrls: ['./statistic.component.scss'],
+    standalone: false
 })
 export class StatisticComponent implements OnInit, OnDestroy {
 

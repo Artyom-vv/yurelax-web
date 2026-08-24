@@ -5,9 +5,10 @@ import {ToolsService} from "../../../../../shared/services/tools.service";
 import {GetOnlineResponseInterface} from "../../../../../shared/interfaces/old/get-online-response.interface";
 
 @Component({
-  selector: 'yrx-online',
-  templateUrl: './online.component.html',
-  styleUrls: ['./online.component.scss']
+    selector: 'yrx-online',
+    templateUrl: './online.component.html',
+    styleUrls: ['./online.component.scss'],
+    standalone: false
 })
 export class OnlineComponent implements OnInit, OnDestroy {
   constructor(

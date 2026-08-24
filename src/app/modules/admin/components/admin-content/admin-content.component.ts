@@ -6,10 +6,11 @@ import {ToolsService} from "../../../shared/services/tools.service";
 import {AdminStore} from "../../store/admin.store";
 
 @Component({
-  selector: 'yrx-admin-content',
-  templateUrl: './admin-content.component.html',
-  styleUrls: ['./admin-content.component.scss'],
-  animations: [AppearanceAnimation]
+    selector: 'yrx-admin-content',
+    templateUrl: './admin-content.component.html',
+    styleUrls: ['./admin-content.component.scss'],
+    animations: [AppearanceAnimation],
+    standalone: false
 })
 export class AdminContentComponent {
   constructor(

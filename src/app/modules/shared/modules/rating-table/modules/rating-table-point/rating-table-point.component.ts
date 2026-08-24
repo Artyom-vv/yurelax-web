@@ -6,9 +6,10 @@ import {AnimationsService} from "../../../../animations/services/animations.serv
 import {UserRes} from "../../../../../platform/interfaces/user.interface";
 
 @Component({
-  selector: 'yrx-rating-table-point',
-  templateUrl: './rating-table-point.component.html',
-  styleUrls: ['./rating-table-point.component.scss']
+    selector: 'yrx-rating-table-point',
+    templateUrl: './rating-table-point.component.html',
+    styleUrls: ['./rating-table-point.component.scss'],
+    standalone: false
 })
 export class RatingTablePointComponent implements OnInit, OnDestroy, AfterViewInit {
 

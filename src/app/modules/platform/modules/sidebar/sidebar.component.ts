@@ -3,9 +3,10 @@ import {SidebarNavItem} from "./interfaces/sidebarNavItem";
 import {Router, Scroll} from "@angular/router";
 
 @Component({
-  selector: 'yrx-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
+    selector: 'yrx-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.scss'],
+    standalone: false
 })
 export class SidebarComponent implements AfterViewInit {
 

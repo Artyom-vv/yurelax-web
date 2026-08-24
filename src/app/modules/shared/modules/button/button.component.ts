@@ -8,9 +8,10 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'yrx-button',
-  templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss']
+    selector: 'yrx-button',
+    templateUrl: './button.component.html',
+    styleUrls: ['./button.component.scss'],
+    standalone: false
 })
 export class ButtonComponent implements AfterViewInit, DoCheck {
   constructor(private cdr: ChangeDetectorRef) {

@@ -18,19 +18,20 @@ import {animateChild, transition, trigger} from "@angular/animations";
 
 @UntilDestroy()
 @Component({
-  host: {
-    "[style.display]": "display"
-  },
-  selector: 'yrx-error-hint-wrapper',
-  templateUrl: './error-hint-wrapper.component.html',
-  styleUrls: ['./error-hint-wrapper.component.scss'],
-  animations: [
-    trigger('childTrigger', [
-      transition(':leave', [
-        animateChild()
-      ]),
-    ]),
-  ]
+    host: {
+        "[style.display]": "display"
+    },
+    selector: 'yrx-error-hint-wrapper',
+    templateUrl: './error-hint-wrapper.component.html',
+    styleUrls: ['./error-hint-wrapper.component.scss'],
+    animations: [
+        trigger('childTrigger', [
+            transition(':leave', [
+                animateChild()
+            ]),
+        ]),
+    ],
+    standalone: false
 })
 export class ErrorHintWrapperComponent implements OnInit, AfterViewInit {
   @Input() isYandexCringe: boolean = false;

@@ -7,12 +7,13 @@ import {DOCUMENT, isPlatformBrowser} from "@angular/common";
 import {ToolsService} from "../../services/tools.service";
 
 @Component({
-  selector: 'yrx-layout',
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss'],
-  animations: [
-    AppearanceAnimation,
-  ]
+    selector: 'yrx-layout',
+    templateUrl: './layout.component.html',
+    styleUrls: ['./layout.component.scss'],
+    animations: [
+        AppearanceAnimation,
+    ],
+    standalone: false
 })
 export class LayoutComponent implements OnInit, OnDestroy {
   constructor(

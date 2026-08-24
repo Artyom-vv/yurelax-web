@@ -13,9 +13,10 @@ import {SocialStoreInterface} from "../../../../store/interfaces/socials-store.i
 import {DOCUMENT} from "@angular/common";
 
 @Component({
-  selector: 'yrx-footer',
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss']
+    selector: 'yrx-footer',
+    templateUrl: './footer.component.html',
+    styleUrls: ['./footer.component.scss'],
+    standalone: false
 })
 export class FooterComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(

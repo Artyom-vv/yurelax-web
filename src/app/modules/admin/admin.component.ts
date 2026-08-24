@@ -11,9 +11,10 @@ import {AdminStore} from "./store/admin.store";
 import {ToolsService} from "../shared/services/tools.service";
 
 @Component({
-  selector: 'yrx-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss'],
+    selector: 'yrx-admin',
+    templateUrl: './admin.component.html',
+    styleUrls: ['./admin.component.scss'],
+    standalone: false
 })
 export class AdminComponent implements OnInit, OnDestroy {
 

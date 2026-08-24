@@ -2,9 +2,10 @@ import {AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core'
 import {DonatePanelType} from "./interfaces/donate-panel.interface";
 
 @Component({
-  selector: 'yrx-donate-panel',
-  templateUrl: './donate-panel.component.html',
-  styleUrls: ['./donate-panel.component.scss']
+    selector: 'yrx-donate-panel',
+    templateUrl: './donate-panel.component.html',
+    styleUrls: ['./donate-panel.component.scss'],
+    standalone: false
 })
 export class DonatePanelComponent implements AfterViewInit {
   @Input() coins: number = 0

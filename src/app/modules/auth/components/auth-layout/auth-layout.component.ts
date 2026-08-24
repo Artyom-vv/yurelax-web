@@ -4,12 +4,13 @@ import {AnimationsService} from "../../../shared/animations/services/animations.
 import {RouterOutlet} from "@angular/router";
 
 @Component({
-  selector: 'yrx-auth-layout',
-  templateUrl: './auth-layout.component.html',
-  styleUrls: ['./auth-layout.component.scss'],
-  animations: [
-    SwipeAnimation
-  ]
+    selector: 'yrx-auth-layout',
+    templateUrl: './auth-layout.component.html',
+    styleUrls: ['./auth-layout.component.scss'],
+    animations: [
+        SwipeAnimation
+    ],
+    standalone: false
 })
 export class AuthLayoutComponent implements OnInit {
   constructor(

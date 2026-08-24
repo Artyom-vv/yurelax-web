@@ -25,9 +25,10 @@ import {RequestsCancellerService} from "../../../../../shared/services/requests-
 import {ITagResponse} from "../../../../../shared/modules/tag/interfaces/tag.interface";
 
 @Component({
-  selector: 'yrx-mini-games-create',
-  templateUrl: './mini-games-create.component.html',
-  styleUrls: ['./mini-games-create.component.scss']
+    selector: 'yrx-mini-games-create',
+    templateUrl: './mini-games-create.component.html',
+    styleUrls: ['./mini-games-create.component.scss'],
+    standalone: false
 })
 export class MiniGamesCreateComponent implements OnInit, OnDestroy, AfterViewInit {
 

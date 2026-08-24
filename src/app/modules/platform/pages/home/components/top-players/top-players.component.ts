@@ -12,9 +12,10 @@ import {catchError} from "rxjs/operators";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
-  selector: 'yrx-top-players',
-  templateUrl: './top-players.component.html',
-  styleUrls: ['./top-players.component.scss']
+    selector: 'yrx-top-players',
+    templateUrl: './top-players.component.html',
+    styleUrls: ['./top-players.component.scss'],
+    standalone: false
 })
 export class TopPlayersComponent implements OnInit, OnDestroy {
 

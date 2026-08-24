@@ -11,9 +11,10 @@ const CARD_THEMES = [
 ] as const;
 
 @Component({
-  selector: 'yrx-profile-store',
-  templateUrl: './profile-store.component.html',
-  styleUrls: ['./profile-store.component.scss']
+    selector: 'yrx-profile-store',
+    templateUrl: './profile-store.component.html',
+    styleUrls: ['./profile-store.component.scss'],
+    standalone: false
 })
 export class ProfileStoreComponent implements OnInit {
   public subscriptions: SubscriptionRes[] = [];

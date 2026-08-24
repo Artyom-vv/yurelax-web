@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
-  selector: 'yrx-link',
-  templateUrl: './link.component.html',
-  styleUrls: ['./link.component.scss'],
-
+    selector: 'yrx-link',
+    templateUrl: './link.component.html',
+    styleUrls: ['./link.component.scss'],
+    standalone: false
 })
 export class LinkComponent {
   @Input() underlined: boolean = false;

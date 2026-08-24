@@ -2,7 +2,8 @@ import {Directive, Input, OnDestroy, OnInit, ElementRef, HostBinding} from '@ang
 import {AnimationBuilder, style, animate} from '@angular/animations';
 
 @Directive({
-  selector: '[yrxAnimateOpacity]'
+    selector: '[yrxAnimateOpacity]',
+    standalone: false
 })
 export class AnimationOpacityDirective implements OnInit, OnDestroy {
 

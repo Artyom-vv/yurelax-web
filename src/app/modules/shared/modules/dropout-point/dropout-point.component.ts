@@ -3,9 +3,10 @@ import {OptionSelectOutputInterface} from "./interfaces/option-select-output.int
 import {RouterLinkActive} from "@angular/router";
 
 @Component({
-  selector: 'yrx-dropout-point',
-  templateUrl: './dropout-point.component.html',
-  styleUrls: ['./dropout-point.component.scss'],
+    selector: 'yrx-dropout-point',
+    templateUrl: './dropout-point.component.html',
+    styleUrls: ['./dropout-point.component.scss'],
+    standalone: false
 })
 export class DropoutPointComponent {
   @Input() size: 'big' | 'normal' | 'small' = 'normal'

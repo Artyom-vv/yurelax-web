@@ -2,9 +2,10 @@ import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@an
 import {DropBoxOnChangeInterface} from "./interfaces/drop-box.interface";
 
 @Component({
-  selector: 'yrx-drag-and-drop',
-  templateUrl: './drag-and-drop.component.html',
-  styleUrls: ['./drag-and-drop.component.scss']
+    selector: 'yrx-drag-and-drop',
+    templateUrl: './drag-and-drop.component.html',
+    styleUrls: ['./drag-and-drop.component.scss'],
+    standalone: false
 })
 export class DragAndDropComponent {
   @ViewChild('fileLoader') fileLoader!: ElementRef;

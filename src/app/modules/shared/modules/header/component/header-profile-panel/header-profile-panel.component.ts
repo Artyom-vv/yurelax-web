@@ -5,9 +5,10 @@ import {SkinsService} from "../../../../services/skins.service";
 import {UserRes} from "../../../../../platform/interfaces/user.interface";
 
 @Component({
-  selector: 'yrx-header-profile-panel',
-  templateUrl: './header-profile-panel.component.html',
-  styleUrls: ['./header-profile-panel.component.scss'],
+    selector: 'yrx-header-profile-panel',
+    templateUrl: './header-profile-panel.component.html',
+    styleUrls: ['./header-profile-panel.component.scss'],
+    standalone: false
 })
 export class HeaderProfilePanelComponent implements OnInit, OnDestroy {
 

@@ -8,9 +8,10 @@ import {DELETE_DURATION} from "../../../../admin.constants";
 import {catchError} from "rxjs/operators";
 
 @Component({
-  selector: 'yrx-mini-games-item',
-  templateUrl: './mini-games-item.component.html',
-  styleUrls: ['./mini-games-item.component.scss']
+    selector: 'yrx-mini-games-item',
+    templateUrl: './mini-games-item.component.html',
+    styleUrls: ['./mini-games-item.component.scss'],
+    standalone: false
 })
 export class MiniGamesItemComponent {
   constructor(

@@ -5,9 +5,10 @@ import {Subscription, tap} from "rxjs";
 import {SocialStoreInterface} from "../../../../../../store/interfaces/socials-store.interface";
 
 @Component({
-  selector: 'yrx-faq',
-  templateUrl: './faq.component.html',
-  styleUrls: ['./faq.component.scss']
+    selector: 'yrx-faq',
+    templateUrl: './faq.component.html',
+    styleUrls: ['./faq.component.scss'],
+    standalone: false
 })
 export class FaqComponent {
 

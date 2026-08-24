@@ -5,9 +5,10 @@ import {Subscription} from "rxjs";
 import {SocialStoreInterface} from "../../../../store/interfaces/socials-store.interface";
 
 @Component({
-  selector: 'yrx-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+    selector: 'yrx-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
+    standalone: false
 })
 export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(

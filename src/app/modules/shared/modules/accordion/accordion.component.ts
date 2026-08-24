@@ -13,9 +13,10 @@ import {ToolsService} from "../../services/tools.service";
 import {Subscription} from "rxjs";
 
 @Component({
-  selector: 'yrx-accordion',
-  templateUrl: './accordion.component.html',
-  styleUrls: ['./accordion.component.scss']
+    selector: 'yrx-accordion',
+    templateUrl: './accordion.component.html',
+    styleUrls: ['./accordion.component.scss'],
+    standalone: false
 })
 export class AccordionComponent implements AfterContentInit, AfterViewInit, OnDestroy {
 

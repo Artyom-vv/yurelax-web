@@ -7,9 +7,10 @@ import {UserRes} from "../../interfaces/user.interface";
 import {SidebarNavItem} from "../../modules/sidebar/interfaces/sidebarNavItem";
 
 @Component({
-  selector: 'yrx-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
+    selector: 'yrx-profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.scss'],
+    standalone: false
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   constructor(

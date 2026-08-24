@@ -14,17 +14,18 @@ import {SelectService} from "./services/select.service";
 import {DOCUMENT} from "@angular/common";
 
 @Component({
-  selector: 'yrx-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SelectComponent),
-      multi: true
-    }
-  ]
+    selector: 'yrx-select',
+    templateUrl: './select.component.html',
+    styleUrls: ['./select.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SelectComponent),
+            multi: true
+        }
+    ],
+    standalone: false
 })
 export class SelectComponent implements AfterViewInit {
 

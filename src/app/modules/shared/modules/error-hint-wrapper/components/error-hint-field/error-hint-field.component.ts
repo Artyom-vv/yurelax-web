@@ -2,9 +2,10 @@ import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/c
 import {BehaviorSubject} from "rxjs";
 
 @Component({
-  selector: 'yrx-error-hint-field',
-  templateUrl: './error-hint-field.component.html',
-  styleUrls: ['./error-hint-field.component.scss'],
+    selector: 'yrx-error-hint-field',
+    templateUrl: './error-hint-field.component.html',
+    styleUrls: ['./error-hint-field.component.scss'],
+    standalone: false
 })
 export class ErrorHintFieldComponent implements AfterViewInit {
   @Input() field: string | string[] = '';

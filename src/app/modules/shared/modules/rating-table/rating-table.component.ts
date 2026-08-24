@@ -3,9 +3,10 @@ import {IRatingTableColumn, RatingTableInterface} from "./interfaces/rating-tabl
 import {ToolsService} from "../../services/tools.service";
 
 @Component({
-  selector: 'yrx-rating-table',
-  templateUrl: './rating-table.component.html',
-  styleUrls: ['./rating-table.component.scss']
+    selector: 'yrx-rating-table',
+    templateUrl: './rating-table.component.html',
+    styleUrls: ['./rating-table.component.scss'],
+    standalone: false
 })
 export class RatingTableComponent {
   @Input() data!: RatingTableInterface;

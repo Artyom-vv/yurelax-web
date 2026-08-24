@@ -2,9 +2,10 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SubscriptionPurchaseRequest, SubscriptionRes} from "../../interfaces/subscription.interface";
 
 @Component({
-  selector: 'yrx-subscription',
-  templateUrl: './subscription.component.html',
-  styleUrls: ['./subscription.component.scss']
+    selector: 'yrx-subscription',
+    templateUrl: './subscription.component.html',
+    styleUrls: ['./subscription.component.scss'],
+    standalone: false
 })
 export class SubscriptionComponent {
   @Input() data!: SubscriptionRes

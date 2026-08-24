@@ -13,9 +13,10 @@ import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { RefIconService } from "./services/ref-icon.service";
 
 @Component({
-  selector: 'yrx-ref-icon',
-  templateUrl: './ref-icon.component.html',
-  styleUrls: ['./ref-icon.component.scss']
+    selector: 'yrx-ref-icon',
+    templateUrl: './ref-icon.component.html',
+    styleUrls: ['./ref-icon.component.scss'],
+    standalone: false
 })
 export class RefIconComponent implements OnChanges {
 

@@ -8,9 +8,10 @@ import {
 } from '../../../shared/services/admin-commerce.service';
 
 @Component({
-  selector: 'yrx-admin-commerce',
-  templateUrl: './admin-commerce.component.html',
-  styleUrls: ['./admin-commerce.component.scss'],
+    selector: 'yrx-admin-commerce',
+    templateUrl: './admin-commerce.component.html',
+    styleUrls: ['./admin-commerce.component.scss'],
+    standalone: false
 })
 export class AdminCommerceComponent implements OnInit {
   public products: AdminCommerceProductRevision[] = [];

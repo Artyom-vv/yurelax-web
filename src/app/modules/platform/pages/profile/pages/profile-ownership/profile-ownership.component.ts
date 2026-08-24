@@ -4,9 +4,10 @@ import {CommerceEntitlement, CommercePurchase} from '../profile-store/interfaces
 import {PlatformCommerceService} from '../profile-store/services/platform-commerce.service';
 
 @Component({
-  selector: 'yrx-profile-ownership',
-  templateUrl: './profile-ownership.component.html',
-  styleUrls: ['./profile-ownership.component.scss']
+    selector: 'yrx-profile-ownership',
+    templateUrl: './profile-ownership.component.html',
+    styleUrls: ['./profile-ownership.component.scss'],
+    standalone: false
 })
 export class ProfileOwnershipComponent implements OnInit {
   public purchases: CommercePurchase[] = [];

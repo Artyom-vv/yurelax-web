@@ -4,14 +4,13 @@ import {ErrorHintWrapperModule} from "../../../error-hint-wrapper/error-hint-wra
 import {BaseComponentInputDirective} from "../../directives/base-component-input.directive";
 
 @Component({
-  selector: 'yrx-input-base',
-  templateUrl: './input-base.component.html',
-  styleUrls: ['./input-base.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    ErrorHintWrapperModule
-  ]
+    selector: 'yrx-input-base',
+    templateUrl: './input-base.component.html',
+    styleUrls: ['./input-base.component.scss'],
+    imports: [
+        CommonModule,
+        ErrorHintWrapperModule
+    ]
 })
 export class InputBaseComponent {
 

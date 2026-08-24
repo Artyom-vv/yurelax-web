@@ -2,9 +2,10 @@ import {AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core'
 import {TransitionPanelType} from "./interfaces/transition-panel.interface";
 
 @Component({
-  selector: 'yrx-transaction-panel',
-  templateUrl: './transaction-panel.component.html',
-  styleUrls: ['./transaction-panel.component.scss']
+    selector: 'yrx-transaction-panel',
+    templateUrl: './transaction-panel.component.html',
+    styleUrls: ['./transaction-panel.component.scss'],
+    standalone: false
 })
 export class TransactionPanelComponent implements AfterViewInit {
   @Input() even: boolean = false;

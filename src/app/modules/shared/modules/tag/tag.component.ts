@@ -2,9 +2,10 @@ import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, Output
 import {ITagResponse} from "./interfaces/tag.interface";
 
 @Component({
-  selector: 'yrx-tag',
-  templateUrl: './tag.component.html',
-  styleUrls: ['./tag.component.scss']
+    selector: 'yrx-tag',
+    templateUrl: './tag.component.html',
+    styleUrls: ['./tag.component.scss'],
+    standalone: false
 })
 export class TagComponent implements AfterViewInit {
 

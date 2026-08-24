@@ -3,16 +3,17 @@ import {BaseInputDirective} from "../../../directives/base-input.directive";
 import {IconDirective} from "../../../../../directives/icon.directive";
 
 @Directive({
-  selector: '[yrxInput]',
-  hostDirectives: [
-    {
-      directive: BaseInputDirective,
-      inputs: [
-        'suffix',
-        'placeholder'
-      ]
-    }
-  ]
+    selector: '[yrxInput]',
+    hostDirectives: [
+        {
+            directive: BaseInputDirective,
+            inputs: [
+                'suffix',
+                'placeholder'
+            ]
+        }
+    ],
+    standalone: false
 })
 export class InputDirective {
 

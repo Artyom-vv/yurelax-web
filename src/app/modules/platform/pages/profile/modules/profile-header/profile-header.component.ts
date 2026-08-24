@@ -4,9 +4,10 @@ import {Subscription} from "rxjs";
 import {SocialStoreInterface} from "../../../../../../store/interfaces/socials-store.interface";
 
 @Component({
-  selector: 'yrx-profile-header',
-  templateUrl: './profile-header.component.html',
-  styleUrls: ['./profile-header.component.scss']
+    selector: 'yrx-profile-header',
+    templateUrl: './profile-header.component.html',
+    styleUrls: ['./profile-header.component.scss'],
+    standalone: false
 })
 export class ProfileHeaderComponent implements OnInit, OnDestroy {
   constructor(private appStore: AppStore) {

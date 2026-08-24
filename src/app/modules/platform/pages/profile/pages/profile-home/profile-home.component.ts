@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'yrx-profile-home',
-  templateUrl: './profile-home.component.html',
-  styleUrls: ['./profile-home.component.scss'],
+    selector: 'yrx-profile-home',
+    templateUrl: './profile-home.component.html',
+    styleUrls: ['./profile-home.component.scss'],
+    standalone: false
 })
 export class ProfileHomeComponent {
 }

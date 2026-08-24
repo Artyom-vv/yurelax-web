@@ -3,9 +3,10 @@ import {BehaviorSubject} from "rxjs";
 import {Properties} from "csstype";
 
 @Component({
-  selector: 'yrx-wiki-picture',
-  templateUrl: './wiki-picture.component.html',
-  styleUrls: ['./wiki-picture.component.scss']
+    selector: 'yrx-wiki-picture',
+    templateUrl: './wiki-picture.component.html',
+    styleUrls: ['./wiki-picture.component.scss'],
+    standalone: false
 })
 export class WikiPictureComponent implements AfterViewInit {
 

@@ -3,12 +3,13 @@ import {InputDirective} from "../../directives/input.directive";
 import {BaseComponentInputDirective} from "../../../../directives/base-component-input.directive";
 
 @Component({
-  selector: 'yrx-input',
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
-  hostDirectives: [
-    BaseComponentInputDirective
-  ]
+    selector: 'yrx-input',
+    templateUrl: './input.component.html',
+    styleUrls: ['./input.component.scss'],
+    hostDirectives: [
+        BaseComponentInputDirective
+    ],
+    standalone: false
 })
 export class InputComponent implements AfterViewInit {
 

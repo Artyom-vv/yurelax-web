@@ -5,9 +5,10 @@ import {combineLatest, tap} from 'rxjs';
 import {WikiService} from "./services/wiki.service";
 
 @Component({
-  selector: 'yrx-wiki',
-  templateUrl: './wiki.component.html',
-  styleUrls: ['./wiki.component.scss'],
+    selector: 'yrx-wiki',
+    templateUrl: './wiki.component.html',
+    styleUrls: ['./wiki.component.scss'],
+    standalone: false
 })
 export class WikiComponent {
   public wikiNavigation: SidebarNavItem[][] = []

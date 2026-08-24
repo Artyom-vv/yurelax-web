@@ -5,9 +5,10 @@ import {SidebarNavItem} from "../../../../modules/sidebar/interfaces/sidebarNavI
 import {WikiNavigationItem} from "../../interfaces/wiki.interface";
 
 @Component({
-  selector: 'yrx-wiki-home',
-  templateUrl: './wiki-home.component.html',
-  styleUrls: ['./wiki-home.component.scss']
+    selector: 'yrx-wiki-home',
+    templateUrl: './wiki-home.component.html',
+    styleUrls: ['./wiki-home.component.scss'],
+    standalone: false
 })
 export class WikiHomeComponent implements OnInit {
 
