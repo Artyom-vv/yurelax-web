@@ -34,4 +34,22 @@ export class PlatformApiService {
       headers: new HttpHeaders({ 'X-CSRF-Token': csrfToken }),
     });
   }
+
+  /** Purchases one exact published price; the browser operation key is generated automatically. */
+  purchase(csrfToken: string, offerCode: string, currencyCode: string): Observable<unknown> {
+    return this.http.post('/api/me/purchases', { offerCode, currencyCode, quantity: '1' }, {
+      headers: this.mutationHeaders(csrfToken),
+    });
+  }
+
+  /** Starts one activatable right owned by the current platform session. */
+  activate(csrfToken: string, entitlementId: string): Observable<unknown> {
+    return this.http.post(`/api/me/entitlements/${encodeURIComponent(entitlementId)}/activations`, null, {
+      headers: this.mutationHeaders(csrfToken),
+    });
+  }
+
+  private mutationHeaders(csrfToken: string): HttpHeaders {
+    return new HttpHeaders({ 'X-CSRF-Token': csrfToken, 'Idempotency-Key': crypto.randomUUID() });
+  }
 }

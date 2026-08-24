@@ -2,7 +2,7 @@ import { AsyncPipe, DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-import { catchError, combineLatest, map, of, startWith } from 'rxjs';
+import { BehaviorSubject, catchError, combineLatest, map, of, startWith, switchMap } from 'rxjs';
 import {
   CabinetData,
   CommerceEntitlement,
@@ -31,8 +31,12 @@ export class CabinetComponent {
   private readonly api = inject(PlatformApiService);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly refresh = new BehaviorSubject<void>(undefined);
   readonly tab = signal<CabinetTab>('store');
-  readonly view$ = combineLatest({ session: this.api.session(), data: this.api.cabinet() }).pipe(
+  readonly busy = signal<string | null>(null);
+  readonly notice = signal<string | null>(null);
+  readonly view$ = combineLatest({ session: this.api.session(),
+    data: this.refresh.pipe(switchMap(() => this.api.cabinet())) }).pipe(
     map(({ session, data }): CabinetView => ({ loading: false, data, session })),
     startWith<CabinetView>({ loading: true }),
     catchError(() => of<CabinetView>({ loading: false,
@@ -40,6 +44,18 @@ export class CabinetComponent {
   );
 
   setTab(tab: CabinetTab): void { this.tab.set(tab); }
+
+  purchase(session: WebSessionState, offer: CommerceOffer, currencyCode: string): void {
+    if (!session.csrfToken || offer.eligibility?.eligible === false || this.busy()) return;
+    this.mutate(`purchase:${offer.code}`, this.api.purchase(session.csrfToken, offer.code, currencyCode),
+      `Покупка «${offer.productName}» подтверждена платформой.`);
+  }
+
+  activateRight(session: WebSessionState, entitlement: CommerceEntitlement): void {
+    if (!session.csrfToken || !entitlement.activationState.canActivate || this.busy()) return;
+    this.mutate(`activation:${entitlement.id}`, this.api.activate(session.csrfToken, entitlement.id),
+      `Право ${entitlement.entitlementKey} активировано.`);
+  }
 
   logout(session: WebSessionState): void {
     if (!session.csrfToken) return;
@@ -67,6 +83,19 @@ export class CabinetComponent {
       LIFETIME_LIMIT_REACHED: 'Лимит исчерпан', PERIOD_LIMIT_REACHED: 'Лимит периода исчерпан',
     };
     return labels[entitlement.activationState.blockedReason ?? ''] ?? 'Активация не требуется';
+  }
+
+  private mutate(key: string, operation: ReturnType<PlatformApiService['purchase']>, success: string): void {
+    this.busy.set(key);
+    this.notice.set(null);
+    operation.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: () => { this.busy.set(null); this.notice.set(success); this.refresh.next(); },
+      error: (error: { error?: { message?: unknown } }) => {
+        this.busy.set(null);
+        const message = error.error?.message;
+        this.notice.set(typeof message === 'string' ? message : 'Операцию не удалось подтвердить. Повторите попытку.');
+      },
+    });
   }
 
   private reason(code: string, actual: string | null): string {
