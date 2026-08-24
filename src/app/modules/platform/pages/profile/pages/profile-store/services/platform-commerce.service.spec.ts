@@ -29,6 +29,14 @@ describe('PlatformCommerceService', () => {
     request.flush({items: []});
   });
 
+  it('reads wallets owned by the authenticated session', () => {
+    service.wallets().subscribe();
+    const request = http.expectOne('/api/me/wallets');
+    expect(request.request.method).toBe('GET');
+    expect(request.request.params.keys()).toEqual([]);
+    request.flush({items: []});
+  });
+
   it('purchases without accepting a browser-owned player id', () => {
     service.purchase('hunt.class.archer', 'GEMS').subscribe();
     const request = http.expectOne('/api/me/purchases');

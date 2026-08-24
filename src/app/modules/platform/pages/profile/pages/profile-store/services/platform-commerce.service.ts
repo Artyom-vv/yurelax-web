@@ -5,10 +5,11 @@ import {environment} from '../../../../../../../../environments/environment';
 import {PlatformSessionService} from '../../../../../../shared/services/platform-session.service';
 import {
   CommercePurchaseResult,
-  CommerceStorefront
+  CommerceStorefront,
+  PlayerWalletPage
 } from '../interfaces/commerce.interface';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class PlatformCommerceService {
   constructor(
     private readonly http: HttpClient,
@@ -20,6 +21,10 @@ export class PlatformCommerceService {
     if (gameCode) params = params.set('gameCode', gameCode);
     if (currencyCode) params = params.set('currencyCode', currencyCode);
     return this.http.get<CommerceStorefront>(`${environment.platformApiUrl}/storefront`, {params});
+  }
+
+  wallets(): Observable<PlayerWalletPage> {
+    return this.http.get<PlayerWalletPage>(`${environment.platformApiUrl}/me/wallets`);
   }
 
   purchase(offerCode: string, currencyCode: string): Observable<CommercePurchaseResult> {

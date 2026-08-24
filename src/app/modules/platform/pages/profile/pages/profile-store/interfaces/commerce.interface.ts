@@ -44,6 +44,18 @@ export interface CommerceStorefront {
   items: CommerceOffer[];
 }
 
+export interface PlayerWalletBalance {
+  currencyCode: string;
+  exponent: number;
+  posted: string;
+  reserved: string;
+  available: string;
+}
+
+export interface PlayerWalletPage {
+  items: PlayerWalletBalance[];
+}
+
 export interface CommercePurchaseResult {
   purchase: {
     id: string;

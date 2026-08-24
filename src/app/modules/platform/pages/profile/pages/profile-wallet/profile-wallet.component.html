@@ -1,31 +1,34 @@
 <div class="colored-box">
-  <h3>Пополнение кошелька</h3>
+  <h3>Ваши кошельки</h3>
   <yrx-spacing type="XS"></yrx-spacing>
-  <p class="text text_body c-gradation-300">Лучший способ помочь проекту - поддержать его материально! Монеты
-  начисляются в течении 1 рабочего дня в соответствии с суммой пополнения.</p>
-  @if (!promoCode.hide) {
-    <yrx-spacing type="XS"></yrx-spacing>
-  }
-  <yrx-promo-code #promoCode></yrx-promo-code>
+  <p class="text text_body c-gradation-300">Баланс загружается из платформенного каталога. Здесь отображаются все активные валюты, доступные вашему аккаунту.</p>
   <yrx-spacing type="S"></yrx-spacing>
-  <div class="flex flex_wrap gap-24">
-    <yrx-donate-panel [coins]="49" [cost]="49"></yrx-donate-panel>
-    <yrx-donate-panel [oldCoins]="99" [coins]="109" [cost]="99" type="primary"></yrx-donate-panel>
-    <yrx-donate-panel [oldCoins]="199" [coins]="249" [cost]="199"></yrx-donate-panel>
-    <yrx-donate-panel [oldCoins]="349" [coins]="499" [cost]="349"></yrx-donate-panel>
-  </div>
-</div>
-<yrx-spacing type="S"></yrx-spacing>
-<div class="borders">
-  <div class="without-borders colored-box" id="transactions">
-    <h3>История транзакций</h3>
-    <yrx-spacing type="XS"></yrx-spacing>
-    <p class="text text_body c-gradation-300">Ниже представлен список совершенных Вами транзакций, если вы не совершали
-      транзакций, но они отображаются ниже - <a href="#" class="c-purple-300">Обратитесь в поддержку</a></p>
-    </div>
-    <div class="flex flex_column">
-      @for (transaction of [1,2,3,4]; track transaction; let idx = $index) {
-        <yrx-transaction-panel [even]="idx % 2 === 0"></yrx-transaction-panel>
+  @if (loading) {
+    <div class="wallet-state text text_body c-gradation-300">Загружаем балансы…</div>
+  } @else if (error) {
+    <div class="wallet-state wallet-state_error text text_body">{{error}}</div>
+  } @else if (wallets.length === 0) {
+    <div class="wallet-state text text_body c-gradation-300">В каталоге пока нет активных валют.</div>
+  } @else {
+    <div class="wallet-grid">
+      @for (wallet of wallets; track wallet.currencyCode) {
+        <article class="wallet-card">
+          <p class="text text_body c-gradation-300">{{wallet.currencyCode}}</p>
+          <yrx-spacing type="XS2"></yrx-spacing>
+          <h3>{{amount(wallet.available, wallet.exponent)}}</h3>
+          <yrx-spacing type="XS"></yrx-spacing>
+          <div class="wallet-details text text_small c-gradation-300">
+            <span>Начислено: {{amount(wallet.posted, wallet.exponent)}}</span>
+            <span>Зарезервировано: {{amount(wallet.reserved, wallet.exponent)}}</span>
+          </div>
+        </article>
       }
     </div>
-  </div>
+  }
+</div>
+<yrx-spacing type="S"></yrx-spacing>
+<div class="colored-box">
+  <h3>Пополнение</h3>
+  <yrx-spacing type="XS"></yrx-spacing>
+  <p class="text text_body c-gradation-300">Способы пополнения появятся здесь после подключения платежного провайдера. Сайт не показывает тестовые пакеты и не имитирует начисление валюты.</p>
+</div>

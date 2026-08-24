@@ -8,7 +8,6 @@ import {SpacingModule} from "../../../../../shared/modules/spacing/spacing.modul
 import {SubscriptionComponent} from "./components/subscription/subscription.component";
 import {RefIconModule} from "../../../../../shared/modules/ref-icon/ref-icon.module";
 import {ButtonModule} from "../../../../../shared/modules/button/button.module";
-import {PlatformCommerceService} from './services/platform-commerce.service';
 
 
 @NgModule({
@@ -24,8 +23,7 @@ import {PlatformCommerceService} from './services/platform-commerce.service';
     SpacingModule,
     RefIconModule,
     ButtonModule
-  ],
-  providers: [PlatformCommerceService]
+  ]
 })
 export class ProfileStoreModule {
 }
