@@ -1,223 +1,100 @@
-<h3>Товары и предложения</h3>
-<yrx-spacing type="XS"></yrx-spacing>
-<p class="text text_body regular c-gradation-300">Товар описывает универсальные права и выдачи. Предложение связывает конкретную версию товара с ценами, областью режима, требованиями и периодом продажи.</p>
-<yrx-spacing type="S"></yrx-spacing>
-
-<section class="editor-card">
-  <h4>Опубликовать версию товара</h4>
-  <p class="text text_small c-gradation-300">Один товар может содержать несколько независимых прав. Каждое право принадлежит своему provider, может быть глобальным или привязанным к режиму и имеет собственный срок.</p>
-  <yrx-spacing type="S"></yrx-spacing>
-  <form [formGroup]="productForm" (ngSubmit)="publishProduct()" class="editor-form">
-    <div class="form-grid form-grid_product">
-      <div class="box box_input"><input class="input_normal" formControlName="code" placeholder="Код товара: hunt.class.archer"></div>
-      <div class="box box_input"><input class="input_normal" formControlName="name" placeholder="Название для игрока"></div>
-      <div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="version" placeholder="Версия"></div>
-      <div class="box box_input">
-        <select class="input_normal" formControlName="kind">
-          <option value="PERMISSION">Право (PERMISSION)</option>
-          <option value="ITEM">Предмет (ITEM)</option>
-          <option value="REWARD_ACCESS">Доступ к награде (REWARD_ACCESS)</option>
-          <option value="CUSTOM">Пользовательский товар (CUSTOM)</option>
-        </select>
-      </div>
-    </div>
-    <div class="box box_input"><textarea class="input_normal editor-textarea" formControlName="description" placeholder="Что именно получает игрок"></textarea></div>
-
-    <div formArrayName="grants" class="grant-editors">
-      @for (grant of grants.controls; track $index; let index = $index) {
-        <fieldset class="grant-editor" [formGroupName]="index">
-          <legend>Право {{index + 1}}</legend>
-          <div class="form-grid">
-            <div class="box box_input"><input class="input_normal" formControlName="providerCode" placeholder="Provider: hunt"></div>
-            <div class="box box_input"><input class="input_normal" formControlName="grantKey" placeholder="Ключ права: class.archer"></div>
-            <div class="box box_input"><input class="input_normal" formControlName="gameCode" placeholder="Режим или пусто для global"></div>
-            <div class="box box_input">
-              <select class="input_normal" formControlName="deliveryMode">
-                <option value="ENTITLEMENT">Хранимое право (ENTITLEMENT)</option>
-                <option value="FULFILLMENT">Задача обработчику (FULFILLMENT)</option>
-              </select>
-            </div>
-            <div class="box box_input">
-              <select class="input_normal" formControlName="ownershipPolicy">
-                <option value="DENY_DUPLICATE">Запретить дубликат</option>
-                <option value="EXTEND">Продлевать срок</option>
-                <option value="REPLACE">Заменять активное право</option>
-                <option value="STACK">Хранить несколько выдач</option>
-              </select>
-            </div>
-            <div class="box box_input">
-              <select class="input_normal" formControlName="lifetimeKind">
-                <option value="PERMANENT">Навсегда</option>
-                <option value="FIXED_DURATION">На заданный срок</option>
-              </select>
-            </div>
-            @if (grant.get('lifetimeKind')?.value === 'FIXED_DURATION') {
-              <div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="durationSeconds" placeholder="Срок, секунд"></div>
-            }
-          </div>
-          <label class="check-row text text_small c-gradation-300"><input type="checkbox" formControlName="activationEnabled"> Право активируется игроком по квоте</label>
-          @if (grant.get('activationEnabled')?.value) {
-            <div class="form-grid">
-              <div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="activationDurationSeconds" placeholder="Длительность активации"></div>
-              <div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="activationWindowSeconds" placeholder="Окно квоты"></div>
-              <div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="maximumActivations" placeholder="Активаций за окно"></div>
-              <div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="lifetimeMaximumActivations" placeholder="Всего активаций, необязательно"></div>
-            </div>
-          }
-          <div class="box box_input"><textarea class="input_normal editor-textarea" formControlName="payload" placeholder='Данные обработчику, JSON: {"classCode":"archer"}'></textarea></div>
-          <button class="secondary-action" type="button" [disabled]="grants.length === 1" (click)="removeGrant(index)">Удалить это право</button>
-        </fieldset>
-      }
-    </div>
-    <div class="editor-actions">
-      <button class="secondary-action" type="button" (click)="addGrant()">Добавить право в товар</button>
-      <button class="primary-action" type="submit" [disabled]="productForm.invalid || mutating">Опубликовать неизменяемую версию</button>
-    </div>
-  </form>
-</section>
-
-<yrx-spacing type="M"></yrx-spacing>
-<section class="editor-card">
-  <h4>Опубликовать предложение магазина</h4>
-  <p class="text text_small c-gradation-300">Предложение выбирает точную версию товара, цену в контрактной валюте и проверяемое платформой условие покупки.</p>
-  <yrx-spacing type="S"></yrx-spacing>
-  <form [formGroup]="offerForm" (ngSubmit)="publishOffer()" class="editor-form">
-    <div class="form-grid">
-      <div class="box box_input"><input class="input_normal" formControlName="code" placeholder="Код предложения"></div>
-      <div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="version" placeholder="Версия предложения"></div>
-      <div class="box box_input"><input class="input_normal" formControlName="productCode" placeholder="Код товара"></div>
-      <div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="productVersion" placeholder="Версия товара"></div>
-      <div class="box box_input"><input class="input_normal" formControlName="gameCode" placeholder="Режим или пусто для global"></div>
-      <div class="box box_input"><input class="input_normal" type="datetime-local" formControlName="effectiveFrom" title="Начало продаж"></div>
-      <div class="box box_input"><input class="input_normal" type="datetime-local" formControlName="effectiveUntil" title="Окончание продаж, необязательно"></div>
-    </div>
-
-    <div formArrayName="prices" class="price-editors">
-      @for (price of prices.controls; track $index; let index = $index) {
-        <div class="price-editor" [formGroupName]="index">
-          <div class="box box_input"><input class="input_normal" formControlName="currencyCode" placeholder="Валюта: GEMS"></div>
-          <div class="box box_input"><input class="input_normal" formControlName="amount" placeholder="Точная сумма"></div>
-          <button class="secondary-action" type="button" [disabled]="prices.length === 1" (click)="removePrice(index)">Удалить</button>
-        </div>
-      }
-      <button class="secondary-action" type="button" (click)="addPrice()">Добавить вариант цены</button>
-    </div>
-
-    <div class="box box_input">
-      <select class="input_normal" formControlName="requirementKind">
-        <option value="NONE">Без дополнительного требования</option>
-        <option value="PROGRESSION_LEVEL">Минимальный уровень прогрессии</option>
-        <option value="STAT_THRESHOLD">Минимальное значение статистики</option>
-        <option value="GRANT_OWNED">Наличие другого права</option>
-        <option value="PURCHASE_COUNT_LIMIT">Лимит покупок предложения</option>
-      </select>
-    </div>
-    @switch (offerForm.get('requirementKind')?.value) {
-      @case ('PROGRESSION_LEVEL') {
-        <div class="form-grid requirement-fields">
-          <div class="box box_input"><input class="input_normal" formControlName="progressionCode" placeholder="Код прогрессии"></div>
-          <div class="box box_input"><input class="input_normal" type="number" min="0" formControlName="minimumLevel" placeholder="Минимальный уровень"></div>
-        </div>
-      }
-      @case ('STAT_THRESHOLD') {
-        <div class="form-grid requirement-fields">
-          <div class="box box_input"><input class="input_normal" formControlName="statCode" placeholder="Код статистики"></div>
-          <div class="box box_input"><input class="input_normal" formControlName="requirementGameCode" placeholder="Режим или global"></div>
-          <div class="box box_input"><input class="input_normal" formControlName="minimumStatistic" placeholder="Минимальное точное значение"></div>
-        </div>
-      }
-      @case ('GRANT_OWNED') {
-        <div class="form-grid requirement-fields">
-          <div class="box box_input"><input class="input_normal" formControlName="providerCode" placeholder="Provider права"></div>
-          <div class="box box_input"><input class="input_normal" formControlName="grantKey" placeholder="Ключ требуемого права"></div>
-          <div class="box box_input"><input class="input_normal" formControlName="requirementGameCode" placeholder="Режим или global"></div>
-        </div>
-      }
-      @case ('PURCHASE_COUNT_LIMIT') {
-        <div class="form-grid requirement-fields">
-          <div class="box box_input"><input class="input_normal" formControlName="requiredOfferCode" placeholder="Код ограничиваемого предложения"></div>
-          <div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="maximumPurchases" placeholder="Максимум покупок"></div>
-        </div>
-      }
+<header class="page-head">
+  <div>
+    <p class="eyebrow">Платформенный каталог</p>
+    <h3>Магазин и права игроков</h3>
+    <p class="text text_body regular c-gradation-300">Управляйте тем, что получает игрок, отдельно от цены и условий продажи. Все изменения публикуются новыми версиями — история не затирается.</p>
+  </div>
+  <div class="page-actions">
+    @if (view === 'catalog') {
+      <yrx-button type="secondary" (press)="open('product')">Новый товар</yrx-button>
+      <yrx-button (press)="open('offer')">Новое предложение</yrx-button>
+    } @else {
+      <yrx-button type="secondary" (press)="open('catalog')">Вернуться к каталогу</yrx-button>
     }
-    <button class="primary-action" type="submit" [disabled]="offerForm.invalid || mutating">Опубликовать предложение</button>
-  </form>
-</section>
+  </div>
+</header>
 
 <yrx-spacing type="M"></yrx-spacing>
 
-<div class="filters">
-  <div class="box box_input"><input class="input_normal" [(ngModel)]="productCode" placeholder="Код товара"></div>
-  <div class="box box_input"><input class="input_normal" [(ngModel)]="offerCode" placeholder="Код предложения"></div>
-  <button class="filter-action" type="button" (click)="load()">Применить фильтры</button>
-</div>
-<yrx-spacing type="M"></yrx-spacing>
-
-@if (loading) {
-  <p class="text text_body c-gradation-300">Загружаем версии каталога…</p>
-} @else {
-  <section>
-    <h4>Версии товаров — {{products.length}}</h4>
-    <yrx-spacing type="S"></yrx-spacing>
-    <div class="catalog-list">
-      @for (product of products; track product.id) {
-        <article class="catalog-card">
-          <div class="flex flex_justify-between gap-24">
-            <div>
-              <p class="text text_small c-gradation-300">{{product.kind}} · версия {{product.version}} · {{product.purchasePolicy}}</p>
-              <h4>{{product.name}}</h4>
-              <p class="text text_body c-gradation-300">{{product.productCode}}</p>
+@if (view === 'product') {
+  <section class="editor-card">
+    <div class="section-heading">
+      <span class="section-number">01</span>
+      <div><h4>Новая версия товара</h4><p class="text text_small c-gradation-300">Товар — это одно или несколько прав. Комплект может одновременно открыть возможности разных обработчиков.</p></div>
+    </div>
+    <form [formGroup]="productForm" (ngSubmit)="publishProduct()" class="editor-form">
+      <div class="form-grid form-grid_product">
+        <label class="field"><span>Контрактный код</span><div class="box box_input"><input class="input_normal" formControlName="code" placeholder="hunt.class.archer"></div></label>
+        <label class="field"><span>Название для игрока</span><div class="box box_input"><input class="input_normal" formControlName="name" placeholder="Класс Лучник"></div></label>
+        <label class="field"><span>Версия</span><div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="version"></div></label>
+        <label class="field"><span>Тип товара</span><div class="box box_input"><select class="input_normal" formControlName="kind"><option value="PERMISSION">Право</option><option value="ITEM">Предмет</option><option value="REWARD_ACCESS">Доступ к награде</option><option value="CUSTOM">Свой тип</option></select></div></label>
+      </div>
+      <label class="field"><span>Что увидит и получит игрок</span><div class="box box_input"><textarea class="input_normal editor-textarea" formControlName="description" placeholder="Коротко и понятно опишите ценность товара"></textarea></div></label>
+      <div formArrayName="grants" class="grant-editors">
+        @for (grant of grants.controls; track $index; let index = $index) {
+          <fieldset class="grant-editor" [formGroupName]="index">
+            <div class="grant-head"><div><span class="grant-index">Право {{index + 1}}</span><p class="text text_small c-gradation-300">Какой модуль обработает покупку и на какой срок.</p></div>@if (grants.length > 1) {<button class="text-action danger" type="button" (click)="removeGrant(index)">Убрать</button>}</div>
+            <div class="form-grid">
+              <label class="field"><span>Обработчик</span><div class="box box_input"><input class="input_normal" formControlName="providerCode" placeholder="hunt"></div></label>
+              <label class="field"><span>Ключ права</span><div class="box box_input"><input class="input_normal" formControlName="grantKey" placeholder="class.archer"></div></label>
+              <label class="field"><span>Режим</span><div class="box box_input"><input class="input_normal" formControlName="gameCode" placeholder="Пусто — глобально"></div></label>
+              <label class="field"><span>Способ выдачи</span><div class="box box_input"><select class="input_normal" formControlName="deliveryMode"><option value="ENTITLEMENT">Хранимое право</option><option value="FULFILLMENT">Задача обработчику</option></select></div></label>
+              <label class="field"><span>Повторная покупка</span><div class="box box_input"><select class="input_normal" formControlName="ownershipPolicy"><option value="DENY_DUPLICATE">Запретить</option><option value="EXTEND">Продлить</option><option value="REPLACE">Заменить</option><option value="STACK">Сложить выдачи</option></select></div></label>
+              <label class="field"><span>Срок права</span><div class="box box_input"><select class="input_normal" formControlName="lifetimeKind"><option value="PERMANENT">Навсегда</option><option value="FIXED_DURATION">Ограниченный</option></select></div></label>
+              @if (grant.get('lifetimeKind')?.value === 'FIXED_DURATION') {<label class="field"><span>Срок в секундах</span><div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="durationSeconds"></div></label>}
             </div>
-            <p class="text text_small c-gradation-300">{{product.publishedAt | date:'dd.MM.yyyy HH:mm'}}</p>
-          </div>
-          <yrx-spacing type="XS"></yrx-spacing>
-          <p class="text text_body c-gradation-300">{{product.description}}</p>
-          <yrx-spacing type="XS"></yrx-spacing>
-          <div class="grant-list">
-            @for (grant of product.grants; track grant.ordinal) {
-              <div class="grant text text_small c-gradation-300">
-                #{{grant.ordinal}} {{grant.grantKey}} · {{grant.deliveryMode}} · {{grant.providerCode}} · {{grant.gameCode ?? 'глобально'}} · {{grant.lifetime.kind}} · {{grant.ownershipPolicy}}
+            <label class="check-row text text_small c-gradation-300"><input type="checkbox" formControlName="activationEnabled"> Игрок активирует это право сам, с ограничением по времени</label>
+            @if (grant.get('activationEnabled')?.value) {
+              <div class="form-grid activation-fields">
+                <label class="field"><span>Длительность активации</span><div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="activationDurationSeconds"></div></label>
+                <label class="field"><span>Период квоты</span><div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="activationWindowSeconds"></div></label>
+                <label class="field"><span>Активаций за период</span><div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="maximumActivations"></div></label>
+                <label class="field"><span>Активаций всего</span><div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="lifetimeMaximumActivations" placeholder="Без лимита"></div></label>
               </div>
             }
-          </div>
-        </article>
-      } @empty {
-        <p class="text text_body c-gradation-300">Товары не найдены.</p>
-      }
-    </div>
+            <label class="field advanced-field"><span>Данные обработчику · JSON</span><div class="box box_input"><textarea class="input_normal editor-textarea" formControlName="payload" placeholder='{"classCode":"archer"}'></textarea></div></label>
+          </fieldset>
+        }
+      </div>
+      <div class="editor-actions"><yrx-button type="secondary" (press)="addGrant()">Добавить ещё одно право</yrx-button><yrx-button [disabled]="productForm.invalid || mutating" [loading]="mutating" (press)="publishProduct()">Опубликовать версию</yrx-button></div>
+    </form>
   </section>
+}
 
-  <yrx-spacing type="M"></yrx-spacing>
-  <section>
-    <h4>Версии предложений — {{offers.length}}</h4>
-    <yrx-spacing type="S"></yrx-spacing>
-    <div class="catalog-list">
-      @for (offer of offers; track offer.id) {
-        <article class="catalog-card" [class.catalog-card_retired]="offer.retiredAt">
-          <div class="flex flex_justify-between gap-24">
-            <div>
-              <p class="text text_small c-gradation-300">версия {{offer.version}} · {{offer.gameCode ?? 'глобальное предложение'}}</p>
-              <h4>{{offer.code}}</h4>
-              <p class="text text_body c-gradation-300">{{offer.productCode}} v{{offer.productVersion}}</p>
-            </div>
-            <div class="prices">
-              @for (price of offer.prices; track price.currencyCode) {
-                <strong>{{price.amount}} {{price.currencyCode}}</strong>
-              }
-            </div>
-          </div>
-          <yrx-spacing type="XS"></yrx-spacing>
-          <p class="text text_small c-gradation-300">Требования: {{requirement(offer.requirement)}}</p>
-          <p class="text text_small c-gradation-300">Период: {{offer.effectiveFrom | date:'dd.MM.yyyy HH:mm'}} — {{offer.effectiveUntil ? (offer.effectiveUntil | date:'dd.MM.yyyy HH:mm') : 'без окончания'}}</p>
-          @if (offer.retiredAt) {
-            <p class="text text_small retired">Снято {{offer.retiredAt | date:'dd.MM.yyyy HH:mm'}} · {{offer.retirementReason}}</p>
-          } @else {
-            <button class="secondary-action danger-action" type="button" [disabled]="mutating" (click)="retireOffer(offer)">Снять предложение, сохранив историю</button>
-          }
-        </article>
-      } @empty {
-        <p class="text text_body c-gradation-300">Предложения не найдены.</p>
-      }
-    </div>
+@if (view === 'offer') {
+  <section class="editor-card">
+    <div class="section-heading"><span class="section-number">02</span><div><h4>Новое предложение</h4><p class="text text_small c-gradation-300">Выберите точную версию товара, цену и условия, при которых игрок сможет его купить.</p></div></div>
+    <form [formGroup]="offerForm" (ngSubmit)="publishOffer()" class="editor-form">
+      <div class="form-grid">
+        <label class="field"><span>Код предложения</span><div class="box box_input"><input class="input_normal" formControlName="code" placeholder="hunt.class.archer.gems"></div></label>
+        <label class="field"><span>Версия предложения</span><div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="version"></div></label>
+        <label class="field"><span>Код товара</span><div class="box box_input"><input class="input_normal" formControlName="productCode" placeholder="hunt.class.archer"></div></label>
+        <label class="field"><span>Версия товара</span><div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="productVersion"></div></label>
+        <label class="field"><span>Область продажи</span><div class="box box_input"><input class="input_normal" formControlName="gameCode" placeholder="Пусто — весь сервер"></div></label>
+        <label class="field"><span>Начало продаж</span><div class="box box_input"><input class="input_normal" type="datetime-local" formControlName="effectiveFrom"></div></label>
+        <label class="field"><span>Окончание</span><div class="box box_input"><input class="input_normal" type="datetime-local" formControlName="effectiveUntil"></div></label>
+      </div>
+      <div class="subsection"><div><h5>Цена</h5><p class="text text_small c-gradation-300">Можно добавить несколько допустимых вариантов оплаты.</p></div><div formArrayName="prices" class="price-editors">@for (price of prices.controls; track $index; let index = $index) {<div class="price-editor" [formGroupName]="index"><label class="field"><span>Валюта</span><div class="box box_input"><input class="input_normal" formControlName="currencyCode" placeholder="Контрактный код"></div></label><label class="field"><span>Сумма</span><div class="box box_input"><input class="input_normal" formControlName="amount" placeholder="0"></div></label>@if (prices.length > 1) {<button class="text-action danger" type="button" (click)="removePrice(index)">Убрать</button>}</div>}<yrx-button type="secondary" (press)="addPrice()">Добавить вариант цены</yrx-button></div></div>
+      <div class="subsection"><div><h5>Условие покупки</h5><p class="text text_small c-gradation-300">Платформа проверит его до списания валюты.</p></div><div class="editor-form"><label class="field"><span>Требование</span><div class="box box_input"><select class="input_normal" formControlName="requirementKind"><option value="NONE">Без дополнительного требования</option><option value="PROGRESSION_LEVEL">Минимальный уровень</option><option value="STAT_THRESHOLD">Значение статистики</option><option value="GRANT_OWNED">Наличие другого права</option><option value="PURCHASE_COUNT_LIMIT">Лимит покупок</option></select></div></label>
+        @switch (offerForm.get('requirementKind')?.value) {
+          @case ('PROGRESSION_LEVEL') {<div class="form-grid"><label class="field"><span>Код прогрессии</span><div class="box box_input"><input class="input_normal" formControlName="progressionCode"></div></label><label class="field"><span>Минимальный уровень</span><div class="box box_input"><input class="input_normal" type="number" min="0" formControlName="minimumLevel"></div></label></div>}
+          @case ('STAT_THRESHOLD') {<div class="form-grid"><label class="field"><span>Статистика</span><div class="box box_input"><input class="input_normal" formControlName="statCode"></div></label><label class="field"><span>Режим</span><div class="box box_input"><input class="input_normal" formControlName="requirementGameCode" placeholder="Пусто — глобально"></div></label><label class="field"><span>Не меньше</span><div class="box box_input"><input class="input_normal" formControlName="minimumStatistic"></div></label></div>}
+          @case ('GRANT_OWNED') {<div class="form-grid"><label class="field"><span>Обработчик</span><div class="box box_input"><input class="input_normal" formControlName="providerCode"></div></label><label class="field"><span>Ключ права</span><div class="box box_input"><input class="input_normal" formControlName="grantKey"></div></label><label class="field"><span>Режим</span><div class="box box_input"><input class="input_normal" formControlName="requirementGameCode" placeholder="Пусто — глобально"></div></label></div>}
+          @case ('PURCHASE_COUNT_LIMIT') {<div class="form-grid"><label class="field"><span>Предложение</span><div class="box box_input"><input class="input_normal" formControlName="requiredOfferCode"></div></label><label class="field"><span>Максимум покупок</span><div class="box box_input"><input class="input_normal" type="number" min="1" formControlName="maximumPurchases"></div></label></div>}
+        }
+      </div></div>
+      <div class="editor-actions editor-actions_end"><yrx-button [disabled]="offerForm.invalid || mutating" [loading]="mutating" (press)="publishOffer()">Опубликовать предложение</yrx-button></div>
+    </form>
   </section>
+}
+
+@if (view === 'catalog') {
+  <section class="catalog-toolbar"><div class="toolbar-copy"><h4>Опубликованный каталог</h4><p class="text text_small c-gradation-300">{{products.length}} версий товаров · {{offers.length}} версий предложений</p></div><div class="filters"><div class="box box_input"><input class="input_normal" [(ngModel)]="productCode" placeholder="Найти товар по коду"></div><div class="box box_input"><input class="input_normal" [(ngModel)]="offerCode" placeholder="Найти предложение"></div><yrx-button type="secondary" (press)="load()">Найти</yrx-button></div></section>
+  <yrx-spacing type="S"></yrx-spacing>
+  @if (loading) {<div class="empty-state"><p class="text text_body c-gradation-300">Загружаем каталог…</p></div>} @else {
+    <div class="catalog-columns">
+      <section><div class="list-head"><h4>Товары</h4><span>{{products.length}}</span></div><div class="catalog-list">@for (product of products; track product.id) {<article class="catalog-card"><div class="card-top"><div><p class="meta">{{product.kind}} · v{{product.version}}</p><h4>{{product.name}}</h4><code>{{product.productCode}}</code></div><time>{{product.publishedAt | date:'dd.MM.yyyy'}}</time></div><p class="description text text_body c-gradation-300">{{product.description}}</p><div class="grant-list">@for (grant of product.grants; track grant.ordinal) {<div class="grant"><div><strong>{{grant.grantKey}}</strong><span>{{grant.gameCode ?? 'Весь сервер'}} · {{lifetime(grant)}}</span></div><code>{{grant.providerCode}}</code></div>}</div></article>} @empty {<div class="empty-state"><p>Товары не найдены</p><span>Создайте первый товар или измените фильтр.</span></div>}</div></section>
+      <section><div class="list-head"><h4>Предложения</h4><span>{{offers.length}}</span></div><div class="catalog-list">@for (offer of offers; track offer.id) {<article class="catalog-card" [class.catalog-card_retired]="offer.retiredAt"><div class="card-top"><div><p class="meta">{{offer.gameCode ?? 'Весь сервер'}} · v{{offer.version}}</p><h4>{{offer.code}}</h4><code>{{offer.productCode}} · v{{offer.productVersion}}</code></div><div class="prices">@for (price of offer.prices; track price.currencyCode) {<strong>{{price.amount}} <small>{{price.currencyCode}}</small></strong>}</div></div><div class="offer-facts"><span>{{requirement(offer.requirement)}}</span><span>{{offer.effectiveUntil ? ('До ' + (offer.effectiveUntil | date:'dd.MM.yyyy')) : 'Без даты окончания'}}</span></div>@if (offer.retiredAt) {<p class="retired">Снято · {{offer.retirementReason}}</p>} @else {<button class="text-action danger" type="button" [disabled]="mutating" (click)="retireOffer(offer)">Снять с продажи</button>}</article>} @empty {<div class="empty-state"><p>Предложения не найдены</p><span>Создайте предложение для опубликованного товара.</span></div>}</div></section>
+    </div>
+  }
 }

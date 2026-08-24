@@ -24,6 +24,7 @@ const POSITIVE_DECIMAL = /^(?:0|[1-9][0-9]*)(?:\.[0-9]+)?$/;
   standalone: false,
 })
 export class AdminCommerceComponent implements OnInit {
+  public view: 'catalog' | 'product' | 'offer' = 'catalog';
   public products: AdminCommerceProductRevision[] = [];
   public offers: AdminCommerceOfferRevision[] = [];
   public productCode = '';
@@ -78,6 +79,10 @@ export class AdminCommerceComponent implements OnInit {
   public addPrice(): void { this.prices.push(this.createPriceGroup()); }
   public removePrice(index: number): void { if (this.prices.length > 1) this.prices.removeAt(index); }
 
+  public open(view: 'catalog' | 'product' | 'offer'): void {
+    this.view = view;
+  }
+
   public load(): void {
     this.loading = true;
     forkJoin({
@@ -114,6 +119,7 @@ export class AdminCommerceComponent implements OnInit {
         this.snackBar.open(`Товар ${product.productCode} v${product.version} опубликован`, 'Хорошо');
         this.productForm.reset({version: 1, kind: 'PERMISSION'});
         this.grants.clear(); this.grants.push(this.createGrantGroup());
+        this.view = 'catalog';
       }),
       catchError(error => this.failure(error, 'Не удалось опубликовать товар')),
       finalize(() => this.mutating = false),
@@ -147,6 +153,7 @@ export class AdminCommerceComponent implements OnInit {
         this.offerForm.reset({version: 1, productVersion: 1, effectiveFrom: this.localDateTime(new Date()),
           requirementKind: 'NONE', minimumLevel: 3, minimumStatistic: '0', maximumPurchases: 1});
         this.prices.clear(); this.prices.push(this.createPriceGroup());
+        this.view = 'catalog';
       }),
       catchError(error => this.failure(error, 'Не удалось опубликовать предложение')),
       finalize(() => this.mutating = false),
@@ -169,7 +176,21 @@ export class AdminCommerceComponent implements OnInit {
   }
 
   public requirement(value: unknown): string {
-    return value === null ? 'без требований' : JSON.stringify(value);
+    if (!value || typeof value !== 'object') return 'Без дополнительных требований';
+    const requirement = value as Record<string, unknown>;
+    switch (requirement['kind']) {
+      case 'PROGRESSION_LEVEL': return `Уровень ${requirement['minimumLevel']} в ${requirement['progressionCode']}`;
+      case 'STAT_THRESHOLD': return `${requirement['statCode']} ≥ ${requirement['minimum']} (${requirement['gameCode'] ?? 'глобально'})`;
+      case 'GRANT_OWNED': return `Требуется право ${requirement['providerCode']}:${requirement['grantKey']}`;
+      case 'PURCHASE_COUNT_LIMIT': return `Не более ${requirement['maximum']} покупок ${requirement['offerCode']}`;
+      default: return 'Контрактное требование';
+    }
+  }
+
+  public lifetime(grant: AdminCommerceProductRevision['grants'][number]): string {
+    return grant.lifetime.kind === 'PERMANENT'
+      ? 'Навсегда'
+      : `На ${grant.lifetime.durationSeconds} сек.`;
   }
 
   private createGrantGroup(): FormGroup {

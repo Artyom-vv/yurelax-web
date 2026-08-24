@@ -6,10 +6,11 @@ import {SpacingModule} from '../../../shared/modules/spacing/spacing.module';
 import {AdminCommerceService} from '../../../shared/services/admin-commerce.service';
 import {AdminCommerceRoutingModule} from './admin-commerce-routing.module';
 import {AdminCommerceComponent} from './admin-commerce.component';
+import {ButtonModule} from '../../../shared/modules/button/button.module';
 
 @NgModule({
   declarations: [AdminCommerceComponent],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatSnackBarModule, SpacingModule, AdminCommerceRoutingModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatSnackBarModule, SpacingModule, ButtonModule, AdminCommerceRoutingModule],
   providers: [AdminCommerceService],
 })
 export class AdminCommerceModule {}
