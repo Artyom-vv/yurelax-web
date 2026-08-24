@@ -20,7 +20,6 @@
             "outputPath": "dist/yurelax-web",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "main": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -34,7 +33,7 @@
               "includePaths": ["."]
             },
             "server": "src/main.server.ts",
-            "prerender": true,
+            "prerender": false,
             "ssr": {
               "entry": "server.ts"
             }
@@ -61,11 +60,13 @@
                 }
               ],
               "sourceMap": true,
-              "optimization": true,
+              "optimization": {
+                "scripts": true,
+                "styles": true,
+                "fonts": false
+              },
               "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              "extractLicenses": true
             },
             "development": {
               "optimization": false,
@@ -115,6 +116,9 @@
     }
   },
   "cli": {
-    "analytics": "8c2990fc-a9a3-4c1c-a5cf-99d660e0f0b1"
+    "analytics": "8c2990fc-a9a3-4c1c-a5cf-99d660e0f0b1",
+    "cache": {
+      "enabled": false
+    }
   }
 }
