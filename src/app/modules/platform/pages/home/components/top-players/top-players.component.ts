@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {
   IRatingTableColumn,
   RatingTableInterface
@@ -15,6 +15,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
     selector: 'yrx-top-players',
     templateUrl: './top-players.component.html',
     styleUrls: ['./top-players.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class TopPlayersComponent implements OnInit, OnDestroy {

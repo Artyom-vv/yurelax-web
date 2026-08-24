@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AppStore} from "../../../../../../store/app.store";
 import { Subscription, switchMap, tap} from "rxjs";
 import {SkinsService} from "../../../../services/skins.service";
@@ -8,6 +8,7 @@ import {UserRes} from "../../../../../platform/interfaces/user.interface";
     selector: 'yrx-header-profile-panel',
     templateUrl: './header-profile-panel.component.html',
     styleUrls: ['./header-profile-panel.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class HeaderProfilePanelComponent implements OnInit, OnDestroy {

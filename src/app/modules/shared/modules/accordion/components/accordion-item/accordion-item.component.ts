@@ -1,6 +1,7 @@
 import {
   Component,
   TemplateRef, ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {ToolsService} from "../../../../services/tools.service";
 import {AccordionItemClickEvent} from "./interfaces/accordion-item.interface";
@@ -22,6 +23,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
             transition('true <=> false', animate('0.15s ease-in-out')),
         ])
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class AccordionItemComponent {

@@ -6,7 +6,8 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-  DOCUMENT
+  DOCUMENT,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {Subscription} from "rxjs";
@@ -17,6 +18,7 @@ import {SocialStoreInterface} from "../../../../store/interfaces/socials-store.i
     selector: 'yrx-footer',
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class FooterComponent implements OnInit, OnDestroy, AfterViewInit {

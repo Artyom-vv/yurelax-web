@@ -1,4 +1,4 @@
-import {Component, HostListener, Inject, NgZone, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, HostListener, Inject, NgZone, OnInit, PLATFORM_ID, ChangeDetectionStrategy} from '@angular/core';
 import {PersistenceService} from "./modules/shared/services/persistence.service";
 import {AppStore} from "./store/app.store";
 import {SystemUserService} from "./modules/shared/services/system-user.service";
@@ -24,6 +24,7 @@ registerLocaleData(localeRu)
         RouterOutlet
     ],
     templateUrl: './app.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {

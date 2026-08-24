@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {OptionInterface} from "../../../../../shared/modules/select/interfaces/option.interface";
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Subscription, tap} from "rxjs";
@@ -7,6 +7,7 @@ import {Subscription, tap} from "rxjs";
     selector: 'yrx-statistic',
     templateUrl: './statistic.component.html',
     styleUrls: ['./statistic.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class StatisticComponent implements OnInit, OnDestroy {

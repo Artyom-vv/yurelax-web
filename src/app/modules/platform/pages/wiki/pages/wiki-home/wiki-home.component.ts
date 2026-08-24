@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AppStore} from "../../../../../../store/app.store";
 import {tap} from "rxjs";
 import {SidebarNavItem} from "../../../../modules/sidebar/interfaces/sidebarNavItem";
@@ -8,6 +8,7 @@ import {WikiNavigationItem} from "../../interfaces/wiki.interface";
     selector: 'yrx-wiki-home',
     templateUrl: './wiki-home.component.html',
     styleUrls: ['./wiki-home.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class WikiHomeComponent implements OnInit {

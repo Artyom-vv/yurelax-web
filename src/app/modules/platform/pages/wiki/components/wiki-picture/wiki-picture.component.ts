@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {Properties} from "csstype";
 
@@ -6,6 +6,7 @@ import {Properties} from "csstype";
     selector: 'yrx-wiki-picture',
     templateUrl: './wiki-picture.component.html',
     styleUrls: ['./wiki-picture.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class WikiPictureComponent implements AfterViewInit {

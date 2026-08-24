@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {catchError, finalize, forkJoin, of, tap} from 'rxjs';
 import {CommerceEntitlement, CommercePurchase} from '../profile-store/interfaces/commerce.interface';
 import {PlatformCommerceService} from '../profile-store/services/platform-commerce.service';
@@ -7,6 +7,7 @@ import {PlatformCommerceService} from '../profile-store/services/platform-commer
     selector: 'yrx-profile-ownership',
     templateUrl: './profile-ownership.component.html',
     styleUrls: ['./profile-ownership.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ProfileOwnershipComponent implements OnInit {

@@ -6,12 +6,14 @@ import {
   Input,
   Output,
   ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 @Component({
     selector: 'yrx-slider',
     templateUrl: './slider.component.html',
     styleUrls: ['./slider.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SliderComponent implements AfterViewInit {

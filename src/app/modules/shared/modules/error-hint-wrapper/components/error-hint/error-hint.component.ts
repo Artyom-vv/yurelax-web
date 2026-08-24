@@ -3,7 +3,8 @@ import {
   Component,
   ElementRef,
   HostBinding, Inject, Input, OnDestroy,
-  ViewChild
+  ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {animate, query, state, style, transition, trigger} from "@angular/animations";
 import {
@@ -48,6 +49,7 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
             ]),
         ])
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ErrorHintComponent implements AfterViewInit {

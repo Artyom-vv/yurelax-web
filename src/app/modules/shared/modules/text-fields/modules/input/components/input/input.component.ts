@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ContentChild} from '@angular/core';
+import {AfterViewInit, Component, ContentChild, ChangeDetectionStrategy} from '@angular/core';
 import {InputDirective} from "../../directives/input.directive";
 import {BaseComponentInputDirective} from "../../../../directives/base-component-input.directive";
 
@@ -9,6 +9,7 @@ import {BaseComponentInputDirective} from "../../../../directives/base-component
     hostDirectives: [
         BaseComponentInputDirective
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class InputComponent implements AfterViewInit {

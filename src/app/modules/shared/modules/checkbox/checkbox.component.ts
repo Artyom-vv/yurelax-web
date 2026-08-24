@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input, ViewEncapsulation} from '@angular/core';
+import {Component, forwardRef, Input, ViewEncapsulation, ChangeDetectionStrategy} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({
@@ -13,6 +13,7 @@ import {NG_VALUE_ACCESSOR} from "@angular/forms";
             multi: true
         }
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class CheckboxComponent {

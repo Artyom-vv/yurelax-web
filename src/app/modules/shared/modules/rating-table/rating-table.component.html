@@ -1,5 +1,5 @@
 <div class="flex flex_column">
-  <yrx-rating-table-head [filteredByKey]="data?.filteredByKey" [columns]="columns"></yrx-rating-table-head>
+  <yrx-rating-table-head [filteredByKey]="$safeNavigationMigration(data?.filteredByKey)" [columns]="columns"></yrx-rating-table-head>
   @for (row of data?.values; track row; let idx = $index) {
     <yrx-rating-table-point [theme]="(idx+1)%2===0? 'bright' : 'dark'" [index]="idx+1" [data]="row"></yrx-rating-table-point>
   }

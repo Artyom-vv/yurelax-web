@@ -1,5 +1,5 @@
 <div class="box box_select" #boxSelect>
-  <mat-select (opened)="opened()" (closed)="closed()" [panelClass]="'select-panel-'+custom" [attr.custom]="custom" [class.isAbove]="isAbove" [class.select_expanded]="select.panelOpen" [value]="selectedOption?.value" [ngClass]="'select_'+size" [class.select_iconly]="icon.children.length > 0" [placeholder]="placeholder" #select>
+  <mat-select (opened)="opened()" (closed)="closed()" [panelClass]="'select-panel-'+custom" [attr.custom]="custom" [class.isAbove]="isAbove" [class.select_expanded]="select.panelOpen" [value]="$safeNavigationMigration(selectedOption?.value)" [ngClass]="'select_'+size" [class.select_iconly]="icon.children.length > 0" [placeholder]="placeholder" #select>
     <ng-template #optionTemplate let-option>
       <yrx-dropout-point [optionCustom]="custom" [selected]="options[option.idx].value === selectedOption?.value" [icon]="option.option.icon" [iconStroked]="option.option.iconStroked"
         (optionSelect)="onOptionSelect($event)" [isOption]="true" [underlined]="options.length-1 !== option.idx"

@@ -4,7 +4,7 @@
       @if (dataLoading) {
         <yrx-skeleton [styles]="{width: '48px', height: '48px', borderRadius: '6px'}" theme="dark"></yrx-skeleton>
       } @else {
-        <img [src]="userStore?.userInfoRef?.avatarUrl ?? 'assets/content/header/default-avatar.png'" [alt]="'Аватар игрока '+userStore?.login+' yurelax'" class="avatar">
+        <img [src]="userStore?.userInfoRef?.avatarUrl ?? 'assets/content/header/default-avatar.png'" [alt]="'Аватар игрока '+$safeNavigationMigration(userStore?.login)+' yurelax'" class="avatar">
       }
       <h4>{{userStore?.login}}</h4>
     </div>
@@ -18,7 +18,7 @@
     </div>
     <div class="flex gap-4">
       <p class="text text_body regular c-gradation-300">Дата регистрации:</p>
-      <p class="text text_body regular c-gradation-100">{{userStore?.userInfoRef?.createdAt | date: 'dd.MM.YY'}}</p>
+      <p class="text text_body regular c-gradation-100">{{$safeNavigationMigration(userStore?.userInfoRef?.createdAt) | date: 'dd.MM.YY'}}</p>
     </div>
     <div class="flex gap-4">
       <p class="text text_body regular c-gradation-300">2-ух факторная верификация:</p>

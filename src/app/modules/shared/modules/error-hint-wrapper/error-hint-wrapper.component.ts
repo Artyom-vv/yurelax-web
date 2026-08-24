@@ -8,7 +8,7 @@ import {
   tap,
 } from "rxjs";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {AfterViewInit, ChangeDetectorRef, Component, Inject, Input, OnInit} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, Inject, Input, OnInit, ChangeDetectionStrategy} from "@angular/core";
 import {
   BASE_COMPONENT_INPUT_BLUR,
   BaseComponentInputDirective
@@ -31,6 +31,7 @@ import {animateChild, transition, trigger} from "@angular/animations";
             ]),
         ]),
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ErrorHintWrapperComponent implements OnInit, AfterViewInit {

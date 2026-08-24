@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {catchError, finalize, of, tap} from 'rxjs';
@@ -12,6 +12,7 @@ import {
     selector: 'yrx-statistics',
     templateUrl: './statistics.component.html',
     styleUrls: ['./statistics.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class StatisticsComponent implements OnInit {

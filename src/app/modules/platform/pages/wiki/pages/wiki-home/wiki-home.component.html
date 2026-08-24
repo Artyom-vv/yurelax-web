@@ -1,5 +1,5 @@
 <ng-template #section let-item>
-  <yrx-selection-panel [routerLink]="'../'+item?.data?.page" [icon]="item?.data?.metadata?.['icon'] ?? 'book'">
+  <yrx-selection-panel [routerLink]="'../'+$safeNavigationMigration(item?.data?.page)" [icon]="item?.data?.metadata?.['icon'] ?? 'book'">
     <ng-container selection-panel-title>{{item?.name}}</ng-container>
     <ng-container selection-panel-text>{{item?.data?.metadata?.['description']}}</ng-container>
   </yrx-selection-panel>

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {catchError, finalize, of, tap} from 'rxjs';
 import {CommerceEligibilityReason, CommerceOffer} from './interfaces/commerce.interface';
 import {SubscriptionPurchaseRequest, SubscriptionRes} from './interfaces/subscription.interface';
@@ -14,6 +14,7 @@ const CARD_THEMES = [
     selector: 'yrx-profile-store',
     templateUrl: './profile-store.component.html',
     styleUrls: ['./profile-store.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ProfileStoreComponent implements OnInit {

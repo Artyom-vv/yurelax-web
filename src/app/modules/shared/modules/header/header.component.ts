@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {NavStore} from "../../../../store/interfaces/nav.store";
 import {Subscription} from "rxjs";
@@ -8,6 +8,7 @@ import {SocialStoreInterface} from "../../../../store/interfaces/socials-store.i
     selector: 'yrx-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {

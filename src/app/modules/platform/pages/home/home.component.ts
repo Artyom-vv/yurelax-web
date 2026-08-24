@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {filter, finalize, Subscription, switchMap, tap} from "rxjs";
 import {ContentLayoutInterface} from "./components/content-layout/interfaces/content-layout.interface";
@@ -10,6 +10,7 @@ import {MiniGameResponseInterface} from "../../../shared/interfaces/old/mini-gam
     selector: 'yrx-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class HomeComponent implements OnInit, OnDestroy {

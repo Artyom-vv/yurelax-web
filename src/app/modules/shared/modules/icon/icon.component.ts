@@ -1,10 +1,11 @@
-import {AfterViewInit, Component, Input, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, Input, ViewEncapsulation, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
     selector: 'yrx-icon',
     templateUrl: './icon.component.html',
     styleUrls: ['./icon.component.scss'],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class IconComponent implements AfterViewInit {

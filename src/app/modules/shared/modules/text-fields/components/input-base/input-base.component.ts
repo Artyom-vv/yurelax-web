@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ErrorHintWrapperModule} from "../../../error-hint-wrapper/error-hint-wrapper.module";
 import {BaseComponentInputDirective} from "../../directives/base-component-input.directive";
@@ -7,6 +7,7 @@ import {BaseComponentInputDirective} from "../../directives/base-component-input
     selector: 'yrx-input-base',
     templateUrl: './input-base.component.html',
     styleUrls: ['./input-base.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         CommonModule,
         ErrorHintWrapperModule

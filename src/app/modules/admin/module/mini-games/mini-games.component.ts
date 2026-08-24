@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {finalize, Subscription, takeUntil, tap} from "rxjs";
 import {MiniGamesService} from "../../../shared/services/mini-games.service";
 import {MiniGameResponseInterface} from "../../../shared/interfaces/old/mini-game-response.interface";
@@ -11,6 +11,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
     selector: 'yrx-mini-games',
     templateUrl: './mini-games.component.html',
     styleUrls: ['./mini-games.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class MiniGamesComponent implements OnInit, OnDestroy {

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID, DOCUMENT} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID, DOCUMENT, ChangeDetectionStrategy} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {Subscription} from "rxjs";
 import {AppearanceAnimation} from "../../animations/redirect.animation";
@@ -13,6 +13,7 @@ import {ToolsService} from "../../services/tools.service";
     animations: [
         AppearanceAnimation,
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class LayoutComponent implements OnInit, OnDestroy {

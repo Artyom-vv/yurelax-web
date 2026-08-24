@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
     host: {
@@ -7,6 +7,7 @@ import {Component, OnInit, Input} from '@angular/core';
     selector: 'yrx-selection-panel',
     templateUrl: './selection-panel.component.html',
     styleUrls: ['./selection-panel.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SelectionPanelComponent implements OnInit {

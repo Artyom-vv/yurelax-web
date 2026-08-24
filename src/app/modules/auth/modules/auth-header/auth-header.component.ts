@@ -1,9 +1,10 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
     selector: 'yrx-auth-header',
     templateUrl: './auth-header.component.html',
     styleUrls: ['./auth-header.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class AuthHeaderComponent {

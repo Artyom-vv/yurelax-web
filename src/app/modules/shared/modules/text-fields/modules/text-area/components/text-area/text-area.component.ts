@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {BaseComponentInputDirective} from "../../../../directives/base-component-input.directive";
 
 @Component({
@@ -8,6 +8,7 @@ import {BaseComponentInputDirective} from "../../../../directives/base-component
     hostDirectives: [
         BaseComponentInputDirective
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class TextAreaComponent {

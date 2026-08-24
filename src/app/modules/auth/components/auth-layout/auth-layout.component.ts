@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {SwipeAnimation} from "../../../shared/animations/redirect.animation";
 import {AnimationsService} from "../../../shared/animations/services/animations.service";
 import {RouterOutlet} from "@angular/router";
@@ -10,6 +10,7 @@ import {RouterOutlet} from "@angular/router";
     animations: [
         SwipeAnimation
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class AuthLayoutComponent implements OnInit {

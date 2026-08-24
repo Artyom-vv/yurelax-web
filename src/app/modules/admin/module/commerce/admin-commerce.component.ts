@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {catchError, finalize, forkJoin, of, tap} from 'rxjs';
 import {
@@ -11,6 +11,7 @@ import {
     selector: 'yrx-admin-commerce',
     templateUrl: './admin-commerce.component.html',
     styleUrls: ['./admin-commerce.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class AdminCommerceComponent implements OnInit {

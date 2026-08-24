@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {AfterViewInit, Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {SidebarNavItem} from "./interfaces/sidebarNavItem";
 import {Router, Scroll} from "@angular/router";
 
@@ -6,6 +6,7 @@ import {Router, Scroll} from "@angular/router";
     selector: 'yrx-sidebar',
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SidebarComponent implements AfterViewInit {

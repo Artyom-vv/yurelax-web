@@ -5,7 +5,8 @@ import {
   Component,
   ContentChildren,
   OnDestroy,
-  QueryList
+  QueryList,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {AccordionItemComponent} from "./components/accordion-item/accordion-item.component";
 import {AccordionItemClickEvent} from "./components/accordion-item/interfaces/accordion-item.interface";
@@ -16,6 +17,7 @@ import {Subscription} from "rxjs";
     selector: 'yrx-accordion',
     templateUrl: './accordion.component.html',
     styleUrls: ['./accordion.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class AccordionComponent implements AfterContentInit, AfterViewInit, OnDestroy {

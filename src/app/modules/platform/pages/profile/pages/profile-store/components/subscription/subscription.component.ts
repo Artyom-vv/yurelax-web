@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
 import {SubscriptionPurchaseRequest, SubscriptionRes} from "../../interfaces/subscription.interface";
 
 @Component({
     selector: 'yrx-subscription',
     templateUrl: './subscription.component.html',
     styleUrls: ['./subscription.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SubscriptionComponent {

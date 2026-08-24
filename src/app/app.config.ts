@@ -2,7 +2,7 @@ import {APP_INITIALIZER, ApplicationConfig, provideZoneChangeDetection} from '@a
 import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
-import {provideClientHydration} from '@angular/platform-browser';
+import {provideClientHydration, withNoIncrementalHydration} from '@angular/platform-browser';
 import {provideHttpClient, withFetch, withInterceptorsFromDi} from "@angular/common/http";
 import {AppStore} from "./store/app.store";
 import {PersistenceService} from "./modules/shared/services/persistence.service";
@@ -36,6 +36,6 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({eventCoalescing: true}),
     provideHttpClient(withFetch(), withInterceptorsFromDi()),
     provideRouter(routes),
-    provideClientHydration()
+    provideClientHydration(withNoIncrementalHydration())
   ]
 };

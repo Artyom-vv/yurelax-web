@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AppStore} from "../../../../../../store/app.store";
 import {Subscription} from "rxjs";
 import {SocialStoreInterface} from "../../../../../../store/interfaces/socials-store.interface";
@@ -7,6 +7,7 @@ import {SocialStoreInterface} from "../../../../../../store/interfaces/socials-s
     selector: 'yrx-profile-header',
     templateUrl: './profile-header.component.html',
     styleUrls: ['./profile-header.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ProfileHeaderComponent implements OnInit, OnDestroy {

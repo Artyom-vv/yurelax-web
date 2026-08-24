@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AppStore} from "../../../../../../store/app.store";
 import {
   delay,
@@ -23,6 +23,7 @@ import {
     selector: 'yrx-sidebar-user-panel',
     templateUrl: './sidebar-user-panel.component.html',
     styleUrls: ['./sidebar-user-panel.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SidebarUserPanelComponent implements OnInit, OnDestroy {

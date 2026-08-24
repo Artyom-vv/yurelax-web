@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {first, Observable, switchMap, tap} from "rxjs";
 import {WikiService} from "../../services/wiki.service";
@@ -15,6 +15,7 @@ import {FootPanelItem} from "../../../../../shared/modules/foot-panel/interfaces
     templateUrl: './wiki-page.component.html',
     styleUrls: ['./wiki-page.component.scss'],
     animations: [AppearanceAnimation],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class WikiPageComponent implements OnInit {

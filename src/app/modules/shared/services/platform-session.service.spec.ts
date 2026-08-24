@@ -18,7 +18,7 @@ describe('PlatformSessionService', () => {
     service.status().subscribe(status => expect(status).toEqual({authenticated: true, csrfToken: 'csrf'}));
     http.expectOne('/api/session').flush({authenticated: true, csrfToken: 'csrf'});
 
-    service.status().subscribe(status => expect(status.authenticated).toBeTrue());
+    service.status().subscribe(status => expect(status.authenticated).toBe(true));
     http.expectNone('/api/session');
   });
 

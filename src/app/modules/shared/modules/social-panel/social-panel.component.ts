@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {Subscription, tap} from "rxjs";
 import {SocialStoreInterface} from "../../../../store/interfaces/socials-store.interface";
@@ -10,6 +10,7 @@ import {SocialStoreInterface} from "../../../../store/interfaces/socials-store.i
     selector: 'yrx-social-panel',
     templateUrl: './social-panel.component.html',
     styleUrls: ['./social-panel.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SocialPanelComponent implements OnInit, OnDestroy, AfterViewInit {

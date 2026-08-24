@@ -3,7 +3,7 @@
     @if (dataLoading) {
       <yrx-skeleton [styles]="{width: '40px', height: '40px', borderRadius: '6px'}" theme="dark"></yrx-skeleton>
     } @else {
-      <img routerLink="/platform/profile/home" [src]="userStore?.userInfoRef?.avatarUrl ?? 'assets/content/header/default-avatar.png'" [alt]="'Аватар игрока '+userStore?.login+' yurelax'" class="avatar cursor-pointer">
+      <img routerLink="/platform/profile/home" [src]="userStore?.userInfoRef?.avatarUrl ?? 'assets/content/header/default-avatar.png'" [alt]="'Аватар игрока '+$safeNavigationMigration(userStore?.login)+' yurelax'" class="avatar cursor-pointer">
     }
     <div class="flex flex_column">
       <p class="text text_big medium c-gradation-100">{{userStore?.login}}</p>
