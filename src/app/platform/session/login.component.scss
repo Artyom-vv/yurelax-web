@@ -1,0 +1,20 @@
+:host { display: block; min-height: 100vh; color: #f4f2e9; background: #090d0d; font-family: 'Onest', sans-serif; }
+.login-shell { min-height: 100vh; display: grid; place-items: center; position: relative; overflow: hidden;
+  background: radial-gradient(circle at 76% 24%, rgba(192, 226, 65, .13), transparent 26%), #090d0d; }
+.world-grid { position: absolute; inset: 0; opacity: .22; background-image: linear-gradient(#9daf7d1a 1px, transparent 1px),
+  linear-gradient(90deg, #9daf7d1a 1px, transparent 1px); background-size: 48px 48px; transform: perspective(500px) rotateX(62deg) scale(1.7); transform-origin: bottom; }
+.login-card { width: min(620px, calc(100vw - 48px)); padding: 64px; box-sizing: border-box; z-index: 1; border: 1px solid #596047;
+  background: linear-gradient(145deg, rgba(19, 25, 23, .96), rgba(9, 13, 13, .92)); box-shadow: 20px 24px 0 #050707, 0 0 80px #c0e2410d; }
+.eyebrow { margin: 0 0 32px; color: #c0e241; letter-spacing: .18em; font: 600 12px 'Gilroy', sans-serif; }
+h1 { margin: 0; font: 600 clamp(48px, 7vw, 82px)/.93 'Gilroy', sans-serif; letter-spacing: -.045em; }
+h1 span { color: #c0e241; }
+.lead { max-width: 480px; margin: 30px 0 36px; color: #aeb7ad; font-size: 17px; line-height: 1.65; }
+button { width: 100%; border: 0; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+  color: #0a0d0c; background: #c0e241; font: 600 16px 'Gilroy', sans-serif; transition: transform .18s, box-shadow .18s; }
+button:hover, button:focus-visible { transform: translate(-4px, -4px); box-shadow: 8px 8px 0 #657525; outline: none; }
+button b { font-size: 26px; }
+.trust { display: flex; align-items: center; gap: 10px; margin: 22px 0 0; color: #737e76; font-size: 12px; }
+.trust i { width: 7px; height: 7px; background: #c0e241; box-shadow: 0 0 14px #c0e241; }
+.signal { position: absolute; right: 36px; bottom: 30px; display: flex; gap: 16px; font: 600 11px 'Gilroy'; letter-spacing: .12em; color: #667068; }
+.signal strong { color: #c0e241; }
+@media (max-width: 640px) { .login-card { padding: 40px 28px; box-shadow: 10px 12px 0 #050707; } .signal { display: none; } }

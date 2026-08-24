@@ -1,19 +1,18 @@
 import { Routes } from '@angular/router';
+import { platformSessionGuard } from './platform/session/platform-session.guard';
 
 export const routes: Routes = [
-  {path: '', redirectTo: 'auth', pathMatch: 'full'},
+  { path: '', redirectTo: 'cabinet', pathMatch: 'full' },
   {
-    path: "auth",
-    title: 'Yurelax — Авторизация',
-    loadChildren: () => import("../app/modules/auth/auth.module").then(m => m.AuthModule)
+    path: 'login',
+    title: 'Yurelax — вход',
+    loadComponent: () => import('./platform/session/login.component').then((module) => module.LoginComponent),
   },
   {
-    path: 'platform',
-    title: 'Yurelax — необычный сервер с сюжетом и мини-играми',
-    loadChildren: () => import('./modules/platform/platform.module').then(m => m.PlatformModule)
+    path: 'cabinet',
+    title: 'Yurelax — кабинет игрока',
+    canActivate: [platformSessionGuard],
+    loadComponent: () => import('./platform/cabinet/cabinet.component').then((module) => module.CabinetComponent),
   },
-  {
-    path: 'admin',
-    loadChildren: () => import('../app/modules/admin/admin.module').then(m => m.AdminModule)
-  },
+  { path: '**', redirectTo: 'cabinet' },
 ];

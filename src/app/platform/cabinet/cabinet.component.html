@@ -1,0 +1,91 @@
+<main class="cabinet">
+  @if (view$ | async; as view) {
+    @if (view.loading) {
+      <section class="state-panel"><i></i><p>Синхронизируем профиль с платформой…</p></section>
+    } @else if (view.error) {
+      <section class="state-panel state-panel--error"><b>!</b><h1>Связь потеряна</h1><p>{{ view.error }}</p></section>
+    } @else if (view.data && view.session) {
+      <aside class="rail">
+        <a class="brand" href="/cabinet" aria-label="Yurelax"><b>Y</b><span>YURELAX<small>PLAYER OS</small></span></a>
+        <nav aria-label="Разделы кабинета">
+          <button [class.active]="tab() === 'store'" (click)="setTab('store')"><i>01</i><span>Магазин</span></button>
+          <button [class.active]="tab() === 'rights'" (click)="setTab('rights')"><i>02</i><span>Мои права</span></button>
+          <button [class.active]="tab() === 'history'" (click)="setTab('history')"><i>03</i><span>Покупки</span></button>
+        </nav>
+        <div class="rail-status"><i></i><span>GLOBAL API<br><b>CONNECTED</b></span></div>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div><p>ИГРОК / {{ view.data.profile.playerId.slice(0, 8) }}</p><h2>{{ view.data.profile.currentName }}</h2></div>
+          <div class="topbar-actions"><span class="avatar">{{ view.data.profile.currentName.slice(0, 1).toUpperCase() }}</span>
+            <button type="button" (click)="logout(view.session)">Выйти</button></div>
+        </header>
+
+        <div class="content">
+          @if (tab() === 'store') {
+            <section class="hero">
+              <p class="kicker">ПЕРСОНАЛЬНАЯ ВИТРИНА</p>
+              <h1>Товары, которые<br><em>подходят именно вам.</em></h1>
+              <p>Доступность рассчитана платформой по уровню, статистике, покупкам и уже выданным правам.</p>
+              <div class="hero-metrics"><span><b>{{ view.data.offers.items.length }}</b> предложений</span>
+                <span><b>{{ view.data.entitlements.items.length }}</b> прав в профиле</span></div>
+            </section>
+
+            <div class="section-heading"><div><p>КАТАЛОГ / LIVE</p><h2>Доступные предложения</h2></div>
+              <span>Наведите на карточку для деталей</span></div>
+            <section class="offer-grid">
+              @for (offer of view.data.offers.items; track offer.code; let index = $index) {
+                <article class="offer-card" tabindex="0" [class.locked]="offer.eligibility && !offer.eligibility.eligible">
+                  <div class="card-index">{{ (index + 1).toString().padStart(2, '0') }}</div>
+                  <p class="scope">{{ offerScope(offer) }}</p>
+                  <h3>{{ offer.productName }}</h3>
+                  <p class="description">{{ offer.productDescription }}</p>
+                  <div class="price"><strong>{{ offerPrice(offer) }}</strong><span>{{ offer.purchasePolicy === 'REPEATABLE' ? 'Можно повторять' : 'Одно активное' }}</span></div>
+                  <div class="availability"><i></i>{{ eligibility(offer) }}</div>
+                  <div class="inspect">
+                    <dl><div><dt>Код предложения</dt><dd>{{ offer.code }}</dd></div>
+                      <div><dt>Контракт товара</dt><dd>{{ offer.productCode }}</dd></div>
+                      <div><dt>Провайдер</dt><dd>{{ offer.providerCode }}</dd></div>
+                      <div><dt>Выдача</dt><dd>{{ offer.deliveryMode }} · {{ offer.productKind }}</dd></div></dl>
+                  </div>
+                </article>
+              } @empty { <p class="empty">Сейчас для вашего профиля нет опубликованных предложений.</p> }
+            </section>
+          }
+
+          @if (tab() === 'rights') {
+            <div class="section-heading section-heading--page"><div><p>ENTITLEMENT LEDGER</p><h1>Мои права</h1></div>
+              <span>Источник истины — платформа</span></div>
+            <section class="ledger">
+              @for (right of view.data.entitlements.items; track right.id) {
+                <article class="ledger-row"><div class="status-dot" [class.inactive]="right.status !== 'ACTIVE'"></div>
+                  <div class="ledger-main"><p>{{ right.gameCode || 'GLOBAL' }} / {{ right.kind }}</p><h3>{{ right.entitlementKey }}</h3>
+                    <small>{{ right.productCode }}</small></div>
+                  <div><span class="label">Состояние</span><strong>{{ right.status }}</strong></div>
+                  <div><span class="label">Активация</span><strong>{{ activation(right) }}</strong></div>
+                  <div><span class="label">Срок</span><strong>{{ right.expiresAt ? (right.expiresAt | date:'dd.MM.yyyy') : 'Постоянно' }}</strong></div>
+                </article>
+              } @empty { <p class="empty">Права ещё не выдавались.</p> }
+            </section>
+          }
+
+          @if (tab() === 'history') {
+            <div class="section-heading section-heading--page"><div><p>IMMUTABLE PURCHASE LOG</p><h1>История покупок</h1></div>
+              <span>Записи нельзя изменить задним числом</span></div>
+            <section class="ledger">
+              @for (purchase of view.data.purchases.items; track purchase.id) {
+                <article class="ledger-row"><div class="purchase-mark">↗</div>
+                  <div class="ledger-main"><p>{{ purchase.offerCode }}</p><h3>{{ purchase.productCode }}</h3><small>ID {{ purchase.id }}</small></div>
+                  <div><span class="label">Дата</span><strong>{{ purchase.purchasedAt | date:'dd.MM.yyyy, HH:mm' }}</strong></div>
+                  <div><span class="label">Количество</span><strong>{{ purchase.quantity }}</strong></div>
+                  <div><span class="label">Сумма</span><strong>{{ purchase.totalPrice }} {{ purchase.currencyCode }}</strong></div>
+                </article>
+              } @empty { <p class="empty">Покупок пока нет.</p> }
+            </section>
+          }
+        </div>
+      </section>
+    }
+  }
+</main>
