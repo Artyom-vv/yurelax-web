@@ -19,6 +19,12 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
+        path: 'players',
+        component: AdminContentComponent,
+        title: 'Дешборд — Игроки',
+        loadChildren: () => import('../admin/module/players/admin-players.module').then(m => m.AdminPlayersModule)
+      },
+      {
         path: 'statistics',
         component: AdminContentComponent,
         title: 'Дешборд — Статистики',

@@ -146,6 +146,7 @@ export class AppComponent implements OnInit {
       [
         {isButton: false, link: '/admin/home', name: 'Домашняя', icon: 'home', iconStroked: true},
         {isButton: false, link: '/admin/wiki', name: 'Вики', icon: 'book', iconStroked: true},
+        {isButton: false, link: '/admin/players', name: 'Игроки', icon: 'users', iconStroked: true},
         {isButton: false, link: '/admin/statistics', name: 'Статистика', icon: 'file', iconStroked: true},
         {isButton: false, link: '/admin/commerce', name: 'Товары и предложения', icon: 'shopping-bag', iconStroked: true},
         {isButton: false, link: '/admin/mini-games', name: 'Мини-игры', icon: 'joystick', iconStroked: true},
@@ -193,11 +194,16 @@ export class AppComponent implements OnInit {
   private dataFields(): void {
     this.platformSession.status(true).pipe(
       switchMap(status => status.authenticated ? this.authService.getMe() : of(null)),
-      tap(user => this.appStore.setIsLogged(user !== null)),
+      tap(user => {
+        this.appStore.setPlatformAvailable(true);
+        this.appStore.setIsLogged(user !== null);
+      }),
       catchError((err) => {
+        this.appStore.setPlatformAvailable(false);
         this.systemUser.logout(false)
         return of(null)
       }),
+      finalize(() => this.appStore.setPreloading(false)),
       untilDestroyed(this)
     ).subscribe()
     this.appStore.isExit$.pipe(

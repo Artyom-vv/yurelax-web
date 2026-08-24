@@ -15,6 +15,7 @@ export class AppStore {
   readonly isExit$: Observable<boolean> = this.select('isExit');
   readonly isLogged$: Observable<boolean> = this.select('isLogged');
   readonly preloading$: Observable<boolean> = this.select('preloading');
+  readonly platformAvailable$: Observable<boolean | null> = this.select('platformAvailable');
   readonly navigation$: Observable<NavStore[]> = this.select('navigation');
   readonly profileNavigation$: Observable<SidebarNavigation> = this.select('profileNavigation');
   readonly wikiNavigation$: Observable<SidebarNavigation<WikiNavigationItem>> = this.select('wikiNavigation');
@@ -26,6 +27,7 @@ export class AppStore {
 
   readonly setIsLogged = (isLogged: boolean) => this.patch({isLogged});
   readonly setPreloading = (preloading: boolean) => this.patch({preloading});
+  readonly setPlatformAvailable = (platformAvailable: boolean | null) => this.patch({platformAvailable});
   readonly setIsHomePage = (isHomePage: boolean) => this.patch({isHomePage});
   readonly setFooterHeight = (footerHeight: number) => this.patch({footerHeight});
   readonly setHeaderHeight = (headerHeight: number) => this.patch({headerHeight});

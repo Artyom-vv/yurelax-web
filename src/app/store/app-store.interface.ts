@@ -16,6 +16,7 @@ export interface AppState {
   isHomePage: boolean
   isLogged: boolean
   preloading: boolean
+  platformAvailable: boolean | null
 }
 export const DEFAULT_STATE: AppState = {
   user: null,
@@ -29,5 +30,6 @@ export const DEFAULT_STATE: AppState = {
   headerHeight: 0,
   isHomePage: false,
   isLogged: false,
-  preloading: true
+  preloading: true,
+  platformAvailable: null
 };
