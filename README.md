@@ -1,39 +1,27 @@
-# Yurelax Web
+# YurelaxWeb
 
-Веб-кабинет игрока и будущая административная панель Yurelax.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
 
-## Архитектурная граница
+## Development server
 
-- Единственный backend и источник контрактов — Global API в `yurelax-platform`.
-- Браузер обращается только к owner-safe маршрутам платформенного `web-bff` по `/api/**`.
-- Авторизация выполняется через серверную OIDC-сессию. Access/refresh tokens не попадают в JavaScript, local storage или browser-readable cookies.
-- Старый отдельный репозиторий `yurelax-api` не является зависимостью этого проекта и не должен возвращаться в схему.
-- Общий proxy к Global API запрещён: каждый новый web-сценарий получает отдельный типизированный BFF-маршрут.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Локальная разработка
+## Code scaffolding
 
-Требуется Node.js 20.19.x.
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-```bash
-npm ci
-npm start
-```
+## Build
 
-Для изолированного просмотра кабинета с контрактоподобными fixture-ответами:
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-```bash
-npm run build
-npm run preview:platform
-```
+## Running unit tests
 
-Предпросмотр доступен на `http://127.0.0.1:4300`. Он предназначен только для UI-разработки и не заменяет интеграционные тесты с `web-bff`.
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Проверки
+## Running end-to-end tests
 
-```bash
-npm test -- --watch=false
-npm run build
-npm audit --omit=dev
-```
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-Тесты выполняются штатным Angular unit-test builder поверх Vitest.
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
