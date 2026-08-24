@@ -91,8 +91,8 @@ export class SliderComponent implements AfterViewInit {
   }
 
 
-  @HostListener('document:mouseup', ['$event'])
-  @HostListener('document:touchend', ['$event'])
+  @HostListener('document:mouseup')
+  @HostListener('document:touchend')
   onTouchEnd(): void {
     this.isSliding = false;
   }
