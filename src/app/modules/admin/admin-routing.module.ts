@@ -25,6 +25,12 @@ const routes: Routes = [
         loadChildren: () => import('../admin/module/statistics/statistics.module').then(m => m.StatisticsModule)
       },
       {
+        path: 'commerce',
+        component: AdminContentComponent,
+        title: 'Дешборд — Товары и предложения',
+        loadChildren: () => import('../admin/module/commerce/admin-commerce.module').then(m => m.AdminCommerceModule)
+      },
+      {
         path: 'mini-games',
         component: AdminContentComponent,
         title: 'Дешборд — Мини-игры',

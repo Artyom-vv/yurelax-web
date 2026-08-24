@@ -147,6 +147,7 @@ export class AppComponent implements OnInit {
         {isButton: false, link: '/admin/home', name: 'Домашняя', icon: 'home', iconStroked: true},
         {isButton: false, link: '/admin/wiki', name: 'Вики', icon: 'book', iconStroked: true},
         {isButton: false, link: '/admin/statistics', name: 'Статистика', icon: 'file', iconStroked: true},
+        {isButton: false, link: '/admin/commerce', name: 'Товары и предложения', icon: 'shopping-bag', iconStroked: true},
         {isButton: false, link: '/admin/mini-games', name: 'Мини-игры', icon: 'joystick', iconStroked: true},
       ],
     ])

@@ -1,0 +1,78 @@
+<h3>Товары и предложения</h3>
+<yrx-spacing type="XS"></yrx-spacing>
+<p class="text text_body regular c-gradation-300">Товар описывает универсальные права и выдачи. Предложение связывает конкретную версию товара с ценами, областью режима, требованиями и периодом продажи.</p>
+<yrx-spacing type="S"></yrx-spacing>
+
+<div class="filters">
+  <div class="box box_input"><input class="input_normal" [(ngModel)]="productCode" placeholder="Код товара"></div>
+  <div class="box box_input"><input class="input_normal" [(ngModel)]="offerCode" placeholder="Код предложения"></div>
+  <button class="filter-action" type="button" (click)="load()">Применить фильтры</button>
+</div>
+<yrx-spacing type="M"></yrx-spacing>
+
+@if (loading) {
+  <p class="text text_body c-gradation-300">Загружаем версии каталога…</p>
+} @else {
+  <section>
+    <h4>Версии товаров — {{products.length}}</h4>
+    <yrx-spacing type="S"></yrx-spacing>
+    <div class="catalog-list">
+      @for (product of products; track product.id) {
+        <article class="catalog-card">
+          <div class="flex flex_justify-between gap-24">
+            <div>
+              <p class="text text_small c-gradation-300">{{product.kind}} · версия {{product.version}} · {{product.purchasePolicy}}</p>
+              <h4>{{product.name}}</h4>
+              <p class="text text_body c-gradation-300">{{product.productCode}}</p>
+            </div>
+            <p class="text text_small c-gradation-300">{{product.publishedAt | date:'dd.MM.yyyy HH:mm'}}</p>
+          </div>
+          <yrx-spacing type="XS"></yrx-spacing>
+          <p class="text text_body c-gradation-300">{{product.description}}</p>
+          <yrx-spacing type="XS"></yrx-spacing>
+          <div class="grant-list">
+            @for (grant of product.grants; track grant.ordinal) {
+              <div class="grant text text_small c-gradation-300">
+                #{{grant.ordinal}} {{grant.grantKey}} · {{grant.deliveryMode}} · {{grant.providerCode}} · {{grant.gameCode ?? 'глобально'}} · {{grant.lifetime.kind}} · {{grant.ownershipPolicy}}
+              </div>
+            }
+          </div>
+        </article>
+      } @empty {
+        <p class="text text_body c-gradation-300">Товары не найдены.</p>
+      }
+    </div>
+  </section>
+
+  <yrx-spacing type="M"></yrx-spacing>
+  <section>
+    <h4>Версии предложений — {{offers.length}}</h4>
+    <yrx-spacing type="S"></yrx-spacing>
+    <div class="catalog-list">
+      @for (offer of offers; track offer.id) {
+        <article class="catalog-card" [class.catalog-card_retired]="offer.retiredAt">
+          <div class="flex flex_justify-between gap-24">
+            <div>
+              <p class="text text_small c-gradation-300">версия {{offer.version}} · {{offer.gameCode ?? 'глобальное предложение'}}</p>
+              <h4>{{offer.code}}</h4>
+              <p class="text text_body c-gradation-300">{{offer.productCode}} v{{offer.productVersion}}</p>
+            </div>
+            <div class="prices">
+              @for (price of offer.prices; track price.currencyCode) {
+                <strong>{{price.amount}} {{price.currencyCode}}</strong>
+              }
+            </div>
+          </div>
+          <yrx-spacing type="XS"></yrx-spacing>
+          <p class="text text_small c-gradation-300">Требования: {{requirement(offer.requirement)}}</p>
+          <p class="text text_small c-gradation-300">Период: {{offer.effectiveFrom | date:'dd.MM.yyyy HH:mm'}} — {{offer.effectiveUntil ? (offer.effectiveUntil | date:'dd.MM.yyyy HH:mm') : 'без окончания'}}</p>
+          @if (offer.retiredAt) {
+            <p class="text text_small retired">Снято {{offer.retiredAt | date:'dd.MM.yyyy HH:mm'}} · {{offer.retirementReason}}</p>
+          }
+        </article>
+      } @empty {
+        <p class="text text_body c-gradation-300">Предложения не найдены.</p>
+      }
+    </div>
+  </section>
+}

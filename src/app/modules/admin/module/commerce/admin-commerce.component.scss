@@ -1,0 +1,50 @@
+.filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+}
+.filter-action {
+  padding: 0 20px;
+  border: 0;
+  border-radius: 10px;
+  color: white;
+  background: #7756ff;
+  cursor: pointer;
+}
+.catalog-list,
+.grant-list,
+.prices {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.catalog-card {
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .03);
+}
+.catalog-card_retired {
+  opacity: .65;
+}
+.grant {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .05);
+  overflow-wrap: anywhere;
+}
+.prices {
+  align-items: flex-end;
+}
+.retired {
+  color: #f28a8e;
+}
+
+@media (max-width: 760px) {
+  .filters {
+    grid-template-columns: 1fr;
+  }
+  .filter-action {
+    min-height: 48px;
+  }
+}
