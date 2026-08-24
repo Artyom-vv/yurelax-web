@@ -4,8 +4,11 @@ import {Observable, switchMap} from 'rxjs';
 import {environment} from '../../../../../../../../environments/environment';
 import {PlatformSessionService} from '../../../../../../shared/services/platform-session.service';
 import {
+  CommerceEntitlement,
   CommercePurchaseResult,
+  CommercePurchase,
   CommerceStorefront,
+  CursorPage,
   PlayerWalletPage
 } from '../interfaces/commerce.interface';
 
@@ -25,6 +28,28 @@ export class PlatformCommerceService {
 
   wallets(): Observable<PlayerWalletPage> {
     return this.http.get<PlayerWalletPage>(`${environment.platformApiUrl}/me/wallets`);
+  }
+
+  purchases(): Observable<CursorPage<CommercePurchase>> {
+    return this.http.get<CursorPage<CommercePurchase>>(`${environment.platformApiUrl}/me/purchases`);
+  }
+
+  entitlements(status?: CommerceEntitlement['status']): Observable<CursorPage<CommerceEntitlement>> {
+    const params = status ? new HttpParams().set('status', status) : undefined;
+    return this.http.get<CursorPage<CommerceEntitlement>>(`${environment.platformApiUrl}/me/entitlements`, {params});
+  }
+
+  activate(entitlementId: string): Observable<unknown> {
+    return this.session.status().pipe(
+      switchMap(status => this.http.post(
+        `${environment.platformApiUrl}/me/entitlements/${entitlementId}/activations`,
+        null,
+        {headers: {
+          'x-csrf-token': status.csrfToken ?? '',
+          'idempotency-key': crypto.randomUUID(),
+        }}
+      ))
+    );
   }
 
   purchase(offerCode: string, currencyCode: string): Observable<CommercePurchaseResult> {

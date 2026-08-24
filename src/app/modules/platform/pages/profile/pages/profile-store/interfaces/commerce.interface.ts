@@ -70,3 +70,45 @@ export interface CommercePurchaseResult {
   entitlements: unknown[];
   replayed: boolean;
 }
+
+export interface CommercePurchase {
+  id: string;
+  offerCode: string;
+  productCode: string;
+  quantity: number;
+  currencyCode: string;
+  unitPrice: string;
+  totalPrice: string;
+  purchasedAt: string;
+  status: 'CONFIRMED';
+}
+
+export interface CommerceActivationState {
+  canActivate: boolean;
+  blockedReason: string | null;
+  activeActivation: {startsAt: string; expiresAt: string} | null;
+  lifetimeUsed: number;
+  lifetimeRemaining: number | null;
+  periodUsed: number;
+  periodRemaining: number | null;
+  periodResetsAt: string | null;
+}
+
+export interface CommerceEntitlement {
+  id: string;
+  productCode: string;
+  kind: CommerceProductKind;
+  providerCode: string;
+  entitlementKey: string;
+  gameCode: string | null;
+  status: 'ACTIVE' | 'CONSUMED' | 'REVOKED';
+  grantedAt: string;
+  startsAt: string;
+  expiresAt: string | null;
+  activationState: CommerceActivationState;
+}
+
+export interface CursorPage<T> {
+  items: T[];
+  page: {nextCursor: string | null; hasMore: boolean};
+}

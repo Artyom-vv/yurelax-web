@@ -1,0 +1,42 @@
+@import "src/shared/styles/layout/colored-box";
+@import "src/shared/styles/vars.colors";
+
+.colored-box {
+  @include colored-box;
+}
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ownership-card,
+.notice {
+  padding: 20px;
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  border-radius: 12px;
+  background: map-get($project-colors, "gradation", 800);
+}
+.metadata {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px 20px;
+}
+.purchase-price {
+  text-align: right;
+}
+.notice_success {
+  border-color: map-get($project-colors, "green", 300);
+}
+.notice_error {
+  color: map-get($project-colors, "red", 300);
+  border-color: map-get($project-colors, "red", 300);
+}
+
+@media (max-width: 640px) {
+  .ownership-card.flex {
+    flex-direction: column;
+  }
+  .purchase-price {
+    text-align: left;
+  }
+}

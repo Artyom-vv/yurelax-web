@@ -22,6 +22,12 @@ const routes: Routes = [
     title: 'Профиль — Магазин',
     loadChildren: () => import('./pages/profile-store/profile-store.module').then(m => m.ProfileStoreModule)
   },
+  {
+    path: 'ownership',
+    component: ProfileContentComponent,
+    title: 'Профиль — Покупки и права',
+    loadChildren: () => import('./pages/profile-ownership/profile-ownership.module').then(m => m.ProfileOwnershipModule)
+  },
 ];
 
 @NgModule({

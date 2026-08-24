@@ -37,6 +37,25 @@ describe('PlatformCommerceService', () => {
     request.flush({items: []});
   });
 
+  it('reads owner purchases and filtered entitlements', () => {
+    service.purchases().subscribe();
+    http.expectOne('/api/me/purchases').flush({items: [], page: {nextCursor: null, hasMore: false}});
+
+    service.entitlements('ACTIVE').subscribe();
+    const rights = http.expectOne('/api/me/entitlements?status=ACTIVE');
+    expect(rights.request.method).toBe('GET');
+    rights.flush({items: [], page: {nextCursor: null, hasMore: false}});
+  });
+
+  it('activates only an owner entitlement with CSRF and idempotency', () => {
+    service.activate('8a5de350-1cd6-489b-bbb2-ddf34830e2a0').subscribe();
+    const request = http.expectOne('/api/me/entitlements/8a5de350-1cd6-489b-bbb2-ddf34830e2a0/activations');
+    expect(request.request.body).toBeNull();
+    expect(request.request.headers.get('x-csrf-token')).toBe('csrf');
+    expect(request.request.headers.get('idempotency-key')).toMatch(/^[0-9a-f-]{36}$/);
+    request.flush({});
+  });
+
   it('purchases without accepting a browser-owned player id', () => {
     service.purchase('hunt.class.archer', 'GEMS').subscribe();
     const request = http.expectOne('/api/me/purchases');
