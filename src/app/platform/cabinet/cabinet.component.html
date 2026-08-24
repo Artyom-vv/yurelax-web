@@ -23,7 +23,6 @@
         </header>
 
         <div class="content">
-          @if (notice()) { <div class="notice" role="status">{{ notice() }}<button type="button" (click)="notice.set(null)">×</button></div> }
           @if (tab() === 'store') {
             <section class="hero">
               <p class="kicker">ПЕРСОНАЛЬНАЯ ВИТРИНА</p>
@@ -49,14 +48,6 @@
                       <div><dt>Контракт товара</dt><dd>{{ offer.productCode }}</dd></div>
                       <div><dt>Провайдер</dt><dd>{{ offer.providerCode }}</dd></div>
                       <div><dt>Выдача</dt><dd>{{ offer.deliveryMode }} · {{ offer.productKind }}</dd></div></dl>
-                    <div class="commerce-actions">
-                      @for (price of offer.prices; track price.currencyCode) {
-                        <button type="button" [disabled]="offer.eligibility?.eligible === false || busy() !== null"
-                          (click)="purchase(view.session, offer, price.currencyCode)">
-                          {{ busy() === 'purchase:' + offer.code ? 'Подтверждаем…' : 'Купить за ' + price.amount + ' ' + price.currencyCode }}
-                        </button>
-                      }
-                    </div>
                   </div>
                 </article>
               } @empty { <p class="empty">Сейчас для вашего профиля нет опубликованных предложений.</p> }
@@ -72,13 +63,7 @@
                   <div class="ledger-main"><p>{{ right.gameCode || 'GLOBAL' }} / {{ right.kind }}</p><h3>{{ right.entitlementKey }}</h3>
                     <small>{{ right.productCode }}</small></div>
                   <div><span class="label">Состояние</span><strong>{{ right.status }}</strong></div>
-                  <div><span class="label">Активация</span><strong>{{ activation(right) }}</strong>
-                    @if (right.activationState.canActivate) {
-                      <button class="activate" type="button" [disabled]="busy() !== null" (click)="activateRight(view.session, right)">
-                        {{ busy() === 'activation:' + right.id ? 'Запускаем…' : 'Активировать' }}
-                      </button>
-                    }
-                  </div>
+                  <div><span class="label">Активация</span><strong>{{ activation(right) }}</strong></div>
                   <div><span class="label">Срок</span><strong>{{ right.expiresAt ? (right.expiresAt | date:'dd.MM.yyyy') : 'Постоянно' }}</strong></div>
                 </article>
               } @empty { <p class="empty">Права ещё не выдавались.</p> }
