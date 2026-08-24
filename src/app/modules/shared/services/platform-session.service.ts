@@ -4,6 +4,7 @@ import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {Observable, of, switchMap, tap} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {
+  PlatformAccessContext,
   PlatformPlayerProfile,
   PlatformSessionStatus
 } from '../interfaces/platform-session.interface';
@@ -28,6 +29,10 @@ export class PlatformSessionService {
 
   profile(): Observable<PlatformPlayerProfile> {
     return this.http.get<PlatformPlayerProfile>(`${environment.platformApiUrl}/me/profile`);
+  }
+
+  access(): Observable<PlatformAccessContext> {
+    return this.http.get<PlatformAccessContext>(`${environment.platformApiUrl}/me/access`);
   }
 
   beginLogin(returnTo = '/platform/profile/home'): void {

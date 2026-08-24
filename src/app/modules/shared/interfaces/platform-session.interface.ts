@@ -15,3 +15,10 @@ export interface PlatformPlayerProfile {
   currentName: string;
   identities: PlatformLinkedIdentity[];
 }
+
+export type PlatformApplicationRole = 'PLAYER' | 'SUPPORT' | 'CONTENT_ADMIN' | 'ECONOMY_ADMIN' | 'PLATFORM_ADMIN';
+
+export interface PlatformAccessContext {
+  roles: PlatformApplicationRole[];
+  scopes: string[];
+}

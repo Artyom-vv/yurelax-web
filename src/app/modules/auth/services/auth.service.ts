@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {map, Observable, of, tap} from 'rxjs';
+import {forkJoin, map, Observable, of, tap} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 import {AppStore} from '../../../store/app.store';
 import {UserRes} from '../../platform/interfaces/user.interface';
@@ -22,8 +22,11 @@ export class AuthService {
   }
 
   getMe(): Observable<GetMeRes> {
-    return this.platformSession.profile().pipe(
-      map(profile => {
+    return forkJoin({
+      profile: this.platformSession.profile(),
+      access: this.platformSession.access(),
+    }).pipe(
+      map(({profile, access}) => {
         const minecraft = profile.identities.find(identity => identity.provider === 'MINECRAFT');
         const createdAt = profile.identities.map(identity => identity.verifiedAt).sort()[0]
           ?? new Date(0).toISOString();
@@ -33,7 +36,7 @@ export class AuthService {
           userInvitedRef: '',
           email: '',
           emailVerify: true,
-          role: RolesEnum.USER,
+          role: access.roles.some(role => role !== 'PLAYER') ? RolesEnum.ADMIN : RolesEnum.USER,
           subscription: '',
           userStatisticRef: '',
           userInfoRef: {

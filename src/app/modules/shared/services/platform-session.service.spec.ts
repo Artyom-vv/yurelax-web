@@ -32,4 +32,11 @@ describe('PlatformSessionService', () => {
     expect(request.request.headers.get('x-csrf-token')).toBe('csrf');
     request.flush(null);
   });
+
+  it('reads only the server-verified access context', () => {
+    service.access().subscribe(access => expect(access.roles).toEqual(['CONTENT_ADMIN']));
+    const request = http.expectOne('/api/me/access');
+    expect(request.request.method).toBe('GET');
+    request.flush({roles: ['CONTENT_ADMIN'], scopes: ['content:read']});
+  });
 });
