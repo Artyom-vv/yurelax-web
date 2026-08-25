@@ -39,7 +39,7 @@ const routes: Routes = [
       {
         path: 'mini-games',
         component: AdminContentComponent,
-        title: 'Дешборд — Мини-игры',
+        title: 'Дешборд — Контент режимов',
         loadChildren: () => import('../admin/module/mini-games/mini-games.module').then(m => m.MiniGamesModule)
       },
       {

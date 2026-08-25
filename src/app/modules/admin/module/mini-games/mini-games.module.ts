@@ -22,6 +22,7 @@ import {SelectModule} from "../../../shared/modules/select/select.module";
 import { MiniGamesItemComponent } from './components/mini-games-item/mini-games-item.component';
 import {InputModule} from "../../../shared/modules/text-fields/modules/input/input.module";
 import {TextAreaModule} from "../../../shared/modules/text-fields/modules/text-area/text-area.module";
+import {AdminGameContentService} from "../../../shared/services/admin-game-content.service";
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import {TextAreaModule} from "../../../shared/modules/text-fields/modules/text-a
   providers: [
     MiniGamesService,
     StatisticsService,
-    RequestsCancellerService
+    RequestsCancellerService,
+    AdminGameContentService
   ]
 })
 export class MiniGamesModule {
