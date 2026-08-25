@@ -65,6 +65,7 @@ code { color: map-get($project-colors, "purple", 200); font: 500 12px/1.4 $secon
 .stat-card span { color: map-get($project-colors, "gradation", 500); font-size: 11px; }
 .right-row { align-items: flex-start; }
 .right-copy { min-width: 0; }
+.right-copy yrx-commerce-origin { display: block; margin: 6px 0 8px; }
 .right-copy > p:not(.meta) { max-width: 520px; margin: 4px 0 7px; color: map-get($project-colors, "gradation", 400); font-size: 12px; line-height: 1.45; }
 .right-copy details { margin-top: 8px; }
 .right-copy summary { color: map-get($project-colors, "gradation", 500); font-size: 11px; cursor: pointer; }

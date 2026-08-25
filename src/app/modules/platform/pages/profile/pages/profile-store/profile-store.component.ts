@@ -3,6 +3,7 @@ import {catchError, finalize, forkJoin, of, tap} from 'rxjs';
 import {CommerceEligibilityReason, CommerceOffer, PlayerWalletBalance} from './interfaces/commerce.interface';
 import {SubscriptionPurchaseRequest, SubscriptionRes} from './interfaces/subscription.interface';
 import {PlatformCommerceService} from './services/platform-commerce.service';
+import {platformErrorMessage} from '../../../../../shared/interfaces/platform-error-message';
 
 const CARD_THEMES = [
   {color: '#FFD071', blocks: ['gold-block/3.png', 'gold-block/2.png', 'gold-block/4.png']},
@@ -60,7 +61,7 @@ export class ProfileStoreComponent implements OnInit {
         this.loadStorefront(false);
       }),
       catchError(error => {
-        this.error = error?.error?.message ?? 'Не удалось выполнить покупку. Попробуйте ещё раз.';
+        this.error = platformErrorMessage(error, 'Не удалось выполнить покупку. Попробуйте ещё раз.');
         return of(null);
       }),
       finalize(() => this.purchasingOffer = null)
@@ -77,7 +78,7 @@ export class ProfileStoreComponent implements OnInit {
         this.updateIndexes();
       }),
       catchError(error => {
-        this.error = error?.error?.message ?? 'Каталог сейчас недоступен.';
+        this.error = platformErrorMessage(error, 'Каталог сейчас недоступен. Попробуйте обновить страницу позже.');
         return of(null);
       }),
       finalize(() => this.loading = false)

@@ -5,6 +5,7 @@ import {
   AdminEntitlement, AdminPlayerEntry, AdminPlayerStatistic, AdminPlayersService,
   AdminPurchase, AdminRewardReceipt, AdminTimelineItem,
 } from '../../../shared/services/admin-players.service';
+import {commercePaymentLabel} from '../../../shared/interfaces/commerce-acquisition.interface';
 
 type PlayerSection = 'overview' | 'rewards' | 'statistics' | 'commerce' | 'timeline';
 
@@ -16,6 +17,7 @@ type PlayerSection = 'overview' | 'rewards' | 'statistics' | 'commerce' | 'timel
   standalone: false,
 })
 export class AdminPlayersComponent implements OnInit {
+  public readonly purchaseLabel = commercePaymentLabel;
   public search = '';
   public gameCode = '';
   public timelineScope = 'ALL';

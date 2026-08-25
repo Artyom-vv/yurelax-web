@@ -1,0 +1,40 @@
+@import "src/shared/styles/vars.colors";
+
+:host { display: inline-block; }
+
+.origin {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  padding: 4px 7px;
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  border-radius: 7px;
+  color: map-get($project-colors, "gradation", 300);
+  background: map-get($project-colors, "gradation", 700);
+  font: 500 11px/1.2 $second_font;
+  white-space: nowrap;
+}
+
+.origin__mark {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: map-get($project-colors, "green", 300);
+}
+
+.origin_legacy_payment {
+  color: map-get($project-colors, "purple", 100);
+  border-color: map-get($project-colors, "purple", 400);
+  background: map-get($project-colors, "purple", 500);
+
+  .origin__mark { background: map-get($project-colors, "purple", 200); }
+}
+
+.origin_legacy_grant {
+  color: map-get($project-colors, "yellow", 100);
+  border-color: map-get($project-colors, "yellow", 500);
+  background: map-get($project-colors, "yellow", 600);
+
+  .origin__mark { background: map-get($project-colors, "yellow", 300); }
+}

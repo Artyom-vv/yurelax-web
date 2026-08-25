@@ -2,6 +2,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {environment} from '../../../../environments/environment';
+import {CommerceAcquisitionOrigin} from '../interfaces/commerce-acquisition.interface';
 
 export interface AdminPlayerEntry {
   playerId: string;
@@ -36,8 +37,9 @@ export interface AdminPurchase {
   productCode: string;
   productName: string;
   quantity: number;
-  currencyCode: string;
-  totalPrice: string;
+  currencyCode: string | null;
+  totalPrice: string | null;
+  origin: CommerceAcquisitionOrigin;
   purchasedAt: string;
   status: string;
 }
@@ -64,6 +66,7 @@ export interface AdminEntitlement {
     periodRemaining: number | null;
     periodResetsAt: string | null;
   };
+  origin: CommerceAcquisitionOrigin;
 }
 
 export interface AdminTimelineItem {

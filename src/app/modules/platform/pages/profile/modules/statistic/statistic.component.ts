@@ -6,6 +6,7 @@ import {
   PlayerStatisticGroup,
   StatisticsService,
 } from '../../../../../shared/services/statistics.service';
+import {platformErrorMessage} from '../../../../../shared/interfaces/platform-error-message';
 
 const ALL_GAME_GROUP = '__all__';
 
@@ -38,7 +39,7 @@ export class StatisticComponent implements OnInit {
     this.statistics.playerOverview().pipe(
       tap(overview => this.applyOverview(overview.groups)),
       catchError(error => {
-        this.error = error?.error?.message ?? 'Не удалось загрузить статистику.';
+        this.error = platformErrorMessage(error, 'Статистика сейчас недоступна. Попробуйте обновить страницу позже.');
         return of(null);
       }),
       finalize(() => this.loading = false),

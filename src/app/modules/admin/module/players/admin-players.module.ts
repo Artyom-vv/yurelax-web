@@ -8,10 +8,12 @@ import {AdminPlayersComponent} from './admin-players.component';
 import {AdminPlayersRoutingModule} from './admin-players-routing.module';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {AdminUiModule} from '../../components/admin-ui/admin-ui.module';
+import {CommerceOriginModule} from '../../../shared/modules/commerce-origin/commerce-origin.module';
 
 @NgModule({
   declarations: [AdminPlayersComponent],
-  imports: [CommonModule, FormsModule, ButtonModule, SpacingModule, MatSnackBarModule, AdminUiModule, AdminPlayersRoutingModule],
+  imports: [CommonModule, FormsModule, ButtonModule, SpacingModule, MatSnackBarModule,
+    CommerceOriginModule, AdminUiModule, AdminPlayersRoutingModule],
   providers: [AdminPlayersService],
 })
 export class AdminPlayersModule {}
