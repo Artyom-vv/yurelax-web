@@ -40,6 +40,15 @@ describe('web production deployment', () => {
     assert.equal(fetcher.calls.length, 2);
   });
 
+  it('accepts one repository-owned application when Coolify suffixes its name', async () => {
+    const fetcher = sequence([
+      json([{...APPLICATION, name: 'yurelax-web-yv5e', git_commit_sha: SHA_ONE}]),
+      json({status: 'ok', service: 'yurelax-web', revision: SHA_ONE}),
+    ]);
+    const result = await deployWeb('reconcile', ENVIRONMENT, fetcher, async () => {});
+    assert.equal(result.skipped, true);
+  });
+
   it('selects the latest successful revision other than current for rollback', async () => {
     const fetcher = sequence([
       json([{...APPLICATION, git_commit_sha: SHA_ONE}]),
