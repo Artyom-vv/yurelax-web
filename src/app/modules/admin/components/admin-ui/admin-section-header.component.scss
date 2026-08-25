@@ -4,9 +4,11 @@
 
 .admin-section-header {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 12px;
+
+  &_indexed { grid-template-columns: auto minmax(0, 1fr) auto; }
 
   &__index {
     display: grid;
@@ -39,7 +41,14 @@
 
 @media (max-width: 620px) {
   .admin-section-header {
-    grid-template-columns: auto minmax(0, 1fr);
-    &__aside { grid-column: 2; justify-content: flex-start; }
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+
+    &__aside { grid-column: 1; justify-content: flex-start; }
+
+    &_indexed {
+      grid-template-columns: auto minmax(0, 1fr);
+      .admin-section-header__aside { grid-column: 2; }
+    }
   }
 }

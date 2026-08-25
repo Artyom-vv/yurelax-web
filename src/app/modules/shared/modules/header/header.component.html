@@ -1,6 +1,6 @@
 <header #header class="header" [class.light]="light">
-  <div class="container container_large flex flex_justify-between">
-    <div class="navigation flex gap-32 flex_align-center">
+  <div class="header__inner container container_large flex flex_justify-between">
+    <div class="header__navigation navigation flex gap-32 flex_align-center">
       <div [routerLink]="'/platform'" class="logotype flex gap-12 flex_align-center">
         <yrx-icon [hover]="false" [color]=" light ? 'purple-100' : ''" icon="yurelax"></yrx-icon>
         <div class="flex flex_column gap-2">
@@ -8,7 +8,7 @@
           <p class="text text_tiny c-gradation-200">Minecraft сервер</p>
         </div>
       </div>
-      <ul class="flex gap-32 ">
+      <ul class="header__routes flex gap-32">
         @for (route of routes; track route) {
           @if (isLogged || !route.isLogged) {
             <li [routerLink]="route.link" routerLinkActive="active" class="link text text_body regular c-gradation-300">{{route.name}}</li>
@@ -16,8 +16,8 @@
         }
       </ul>
     </div>
-    <div class="flex gap-24 flex_align-center">
-      <div class="socials flex gap-12">
+    <div class="header__actions flex gap-24 flex_align-center">
+      <div class="header__socials socials flex gap-12">
         @for (social of socials; track social) {
           @if (social.link) {
             <a [href]="social.link" target="_blank" rel="noopener noreferrer" [attr.aria-label]="social.name">

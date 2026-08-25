@@ -2,7 +2,7 @@
 <footer #footer class="footer">
   <yrx-spacing type="L"></yrx-spacing>
   <div class="container flex flex_column gap-24">
-    <div class="flex flex_justify-between">
+    <div class="footer-primary flex flex_justify-between">
       <div [routerLink]="'/platform'" class="logotype flex gap-12 flex_align-center">
         <yrx-icon [hover]="false" color="purple-100" icon="yurelax"></yrx-icon>
         <h1 class="headline c-gradation-100">yurelax</h1>
@@ -13,7 +13,7 @@
       </yrx-button>
     </div>
     <div class="separator"></div>
-    <div class="flex flex_align-center flex_justify-between">
+    <div class="footer-meta flex flex_align-center flex_justify-between">
       <ul class="socials" aria-label="Социальные сети Yurelax">
         @for (social of socials; track social.link) {
           @if (social.link) {
@@ -34,7 +34,7 @@
           }
         }
       </ul>
-      <ul class="flex gap-24">
+      <ul class="footer-legal flex gap-24">
         <li><span class="pending-link text text_body medium" title="Документ готовится">Условия пользования</span></li>
         <li><span class="pending-link text text_body medium" title="Документ готовится">Политика конфиденциальности</span></li>
       </ul>

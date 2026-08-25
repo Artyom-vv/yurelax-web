@@ -2,6 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {AdminPageHeaderComponent} from './admin-page-header.component';
 import {AdminStateComponent} from './admin-state.component';
 import {AdminStatusComponent} from './admin-status.component';
+import {AdminSectionHeaderComponent} from './admin-section-header.component';
 
 describe('Admin UI primitives', () => {
   it('renders one consistent page hierarchy', async () => {
@@ -37,5 +38,19 @@ describe('Admin UI primitives', () => {
 
     expect(fixture.nativeElement.textContent).toContain('Используется');
     expect(fixture.nativeElement.querySelector('.admin-status__dot')).toBeTruthy();
+  });
+
+  it('distinguishes indexed section geometry from a plain section header', async () => {
+    await TestBed.configureTestingModule({declarations: [AdminSectionHeaderComponent]}).compileComponents();
+    const fixture = TestBed.createComponent(AdminSectionHeaderComponent);
+    fixture.componentRef.setInput('title', 'Опубликованные контракты');
+    fixture.detectChanges();
+
+    const header: HTMLElement = fixture.nativeElement.querySelector('header');
+    expect(header.classList).not.toContain('admin-section-header_indexed');
+
+    fixture.componentRef.setInput('index', '02');
+    fixture.detectChanges();
+    expect(header.classList).toContain('admin-section-header_indexed');
   });
 });

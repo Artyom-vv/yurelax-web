@@ -243,6 +243,7 @@
 @mixin btn {
   width: 100%;
   min-width: unset;
+  font-family: $second_font;
   transition: background-color $trs, color $trs;
   border-radius: 6px;
   .mdc-button__label span {

@@ -1,8 +1,59 @@
-.sidebar {
-  width: 270px;
-}
+@import "src/shared/styles/vars.colors";
+
+.sidebar { width: 270px; }
+.sidebar__toggle { display: none; }
 :host {
   align-self: start;
   position: sticky;
   top: 24px;
+}
+
+@media (max-width: 900px) {
+  .sidebar_collapsible {
+    width: 100%;
+    padding: 8px 0;
+    border-bottom: 1px solid map-get($project-colors, "gradation", 600);
+    background: map-get($project-colors, "gradation", 800);
+  }
+
+  .sidebar_collapsible .sidebar__toggle {
+    display: grid;
+    width: 100%;
+    min-height: 44px;
+    grid-template-columns: 20px minmax(0, 1fr) 18px;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+    border: 1px solid map-get($project-colors, "gradation", 600);
+    border-radius: 8px;
+    color: map-get($project-colors, "gradation", 200);
+    background: map-get($project-colors, "gradation", 750);
+    font: 500 14px/20px $second_font;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .sidebar__toggle-icon,
+  .sidebar__toggle-chevron {
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+    align-items: center;
+    justify-content: center;
+    color: map-get($project-colors, "gradation", 300);
+  }
+
+  .sidebar__toggle-icon yrx-icon,
+  .sidebar__toggle-chevron { width: 18px; height: 18px; }
+  .sidebar__toggle-chevron { transition: transform .16s ease; }
+  .sidebar_open .sidebar__toggle-chevron { transform: rotate(180deg); }
+
+  .sidebar_collapsible .sidebar__panel {
+    display: none;
+    max-height: calc(100vh - 72px);
+    padding-bottom: 12px;
+    overflow-y: auto;
+  }
+
+  .sidebar_collapsible.sidebar_open .sidebar__panel { display: flex; }
 }

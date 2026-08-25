@@ -1,4 +1,4 @@
-<header class="admin-section-header">
+<header class="admin-section-header" [class.admin-section-header_indexed]="index">
   @if (index) {<span class="admin-section-header__index" aria-hidden="true">{{index}}</span>}
   <div class="admin-section-header__copy">
     <h4>{{title}}</h4>
