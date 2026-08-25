@@ -10,6 +10,7 @@ export class IconsService {
 
   public icons: { name: string, pathName: string }[] = [
     {name: 'ucoin', pathName: 'ucoin'},
+    {name: 'gem', pathName: 'gem'},
     {name: 'login', pathName: 'log-in'},
     {name: 'check-circle', pathName: 'check-circle'},
     {name: 'x-circle', pathName: 'x-circle'},
@@ -25,6 +26,11 @@ export class IconsService {
     {name: 'book', pathName: 'book'},
     {name: 'chevron-right', pathName: 'chevron-right'},
     {name: 'chevron-left', pathName: 'chevron-left'},
+    {name: 'chevron-up', pathName: 'chevron-up'},
+    {name: 'chevron-down', pathName: 'chevron-down'},
+    {name: 'search', pathName: 'search'},
+    {name: 'crosshair', pathName: 'crosshair'},
+    {name: 'swords', pathName: 'swords'},
     {name: 'arrow-right', pathName: 'arrow-right'},
     {name: 'arrow-left', pathName: 'arrow-left'},
     {name: 'arrow-up', pathName: 'arrow-up'},

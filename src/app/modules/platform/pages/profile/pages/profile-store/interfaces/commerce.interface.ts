@@ -48,6 +48,8 @@ export interface CommerceStorefront {
 
 export interface PlayerWalletBalance {
   currencyCode: string;
+  displayName: string;
+  iconKey: string;
   exponent: number;
   posted: string;
   reserved: string;

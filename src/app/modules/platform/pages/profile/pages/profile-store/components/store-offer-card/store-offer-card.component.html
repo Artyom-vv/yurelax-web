@@ -1,0 +1,74 @@
+<article class="offer-card flex flex_column">
+  <div class="offer-card__scope flex flex_align-center gap-8">
+    <span class="offer-card__scope-icon flex flex_center">
+      <yrx-ref-icon class="stroke" [name]="data.scopeIcon"></yrx-ref-icon>
+    </span>
+    <div class="flex flex_column">
+      <span class="text text_table medium c-gradation-200">{{data.scopeName}}</span>
+      <span class="text text_caption regular c-gradation-400">{{data.productKind}}</span>
+    </div>
+  </div>
+
+  <div class="offer-card__body flex_grow">
+    <h4>{{data.name}}</h4>
+    <p class="text text_body regular c-gradation-300">{{data.description}}</p>
+
+    @if (!data.eligible) {
+      <div class="offer-card__eligibility text text_table regular">{{data.eligibilityText}}</div>
+    }
+
+    @if (detailsVisible) {
+      <div class="offer-card__details flex flex_column gap-8">
+        <p class="text text_table medium c-gradation-100">Что получит аккаунт</p>
+        @for (detail of data.details; track detail) {
+          <p class="text text_table regular c-gradation-300">{{detail}}</p>
+        }
+        <p class="text text_caption regular c-gradation-400">Код товара: {{data.productCode}}</p>
+      </div>
+    }
+  </div>
+
+  <div class="offer-card__purchase flex flex_column gap-12">
+    <div class="offer-card__prices flex flex_column gap-8" role="radiogroup" aria-label="Выбор валюты">
+      @for (price of data.prices; track price.currencyCode; let index = $index) {
+        <button class="price" type="button" role="radio" [attr.aria-checked]="selectedPrice === index"
+          [class.price_selected]="selectedPrice === index" (click)="selectPrice(index)">
+          <span class="price__main flex flex_align-center gap-8">
+            <yrx-ref-icon class="stroke price__icon" [name]="price.iconKey"></yrx-ref-icon>
+            <span class="flex flex_column">
+              <strong>{{price.amount}} {{price.displayName}}</strong>
+              <small>{{price.currencyCode}}</small>
+            </span>
+          </span>
+          @if (price.available !== null) {
+            <span class="price__balance text text_table" [class.price__balance_insufficient]="price.canAfford === false">
+              На счету {{price.available}}
+            </span>
+          }
+        </button>
+      }
+    </div>
+
+    @if (confirmationVisible) {
+      <div class="confirmation flex flex_column gap-12">
+        <p class="text text_table regular c-gradation-200">
+          Подтвердите покупку «{{data.name}}» за {{data.prices[selectedPrice].amount}} {{data.prices[selectedPrice].displayName}}.
+        </p>
+        <div class="flex gap-8">
+          <yrx-button (press)="confirmPurchase()" [loading]="loading">Подтвердить</yrx-button>
+          <yrx-button (press)="confirmationVisible = false" type="secondary" [disabled]="loading">Отмена</yrx-button>
+        </div>
+      </div>
+    } @else {
+      <yrx-button (press)="beginPurchase()" [loading]="loading"
+        [disabled]="loading || !data.eligible || data.prices.length === 0 || data.prices[selectedPrice].canAfford === false">
+        {{!data.eligible ? 'Условия не выполнены' : data.prices.length > 0 && data.prices[selectedPrice].canAfford === false ? 'Недостаточно средств' : 'Купить'}}
+      </yrx-button>
+    }
+
+    <button class="details-button text text_table medium" type="button" (click)="detailsVisible = !detailsVisible">
+      {{detailsVisible ? 'Скрыть состав' : 'Посмотреть состав'}}
+      <yrx-ref-icon class="stroke" [name]="detailsVisible ? 'chevron-up' : 'chevron-down'"></yrx-ref-icon>
+    </button>
+  </div>
+</article>

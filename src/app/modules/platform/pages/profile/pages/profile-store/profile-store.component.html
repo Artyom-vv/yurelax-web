@@ -1,35 +1,73 @@
-<div class="flex flex_align-center flex_justify-between">
-  <h3>Доступные подписки</h3>
-  <div class="flex gap-12">
-    <yrx-button (press)="prev()" type="secondary" [disabled]="step === 0">
-      <yrx-ref-icon btn-icon class="stroke" name="chevron-left"></yrx-ref-icon>
-    </yrx-button>
-    <yrx-button (press)="next()" type="secondary" [disabled]="step + subscriptionsPerPage >= totalSubscriptions">
-      <yrx-ref-icon btn-icon class="stroke" name="chevron-right"></yrx-ref-icon>
-    </yrx-button>
+<header class="store-heading flex flex_justify-between gap-24">
+  <div>
+    <h3>Магазин</h3>
+    <p class="text text_body regular c-gradation-300">Товары, права и игровые возможности из опубликованного каталога Yurelax.</p>
   </div>
-</div>
+  @if (!loading) {
+    <div class="store-count flex flex_center"><strong>{{resultCount}}</strong><span class="text text_table regular c-gradation-400">предложений</span></div>
+  }
+</header>
+
 <yrx-spacing type="S"></yrx-spacing>
+
 @if (message) {
-  <div class="notice notice_success text text_body regular">{{message}}</div>
+  <div class="notice notice_success text text_body regular">
+    <yrx-ref-icon class="stroke" name="check-circle"></yrx-ref-icon>
+    <span>{{message}} <a routerLink="/platform/profile/ownership">Посмотреть покупки и права</a></span>
+  </div>
   <yrx-spacing type="XS"></yrx-spacing>
 }
 @if (error) {
-  <div class="notice notice_error text text_body regular">{{error}}</div>
+  <div class="notice notice_error text text_body regular"><yrx-ref-icon class="stroke" name="alert-triangle"></yrx-ref-icon><span>{{error}}</span></div>
   <yrx-spacing type="XS"></yrx-spacing>
 }
+
+<section class="catalog-tools" aria-label="Фильтры магазина">
+  <label class="search-field">
+    <yrx-ref-icon class="stroke" name="search"></yrx-ref-icon>
+    <input type="search" [value]="search" (input)="updateSearch($event)" placeholder="Найти товар или возможность" aria-label="Поиск по магазину">
+  </label>
+
+  <div class="filter-row flex flex_align-center gap-8">
+    <span class="filter-label text text_table medium c-gradation-300">Где действует</span>
+    <button class="filter-chip" type="button" [class.filter-chip_active]="selectedScope === 'all'" (click)="setScope('all')">Все</button>
+    @for (scope of scopeOptions; track scope.code) {
+      <button class="filter-chip" type="button" [class.filter-chip_active]="selectedScope === scope.code" (click)="setScope(scope.code)"><yrx-ref-icon class="stroke" [name]="scope.icon"></yrx-ref-icon>{{scope.name}}</button>
+    }
+  </div>
+
+  <div class="filter-row flex flex_align-center gap-8">
+    <span class="filter-label text text_table medium c-gradation-300">Валюта</span>
+    <button class="filter-chip" type="button" [class.filter-chip_active]="selectedCurrency === 'all'" (click)="setCurrency('all')">Любая</button>
+    @for (currency of currencyOptions; track currency.code) {
+      <button class="filter-chip" type="button" [class.filter-chip_active]="selectedCurrency === currency.code" (click)="setCurrency(currency.code)"><yrx-ref-icon class="stroke" [name]="currency.icon"></yrx-ref-icon>{{currency.name}}</button>
+    }
+    <label class="available-toggle text text_table regular c-gradation-300"><input type="checkbox" [checked]="availableOnly" (change)="availableOnly = !availableOnly">Можно купить сейчас</label>
+  </div>
+</section>
+
+<yrx-spacing type="S"></yrx-spacing>
+
 @if (loading) {
-  <div class="empty flex flex_center text text_body regular c-gradation-300">Загружаем персональный каталог…</div>
-} @else if (subscriptions.length === 0) {
-  <div class="empty flex flex_center text text_body regular c-gradation-300">Сейчас нет доступных предложений.</div>
+  <div class="catalog-state text text_body regular c-gradation-300">Загружаем персональный каталог и проверяем условия…</div>
+} @else if (groups.length === 0) {
+  <div class="catalog-state flex flex_column flex_center gap-8"><yrx-ref-icon class="stroke" name="shopping-bag"></yrx-ref-icon><h4>Ничего не найдено</h4><p class="text text_body regular c-gradation-300">Измените запрос или снимите один из фильтров.</p></div>
 } @else {
-  <div class="subscriptions flex gap-24">
-    @for (index of indexes; track subscriptions[index].offerCode) {
-      <yrx-subscription
-        [data]="subscriptions[index]"
-        [loading]="purchasingOffer === subscriptions[index].offerCode"
-        (purchase)="purchase($event)">
-      </yrx-subscription>
+  <div class="catalog-groups flex flex_column gap-32">
+    @for (group of groups; track group.key) {
+      <section class="catalog-group">
+        <div class="group-heading flex flex_align-center gap-12">
+          <span class="group-heading__icon flex flex_center"><yrx-ref-icon class="stroke" [name]="group.icon"></yrx-ref-icon></span>
+          <div><h4>{{group.name}}</h4><p class="text text_table regular c-gradation-400">{{group.description}}</p></div>
+          <span class="group-heading__count text text_table regular c-gradation-400">{{group.offers.length}}</span>
+        </div>
+        <yrx-spacing type="XS"></yrx-spacing>
+        <div class="offer-grid">
+          @for (offer of group.offers; track offer.offerCode) {
+            <yrx-store-offer-card [data]="offer" [loading]="purchasingOffer === offer.offerCode" (purchase)="purchase($event)"></yrx-store-offer-card>
+          }
+        </div>
+      </section>
     }
   </div>
 }

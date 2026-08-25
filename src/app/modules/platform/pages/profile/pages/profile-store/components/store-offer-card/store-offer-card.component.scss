@@ -1,0 +1,100 @@
+@import "src/shared/styles/vars.colors";
+
+:host { display: block; min-width: 0; }
+
+.offer-card {
+  min-height: 100%;
+  overflow: hidden;
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  border-radius: 12px;
+  background: map-get($project-colors, "gradation", 700);
+}
+
+.offer-card__scope {
+  padding: 14px 18px;
+  border-bottom: 1px solid map-get($project-colors, "gradation", 600);
+  background: map-get($project-colors, "gradation", 750);
+}
+
+.offer-card__scope-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  color: map-get($project-colors, "purple", 200);
+  background: map-get($project-colors, "purple", 500);
+}
+
+.offer-card__body { padding: 20px 20px 18px; }
+.offer-card__body h4 { margin-bottom: 8px; }
+.offer-card__body > p { line-height: 1.45; }
+
+.offer-card__eligibility {
+  margin-top: 16px;
+  padding: 10px 12px;
+  color: map-get($project-colors, "yellow", 100);
+  border: 1px solid rgba(250, 185, 56, .25);
+  border-radius: 8px;
+  background: map-get($project-colors, "yellow", 600);
+}
+
+.offer-card__details {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid map-get($project-colors, "gradation", 600);
+}
+
+.offer-card__purchase {
+  padding: 18px 20px 20px;
+  border-top: 1px solid map-get($project-colors, "gradation", 600);
+}
+
+.price {
+  width: 100%;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: map-get($project-colors, "gradation", 200);
+  text-align: left;
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  border-radius: 8px;
+  background: map-get($project-colors, "gradation", 750);
+  cursor: pointer;
+}
+
+.price_selected {
+  border-color: map-get($project-colors, "purple", 200);
+  background: map-get($project-colors, "purple", 600);
+}
+
+.price__icon { width: 22px; height: 22px; color: map-get($project-colors, "purple", 200); }
+.price__main small { margin-top: 2px; color: map-get($project-colors, "gradation", 400); }
+.price__balance { color: map-get($project-colors, "gradation", 400); white-space: nowrap; }
+.price__balance_insufficient { color: map-get($project-colors, "red", 200); }
+
+.confirmation {
+  padding: 12px;
+  border: 1px solid rgba(150, 156, 238, .28);
+  border-radius: 8px;
+  background: map-get($project-colors, "purple", 600);
+}
+
+.details-button {
+  min-height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: map-get($project-colors, "gradation", 300);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.details-button yrx-ref-icon { width: 18px; height: 18px; }
+
+@media (max-width: 720px) {
+  .price { align-items: flex-start; flex-direction: column; }
+}
