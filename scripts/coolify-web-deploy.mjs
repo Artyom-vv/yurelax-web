@@ -129,7 +129,9 @@ function selectApplication(config, applications) {
 function repositorySlug(value) {
   if (typeof value !== 'string') return '';
   const normalized = value.trim().replace(/\.git$/, '');
-  if (!normalized.includes('://')) return normalized.toLowerCase();
+  const sshMatch = normalized.match(/^[^@]+@[^:]+:(.+)$/);
+  if (sshMatch) return sshMatch[1].toLowerCase();
+  if (!normalized.includes('://')) return normalized.replace(/^github\.com\//i, '').toLowerCase();
   const url = new URL(normalized);
   return url.pathname.replace(/^\//, '').toLowerCase();
 }
