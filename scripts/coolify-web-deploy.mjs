@@ -73,17 +73,30 @@ async function waitForDeployment(config, deploymentUuid, fetcher, sleep) {
     const status = String(deployment.status ?? '').toLowerCase();
     if (SUCCESS.has(status)) return;
     if (FAILURE.has(status)) {
-      throw new Error(`Coolify web deployment ended with status ${status}${deploymentLogSummary(deployment.logs)}`);
+      const runtime = await optionalRequest(config, fetcher,
+        `applications/${config.applicationUuid}/logs?lines=100`);
+      const details = deploymentLogSummary(deployment.logs) || deploymentLogSummary(runtime?.logs);
+      throw new Error(`Coolify web deployment ended with status ${status}${details}`);
     }
     await sleep(POLL_INTERVAL_MS);
   }
   throw new Error('Coolify web deployment exceeded its timeout');
 }
 
+/** Reads optional diagnostics without replacing the original deployment failure. */
+async function optionalRequest(config, fetcher, path) {
+  try {
+    return await request(config, fetcher, path);
+  } catch {
+    return undefined;
+  }
+}
+
 /** Redacts common credential shapes before exposing the useful tail of a private deployment log. */
 function deploymentLogSummary(value) {
-  if (typeof value !== 'string' || value.trim() === '') return '';
-  const clean = value.replace(/\x1B\[[0-?]*[ -\/]*[@-~]/g, '')
+  const serialized = typeof value === 'string' ? value : value == null ? '' : JSON.stringify(value);
+  if (serialized.trim() === '') return '';
+  const clean = serialized.replace(/\x1B\[[0-?]*[ -\/]*[@-~]/g, '')
     .replace(/(authorization:\s*bearer\s+)\S+/gi, '$1[redacted]')
     .replace(/((?:token|password|secret)\s*[=:]\s*)\S+/gi, '$1[redacted]')
     .replace(/(https?:\/\/)[^\s/@:]+:[^\s/@]+@/gi, '$1[redacted]@');
