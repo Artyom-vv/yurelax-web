@@ -4,6 +4,7 @@ import {ProfileContentComponent} from "./components/profile-content/profile-cont
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'games', redirectTo: '/platform/games', pathMatch: 'full'},
   {
     path: 'home',
     component: ProfileContentComponent,
