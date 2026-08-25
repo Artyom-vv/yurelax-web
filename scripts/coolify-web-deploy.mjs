@@ -9,16 +9,21 @@ const REQUEST_TIMEOUT_MS = 15_000;
 const DEPLOYMENT_TIMEOUT_MS = 900_000;
 const POLL_INTERVAL_MS = 5_000;
 const RELEASE_ENVIRONMENT = 'WEB_RELEASE_SHA';
+const ACTIONS = new Set(['publish', 'reconcile', 'rollback']);
 
 /** Publishes one immutable web revision or the last successful predecessor. */
 export async function deployWeb(action, environment = process.env, fetcher = fetch, sleep = delay) {
+  if (!ACTIONS.has(action)) throw new Error('Unknown web release operation');
   const baseConfig = deploymentConfig(environment);
   const applications = await request(baseConfig, fetcher, 'applications');
   const application = selectApplication(baseConfig, applications);
   const config = {...baseConfig, applicationUuid: application.uuid,
     productionUrl: primaryApplicationUrl(application.fqdn)};
-  const target = action === 'publish'
-    ? config.releaseSha
+  if (action === 'reconcile' && application.git_commit_sha === config.releaseSha) {
+    await verifyHealth(config.productionUrl, config.releaseSha, fetcher);
+    return {deploymentUuid: null, revision: config.releaseSha, skipped: true};
+  }
+  const target = action !== 'rollback' ? config.releaseSha
     : await previousRevision(config, application.git_commit_sha, fetcher);
   await pinRuntimeRevision(config, target, fetcher);
   await request(config, fetcher, `applications/${config.applicationUuid}`, {
@@ -34,7 +39,7 @@ export async function deployWeb(action, environment = process.env, fetcher = fet
   if (deployments.length !== 1) throw new Error(`Coolify returned ${deployments.length} web deployment identities`);
   await waitForDeployment(config, deployments[0], fetcher, sleep);
   await verifyHealth(config.productionUrl, target, fetcher);
-  return {deploymentUuid: deployments[0], revision: target};
+  return {deploymentUuid: deployments[0], revision: target, skipped: false};
 }
 
 /** Makes the selected immutable revision observable from the running health endpoint. */
@@ -153,7 +158,10 @@ function delay(milliseconds) { return new Promise((resolve) => setTimeout(resolv
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   const action = process.argv[2];
-  if (!['publish', 'rollback'].includes(action)) throw new Error('Usage: coolify-web-deploy.mjs <publish|rollback>');
+  if (!ACTIONS.has(action)) {
+    throw new Error('Usage: coolify-web-deploy.mjs <publish|reconcile|rollback>');
+  }
   const result = await deployWeb(action);
-  console.info(`${action === 'publish' ? 'Published' : 'Rolled back'} yurelax-web to ${result.revision}`);
+  const verb = result.skipped ? 'Already running' : action === 'rollback' ? 'Rolled back' : 'Published';
+  console.info(`${verb} yurelax-web at ${result.revision}`);
 }

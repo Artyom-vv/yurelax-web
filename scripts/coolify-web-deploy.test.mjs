@@ -24,10 +24,20 @@ describe('web production deployment', () => {
       json({status: 'finished'}), json({status: 'ok', service: 'yurelax-web', revision: SHA_ONE}),
     ]);
     const result = await deployWeb('publish', ENVIRONMENT, fetcher, async () => {});
-    assert.deepEqual(result, {deploymentUuid: 'deployment-1', revision: SHA_ONE});
+    assert.deepEqual(result, {deploymentUuid: 'deployment-1', revision: SHA_ONE, skipped: false});
     const update = fetcher.calls[3];
     assert.equal(update.options.method, 'PATCH');
     assert.equal(JSON.parse(update.options.body).git_commit_sha, SHA_ONE);
+  });
+
+  it('does not redeploy an already healthy reconciled revision', async () => {
+    const fetcher = sequence([
+      json([{...APPLICATION, git_commit_sha: SHA_ONE}]),
+      json({status: 'ok', service: 'yurelax-web', revision: SHA_ONE}),
+    ]);
+    const result = await deployWeb('reconcile', ENVIRONMENT, fetcher, async () => {});
+    assert.deepEqual(result, {deploymentUuid: null, revision: SHA_ONE, skipped: true});
+    assert.equal(fetcher.calls.length, 2);
   });
 
   it('selects the latest successful revision other than current for rollback', async () => {
@@ -56,28 +66,20 @@ describe('web production deployment', () => {
       sequence([json([APPLICATION, {...APPLICATION, uuid: 'duplicate'}])]), async () => {}), /exactly one yurelax-web/);
   });
 
-  it('requires HTTPS and a full commit SHA', () => {
+  it('requires a known action, HTTPS and a full commit SHA', async () => {
+    await assert.rejects(() => deployWeb('destroy', ENVIRONMENT), /Unknown web release operation/);
     assert.throws(() => deploymentConfig({...ENVIRONMENT, WEB_RELEASE_SHA: 'master'}), /immutable Git commit/);
     assert.throws(() => deploymentConfig({...ENVIRONMENT, COOLIFY_API_URL: 'http:\/\/coolify.example.test'}), /must use HTTPS/);
   });
 });
 
 describe('web release repository contract', () => {
-  it('keeps publish and rollback manual runs restricted to master', async () => {
-    const publish = await fixture('../.github/workflows/web-publish.yml');
-    const rollback = await fixture('../.github/workflows/web-rollback.yml');
-    for (const workflow of [publish, rollback]) {
-      assert.match(workflow, /workflow_dispatch:/);
-      assert.match(workflow, /if: github\.ref == 'refs\/heads\/master'/);
-      assert.match(workflow, /group: web-production/);
-      assert.match(workflow,
-        /uses: Artyom-vv\/yurelax-platform\/\.github\/workflows\/web-release\.yaml@[a-f0-9]{40}/);
-      assert.doesNotMatch(workflow, /workflow_dispatch:\s*\n\s+inputs:/);
+  it('keeps production credentials outside the public web repository', async () => {
+    const workflows = await Promise.all(['../.github/workflows/ci.yml'].map(fixture));
+    for (const workflow of workflows) {
       assert.doesNotMatch(workflow, /COOLIFY_API_TOKEN|secrets:/);
+      assert.doesNotMatch(workflow, /yurelax-platform\/\.github\/workflows/);
     }
-    assert.match(publish, /branches: \[master\]/);
-    assert.match(publish, /action: publish/);
-    assert.match(rollback, /action: rollback/);
   });
 
   it('runs an immutable non-root image with semantic health verification', async () => {
