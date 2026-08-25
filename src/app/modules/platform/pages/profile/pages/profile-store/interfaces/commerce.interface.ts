@@ -63,6 +63,7 @@ export interface CommercePurchaseResult {
     id: string;
     offerCode: string;
     productCode: string;
+    productName: string;
     quantity: number;
     currencyCode: string;
     totalPrice: string;
@@ -77,6 +78,7 @@ export interface CommercePurchase {
   id: string;
   offerCode: string;
   productCode: string;
+  productName: string;
   quantity: number;
   currencyCode: string;
   unitPrice: string;
