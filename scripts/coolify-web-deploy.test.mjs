@@ -56,7 +56,8 @@ describe('web production deployment', () => {
       json([{uuid: 'server-uuid', name: 'production', settings: {is_usable: true, is_reachable: true}}]),
       json([{uuid: 'other-destination', name: 'isolated', server_uuid: 'server-uuid'},
         {uuid: 'destination-uuid', name: 'coolify', server_uuid: 'server-uuid'}]),
-      json({uuid: 'created-web'}, 201), json({...APPLICATION, uuid: 'created-web', git_commit_sha: SHA_TWO}),
+      json({uuid: 'created-web'}, 201), json({...APPLICATION, uuid: 'created-web',
+        fqdn: 'http://generated.example.test', git_commit_sha: SHA_TWO}),
       json([]), json({message: 'created'}, 201), json({message: 'updated'}),
       json({deployments: [{deployment_uuid: 'deployment-created'}]}),
       json({status: 'finished'}), json({status: 'ok', service: 'yurelax-web', revision: SHA_ONE}),
@@ -71,9 +72,11 @@ describe('web production deployment', () => {
       git_repository: 'https://github.com/Artyom-vv/yurelax-web.git', git_branch: 'master',
       git_commit_sha: SHA_ONE, name: 'yurelax-web', description: 'Yurelax player cabinet and admin',
       build_pack: 'dockerfile', dockerfile_location: '/Dockerfile', ports_exposes: '4000',
-      is_auto_deploy_enabled: false, health_check_enabled: true, health_check_path: '/health',
+      is_auto_deploy_enabled: false, is_force_https_enabled: true,
+      health_check_enabled: true, health_check_path: '/health',
       health_check_port: '4000', autogenerate_domain: true, instant_deploy: false,
     });
+    assert.equal(fetcher.calls.at(-1).url, 'https://generated.example.test/health');
   });
 
   it('does not provision into an ambiguous production server', async () => {
