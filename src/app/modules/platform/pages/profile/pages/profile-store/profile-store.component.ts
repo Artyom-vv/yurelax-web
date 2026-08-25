@@ -1,6 +1,6 @@
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {catchError, finalize, of, tap} from 'rxjs';
-import {CommerceEligibilityReason, CommerceOffer} from './interfaces/commerce.interface';
+import {catchError, finalize, forkJoin, of, tap} from 'rxjs';
+import {CommerceEligibilityReason, CommerceOffer, PlayerWalletBalance} from './interfaces/commerce.interface';
 import {SubscriptionPurchaseRequest, SubscriptionRes} from './interfaces/subscription.interface';
 import {PlatformCommerceService} from './services/platform-commerce.service';
 
@@ -69,9 +69,10 @@ export class ProfileStoreComponent implements OnInit {
 
   private loadStorefront(showLoading = true): void {
     if (showLoading) this.loading = true;
-    this.commerce.storefront().pipe(
+    forkJoin({storefront: this.commerce.storefront(), wallets: this.commerce.wallets()}).pipe(
       tap(response => {
-        this.subscriptions = response.items.map((offer, index) => this.card(offer, index));
+        const wallets = new Map(response.wallets.items.map(wallet => [wallet.currencyCode, wallet]));
+        this.subscriptions = response.storefront.items.map((offer, index) => this.card(offer, index, wallets));
         this.step = Math.min(this.step, Math.max(0, this.totalSubscriptions - this.subscriptionsPerPage));
         this.updateIndexes();
       }),
@@ -88,7 +89,7 @@ export class ProfileStoreComponent implements OnInit {
     this.indexes = Array.from({length: visible}, (_, index) => this.step + index);
   }
 
-  private card(offer: CommerceOffer, index: number): SubscriptionRes {
+  private card(offer: CommerceOffer, index: number, wallets: Map<string, PlayerWalletBalance>): SubscriptionRes {
     const theme = CARD_THEMES[index % CARD_THEMES.length];
     const eligibility = offer.eligibility ?? {eligible: true, reasons: []};
     return {
@@ -96,7 +97,14 @@ export class ProfileStoreComponent implements OnInit {
       offerCode: offer.code,
       productCode: offer.productCode,
       gameCode: offer.gameCode,
-      prices: offer.prices,
+      prices: offer.prices.map(price => {
+        const wallet = wallets.get(price.currencyCode);
+        return {
+          ...price,
+          available: wallet?.available ?? null,
+          canAfford: wallet ? this.canAfford(wallet.available, price.amount) : null,
+        };
+      }),
       color: theme.color,
       decorationFirst: `assets/content/blocks/${theme.blocks[0]}`,
       decorationSecond: `assets/content/blocks/${theme.blocks[1]}`,
@@ -110,6 +118,14 @@ export class ProfileStoreComponent implements OnInit {
         return `${grant.capabilityName} — ${grant.capabilityDescription} · ${scope} · ${delivery}`;
       })
     };
+  }
+
+  private canAfford(available: string, price: string): boolean {
+    try {
+      return BigInt(available) >= BigInt(price);
+    } catch {
+      return false;
+    }
   }
 
   private reason(reason: CommerceEligibilityReason): string {

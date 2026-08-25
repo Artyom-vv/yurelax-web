@@ -7,7 +7,7 @@ export interface SubscriptionRes {
   decorationFirst: string
   decorationSecond: string
   decorationThird: string
-  prices: {currencyCode: string; amount: string}[]
+  prices: {currencyCode: string; amount: string; available: string | null; canAfford: boolean | null}[]
   information: SubscriptionText[][]
   name: string
   color: string

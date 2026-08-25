@@ -14,15 +14,26 @@ export class SubscriptionComponent {
   @Output() purchase = new EventEmitter<SubscriptionPurchaseRequest>();
   public selectedPrice = 0;
   public detailsVisible = false;
+  public confirmationVisible = false;
 
   selectPrice(index: number): void {
     this.selectedPrice = index;
+    this.confirmationVisible = false;
   }
 
   buy(): void {
     const price = this.data.prices[this.selectedPrice];
-    if (!price || !this.data.eligible || this.loading) return;
+    if (!price || !this.data.eligible || price.canAfford === false || this.loading) return;
+    if (!this.confirmationVisible) {
+      this.confirmationVisible = true;
+      return;
+    }
     this.purchase.emit({offerCode: this.data.offerCode, currencyCode: price.currencyCode});
+    this.confirmationVisible = false;
+  }
+
+  cancelPurchase(): void {
+    this.confirmationVisible = false;
   }
 
   getClasses(item: any): {[key: string]: boolean} {

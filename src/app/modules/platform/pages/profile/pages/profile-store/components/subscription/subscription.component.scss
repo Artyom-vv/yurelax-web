@@ -52,12 +52,31 @@ h4 {
   border-radius: 7px;
   cursor: pointer;
   text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  small {
+    color: map-get($project-colors, "gradation", 400);
+  }
+
+  .price_insufficient {
+    color: #f0b6b8;
+  }
 
   &_selected {
     color: map-get($project-colors, "gradation", 100);
     border-color: rgba(150, 194, 238, 0.75);
     background: rgba(150, 194, 238, 0.08);
   }
+}
+
+.purchase-confirmation {
+  padding: 12px;
+  border: 1px solid rgba(255, 208, 113, 0.28);
+  border-radius: 8px;
+  background: rgba(255, 208, 113, 0.06);
 }
 
 .additional-information {
