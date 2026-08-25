@@ -32,6 +32,24 @@ export interface CreatePlatformStatDefinition {
   allowNegative: boolean;
 }
 
+export interface PlayerStatisticValue {
+  statCode: string;
+  value: string | boolean;
+  aggregationKind: StatAggregationKind;
+  updatedAt: string;
+}
+
+export interface PlayerStatisticGroup {
+  gameCode: string | null;
+  gameName: string;
+  items: PlayerStatisticValue[];
+}
+
+export interface PlayerStatisticsOverview {
+  playerId: string;
+  groups: PlayerStatisticGroup[];
+}
+
 @Injectable()
 export class StatisticsService {
   constructor(
@@ -41,6 +59,11 @@ export class StatisticsService {
 
   list(): Observable<PlatformStatDefinitionPage> {
     return this.http.get<PlatformStatDefinitionPage>(`${environment.platformApiUrl}/admin/stat-definitions`);
+  }
+
+  /** Reads statistic groups bound to the current authenticated player. */
+  playerOverview(): Observable<PlayerStatisticsOverview> {
+    return this.http.get<PlayerStatisticsOverview>(`${environment.platformApiUrl}/me/statistics`);
   }
 
   /** Compatibility projection for existing game selectors while they migrate to contract codes. */

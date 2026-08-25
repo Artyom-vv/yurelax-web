@@ -18,6 +18,21 @@
   text-align: right;
 }
 
+.statistic-key {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statistic-state {
+  padding: 22px 24px;
+  background-color: rgba(25, 30, 36, .72);
+}
+
+.statistic-state_error {
+  color: #ff6b75;
+}
+
 .statistic-note {
   display: flex;
   align-items: center;
