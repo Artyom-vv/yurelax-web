@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 
 @Component({
     selector: 'yrx-voting-banner',
@@ -8,5 +8,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
     standalone: false
 })
 export class VotingBannerComponent {
-
+  @Input() title = '';
+  @Input() description = '';
+  @Input() icon = 'trophy';
 }

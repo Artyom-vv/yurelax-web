@@ -19,8 +19,12 @@
   <yrx-spacing type="XS"></yrx-spacing>
   <yrx-rating-table [columns]="columns" [data]="tableData"></yrx-rating-table>
   <yrx-spacing type="XS"></yrx-spacing>
-  @if (tableData?.values?.length === 0) {
-    <p class="text text_body regular c-gradation-300">Поспешите и займите топ первым! </p>
+  @if (dataLoading) {
+    <div class="leaderboard-state"><yrx-icon icon="loader"></yrx-icon><span>Обновляем рейтинг игроков…</span></div>
+  } @else if (unavailable) {
+    <div class="leaderboard-state"><yrx-icon [stroked]="true" icon="alert-triangle"></yrx-icon><span>Таблица сохранена. Результаты появятся после подключения рейтинга к платформенным контрактам.</span></div>
+  } @else if (tableData.values.length === 0) {
+    <div class="leaderboard-state"><yrx-icon [stroked]="true" icon="trophy"></yrx-icon><span>В этом рейтинге пока нет результатов — первое место свободно.</span></div>
   }
   <yrx-spacing type="L"></yrx-spacing>
 </div>

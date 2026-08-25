@@ -8,6 +8,8 @@ import {IconDirective} from "../../../../../directives/icon.directive";
         {
             directive: BaseInputDirective,
             inputs: [
+                'disabled',
+                'size',
                 'suffix',
                 'placeholder'
             ]

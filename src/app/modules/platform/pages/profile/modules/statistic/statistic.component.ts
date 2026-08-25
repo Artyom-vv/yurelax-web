@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {OptionInterface} from "../../../../../shared/modules/select/interfaces/option.interface";
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Subscription, tap} from "rxjs";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'yrx-statistic',
@@ -23,11 +23,20 @@ export class StatisticComponent implements OnInit, OnDestroy {
     {text: 'Stay Alive статистика', value: 3, icon: 'shield', iconStroked: true},
     {text: 'Tower Defence статистика', value: 4, icon: 'boxes', iconStroked: true},
   ]
-  public statistics: any[] = [1,2,3,4,5,6]
+  public readonly statistics: Record<number, string[]> = {
+    1: ['Сыграно игр', 'Побед', 'Времени в игре', 'Получено опыта'],
+    2: ['Сыграно матчей', 'Побед', 'Убийств', 'Нанесено урона', 'Получено опыта'],
+    3: ['Сыграно матчей', 'Лучшее время', 'Побед', 'Получено опыта'],
+    4: ['Сыграно матчей', 'Отражено волн', 'Построено башен', 'Получено опыта'],
+  };
 
   private subscriptions: Subscription[] = []
 
-  public form!: FormGroup
+  public form!: FormGroup;
+
+  public get visibleStatistics(): string[] {
+    return this.statistics[this.form?.get('statisticType')?.value ?? 1] ?? [];
+  }
 
   ngOnInit() {
     this.initForms()
@@ -41,12 +50,5 @@ export class StatisticComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       statisticType: [1, [Validators.required]]
     })
-    this.subscriptions.push(
-      this.form.valueChanges.pipe(
-        tap((value) => {
-          console.log(value)
-        })
-      ).subscribe()
-    )
   }
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RewardsComponent } from './rewards.component';
 import {SpacingModule} from "../../../../../shared/modules/spacing/spacing.module";
 import { RewardsWrapperComponent } from './components/rewards-wrapper/rewards-wrapper.component';
+import {IconModule} from "../../../../../shared/modules/icon/icon.module";
 
 
 
@@ -16,7 +17,8 @@ import { RewardsWrapperComponent } from './components/rewards-wrapper/rewards-wr
     ],
   imports: [
     CommonModule,
-    SpacingModule
+    SpacingModule,
+    IconModule
   ]
 })
 export class RewardsModule { }

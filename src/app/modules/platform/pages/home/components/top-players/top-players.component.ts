@@ -30,14 +30,15 @@ export class TopPlayersComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = []
 
-  public columns: IRatingTableColumn[] = []
-  public tableData!: RatingTableInterface
+  public columns: IRatingTableColumn[] = [{key: 'result', text: 'Результат'}]
+  public tableData: RatingTableInterface = {filteredByKey: 'result', values: []}
   public currentMonth: number = new Date().getMonth() + 1
   public month: string = ''
   public miniGames: MiniGameResponseInterface[] = []
   public miniGameKey: string = ''
   public miniGameLoadingKey: string | null = null
   public dataLoading: boolean = false;
+  public unavailable = false;
 
   ngOnInit() {
     this.month = this.getMonthString()
@@ -50,7 +51,11 @@ export class TopPlayersComponent implements OnInit, OnDestroy {
         }),
         finalize(() => {
           this.dataLoading = false;
-        })
+        }),
+        catchError(() => {
+          this.unavailable = true;
+          return EMPTY;
+        }),
       ).subscribe()
     )
 
@@ -93,6 +98,7 @@ export class TopPlayersComponent implements OnInit, OnDestroy {
 
   public selectTab(game: MiniGameResponseInterface) {
     this.dataLoading = true;
+    this.unavailable = false;
     this.miniGameKey = game.miniGameKey
     this.miniGameLoadingKey = game.miniGameKey
     this.userStatisticsService.getTopPlayers({
@@ -126,8 +132,9 @@ export class TopPlayersComponent implements OnInit, OnDestroy {
         this.dataLoading = false;
       }),
       catchError((err) => {
-        this._snackBar.open(err.error.message, "Закрыть")
-        throw Error(err)
+        this.unavailable = true;
+        this._snackBar.open(err?.error?.message ?? 'Рейтинг временно недоступен', "Закрыть")
+        return EMPTY;
       })
     ).subscribe()
   }

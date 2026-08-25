@@ -4,7 +4,15 @@ import {BaseInputDirective} from "../../../directives/base-input.directive";
 @Directive({
     selector: '[yrxTextArea]',
     hostDirectives: [
-        BaseInputDirective
+        {
+            directive: BaseInputDirective,
+            inputs: [
+                'disabled',
+                'size',
+                'suffix',
+                'placeholder'
+            ]
+        }
     ],
     standalone: false
 })
