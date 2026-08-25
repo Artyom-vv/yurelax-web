@@ -41,6 +41,10 @@ const routes: Routes = [
         loadChildren: () => import('../admin/module/finance/admin-finance.module').then(m => m.AdminFinanceModule)
       },
       {
+        path: 'quarantine', component: AdminContentComponent, title: 'Дешборд — Карантин событий',
+        loadChildren: () => import('../admin/module/quarantine/admin-quarantine.module').then(m => m.AdminQuarantineModule)
+      },
+      {
         path: 'mini-games',
         component: AdminContentComponent,
         title: 'Дешборд — Контент режимов',
