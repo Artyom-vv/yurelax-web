@@ -89,7 +89,8 @@ export interface PublishCommerceGrant {
   gameCode: string | null;
   deliveryMode: CommerceDeliveryMode;
   ownershipPolicy: CommerceOwnershipPolicy;
-  lifetime: {kind: 'PERMANENT'} | {kind: 'FIXED_DURATION'; durationSeconds: number};
+  lifetime: {kind: 'PERMANENT'} | {kind: 'FIXED_DURATION'; durationSeconds: number}
+    | {kind: 'FIXED_WINDOW'; startsAt: string; expiresAt: string};
   activationPolicy: null | {
     durationSeconds: number;
     lifetimeMaximumActivations: number | null;
@@ -108,6 +109,8 @@ export interface PublishCommerceProduct {
 }
 
 export type CommerceRequirement =
+  | {kind: 'ALL' | 'ANY'; items: CommerceRequirement[]}
+  | {kind: 'NOT'; item: CommerceRequirement}
   | {kind: 'PROGRESSION_LEVEL'; progressionCode: string; minimumLevel: number}
   | {kind: 'STAT_THRESHOLD'; statCode: string; gameCode: string | null; minimum: string}
   | {kind: 'GRANT_OWNED'; providerCode: string; grantKey: string; gameCode: string | null}

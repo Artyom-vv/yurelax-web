@@ -15,13 +15,15 @@
 .editor-card { border: 1px solid map-get($project-colors, "gradation", 600); }
 .section-heading { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; margin-bottom: 28px; }
 .section-number { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; color: map-get($project-colors, "purple", 100); background: map-get($project-colors, "purple", 500); font-weight: 700; }
-.editor-form, .grant-editors, .price-editors, .catalog-list { display: flex; flex-direction: column; gap: 16px; }
+.editor-form, .grant-editors, .price-editors, .requirement-editors, .catalog-list { display: flex; flex-direction: column; gap: 16px; }
 .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .form-grid_product { grid-template-columns: 2fr 2fr .65fr 1.4fr; }
 .field { display: flex; min-width: 0; flex-direction: column; gap: 7px; color: map-get($project-colors, "gradation", 300); font: 500 13px/1.2 $second_font; }
 .field .box, .field input, .field select, .field textarea { width: 100%; }
 .editor-textarea { min-height: 92px; padding-top: 13px; resize: vertical; }
 .grant-editor { display: flex; flex-direction: column; gap: 18px; min-width: 0; margin: 0; padding: 20px; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 12px; background: map-get($project-colors, "gradation", 750); }
+.requirement-editor { display: flex; flex-direction: column; gap: 14px; min-width: 0; margin: 0; padding: 16px; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 10px; background: map-get($project-colors, "gradation", 750); }
+.requirement-editor > .form-grid:first-of-type { align-items: end; }
 .grant-editor legend { display: none; }
 .capability-card { display: grid; gap: 14px; padding: 16px; border: 1px solid map-get($project-colors, "purple", 500); border-radius: 10px; background: rgba(map-get($project-colors, "purple", 500), .08); }
 .capability-card strong { color: map-get($project-colors, "gradation", 100); }
