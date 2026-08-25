@@ -8,7 +8,7 @@
 .contract-directory span { padding: 6px 9px; border-radius: 7px; color: map-get($project-colors, "gradation", 300); background: map-get($project-colors, "gradation", 700); font: 500 12px/1.2 $second_font; }
 .contract-directory strong { color: map-get($project-colors, "gradation", 100); }
 .contract-directory small { margin-left: auto; color: map-get($project-colors, "gradation", 400); font: 400 12px/1.3 $second_font; }
-.editor-card, .catalog-toolbar { @include colored-box; }
+.editor-card, .catalog-toolbar, .operations-card { @include colored-box; }
 .editor-card { border: 1px solid map-get($project-colors, "gradation", 600); }
 .section-heading { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; margin-bottom: 28px; }
 .section-number { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; color: map-get($project-colors, "purple", 100); background: map-get($project-colors, "purple", 500); font-weight: 700; }
@@ -70,5 +70,12 @@ code { color: map-get($project-colors, "purple", 200); font: 500 12px/1.4 $secon
 .empty-state { padding: 36px 20px; border: 1px dashed map-get($project-colors, "gradation", 600); border-radius: 12px; text-align: center; color: map-get($project-colors, "gradation", 300); }
 .empty-state span { display: block; margin-top: 4px; color: map-get($project-colors, "gradation", 500); font-size: 13px; }
 
-@media (max-width: 1100px) { .catalog-columns, .form-grid_product { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 760px) { .page-actions, .editor-actions, .catalog-toolbar { align-items: stretch; flex-direction: column; } .page-actions yrx-button, .editor-actions yrx-button { width: 100%; } .catalog-columns, .form-grid, .form-grid_product, .filters, .subsection, .price-editor, .capability-card dl, .capability-card_compact { grid-template-columns: 1fr; } .section-heading { grid-template-columns: 36px 1fr; } .section-number { width: 36px; height: 36px; } }
+.operations-card { padding-top: 20px; padding-bottom: 20px; }
+.operations-heading { display: grid; grid-template-columns: minmax(260px, .8fr) minmax(520px, 1.2fr); align-items: end; gap: 28px; }
+.operations-heading h4 { margin: 4px 0 5px; }
+.operations-heading .eyebrow { color: map-get($project-colors, "purple", 200); font: 600 11px/1.2 $second_font; letter-spacing: .08em; }
+.operations-filters { display: grid; grid-template-columns: 1fr 1fr auto; align-items: end; gap: 10px; }
+.operations-filters yrx-button { align-self: end; }
+
+@media (max-width: 1100px) { .catalog-columns, .form-grid_product, .operations-heading { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 760px) { .page-actions, .editor-actions, .catalog-toolbar { align-items: stretch; flex-direction: column; } .page-actions yrx-button, .editor-actions yrx-button { width: 100%; } .catalog-columns, .form-grid, .form-grid_product, .filters, .subsection, .price-editor, .capability-card dl, .capability-card_compact, .operations-heading, .operations-filters { grid-template-columns: 1fr; } .section-heading { grid-template-columns: 36px 1fr; } .section-number { width: 36px; height: 36px; } }

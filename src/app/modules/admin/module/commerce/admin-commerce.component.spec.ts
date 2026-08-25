@@ -54,14 +54,31 @@ describe('AdminCommerceComponent', () => {
     ]}));
   });
 
+  it('loads provider delivery health when the operator opens fulfillment control', () => {
+    const {component, commerce} = fixture();
+
+    component.open('operations');
+
+    expect(commerce.fulfillments).toHaveBeenCalledWith('hunt', undefined);
+    expect(component.fulfillmentData?.health).toEqual(expect.objectContaining({
+      providerCode: 'hunt', state: 'STALLED', outstanding: 2,
+    }));
+  });
+
   function fixture() {
     const commerce = {
       publishProduct: vi.fn().mockReturnValue(of({productCode: 'global.season-pass', version: 1})),
       publishOffer: vi.fn().mockReturnValue(of({code: 'hunt.archer.gems', version: 1})),
+      fulfillments: vi.fn().mockReturnValue(of({items: [], health: {
+        providerCode: 'hunt', state: 'STALLED', pending: 2, claimed: 0, failed: 0, fulfilled: 1,
+        outstanding: 2, stale: 2, maximumAttempts: 3, oldestOutstandingAt: '2026-08-25T00:00:00.000Z',
+        oldestOutstandingAgeSeconds: 600,
+      }})),
     };
     const snackBar = {open: vi.fn()};
     const component = new AdminCommerceComponent(commerce as any, snackBar as any, new FormBuilder());
     component.references.capabilities = [capability];
+    component.references.providers = [{id: 'provider-1', code: 'hunt', active: true}];
     return {component, commerce};
   }
 });

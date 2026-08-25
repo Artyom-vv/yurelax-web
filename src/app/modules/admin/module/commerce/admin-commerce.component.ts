@@ -7,6 +7,8 @@ import {
   AdminCommerceProductRevision,
   AdminCommerceReferences,
   AdminCommerceService,
+  CommerceFulfillmentInspectionResult,
+  CommerceFulfillmentStatus,
   CommerceCapabilityReference,
   CommerceRequirement,
   PublishCommerceGrant,
@@ -26,7 +28,7 @@ const POSITIVE_DECIMAL = /^(?:0|[1-9][0-9]*)(?:\.[0-9]+)?$/;
   standalone: false,
 })
 export class AdminCommerceComponent implements OnInit {
-  public view: 'catalog' | 'product' | 'offer' = 'catalog';
+  public view: 'catalog' | 'product' | 'offer' | 'operations' = 'catalog';
   public products: AdminCommerceProductRevision[] = [];
   public offers: AdminCommerceOfferRevision[] = [];
   public references: AdminCommerceReferences = {
@@ -34,6 +36,10 @@ export class AdminCommerceComponent implements OnInit {
   };
   public productCode = '';
   public offerCode = '';
+  public fulfillmentProvider = '';
+  public fulfillmentStatus: CommerceFulfillmentStatus | '' = '';
+  public fulfillmentData: CommerceFulfillmentInspectionResult | null = null;
+  public fulfillmentLoading = false;
   public loading = true;
   public mutating = false;
   public readonly productForm: FormGroup;
@@ -87,11 +93,34 @@ export class AdminCommerceComponent implements OnInit {
     if (this.requirements.length === 0) this.offerForm.patchValue({requirementMode: 'NONE'});
   }
 
-  public open(view: 'catalog' | 'product' | 'offer'): void {
+  public open(view: 'catalog' | 'product' | 'offer' | 'operations'): void {
     this.view = view;
     if (view === 'offer' && !this.offerForm.get('productRevision')?.value && this.products.length > 0) {
       this.offerForm.patchValue({productRevision: this.productRevisionValue(this.products[0])});
     }
+    if (view === 'operations') {
+      this.fulfillmentProvider ||= this.references.providers.find(provider => provider.active)?.code ?? '';
+      this.loadFulfillments();
+    }
+  }
+
+  public loadFulfillments(): void {
+    if (!this.fulfillmentProvider) {
+      this.fulfillmentData = null;
+      return;
+    }
+    this.fulfillmentLoading = true;
+    this.commerce.fulfillments(
+      this.fulfillmentProvider,
+      this.fulfillmentStatus || undefined,
+    ).pipe(
+      tap(result => this.fulfillmentData = result),
+      catchError(error => {
+        this.fulfillmentData = null;
+        return this.failure(error, 'Не удалось загрузить состояние выдачи товаров');
+      }),
+      finalize(() => this.fulfillmentLoading = false),
+    ).subscribe();
   }
 
   public load(): void {
@@ -105,6 +134,9 @@ export class AdminCommerceComponent implements OnInit {
         this.products = result.products.items;
         this.offers = result.offers.items;
         this.references = result.references;
+        if (!this.fulfillmentProvider) {
+          this.fulfillmentProvider = result.references.providers.find(provider => provider.active)?.code ?? '';
+        }
       }),
       catchError(error => this.failure(error, 'Не удалось загрузить commerce-каталог')),
       finalize(() => this.loading = false),

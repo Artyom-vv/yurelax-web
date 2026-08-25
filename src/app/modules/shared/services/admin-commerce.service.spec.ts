@@ -36,6 +36,15 @@ describe('AdminCommerceService', () => {
     offers.flush({items: [], page: {nextCursor: null, hasMore: false}});
   });
 
+  it('inspects one explicit provider delivery queue without mutation credentials', () => {
+    service.fulfillments('hunt', 'FAILED').subscribe();
+    const request = http.expectOne('/api/admin/commerce/fulfillments?providerCode=hunt&limit=50&status=FAILED');
+    expect(request.request.method).toBe('GET');
+    expect(request.request.headers.has('x-csrf-token')).toBe(false);
+    expect(request.request.headers.has('idempotency-key')).toBe(false);
+    request.flush({items: [], health: {providerCode: 'hunt', state: 'HEALTHY'}});
+  });
+
   it('publishes and retires only through CSRF-protected allow-listed routes', () => {
     service.publishProduct({
       code: 'hunt.class.archer', name: 'Лучник', description: 'Доступ к классу', version: 1,

@@ -1,0 +1,103 @@
+@import "src/shared/styles/vars.colors";
+
+:host { display: block; }
+
+.health {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.15fr) minmax(420px, 1fr);
+  align-items: center;
+  gap: 28px;
+  padding: 22px;
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  border-radius: 12px;
+  background: map-get($project-colors, "gradation", 750);
+}
+
+.health__copy {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr);
+  align-items: start;
+  gap: 14px;
+}
+
+.health__signal {
+  width: 10px;
+  height: 10px;
+  margin-top: 7px;
+  border-radius: 50%;
+  background: map-get($project-colors, "green", 300);
+  box-shadow: 0 0 0 5px rgba(map-get($project-colors, "green", 300), .1);
+}
+
+.health[data-state="DEGRADED"] .health__signal { background: map-get($project-colors, "yellow", 200); box-shadow: 0 0 0 5px rgba(map-get($project-colors, "yellow", 200), .1); }
+.health[data-state="STALLED"] .health__signal { background: map-get($project-colors, "red", 200); box-shadow: 0 0 0 5px rgba(map-get($project-colors, "red", 200), .1); }
+.health h4 { margin: 3px 0 5px; }
+.eyebrow { color: map-get($project-colors, "purple", 200); font: 600 11px/1.2 $second_font; letter-spacing: .08em; }
+
+.health__metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.health__metrics div {
+  min-width: 0;
+  padding: 12px;
+  border-radius: 9px;
+  background: map-get($project-colors, "gradation", 700);
+}
+
+.health__metrics strong,
+.health__metrics span { display: block; }
+.health__metrics strong { color: map-get($project-colors, "gradation", 100); font: 600 17px/1.2 $second_font; }
+.health__metrics span { margin-top: 4px; color: map-get($project-colors, "gradation", 400); font: 500 10px/1.3 $second_font; }
+
+.queue-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 26px 0 12px;
+}
+
+.queue-heading span {
+  display: grid;
+  place-items: center;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 8px;
+  border-radius: 8px;
+  color: map-get($project-colors, "gradation", 300);
+  background: map-get($project-colors, "gradation", 600);
+  font-size: 12px;
+}
+
+.tasks { display: grid; gap: 10px; }
+.task { display: grid; grid-template-columns: minmax(220px, .8fr) minmax(400px, 1.2fr); gap: 18px 28px; padding: 18px; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 12px; background: map-get($project-colors, "gradation", 750); }
+.task_stale { border-color: rgba(242, 138, 142, .45); }
+.task__primary { min-width: 0; }
+.task__primary h5 { margin: 8px 0 4px; overflow-wrap: anywhere; }
+.status, .stale { display: inline-block; margin-right: 6px; padding: 4px 7px; border-radius: 6px; font: 600 10px/1.2 $second_font; }
+.status { color: map-get($project-colors, "purple", 200); background: map-get($project-colors, "purple", 600); }
+.status[data-status="FULFILLED"] { color: map-get($project-colors, "green", 200); background: map-get($project-colors, "green", 600); }
+.status[data-status="FAILED"], .stale { color: map-get($project-colors, "red", 200); background: map-get($project-colors, "red", 600); }
+.status[data-status="CLAIMED"] { color: map-get($project-colors, "yellow", 200); background: map-get($project-colors, "yellow", 600); }
+
+.task__facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.task__facts div { min-width: 0; padding: 10px; border-radius: 8px; background: map-get($project-colors, "gradation", 700); }
+.task__facts dt { color: map-get($project-colors, "gradation", 400); font: 500 10px/1.2 $second_font; text-transform: uppercase; }
+.task__facts dd { margin-top: 4px; color: map-get($project-colors, "gradation", 200); font: 500 11px/1.35 $second_font; overflow-wrap: anywhere; }
+.task__details { grid-column: 1 / -1; padding-top: 12px; border-top: 1px solid map-get($project-colors, "gradation", 600); }
+.task__details summary { color: map-get($project-colors, "purple", 200); cursor: pointer; font: 600 12px/1.3 $second_font; }
+.task__details div { display: grid; gap: 5px; margin-top: 10px; color: map-get($project-colors, "gradation", 300); font: 400 11px/1.45 $second_font; overflow-wrap: anywhere; }
+.empty-state { padding: 36px 20px; border: 1px dashed map-get($project-colors, "gradation", 600); border-radius: 12px; text-align: center; color: map-get($project-colors, "gradation", 300); }
+.empty-state strong, .empty-state span { display: block; }
+.empty-state span { margin-top: 5px; color: map-get($project-colors, "gradation", 500); font-size: 12px; }
+
+@media (max-width: 1040px) {
+  .health, .task { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .health__metrics, .task__facts { grid-template-columns: 1fr 1fr; }
+}

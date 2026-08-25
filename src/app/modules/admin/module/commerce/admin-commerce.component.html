@@ -2,6 +2,7 @@
   description="Управляйте тем, что получает игрок, отдельно от цены и условий продажи. Все изменения публикуются новыми версиями — история не затирается.">
   <div class="page-actions">
     @if (view === 'catalog') {
+      <yrx-button type="secondary" (press)="open('operations')">Контроль выдачи</yrx-button>
       <yrx-button type="secondary" (press)="open('product')">Новый товар</yrx-button>
       <yrx-button (press)="open('offer')">Новое предложение</yrx-button>
     } @else {
@@ -23,6 +24,51 @@
     <small>Выборы ниже загружены из платформенных контрактов</small>
   </div>
   <yrx-spacing type="S"></yrx-spacing>
+}
+
+@if (view === 'operations') {
+  <section class="operations-card">
+    <div class="operations-heading">
+      <div>
+        <p class="eyebrow">ИСПОЛНЕНИЕ ПОКУПОК</p>
+        <h4>Доставка товаров игрокам</h4>
+        <p class="text text_small c-gradation-300">Проверяйте, забирают ли игровые модули купленные товары и где возникла задержка.</p>
+      </div>
+      <div class="operations-filters">
+        <label class="field">
+          <span>Обработчик</span>
+          <div class="box box_input">
+            <select class="input_normal" [(ngModel)]="fulfillmentProvider">
+              @for (provider of references.providers; track provider.id) {
+                @if (provider.active) {<option [value]="provider.code">{{provider.code}}</option>}
+              }
+            </select>
+          </div>
+        </label>
+        <label class="field">
+          <span>Состояние задач</span>
+          <div class="box box_input">
+            <select class="input_normal" [(ngModel)]="fulfillmentStatus">
+              <option value="">Все состояния</option>
+              <option value="PENDING">Ожидают</option>
+              <option value="CLAIMED">В работе</option>
+              <option value="FULFILLED">Выданы</option>
+              <option value="FAILED">С ошибкой</option>
+            </select>
+          </div>
+        </label>
+        <yrx-button type="secondary" [loading]="fulfillmentLoading" (press)="loadFulfillments()">Обновить</yrx-button>
+      </div>
+    </div>
+  </section>
+  <yrx-spacing type="S"></yrx-spacing>
+  @if (!fulfillmentProvider) {
+    <div class="empty-state"><strong>Нет зарегистрированных обработчиков</strong><span>Сначала опубликуйте provider-контракт платформы.</span></div>
+  } @else if (fulfillmentLoading && !fulfillmentData) {
+    <yrx-admin-state title="Проверяем выдачу товаров" [loading]="true" [compact]="true"></yrx-admin-state>
+  } @else if (fulfillmentData) {
+    <yrx-commerce-fulfillment-board [data]="fulfillmentData"></yrx-commerce-fulfillment-board>
+  }
 }
 
 @if (view === 'product') {

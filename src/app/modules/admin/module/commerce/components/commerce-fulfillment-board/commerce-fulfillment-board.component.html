@@ -1,0 +1,59 @@
+<section class="health" [attr.data-state]="data.health.state">
+  <div class="health__copy">
+    <span class="health__signal" aria-hidden="true"></span>
+    <div>
+      <p class="eyebrow">СОСТОЯНИЕ ОБРАБОТЧИКА · {{data.health.providerCode}}</p>
+      <h4>{{healthLabel(data.health.state)}}</h4>
+      <p class="text text_small c-gradation-300">{{healthDescription(data.health.state)}}</p>
+    </div>
+  </div>
+  <div class="health__metrics">
+    <div><strong>{{data.health.outstanding}}</strong><span>ожидают выдачи</span></div>
+    <div><strong>{{data.health.stale}}</strong><span>просрочены</span></div>
+    <div><strong>{{data.health.maximumAttempts}}</strong><span>макс. попыток</span></div>
+    <div><strong>{{age(data.health.oldestOutstandingAgeSeconds)}}</strong><span>старейшая задача</span></div>
+  </div>
+</section>
+
+<div class="queue-heading">
+  <div><h4>Задачи выдачи</h4><p class="text text_small c-gradation-300">Без содержимого товара и секретов активного lease.</p></div>
+  <span>{{data.items.length}}</span>
+</div>
+
+@if (data.items.length === 0) {
+  <div class="empty-state">
+    <strong>Задач по выбранному фильтру нет</strong>
+    <span>Смените состояние или выберите другого обработчика.</span>
+  </div>
+} @else {
+  <div class="tasks">
+    @for (task of data.items; track task.id) {
+      <article class="task" [class.task_stale]="task.stale">
+        <div class="task__primary">
+          <div>
+            <span class="status" [attr.data-status]="task.status">{{statusLabel(task.status)}}</span>
+            @if (task.stale) {<span class="stale">Просрочено</span>}
+          </div>
+          <h5>{{taskTitle(task)}}</h5>
+          <p class="text text_small c-gradation-300">Игрок {{task.playerId}}</p>
+        </div>
+        <dl class="task__facts">
+          <div><dt>Возраст</dt><dd>{{age(task.ageSeconds)}}</dd></div>
+          <div><dt>Попытки</dt><dd>{{task.attempts}}</dd></div>
+          <div><dt>Обработчик</dt><dd>{{task.leaseOwner ?? 'ещё не забрал'}}</dd></div>
+          <div><dt>Lease до</dt><dd>{{task.leaseUntil ? (task.leaseUntil | date:'dd.MM.yyyy HH:mm:ss') : 'нет'}}</dd></div>
+        </dl>
+        <details class="task__details">
+          <summary>Подробности задачи</summary>
+          <div>
+            <span>Право: {{task.entitlementId}}</span>
+            <span>Задача: {{task.id}}</span>
+            <span>Обновлена: {{task.updatedAt | date:'dd.MM.yyyy HH:mm:ss'}}</span>
+            <span>Результат: {{task.resultReference ?? 'не сохранён'}}</span>
+            <span>Последняя ошибка: {{task.lastError ?? 'нет'}}</span>
+          </div>
+        </details>
+      </article>
+    }
+  </div>
+}
