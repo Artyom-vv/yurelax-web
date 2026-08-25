@@ -21,7 +21,7 @@ export class StatisticComponent implements OnInit, OnDestroy {
     {text: 'Общая статистика', value: 1, icon: 'box', iconStroked: true},
     {text: 'Hunt статистика', value: 2, icon: 'crosshair', iconStroked: true},
     {text: 'Stay Alive статистика', value: 3, icon: 'shield', iconStroked: true},
-    {text: 'Tower Defence статистика', value: 4, icon: 'boxes', iconStroked: true},
+    {text: 'Tower Defence статистика', value: 4, icon: 'codesandbox', iconStroked: true},
   ]
   public readonly statistics: Record<number, string[]> = {
     1: ['Сыграно игр', 'Побед', 'Времени в игре', 'Получено опыта'],
