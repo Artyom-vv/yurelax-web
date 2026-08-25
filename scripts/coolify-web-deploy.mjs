@@ -124,6 +124,7 @@ export function deploymentConfig(environment) {
     repository: environment.COOLIFY_WEB_REPOSITORY?.trim() || 'Artyom-vv/yurelax-web',
     projectName: environment.COOLIFY_WEB_PROJECT_NAME?.trim() || 'Yurelax',
     serverName: environment.COOLIFY_WEB_SERVER_NAME?.trim() || '',
+    destinationName: environment.COOLIFY_WEB_DESTINATION_NAME?.trim() || 'coolify',
     token: required(environment, 'COOLIFY_API_TOKEN'),
     coolifyApiUrl: secureUrl(required(environment, 'COOLIFY_API_URL'), 'COOLIFY_API_URL'),
   };
@@ -157,9 +158,13 @@ async function provisionApplication(config, fetcher) {
   const usableServers = servers.filter((server) => server.settings?.is_usable !== false
     && server.settings?.is_reachable !== false && server.settings?.is_build_server !== true);
   const server = uniqueNamedResource(usableServers, config.serverName, 'server');
+  const destinations = await request(config, fetcher, 'destinations');
+  const serverDestinations = destinations.filter((destination) => destination.server_uuid === server.uuid);
+  const destination = uniqueNamedResource(serverDestinations, config.destinationName, 'destination');
   const created = await request(config, fetcher, 'applications/public', {
     method: 'POST',
-    body: JSON.stringify({project_uuid: project.uuid, server_uuid: server.uuid, environment_name: 'production',
+    body: JSON.stringify({project_uuid: project.uuid, server_uuid: server.uuid, destination_uuid: destination.uuid,
+      environment_name: 'production',
       git_repository: `https://github.com/${config.repository}.git`, git_branch: 'master',
       git_commit_sha: config.releaseSha, name: config.applicationName, description: 'Yurelax player cabinet and admin',
       build_pack: 'dockerfile', dockerfile_location: '/Dockerfile', ports_exposes: '4000',
