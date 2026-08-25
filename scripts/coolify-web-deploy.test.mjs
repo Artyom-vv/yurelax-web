@@ -126,8 +126,7 @@ describe('web production deployment', () => {
       json([{...APPLICATION, git_commit_sha: SHA_TWO}]),
       json([]), json({message: 'created'}, 201), json({message: 'updated'}),
       json({deployments: [{deployment_uuid: 'deployment-failed'}]}),
-      json({status: 'failed'}),
-      json({logs: ['Build error', 'TOKEN=unsafe', 'https://user:pass@example.test/private']}),
+      json({status: 'failed', logs: 'Build error\nTOKEN=unsafe\nhttps://user:pass@example.test/private'}),
     ]);
     await assert.rejects(() => deployWeb('publish', ENVIRONMENT, fetcher, async () => {}), (error) => {
       assert.match(error.message, /Build error/);
