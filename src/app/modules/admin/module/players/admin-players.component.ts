@@ -81,6 +81,20 @@ export class AdminPlayersComponent implements OnInit {
   public expiry(value: string | null): string { return value ? `до ${this.date(value)}` : 'бессрочно'; }
   public date(value: string): string { return new Intl.DateTimeFormat('ru-RU', {dateStyle: 'medium', timeStyle: 'short'}).format(new Date(value)); }
 
+  public entitlementStatus(value: string): string {
+    return ({ACTIVE: 'Активно', CONSUMED: 'Использовано', REVOKED: 'Отозвано'} as Record<string, string>)[value] ?? value;
+  }
+
+  public activationSummary(right: AdminEntitlement): string {
+    const state = right.activationState;
+    if (state.activeActivation) return `Запущено до ${this.date(state.activeActivation.expiresAt)}`;
+    if (state.canActivate) return 'Игрок может активировать';
+    const reasons: Record<string, string> = {NOT_ACTIVATABLE: 'Не требует активации', ENTITLEMENT_INACTIVE: 'Право неактивно',
+      ALREADY_ACTIVE: 'Уже запущено', LIFETIME_LIMIT_REACHED: 'Лимит активаций исчерпан',
+      PERIOD_LIMIT_REACHED: `Следующая активация ${state.periodResetsAt ? this.date(state.periodResetsAt) : 'позже'}`};
+    return reasons[state.blockedReason ?? ''] ?? 'Активация недоступна';
+  }
+
   public timelineSummary(item: AdminTimelineItem): string {
     const preferred = ['title', 'name', 'statCode', 'rewardCode', 'currencyCode', 'reasonCode', 'eventCode', 'amount', 'value'];
     const facts = preferred.flatMap(key => item.details[key] === undefined ? [] : [`${this.detailLabel(key)}: ${String(item.details[key])}`]);

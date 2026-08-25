@@ -34,6 +34,7 @@ export interface AdminPurchase {
   id: string;
   offerCode: string;
   productCode: string;
+  productName: string;
   quantity: number;
   currencyCode: string;
   totalPrice: string;
@@ -44,13 +45,25 @@ export interface AdminPurchase {
 export interface AdminEntitlement {
   id: string;
   productCode: string;
+  productName: string;
   providerCode: string;
   entitlementKey: string;
+  capabilityName: string;
+  capabilityDescription: string;
   gameCode: string | null;
   status: string;
   grantedAt: string;
   expiresAt: string | null;
-  activationState?: {canActivate?: boolean; blockedReason?: string | null; activeActivation?: unknown};
+  activationState: {
+    canActivate: boolean;
+    blockedReason: string | null;
+    activeActivation: {startsAt: string; expiresAt: string} | null;
+    lifetimeUsed: number;
+    lifetimeRemaining: number | null;
+    periodUsed: number;
+    periodRemaining: number | null;
+    periodResetsAt: string | null;
+  };
 }
 
 export interface AdminTimelineItem {

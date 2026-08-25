@@ -65,6 +65,11 @@ code { color: map-get($project-colors, "purple", 200); font: 500 12px/1.4 $secon
 .stat-card strong { display: block; margin: 8px 0 5px; color: map-get($project-colors, "gradation", 100); font-size: 24px; }
 .stat-card span { color: map-get($project-colors, "gradation", 500); font-size: 11px; }
 .right-row { align-items: flex-start; }
+.right-copy { min-width: 0; }
+.right-copy > p:not(.meta) { max-width: 520px; margin: 4px 0 7px; color: map-get($project-colors, "gradation", 400); font-size: 12px; line-height: 1.45; }
+.right-copy details { margin-top: 8px; }
+.right-copy summary { color: map-get($project-colors, "gradation", 500); font-size: 11px; cursor: pointer; }
+.right-copy details code { margin-top: 5px; }
 .right-state { display: flex; align-items: flex-end; flex-direction: column; gap: 6px; text-align: right; }
 .muted { color: map-get($project-colors, "gradation", 500); }
 .empty { padding: 32px 20px; text-align: center; color: map-get($project-colors, "gradation", 300); }
