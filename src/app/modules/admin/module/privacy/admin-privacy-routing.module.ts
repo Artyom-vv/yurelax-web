@@ -1,0 +1,1 @@
+import{NgModule}from'@angular/core';import{RouterModule,Routes}from'@angular/router';import{AdminPrivacyComponent}from'./admin-privacy.component';const routes:Routes=[{path:'',pathMatch:'full',component:AdminPrivacyComponent}];@NgModule({imports:[RouterModule.forChild(routes)],exports:[RouterModule]})export class AdminPrivacyRoutingModule{}
