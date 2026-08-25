@@ -46,7 +46,7 @@ $text_selectors: "&, span";
     }
   }
   background-color: map-get($project-colors, "gradation", 700);
-  yrx-ref-icon {
+  yrx-icon {
     @include icon-color(map-get($project-colors, "gradation", 200));
   }
   #{$text_selectors} {
@@ -84,7 +84,7 @@ $text_selectors: "&, span";
     color: map-get($project-colors, "gradation", 300);
   }
 
-  yrx-ref-icon {
+  yrx-icon {
     @include icon-color(map-get($project-colors, "gradation", 300));
   }
 
@@ -108,7 +108,7 @@ $text_selectors: "&, span";
     border-radius: 6px;
     border-bottom-color: transparent;
     background-color: map-get($project-colors, "gradation", 700);
-    yrx-ref-icon {
+    yrx-icon {
       @include icon-color(map-get($project-colors, "gradation", 100));
     }
     #{$text_selectors} {

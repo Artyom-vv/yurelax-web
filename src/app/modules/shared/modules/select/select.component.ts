@@ -2,16 +2,14 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component, ElementRef, forwardRef, Inject,
+  Component, forwardRef,
   Input,
   ViewChild,
-  DOCUMENT
 } from '@angular/core';
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {OptionInterface} from "./interfaces/option.interface";
 import {MatSelect} from "@angular/material/select";
 import {OptionSelectOutputInterface} from "../dropout-point/interfaces/option-select-output.interface";
-import {SelectService} from "./services/select.service";
 
 
 @Component({
@@ -32,13 +30,10 @@ export class SelectComponent implements AfterViewInit {
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private selectService: SelectService,
-    @Inject(DOCUMENT) private document: Document
   ) {
   }
 
   @ViewChild('select') select!: MatSelect
-  @ViewChild('boxSelect') boxSelect!: ElementRef
   @Input() options: OptionInterface[] = []
   @Input() placeholder: string = ''
   @Input() custom: 'dark' | null = null
@@ -49,8 +44,7 @@ export class SelectComponent implements AfterViewInit {
   onTouch: any = () => {};
 
   public selectedOption?: OptionSelectOutputInterface;
-  public isAbove: boolean = false;
-  public value: boolean = false;
+  public value: unknown = null;
 
   ngAfterViewInit() {
     const option = this.value ? this.options.find(x => x.value === this.value) : this.options[0];
@@ -73,18 +67,21 @@ export class SelectComponent implements AfterViewInit {
       this.select.close()
   }
 
-  public opened() {
-    this.selectService.openBlocker(this.boxSelect);
-    this.isAbove = !!this.document.documentElement.querySelector('.mat-mdc-select-panel-above')
-  }
-
   public closed() {
-    this.selectService.closeBlocker()
+    this.onTouch();
   }
 
-  writeValue(value: boolean): void {
+  writeValue(value: unknown): void {
     this.value = value;
-    this.onChange(this.value);
+    const option = this.options.find(candidate => candidate.value === value);
+    if (option) {
+      this.selectedOption = {
+        value: option.value,
+        icon: option.icon,
+        iconStroked: option.iconStroked
+      };
+    }
+    this.cdr.markForCheck();
   }
 
   registerOnChange(fn: any): void {

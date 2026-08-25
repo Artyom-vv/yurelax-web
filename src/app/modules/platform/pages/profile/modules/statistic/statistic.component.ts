@@ -19,9 +19,9 @@ export class StatisticComponent implements OnInit, OnDestroy {
 
   public options: OptionInterface[] = [
     {text: 'Общая статистика', value: 1, icon: 'box', iconStroked: true},
-    {text: 'Hunt статистика', value: 2, icon: 'shopping-bag', iconStroked: true},
-    {text: 'Stay Alive статистика', value: 3, icon: 'laptop', iconStroked: true},
-    {text: 'Tower Defence статистика', value: 4, icon: 'settings', iconStroked: true},
+    {text: 'Hunt статистика', value: 2, icon: 'crosshair', iconStroked: true},
+    {text: 'Stay Alive статистика', value: 3, icon: 'shield', iconStroked: true},
+    {text: 'Tower Defence статистика', value: 4, icon: 'boxes', iconStroked: true},
   ]
   public statistics: any[] = [1,2,3,4,5,6]
 
