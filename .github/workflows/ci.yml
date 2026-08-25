@@ -37,3 +37,9 @@ jobs:
 
       - name: Run unit tests
         run: npm test -- --watch=false
+
+      - name: Verify production deployment contract
+        run: npm run test:deployment
+
+      - name: Build production runtime image
+        run: docker build --tag yurelax-web:${{ github.sha }} .

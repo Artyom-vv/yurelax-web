@@ -1,4 +1,27 @@
-# YurelaxWeb
+# Yurelax Web
+
+Angular SSR-приложение пользовательского кабинета и RBAC-админки текущей
+платформы Yurelax. Browser API работает через same-origin `/api`; внешний edge
+маршрутизирует его в platform Web BFF.
+
+## Production release
+
+`Dockerfile` собирает immutable Angular SSR runtime на Node 24.15.0. Контейнер
+работает без root на порту `4000` и публикует семантический `GET /health`.
+
+Push в `master` запускает `Publish web`: workflow фиксирует Coolify application
+на точный Git SHA, ожидает терминального статуса и проверяет, что публичный
+health endpoint вернул тот же revision. `Roll back web` — отдельная кнопка без
+ручного SHA; она выбирает последний успешный predecessor из истории Coolify.
+
+GitHub environment `production` должен содержать:
+
+- variable `WEB_PRODUCTION_URL`;
+- variable `COOLIFY_API_URL`;
+- variable `COOLIFY_WEB_APPLICATION_UUID`;
+- variable `COOLIFY_WEB_APPLICATION_NAME` со значением `yurelax-web`;
+- secret `COOLIFY_API_TOKEN` с минимальными правами чтения приложения,
+  просмотра deployments, изменения application и запуска deployment.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
 
