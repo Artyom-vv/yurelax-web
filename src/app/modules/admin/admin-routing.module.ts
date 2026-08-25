@@ -37,6 +37,10 @@ const routes: Routes = [
         loadChildren: () => import('../admin/module/commerce/admin-commerce.module').then(m => m.AdminCommerceModule)
       },
       {
+        path: 'finance', component: AdminContentComponent, title: 'Дешборд — Финансовые операции',
+        loadChildren: () => import('../admin/module/finance/admin-finance.module').then(m => m.AdminFinanceModule)
+      },
+      {
         path: 'mini-games',
         component: AdminContentComponent,
         title: 'Дешборд — Контент режимов',
