@@ -158,8 +158,6 @@ export class AppComponent implements OnInit {
     this.appStore.setSocials([
       {link: 'https://vk.com/yurelax', name: 'Вконтакте', icon: 'vk', color: '#0077FF'},
       {link: 'https://discord.gg/xTWx7T4y6W', name: 'Дискорд', icon: 'dc', color: '#5865F2'},
-      {link: '', name: 'Телеграм', icon: 'tg', color: '#0088CC'},
-      {link: '', name: 'Ютуб', icon: 'yt', color: '#CD201F'},
     ])
   }
 
