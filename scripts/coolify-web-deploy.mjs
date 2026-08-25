@@ -168,7 +168,8 @@ async function provisionApplication(config, fetcher) {
       git_repository: `https://github.com/${config.repository}.git`, git_branch: 'master',
       git_commit_sha: config.releaseSha, name: config.applicationName, description: 'Yurelax player cabinet and admin',
       build_pack: 'dockerfile', dockerfile_location: '/Dockerfile', ports_exposes: '4000',
-      is_auto_deploy_enabled: false, health_check_enabled: true, health_check_path: '/health',
+      is_auto_deploy_enabled: false, is_force_https_enabled: true,
+      health_check_enabled: true, health_check_path: '/health',
       health_check_port: '4000', autogenerate_domain: true, instant_deploy: false}),
   });
   if (typeof created.uuid !== 'string') throw new Error('Coolify did not return the created web application identity');
@@ -204,7 +205,9 @@ function primaryApplicationUrl(value) {
   if (typeof value !== 'string') throw new Error('Coolify web application has no public URL');
   const entries = value.split(',').map((entry) => entry.trim()).filter(Boolean);
   if (entries.length === 0) throw new Error('Coolify web application has no public URL');
-  return secureUrl(entries[0], 'Coolify web application URL');
+  const url = new URL(entries[0]);
+  if (url.protocol === 'http:') url.protocol = 'https:';
+  return secureUrl(url.href, 'Coolify web application URL');
 }
 
 function required(environment, name) {
