@@ -1,4 +1,6 @@
-<header class="finance-hero"><div><p class="eyebrow">Аудируемая экономика</p><h3>Финансовые операции</h3><p class="text text_body regular c-gradation-300">Создавайте корректировки через платформу. Рискованные операции исполняются только после решения другого администратора.</p></div></header>
+<yrx-admin-page-header eyebrow="Аудируемая экономика" title="Финансовые операции"
+  description="Создавайте корректировки через платформу. Рискованные операции исполняются только после решения другого администратора."
+  [surface]="true"></yrx-admin-page-header>
 <yrx-spacing type="M"></yrx-spacing>
 <div class="finance-layout">
   <section class="panel"><h4>Новая корректировка</h4><p class="hint">Положительная сумма начисляет валюту, отрицательная — списывает. Все действия сохраняются с автором и причиной.</p>
@@ -11,7 +13,7 @@
     </form>
   </section>
   <section class="panel queue"><div class="panel-head"><div><h4>Очередь решений</h4><p class="hint">Автор запроса не может подтвердить собственную операцию.</p></div><select [value]="status" (change)="filter($any($event.target).value)"><option value="PENDING">Ожидают решения</option><option value="EXECUTED">Исполнены</option><option value="REJECTED">Отклонены</option><option value="EXPIRED">Истекли</option></select></div>
-    @if (loading) {<p class="empty">Загружаем очередь…</p>}
+    @if (loading) {<yrx-admin-state title="Загружаем очередь" [loading]="true" [compact]="true"></yrx-admin-state>}
     @for (item of approvals; track item.approvalRequestId) {
       <article class="approval"><div class="approval-main"><span class="status" [class.status_pending]="item.status === 'PENDING'">{{item.status}}</span>
         @if (adjustment(item); as operation) {<h5>{{operation.amount}} {{operation.currencyCode}}</h5><p>Игрок: {{operation.playerId}}</p><p>Причина: {{operation.reasonCode}}</p>} @else {<h5>Пакетная награда</h5>}
@@ -21,6 +23,6 @@
       @if (item.status === 'PENDING') {<div class="actions"><yrx-button (press)="approve(item)" [loading]="decidingId === item.approvalRequestId">Подтвердить</yrx-button><yrx-button type="secondary" (press)="beginReject(item)">Отклонить</yrx-button></div>}
       @if (rejectionId === item.approvalRequestId) {<div class="reject-box"><textarea [(ngModel)]="rejectionReason" placeholder="Почему операция отклоняется"></textarea><div class="actions"><yrx-button (press)="reject(item)" [disabled]="rejectionReason.trim().length < 3">Сохранить отказ</yrx-button><yrx-button type="secondary" (press)="cancelReject()">Отмена</yrx-button></div></div>}
       </article>
-    } @empty { @if (!loading) {<p class="empty">В этой очереди операций нет.</p>} }
+    } @empty { @if (!loading) {<yrx-admin-state title="В этой очереди операций нет" description="Выберите другое состояние или создайте новую операцию." [compact]="true"></yrx-admin-state>} }
   </section>
 </div>

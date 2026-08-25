@@ -1,0 +1,6 @@
+<section class="admin-state" [class.admin-state_compact]="compact" role="status" aria-live="polite">
+  @if (loading) { <span class="admin-state__loader" aria-hidden="true"></span> }
+  <strong>{{title}}</strong>
+  @if (description) { <p>{{description}}</p> }
+  <ng-content></ng-content>
+</section>

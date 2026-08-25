@@ -1,9 +1,5 @@
-<header class="page-head">
-  <div>
-    <p class="eyebrow">Платформенный каталог</p>
-    <h3>Магазин и права игроков</h3>
-    <p class="text text_body regular c-gradation-300">Управляйте тем, что получает игрок, отдельно от цены и условий продажи. Все изменения публикуются новыми версиями — история не затирается.</p>
-  </div>
+<yrx-admin-page-header eyebrow="Платформенный каталог" title="Магазин и права игроков"
+  description="Управляйте тем, что получает игрок, отдельно от цены и условий продажи. Все изменения публикуются новыми версиями — история не затирается.">
   <div class="page-actions">
     @if (view === 'catalog') {
       <yrx-button type="secondary" (press)="open('product')">Новый товар</yrx-button>
@@ -12,7 +8,7 @@
       <yrx-button type="secondary" (press)="open('catalog')">Вернуться к каталогу</yrx-button>
     }
   </div>
-</header>
+</yrx-admin-page-header>
 
 <yrx-spacing type="M"></yrx-spacing>
 

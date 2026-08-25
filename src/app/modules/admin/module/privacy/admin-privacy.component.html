@@ -1,1 +1,21 @@
-<header class="hero"><p class="eyebrow">Защита персональных данных</p><h3>Псевдонимизация игроков</h3><p>Необратимая операция отвязывает активные идентичности и заменяет отображаемое имя. Она исполняется только после решения другого platform-администратора.</p></header><yrx-spacing type="M"></yrx-spacing><div class="layout"><section class="panel"><h4>Новая заявка</h4><p class="hint">Используйте только для подтверждённого обращения игрока или юридически обоснованной процедуры.</p><form [formGroup]="form" (ngSubmit)="submit()"><label>Игрок<select formControlName="playerId"><option value="">Выберите игрока</option>@for(player of players;track player.playerId){<option [value]="player.playerId">{{player.currentName}} · {{player.playerId}}</option>}</select></label><label>Основание<textarea formControlName="reason" placeholder="Опишите подтверждение запроса и основание"></textarea></label><yrx-button [loading]="saving">Создать заявку</yrx-button></form></section><section class="panel"><div class="head"><div><h4>Очередь второго администратора</h4><p class="hint">Автор заявки не может принять решение.</p></div><select [value]="status" (change)="filter($any($event.target).value)"><option value="PENDING">Ожидают</option><option value="EXECUTED">Исполнены</option><option value="REJECTED">Отклонены</option></select></div>@if(loading){<p class="empty">Загружаем…</p>}@for(item of items;track item.id){<article class="request"><span>{{item.status}}</span><h5>{{item.playerId}}</h5><p>{{item.reason}}</p><small>{{item.requestedAt|date:'dd.MM.yyyy HH:mm'}} · автор {{item.requestedBy}}</small>@if(item.status==='PENDING'){<div class="actions"><yrx-button (press)="approve(item)">{{confirmId===item.id?'Подтвердить необратимо':'Исполнить'}}</yrx-button><yrx-button type="secondary" (press)="reject(item)">Отклонить</yrx-button>@if(confirmId===item.id){<yrx-button type="secondary" (press)="cancel()">Отмена</yrx-button>}</div>}</article>}@empty{@if(!loading){<p class="empty">Заявок нет.</p>}}</section></div>
+<yrx-admin-page-header eyebrow="Защита персональных данных" title="Псевдонимизация игроков"
+  description="Необратимая операция отвязывает активные идентичности и заменяет отображаемое имя. Она исполняется только после решения другого platform-администратора."
+  [surface]="true"></yrx-admin-page-header>
+<yrx-spacing type="M"></yrx-spacing>
+
+<div class="layout">
+  <section class="panel">
+    <h4>Новая заявка</h4>
+    <p class="hint">Используйте только для подтверждённого обращения игрока или юридически обоснованной процедуры.</p>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <label>Игрок<select formControlName="playerId"><option value="">Выберите игрока</option>@for(player of players;track player.playerId){<option [value]="player.playerId">{{player.currentName}} · {{player.playerId}}</option>}</select></label>
+      <label>Основание<textarea formControlName="reason" placeholder="Опишите подтверждение запроса и основание"></textarea></label>
+      <yrx-button [loading]="saving">Создать заявку</yrx-button>
+    </form>
+  </section>
+  <section class="panel">
+    <div class="head"><div><h4>Очередь второго администратора</h4><p class="hint">Автор заявки не может принять решение.</p></div><select [value]="status" (change)="filter($any($event.target).value)"><option value="PENDING">Ожидают</option><option value="EXECUTED">Исполнены</option><option value="REJECTED">Отклонены</option></select></div>
+    @if(loading){<yrx-admin-state title="Загружаем заявки" [loading]="true" [compact]="true"></yrx-admin-state>}
+    @for(item of items;track item.id){<article class="request"><span>{{item.status}}</span><h5>{{item.playerId}}</h5><p>{{item.reason}}</p><small>{{item.requestedAt|date:'dd.MM.yyyy HH:mm'}} · автор {{item.requestedBy}}</small>@if(item.status==='PENDING'){<div class="actions"><yrx-button (press)="approve(item)">{{confirmId===item.id?'Подтвердить необратимо':'Исполнить'}}</yrx-button><yrx-button type="secondary" (press)="reject(item)">Отклонить</yrx-button>@if(confirmId===item.id){<yrx-button type="secondary" (press)="cancel()">Отмена</yrx-button>}</div>}</article>}@empty{@if(!loading){<yrx-admin-state title="Заявок нет" description="Для выбранного состояния очередь пуста." [compact]="true"></yrx-admin-state>}}
+  </section>
+</div>

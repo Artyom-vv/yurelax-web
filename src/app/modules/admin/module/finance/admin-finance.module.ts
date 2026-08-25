@@ -9,5 +9,6 @@ import {AdminFinanceService} from '../../../shared/services/admin-finance.servic
 import {AdminPlayersService} from '../../../shared/services/admin-players.service';
 import {AdminFinanceComponent} from './admin-finance.component';
 import {AdminFinanceRoutingModule} from './admin-finance-routing.module';
-@NgModule({declarations:[AdminFinanceComponent],imports:[CommonModule,FormsModule,ReactiveFormsModule,MatSnackBarModule,ButtonModule,SpacingModule,AdminFinanceRoutingModule],providers:[AdminFinanceService,AdminCommerceService,AdminPlayersService]})
+import {AdminUiModule} from '../../components/admin-ui/admin-ui.module';
+@NgModule({declarations:[AdminFinanceComponent],imports:[CommonModule,FormsModule,ReactiveFormsModule,MatSnackBarModule,ButtonModule,SpacingModule,AdminUiModule,AdminFinanceRoutingModule],providers:[AdminFinanceService,AdminCommerceService,AdminPlayersService]})
 export class AdminFinanceModule {}

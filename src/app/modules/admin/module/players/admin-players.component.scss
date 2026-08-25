@@ -2,7 +2,6 @@
 @import "src/shared/styles/layout/colored-box";
 
 :host { display: block; width: 100%; }
-.eyebrow { margin-bottom: 6px; color: map-get($project-colors, "purple", 200); font: 600 12px/1.2 $second_font; letter-spacing: .12em; text-transform: uppercase; }
 .player-layout { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 20px; min-height: 620px; }
 .directory, .player-card { border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 14px; background: map-get($project-colors, "gradation", 750); overflow: hidden; }
 .directory { align-self: start; }

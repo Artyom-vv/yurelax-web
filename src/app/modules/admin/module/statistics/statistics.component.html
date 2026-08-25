@@ -1,14 +1,10 @@
-<header class="page-head">
-  <div>
-    <p class="eyebrow">Игровые показатели</p>
-    <h3>Статистика</h3>
-    <p class="text text_body regular c-gradation-300">Показатели, которые режимы записывают в профиль игрока: победы, убийства, опыт и прогресс.</p>
-  </div>
+<yrx-admin-page-header eyebrow="Игровые показатели" title="Статистика"
+  description="Показатели, которые режимы записывают в профиль игрока: победы, убийства, опыт и прогресс.">
   <div class="summary">
     <strong>{{definitions.length}}</strong>
     <span>показателей</span>
   </div>
-</header>
+</yrx-admin-page-header>
 <yrx-spacing type="M"></yrx-spacing>
 
 <details class="contract-form">
@@ -50,9 +46,9 @@
 <yrx-spacing type="S"></yrx-spacing>
 
 @if (loading) {
-  <p class="text text_body regular c-gradation-300">Загружаем опубликованные контракты…</p>
+  <yrx-admin-state title="Загружаем опубликованные контракты" [loading]="true" [compact]="true"></yrx-admin-state>
 } @else if (visibleDefinitions.length === 0) {
-  <p class="text text_body regular c-gradation-300">Контракты не найдены.</p>
+  <yrx-admin-state title="Контракты не найдены" description="Измените запрос или добавьте новый показатель." [compact]="true"></yrx-admin-state>
 } @else {
   <div class="contract-list">
     @for (definition of visibleDefinitions; track definition.id) {

@@ -23,6 +23,7 @@ import { MiniGamesItemComponent } from './components/mini-games-item/mini-games-
 import {InputModule} from "../../../shared/modules/text-fields/modules/input/input.module";
 import {TextAreaModule} from "../../../shared/modules/text-fields/modules/text-area/text-area.module";
 import {AdminGameContentService} from "../../../shared/services/admin-game-content.service";
+import {AdminUiModule} from '../../components/admin-ui/admin-ui.module';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {AdminGameContentService} from "../../../shared/services/admin-game-conte
     TagModule,
     SelectModule,
     InputModule,
-    TextAreaModule
+    TextAreaModule,
+    AdminUiModule
   ],
   providers: [
     MiniGamesService,

@@ -7,10 +7,11 @@ import {AdminPlayersService} from '../../../shared/services/admin-players.servic
 import {AdminPlayersComponent} from './admin-players.component';
 import {AdminPlayersRoutingModule} from './admin-players-routing.module';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {AdminUiModule} from '../../components/admin-ui/admin-ui.module';
 
 @NgModule({
   declarations: [AdminPlayersComponent],
-  imports: [CommonModule, FormsModule, ButtonModule, SpacingModule, MatSnackBarModule, AdminPlayersRoutingModule],
+  imports: [CommonModule, FormsModule, ButtonModule, SpacingModule, MatSnackBarModule, AdminUiModule, AdminPlayersRoutingModule],
   providers: [AdminPlayersService],
 })
 export class AdminPlayersModule {}

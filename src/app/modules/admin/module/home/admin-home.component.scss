@@ -1,20 +1,6 @@
 @import "src/shared/styles/vars.colors";
 
-.admin-hero {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 36px;
-  padding: 30px;
-  border: 1px solid map-get($project-colors, "gradation", 600);
-  border-radius: 12px;
-  background: linear-gradient(120deg, map-get($project-colors, "gradation", 750), map-get($project-colors, "gradation", 700));
-
-  > div:first-child { max-width: 720px; }
-  h3 { margin: 4px 0 10px; }
-}
-
-.eyebrow, .card-kicker {
+.card-kicker {
   color: map-get($project-colors, "purple", 200);
   font-size: 12px;
   font-weight: 600;
@@ -88,6 +74,5 @@
 
 @media (max-width: 800px) {
   .workspace-grid { grid-template-columns: 1fr; }
-  .admin-hero { padding: 22px; }
   .hero-mark { display: none; }
 }

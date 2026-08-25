@@ -1,14 +1,14 @@
-<header class="page-head">
-  <div><p class="eyebrow">Контент сервера</p><h3>Игровые режимы</h3>
-    <p>Оформляйте карточки, проверяйте результат и публикуйте изменения отдельной версией.</p></div>
+<yrx-admin-page-header eyebrow="Контент сервера" title="Игровые режимы"
+  description="Оформляйте карточки, проверяйте результат и публикуйте изменения отдельной версией.">
   <span class="workflow"><i></i> Черновик → публикация</span>
-</header>
+</yrx-admin-page-header>
 
 @if (loading && games.length === 0) {
-  <section class="state-card"><span class="loader"></span><strong>Загружаем контракты платформы</strong></section>
+  <yrx-admin-state title="Загружаем контракты платформы" [loading]="true"></yrx-admin-state>
 } @else if (games.length === 0) {
-  <section class="state-card"><yrx-icon icon="joystick" [stroked]="true"></yrx-icon><strong>Режимов пока нет</strong>
-    <p>Сначала добавьте игровой контракт в платформенный каталог.</p></section>
+  <yrx-admin-state title="Режимов пока нет" description="Сначала добавьте игровой контракт в платформенный каталог.">
+    <yrx-icon icon="joystick" [stroked]="true"></yrx-icon>
+  </yrx-admin-state>
 } @else {
   <nav class="game-tabs" aria-label="Игровые режимы">
     @for (game of games; track game.code) {

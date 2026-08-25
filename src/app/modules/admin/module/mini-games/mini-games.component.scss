@@ -1,8 +1,4 @@
 :host {display: block; width: 100%; color: #f4f5f6; --line: #283137; --panel: #10161a; --muted: #919ba2; --accent: #7e51dd;}
-.page-head {display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 28px;
-  h3 {font-size: clamp(32px, 4vw, 52px); line-height: 1; margin: 6px 0 12px; font-weight: 500; letter-spacing: -.04em;}
-  p {color: var(--muted); max-width: 680px; line-height: 1.55; margin: 0;}}
-.eyebrow {color: #a787ef !important; text-transform: uppercase; letter-spacing: .14em; font-size: 11px; font-weight: 700;}
 .workflow {border: 1px solid var(--line); border-radius: 999px; padding: 10px 15px; color: #c5cbd0; font-size: 12px; white-space: nowrap;
   i {display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #5acf91; margin-right: 7px;}}
 .game-tabs {display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 18px;
@@ -35,6 +31,6 @@ button.primary, button.publish {border: 0; border-radius: 9px; color: #fff; back
 .status {color: #d2b984; background: #292315; border-radius: 999px; padding: 6px 8px; text-align: center; font-size: 9px; text-transform: uppercase; letter-spacing: .06em; &.published {color: #79dca5; background: #12271d;}}
 .revision {strong, small {display: block;} strong {font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;} small {color: #77828a; font-size: 10px; margin-top: 4px; line-height: 1.45;}}
 .revision-actions {display: flex; gap: 7px; button {color: #b9c2c8; background: transparent; border: 1px solid #344048; border-radius: 8px; padding: 8px 10px; cursor: pointer;} button.publish {color: #fff; border: 0;}}
-.state-card, .history-empty {display: grid; place-items: center; gap: 10px; min-height: 180px; color: #89949b; text-align: center; border: 1px dashed #313b41; border-radius: 14px;}.history-empty {min-height: 90px;}.loader {width: 24px; height: 24px; border: 2px solid #39434a; border-top-color: #8a62df; border-radius: 50%; animation: spin .7s linear infinite;}.muted {color: var(--muted); font-size: 12px;}@keyframes spin {to {transform: rotate(360deg);}}
+.history-empty {display: grid; min-height: 90px; place-items: center; color: #89949b; text-align: center; border: 1px dashed #313b41; border-radius: 14px;}.muted {color: var(--muted); font-size: 12px;}
 @media (max-width: 980px) {.workspace {grid-template-columns: 1fr;}.preview-column {display: grid; grid-template-columns: 1fr 1fr; gap: 14px;}.preview-column .section-title {grid-column: 1/-1;}.publication-note {margin: 0; align-self: end;}}
-@media (max-width: 680px) {.page-head {align-items: flex-start; flex-direction: column;}.workflow {display: none;}.field-row, .stat-grid {grid-template-columns: 1fr;}.preview-column {display: block;}.publication-note {margin-top: 12px;}.editor-actions {align-items: stretch; flex-direction: column;}.history article {grid-template-columns: 1fr;}.revision-actions {justify-content: flex-start;}}
+@media (max-width: 680px) {.workflow {display: none;}.field-row, .stat-grid {grid-template-columns: 1fr;}.preview-column {display: block;}.publication-note {margin-top: 12px;}.editor-actions {align-items: stretch; flex-direction: column;}.history article {grid-template-columns: 1fr;}.revision-actions {justify-content: flex-start;}}
