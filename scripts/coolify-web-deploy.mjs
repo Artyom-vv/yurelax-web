@@ -120,7 +120,12 @@ function selectApplication(config, applications) {
   const namedMatches = repositoryMatches.filter((application) => application.name === config.applicationName);
   const matches = namedMatches.length === 1 ? namedMatches : repositoryMatches;
   if (matches.length !== 1 || typeof matches[0]?.uuid !== 'string') {
-    throw new Error(`Coolify must expose exactly one ${config.applicationName} application for ${config.repository}`);
+    const candidates = applications
+      .map((application) => ({name: String(application.name ?? ''), repository: repositorySlug(application.git_repository)}))
+      .filter(({name, repository}) => `${name} ${repository}`.toLowerCase().includes('yurelax'))
+      .slice(0, 20);
+    throw new Error(`Coolify must expose exactly one ${config.applicationName} application for ${config.repository}; `
+      + `Yurelax candidates: ${JSON.stringify(candidates)}`);
   }
   return matches[0];
 }
