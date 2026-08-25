@@ -1,37 +1,51 @@
-<h3>Контракты статистики</h3>
-<yrx-spacing type="XS"></yrx-spacing>
-<p class="text text_body regular c-gradation-300">Контракт задает тип значения и способ агрегации. После создания он неизменяемый; деактивация запрещает новые факты, но сохраняет всю историю.</p>
-<yrx-spacing type="S"></yrx-spacing>
+<header class="page-head">
+  <div>
+    <p class="eyebrow">Игровые показатели</p>
+    <h3>Статистика</h3>
+    <p class="text text_body regular c-gradation-300">Показатели, которые режимы записывают в профиль игрока: победы, убийства, опыт и прогресс.</p>
+  </div>
+  <div class="summary">
+    <strong>{{definitions.length}}</strong>
+    <span>показателей</span>
+  </div>
+</header>
+<yrx-spacing type="M"></yrx-spacing>
 
-<form class="contract-form flex flex_column gap-12" [formGroup]="form" (ngSubmit)="create()">
+<details class="contract-form">
+  <summary>
+    <div><h4>Добавить показатель</h4><p class="text text_small c-gradation-300">Для нового события или механики игрового режима</p></div>
+    <span class="summary-action">Настроить</span>
+  </summary>
+  <form class="editor flex flex_column gap-12" [formGroup]="form" (ngSubmit)="create()">
   <div class="form-grid">
-    <div class="box box_input"><input formControlName="code" class="input_normal" placeholder="Код: hunt.kills"></div>
-    <div class="box box_input">
+    <label class="field"><span>Код показателя</span><div class="box box_input"><input formControlName="code" class="input_normal" placeholder="Например: hunt.kills"></div></label>
+    <label class="field"><span>Какие данные храним</span><div class="box box_input">
       <select formControlName="valueKind" class="input_normal">
         <option value="BIGINT">Целое число (BIGINT)</option>
         <option value="NUMERIC">Точное число (NUMERIC)</option>
         <option value="TEXT">Текст (TEXT)</option>
         <option value="BOOL">Да / нет (BOOL)</option>
       </select>
-    </div>
-    <div class="box box_input">
+    </div></label>
+    <label class="field"><span>Как обновлять значение</span><div class="box box_input">
       <select formControlName="aggregationKind" class="input_normal">
         <option value="SUM">Суммировать (SUM)</option>
         <option value="LAST">Последнее значение (LAST)</option>
       </select>
-    </div>
-    <div class="box box_input"><input formControlName="unit" class="input_normal" placeholder="Единица, необязательно"></div>
+    </div></label>
+    <label class="field"><span>Единица измерения</span><div class="box box_input"><input formControlName="unit" class="input_normal" placeholder="Например: очки, секунды"></div></label>
   </div>
   <label class="text text_body c-gradation-300 flex flex_align-center gap-8">
     <input type="checkbox" formControlName="allowNegative">
     Разрешить отрицательные значения
   </label>
-  <yrx-button type="primary" [disabled]="form.invalid || mutating" (press)="create()">Создать контракт</yrx-button>
-</form>
+  <yrx-button type="primary" [disabled]="form.invalid || mutating" (press)="create()">Добавить показатель</yrx-button>
+  </form>
+</details>
 
 <yrx-spacing type="M"></yrx-spacing>
 <div class="box box_input">
-  <input class="input_normal" [value]="search" (input)="search = $any($event.target).value" placeholder="Поиск по коду контракта">
+  <input class="input_normal" [value]="search" (input)="search = $any($event.target).value" placeholder="Найти показатель по названию или коду">
 </div>
 <yrx-spacing type="S"></yrx-spacing>
 
@@ -47,17 +61,17 @@
           <div>
             <div class="flex flex_align-center gap-8">
               <h4>{{definition.code}}</h4>
-              <span class="state text text_small">{{definition.active ? 'активен' : 'деактивирован'}}</span>
+              <span class="state text text_small">{{definition.active ? 'используется' : 'архив'}}</span>
             </div>
             <yrx-spacing type="XS2"></yrx-spacing>
             <p class="text text_body regular c-gradation-300">
-              {{definition.valueKind}} · {{definition.aggregationKind}}
+              {{definition.aggregationKind === 'SUM' ? 'Накапливается' : 'Хранит последнее значение'}} · {{definition.valueKind}}
               @if (definition.unit) { · {{definition.unit}} }
               · отрицательные: {{definition.allowNegative ? 'разрешены' : 'запрещены'}}
             </p>
           </div>
           @if (definition.active) {
-            <yrx-button custom="red" [disabled]="mutating" (press)="deactivate(definition)">Деактивировать</yrx-button>
+            <yrx-button custom="red" [disabled]="mutating" (press)="deactivate(definition)">В архив</yrx-button>
           }
         </div>
       </article>

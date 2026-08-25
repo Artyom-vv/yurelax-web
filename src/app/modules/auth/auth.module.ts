@@ -25,10 +25,11 @@ import {PasswordStrengthModule} from './modules/password-strength/password-stren
 import {EmailCodeVerificationModule} from './modules/email-code-verification/email-code-verification.module';
 import {RefIconModule} from '../shared/modules/ref-icon/ref-icon.module';
 import {PasswordHiderModule} from '../shared/directives/password-hider/password-hider.module';
+import {GameLinkComponent} from './components/game-link/game-link.component';
 
 @NgModule({
   declarations: [AuthComponent, LoginComponent, AuthLayoutComponent, RegisterComponent, EmailVerifyComponent,
-    WhichEmailRecoverComponent, RecoverPasswordVerifyComponent, RecoverPasswordComponent],
+    WhichEmailRecoverComponent, RecoverPasswordVerifyComponent, RecoverPasswordComponent, GameLinkComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,

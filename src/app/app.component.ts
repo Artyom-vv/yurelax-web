@@ -13,6 +13,7 @@ import {isPlatformBrowser, registerLocaleData} from "@angular/common";
 import localeRu from '@angular/common/locales/ru';
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {PlatformSessionService} from './modules/shared/services/platform-session.service';
+import {SvgSpritesComponent} from './modules/shared/components/svg-sprites/svg-sprites.component';
 
 registerLocaleData(localeRu)
 
@@ -21,6 +22,7 @@ registerLocaleData(localeRu)
     selector: 'yrx-root',
     imports: [
         AdminModule,
+        SvgSpritesComponent,
         RouterOutlet
     ],
     templateUrl: './app.component.html',

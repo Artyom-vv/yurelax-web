@@ -1,0 +1,27 @@
+<yrx-auth-header page="login">Связать игру и сайт</yrx-auth-header>
+<yrx-spacing type="S"></yrx-spacing>
+
+@if (linkedName) {
+  <div class="link-state link-state_success">
+    <h4>Аккаунты связаны</h4>
+    <p class="text text_body regular">Minecraft-профиль <strong>{{linkedName}}</strong> теперь принадлежит этому аккаунту Yurelax.</p>
+  </div>
+  <yrx-spacing type="M"></yrx-spacing>
+  <yrx-button class="w100" type="primary" (press)="openProfile()">Открыть кабинет</yrx-button>
+} @else {
+  <p class="text text_body regular c-gradation-300">
+    Код получен от прокси для вашего текущего подключения. После подтверждения покупки, права и прогресс будут доступны и на сайте, и в игре.
+  </p>
+  <yrx-spacing type="M"></yrx-spacing>
+  <div class="link-code" aria-label="Код привязки">{{code || '—'}}</div>
+  @if (error) {
+    <yrx-spacing type="S"></yrx-spacing>
+    <p class="text text_body regular c-red-300" role="alert">{{error}}</p>
+  }
+  <yrx-spacing type="M"></yrx-spacing>
+  <yrx-button class="w100" type="primary" [loading]="loading" [disabled]="loading || !!error" (press)="approve()">
+    Подтвердить привязку
+  </yrx-button>
+  <yrx-spacing type="XS"></yrx-spacing>
+  <p class="text text_small regular c-gradation-300">Не подтверждайте код, если вы не выполняли команду <strong>/link</strong> в игре.</p>
+}

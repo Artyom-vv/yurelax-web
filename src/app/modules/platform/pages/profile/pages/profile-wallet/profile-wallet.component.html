@@ -30,5 +30,29 @@
 <div class="colored-box">
   <h3>Пополнение</h3>
   <yrx-spacing type="XS"></yrx-spacing>
-  <p class="text text_body c-gradation-300">Способы пополнения появятся здесь после подключения платежного провайдера. Сайт не показывает тестовые пакеты и не имитирует начисление валюты.</p>
+  <p class="text text_body c-gradation-300">Поддержите развитие проекта и выберите подходящий пакет. Перед оплатой сайт покажет итоговую сумму и способ зачисления.</p>
+  @if (!promoCode.hide) {
+    <yrx-spacing type="XS"></yrx-spacing>
+  }
+  <yrx-promo-code #promoCode></yrx-promo-code>
+  <yrx-spacing type="S"></yrx-spacing>
+  <div class="flex flex_wrap gap-24">
+    <yrx-donate-panel [coins]="49" [cost]="49"></yrx-donate-panel>
+    <yrx-donate-panel [oldCoins]="99" [coins]="109" [cost]="99" type="primary"></yrx-donate-panel>
+    <yrx-donate-panel [oldCoins]="199" [coins]="249" [cost]="199"></yrx-donate-panel>
+    <yrx-donate-panel [oldCoins]="349" [coins]="499" [cost]="349"></yrx-donate-panel>
+  </div>
+</div>
+<yrx-spacing type="S"></yrx-spacing>
+<div class="borders" id="transactions">
+  <div class="without-borders colored-box">
+    <h3>История транзакций</h3>
+    <yrx-spacing type="XS"></yrx-spacing>
+    <p class="text text_body c-gradation-300">Начисления и списания появятся здесь после загрузки истории кошелька. Если операция вам незнакома, обратитесь в поддержку.</p>
+  </div>
+  <div class="flex flex_column">
+    @for (transaction of [1,2,3,4]; track transaction; let idx = $index) {
+      <yrx-transaction-panel [even]="idx % 2 === 0"></yrx-transaction-panel>
+    }
+  </div>
 </div>

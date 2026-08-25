@@ -13,8 +13,14 @@
   <yrx-spacing type="S"></yrx-spacing>
   <div class="flex flex_column gap-8">
     <div class="flex gap-4">
-      <p class="text text_body regular c-gradation-300">ID игрока:</p>
-      <p class="text text_body regular c-gradation-100">{{userStore?._id}}</p>
+      <p class="text text_body regular c-gradation-300">Почта:</p>
+      <p class="text text_body regular c-gradation-100">{{userStore?.email || 'не указана'}}</p>
+    </div>
+    <div class="flex gap-4">
+      <p class="text text_body regular c-gradation-300">Безопасность:</p>
+      <p class="text text_body regular" [class.c-green-300]="userStore?.emailVerify" [class.c-red-300]="!userStore?.emailVerify">
+        {{userStore?.emailVerify ? 'почта подтверждена' : 'почта не подтверждена'}}
+      </p>
     </div>
     <div class="flex gap-4">
       <p class="text text_body regular c-gradation-300">Дата регистрации:</p>
@@ -28,5 +34,5 @@
     </div>
   </div>
   <yrx-spacing type="S"></yrx-spacing>
-  <p class="text text_table regular c-gradation-300">Профиль создан платформой и одинаково используется сайтом, прокси и игровыми режимами.</p>
+  <yrx-link [iconStroked]="true" icon="arrow-right" size="small">Статистика по мини-играм</yrx-link>
 </div>

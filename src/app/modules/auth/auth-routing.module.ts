@@ -8,6 +8,8 @@ import {EmailVerifyComponent} from './components/email-verify/email-verify.compo
 import {WhichEmailRecoverComponent} from './components/which-email-recover/which-email-recover.component';
 import {RecoverPasswordVerifyComponent} from './components/recover-password-verify/recover-password-verify.component';
 import {RecoverPasswordComponent} from './components/recover-password/recover-password.component';
+import {GameLinkComponent} from './components/game-link/game-link.component';
+import {AuthGuard} from '../shared/services/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -26,6 +28,7 @@ const routes: Routes = [
       {path: 'which-email-recover', canActivate: [CheckAuthGuard], component: WhichEmailRecoverComponent, data: {route: 'recover'}},
       {path: 'recover-password-verify', canActivate: [CheckAuthGuard], component: RecoverPasswordVerifyComponent, data: {route: 'recover-verify'}},
       {path: 'recover-password', canActivate: [CheckAuthGuard], component: RecoverPasswordComponent, data: {route: 'recover-password'}},
+      {path: 'link', canActivate: [AuthGuard], component: GameLinkComponent, data: {route: 'game-link'}},
       {path: '**', redirectTo: 'login'},
     ]
   },

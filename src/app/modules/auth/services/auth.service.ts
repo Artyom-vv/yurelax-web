@@ -68,6 +68,13 @@ export class AuthService {
     );
   }
 
+  /** Starts a web session without provisioning a profile before an account-link confirmation. */
+  loginSession(credentials: {identifier: string; password: string}): Observable<void> {
+    return this.platformSession.login(credentials.identifier, credentials.password).pipe(
+      tap(() => this.appStore.setIsLogged(true))
+    );
+  }
+
   logout(): Observable<void> {
     return this.platformSession.logout();
   }
