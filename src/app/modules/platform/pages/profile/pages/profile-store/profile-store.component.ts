@@ -106,8 +106,8 @@ export class ProfileStoreComponent implements OnInit {
       eligibilityText: eligibility.reasons.map(reason => this.reason(reason)).join(' · '),
       details: offer.grants.map(grant => {
         const scope = grant.gameCode ? `режим ${grant.gameCode}` : 'весь сервер';
-        const delivery = grant.deliveryMode === 'ENTITLEMENT' ? 'право' : 'выдача';
-        return `${delivery}: ${grant.grantKey} · ${scope} · обработчик ${grant.providerCode}`;
+        const delivery = grant.deliveryMode === 'ENTITLEMENT' ? 'Доступ сохраняется в аккаунте' : 'Выдаётся игровым модулем';
+        return `${grant.capabilityName} — ${grant.capabilityDescription} · ${scope} · ${delivery}`;
       })
     };
   }

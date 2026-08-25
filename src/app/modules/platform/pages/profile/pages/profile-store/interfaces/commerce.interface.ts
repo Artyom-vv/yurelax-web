@@ -22,6 +22,8 @@ export interface CommerceGrant {
   grantKey: string;
   gameCode: string | null;
   deliveryMode: 'ENTITLEMENT' | 'FULFILLMENT';
+  capabilityName: string;
+  capabilityDescription: string;
   payload: unknown;
 }
 
@@ -97,9 +99,12 @@ export interface CommerceActivationState {
 export interface CommerceEntitlement {
   id: string;
   productCode: string;
+  productName: string;
   kind: CommerceProductKind;
   providerCode: string;
   entitlementKey: string;
+  capabilityName: string;
+  capabilityDescription: string;
   gameCode: string | null;
   status: 'ACTIVE' | 'CONSUMED' | 'REVOKED';
   grantedAt: string;

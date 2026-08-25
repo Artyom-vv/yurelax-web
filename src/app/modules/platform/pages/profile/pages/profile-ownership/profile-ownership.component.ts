@@ -28,7 +28,7 @@ export class ProfileOwnershipComponent implements OnInit {
     this.message = '';
     this.commerce.activate(entitlement.id).pipe(
       tap(() => {
-        this.message = `Право ${entitlement.entitlementKey} активировано.`;
+        this.message = `«${entitlement.capabilityName}» активировано.`;
         this.load(false);
       }),
       catchError(error => {

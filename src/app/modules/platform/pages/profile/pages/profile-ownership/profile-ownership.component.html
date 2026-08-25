@@ -26,9 +26,10 @@
             <article class="ownership-card">
               <div class="flex flex_justify-between gap-24">
                 <div>
-                  <p class="text text_body c-gradation-300">{{entitlement.kind}} · {{entitlement.status}}</p>
+                  <p class="text text_body c-gradation-300">{{entitlement.productName}} · {{entitlement.status}}</p>
                   <yrx-spacing type="XS2"></yrx-spacing>
-                  <h4>{{entitlement.entitlementKey}}</h4>
+                  <h4>{{entitlement.capabilityName}}</h4>
+                  <p class="text text_small c-gradation-300">{{entitlement.capabilityDescription}}</p>
                 </div>
                 @if (entitlement.activationState.canActivate) {
                   <yrx-button type="primary" [disabled]="activating === entitlement.id" (press)="activate(entitlement)">
@@ -38,8 +39,7 @@
               </div>
               <yrx-spacing type="XS"></yrx-spacing>
               <div class="metadata text text_small c-gradation-300">
-                <span>Товар: {{entitlement.productCode}}</span>
-                <span>Обработчик: {{entitlement.providerCode}}</span>
+                <span>Товар: {{entitlement.productName}}</span>
                 <span>Область: {{entitlement.gameCode ?? 'весь проект'}}</span>
                 <span>Действует до: {{entitlement.expiresAt ? (entitlement.expiresAt | date:'dd.MM.yyyy HH:mm') : 'бессрочно'}}</span>
                 <span>{{activationHint(entitlement)}}</span>
