@@ -70,6 +70,21 @@ export interface PlayerWalletTransactionPage {
   items: PlayerWalletTransaction[];
 }
 
+export interface PlayerRewardReceipt {
+  rewardGrantId: string;
+  rewardCode: string;
+  rewardName: string;
+  currencyCode: string;
+  amount: string;
+  transactionReasonCode: string;
+  sourceKind: 'OCCURRENCE' | 'STAT_FACT' | 'EXTENSION_EVENT';
+  grantedAt: string;
+  gameCode?: string;
+  contextRef?: string;
+  statCode?: string;
+  eventCode?: string;
+}
+
 export interface CommercePurchaseResult {
   purchase: {
     id: string;

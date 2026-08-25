@@ -16,6 +16,45 @@
     <div class="colored-box text text_body c-gradation-300">Загружаем историю владения…</div>
   } @else {
     <section class="colored-box">
+      <div class="section-heading flex flex_justify-between gap-24">
+        <div>
+          <p class="eyebrow text text_small">НАЧИСЛЕНИЯ ПЛАТФОРМЫ</p>
+          <h3>Полученные награды</h3>
+        </div>
+        <p class="reward-count">{{rewards.length}}</p>
+      </div>
+      <yrx-spacing type="S"></yrx-spacing>
+      @if (rewards.length === 0) {
+        <p class="text text_body c-gradation-300">Награды появятся здесь после матчей, событий и выполненных условий.</p>
+      } @else {
+        <div class="reward-list">
+          @for (reward of rewards; track reward.rewardGrantId) {
+            <article class="reward-card" tabindex="0">
+              <div class="reward-card__summary flex flex_justify-between gap-24">
+                <div>
+                  <p class="reward-card__scope text text_small">{{reward.gameCode ?? 'ВЕСЬ ПРОЕКТ'}}</p>
+                  <h4>{{reward.rewardName}}</h4>
+                  <p class="text text_small c-gradation-300">{{rewardSource(reward)}}</p>
+                </div>
+                <div class="reward-amount">
+                  <h4>+{{reward.amount}}</h4>
+                  <p class="text text_small">{{reward.currencyCode}}</p>
+                </div>
+              </div>
+              <div class="reward-card__details text text_small c-gradation-300">
+                <span>Получено {{reward.grantedAt | date:'dd.MM.yyyy в HH:mm'}}</span>
+                <span>Награда: {{reward.rewardCode}}</span>
+                <span>Причина: {{reward.transactionReasonCode}}</span>
+                <span>Источник: {{reward.sourceKind}}</span>
+                <span class="receipt">Receipt {{reward.rewardGrantId}}</span>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </section>
+
+    <section class="colored-box">
       <h3>Активные и прошлые права</h3>
       <yrx-spacing type="S"></yrx-spacing>
       @if (entitlements.length === 0) {

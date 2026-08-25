@@ -1,6 +1,6 @@
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {catchError, finalize, forkJoin, of, tap} from 'rxjs';
-import {CommerceEntitlement, CommercePurchase} from '../profile-store/interfaces/commerce.interface';
+import {CommerceEntitlement, CommercePurchase, PlayerRewardReceipt} from '../profile-store/interfaces/commerce.interface';
 import {PlatformCommerceService} from '../profile-store/services/platform-commerce.service';
 
 @Component({
@@ -13,6 +13,7 @@ import {PlatformCommerceService} from '../profile-store/services/platform-commer
 export class ProfileOwnershipComponent implements OnInit {
   public purchases: CommercePurchase[] = [];
   public entitlements: CommerceEntitlement[] = [];
+  public rewards: PlayerRewardReceipt[] = [];
   public loading = true;
   public activating: string | null = null;
   public error = '';
@@ -52,12 +53,22 @@ export class ProfileOwnershipComponent implements OnInit {
     }
   }
 
+  public rewardSource(reward: PlayerRewardReceipt): string {
+    switch (reward.sourceKind) {
+      case 'OCCURRENCE': return reward.contextRef ? `Матч ${reward.contextRef}` : 'Игровой матч';
+      case 'STAT_FACT': return reward.statCode ? `Показатель ${reward.statCode}` : 'Игровой показатель';
+      case 'EXTENSION_EVENT': return reward.eventCode ? `Событие ${reward.eventCode}` : 'Событие режима';
+    }
+  }
+
   private load(showLoading = true): void {
     if (showLoading) this.loading = true;
-    forkJoin({purchases: this.commerce.purchases(), entitlements: this.commerce.entitlements()}).pipe(
+    forkJoin({purchases: this.commerce.purchases(), entitlements: this.commerce.entitlements(),
+      rewards: this.commerce.rewards()}).pipe(
       tap(result => {
         this.purchases = result.purchases.items;
         this.entitlements = result.entitlements.items;
+        this.rewards = result.rewards.items;
       }),
       catchError(error => {
         this.error = error?.error?.message ?? 'Не удалось загрузить покупки и права.';
