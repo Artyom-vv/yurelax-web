@@ -50,6 +50,39 @@ describe('web production deployment', () => {
     assert.equal(result.skipped, true);
   });
 
+  it('provisions one missing public web application before publishing it', async () => {
+    const fetcher = sequence([
+      json([]), json([{uuid: 'project-uuid', name: 'Yurelax'}]),
+      json([{uuid: 'server-uuid', name: 'production', settings: {is_usable: true, is_reachable: true}}]),
+      json({uuid: 'created-web'}, 201), json({...APPLICATION, uuid: 'created-web', git_commit_sha: SHA_TWO}),
+      json([]), json({message: 'created'}, 201), json({message: 'updated'}),
+      json({deployments: [{deployment_uuid: 'deployment-created'}]}),
+      json({status: 'finished'}), json({status: 'ok', service: 'yurelax-web', revision: SHA_ONE}),
+    ]);
+    const result = await deployWeb('publish', ENVIRONMENT, fetcher, async () => {});
+    assert.equal(result.revision, SHA_ONE);
+    const create = fetcher.calls[3];
+    assert.match(create.url, /applications\/public$/);
+    assert.deepEqual(JSON.parse(create.options.body), {
+      project_uuid: 'project-uuid', server_uuid: 'server-uuid', environment_name: 'production',
+      git_repository: 'https://github.com/Artyom-vv/yurelax-web.git', git_branch: 'master',
+      git_commit_sha: SHA_ONE, name: 'yurelax-web', description: 'Yurelax player cabinet and admin',
+      build_pack: 'dockerfile', dockerfile_location: '/Dockerfile', ports_exposes: '4000',
+      is_auto_deploy_enabled: false, health_check_enabled: true, health_check_path: '/health',
+      health_check_port: '4000', autogenerate_domain: true, instant_deploy: false,
+    });
+  });
+
+  it('does not provision into an ambiguous production server', async () => {
+    const fetcher = sequence([
+      json([]), json([{uuid: 'project-uuid', name: 'Yurelax'}]),
+      json([{uuid: 'server-one', name: 'one'}, {uuid: 'server-two', name: 'two'}]),
+    ]);
+    await assert.rejects(() => deployWeb('publish', ENVIRONMENT, fetcher, async () => {}),
+      /exactly one server; candidates: \["one","two"\]/);
+    assert.equal(fetcher.calls.length, 3);
+  });
+
   it('selects the latest successful revision other than current for rollback', async () => {
     const fetcher = sequence([
       json([{...APPLICATION, git_commit_sha: SHA_ONE}]),
@@ -70,9 +103,10 @@ describe('web production deployment', () => {
   });
 
   it('fails closed when repository identity is missing or ambiguous', async () => {
-    await assert.rejects(() => deployWeb('publish', ENVIRONMENT,
-      sequence([json([{name: 'yurelax-api', git_repository: 'Artyom-vv/yurelax-platform'}])]), async () => {}),
-    /Yurelax candidates: \[{"name":"yurelax-api","repository":"artyom-vv\/yurelax-platform"}\]/);
+    await assert.rejects(() => deployWeb('publish', ENVIRONMENT, sequence([
+      json([{name: 'duplicate', uuid: 'one', git_repository: 'Artyom-vv/yurelax-web'},
+        {name: 'duplicate', uuid: 'two', git_repository: 'Artyom-vv/yurelax-web'}]),
+    ]), async () => {}), /Yurelax candidates/);
     await assert.rejects(() => deployWeb('publish', ENVIRONMENT,
       sequence([json([APPLICATION, {...APPLICATION, uuid: 'duplicate'}])]), async () => {}), /exactly one yurelax-web/);
   });
