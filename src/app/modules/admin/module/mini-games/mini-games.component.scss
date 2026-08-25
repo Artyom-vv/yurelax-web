@@ -1,36 +1,72 @@
-:host {display: block; width: 100%; color: #f4f5f6; --line: #283137; --panel: #10161a; --muted: #919ba2; --accent: #7e51dd;}
-.workflow {border: 1px solid var(--line); border-radius: 999px; padding: 10px 15px; color: #c5cbd0; font-size: 12px; white-space: nowrap;
-  i {display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #5acf91; margin-right: 7px;}}
-.game-tabs {display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 18px;
-  button {position: relative; min-width: 168px; text-align: left; color: #c4cbd0; background: #0b1013; border: 1px solid var(--line); border-radius: 12px; padding: 13px 34px 12px 15px; cursor: pointer; transition: .2s ease;
-    span, small {display: block;} span {font-size: 14px; font-weight: 600;} small {color: #737f87; margin-top: 3px;} i {position: absolute; right: 14px; top: 17px; width: 7px; height: 7px; border-radius: 50%; background: #55ca8e;} i.offline {background: #697179;}}
-  button:hover, button.active {border-color: #6e4bb9; background: #151322; color: #fff;} button.active {box-shadow: inset 0 0 0 1px #6e4bb9;}}
-.workspace {display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(300px, .8fr); gap: 16px; align-items: start;}
-.editor, .preview-column, .history {background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 20px;}
-.section-title {display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 18px;
-  > div {display: flex; align-items: center; gap: 10px;} span {font: 700 10px/1 sans-serif; color: #9d7be8; background: #211b32; padding: 6px; border-radius: 6px;} h4 {font-size: 17px; font-weight: 600; margin: 0;} small {color: #77828a;}}
-.section-title_stats {margin-top: 28px;}
-label {display: block; margin-bottom: 16px; > span {display: block; font-size: 12px; color: #b8c0c5; margin-bottom: 8px;} > small {display: block; color: #69757d; font-size: 10px; margin-top: 6px; text-align: right;}}
-input, textarea {box-sizing: border-box; width: 100%; color: #f4f6f7; background: #0a0f12; border: 1px solid #2b353b; border-radius: 10px; padding: 12px 13px; font: inherit; outline: none; resize: vertical; transition: .2s;
-  &::placeholder {color: #566168;} &:focus {border-color: #7653c4; box-shadow: 0 0 0 3px rgba(126,81,221,.12);} &.ng-invalid.ng-touched {border-color: #c95768;}}
-.field-row {display: grid; grid-template-columns: 1fr 1.55fr; gap: 12px;}
-.check {display: flex; align-items: center; gap: 11px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; cursor: pointer;
-  input {display: none;} > i {width: 17px; height: 17px; border: 1px solid #526069; border-radius: 5px; flex: none;} input:checked + i {background: var(--accent); border-color: var(--accent); box-shadow: inset 0 0 0 4px #171321;}
-  > span {margin: 0; display: flex; flex-direction: column; gap: 2px;} strong {font-size: 12px;} small {color: #78838a; font-size: 10px;}}
-.stat-grid {display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px;
-  button {display: flex; justify-content: space-between; align-items: center; gap: 8px; min-width: 0; padding: 10px 11px; color: #aeb6bc; background: #0a0f12; border: 1px solid #253037; border-radius: 9px; cursor: pointer; text-align: left;
-    span {overflow: hidden; text-overflow: ellipsis;} i {font-style: normal; color: #66727a; font-size: 10px;} &.selected {color: #fff; border-color: #7653c4; background: #181426;} &.selected i {color: #a989ee;}}}
-.editor-actions {display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 20px; margin-top: 22px; border-top: 1px solid var(--line); p {color: #727d84; font-size: 11px; max-width: 330px; line-height: 1.45; margin: 0;}}
-button.primary, button.publish {border: 0; border-radius: 9px; color: #fff; background: linear-gradient(135deg, #7045cf, #8b61e5); padding: 11px 17px; font-weight: 600; cursor: pointer; white-space: nowrap; &:disabled {opacity: .5; cursor: wait;}}
-.game-preview {position: relative; overflow: hidden; min-height: 330px; border-radius: 13px; border: 1px solid #30373e; background: radial-gradient(circle at 85% 10%, #37245f 0, transparent 45%), #090d10; background-size: cover; background-position: center;
-  &__veil {position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,10,13,.08), rgba(7,10,13,.95));} &__content {position: absolute; inset: auto 0 0; padding: 22px;} p {margin: 13px 0 4px; color: #9571df; font-size: 10px; text-transform: uppercase; letter-spacing: .15em;} h4 {font-size: 25px; margin: 0 0 11px;} }
-.game-icon {display: grid; place-items: center; width: 42px; height: 42px; border-radius: 11px; color: #fff; background: rgba(126,81,221,.9); yrx-icon {width: 21px; height: 21px;}}
-.preview-description {color: #b9c0c5; font-size: 12px; line-height: 1.55; min-height: 38px;}.chips {display: flex; flex-wrap: wrap; gap: 5px; margin-top: 15px; span {padding: 5px 7px; border-radius: 5px; color: #cdbdf1; background: rgba(126,81,221,.17); font-size: 9px;}}
-.publication-note {margin-top: 12px; padding: 14px; border-radius: 10px; background: #0b1013; border: 1px solid var(--line); strong {font-size: 12px;} p {color: #77828a; font-size: 10px; line-height: 1.5; margin: 5px 0 0;}}
-.history {margin-top: 16px; article {display: grid; grid-template-columns: 110px minmax(0,1fr) auto; align-items: center; gap: 14px; padding: 13px 0; border-top: 1px solid var(--line);}}
-.status {color: #d2b984; background: #292315; border-radius: 999px; padding: 6px 8px; text-align: center; font-size: 9px; text-transform: uppercase; letter-spacing: .06em; &.published {color: #79dca5; background: #12271d;}}
-.revision {strong, small {display: block;} strong {font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;} small {color: #77828a; font-size: 10px; margin-top: 4px; line-height: 1.45;}}
-.revision-actions {display: flex; gap: 7px; button {color: #b9c2c8; background: transparent; border: 1px solid #344048; border-radius: 8px; padding: 8px 10px; cursor: pointer;} button.publish {color: #fff; border: 0;}}
-.history-empty {display: grid; min-height: 90px; place-items: center; color: #89949b; text-align: center; border: 1px dashed #313b41; border-radius: 14px;}.muted {color: var(--muted); font-size: 12px;}
-@media (max-width: 980px) {.workspace {grid-template-columns: 1fr;}.preview-column {display: grid; grid-template-columns: 1fr 1fr; gap: 14px;}.preview-column .section-title {grid-column: 1/-1;}.publication-note {margin: 0; align-self: end;}}
-@media (max-width: 680px) {.workflow {display: none;}.field-row, .stat-grid {grid-template-columns: 1fr;}.preview-column {display: block;}.publication-note {margin-top: 12px;}.editor-actions {align-items: stretch; flex-direction: column;}.history article {grid-template-columns: 1fr;}.revision-actions {justify-content: flex-start;}}
+@import "src/shared/styles/vars.colors";
+
+:host { display: block; width: 100%; }
+
+.game-tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
+
+  button { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 14px; padding: 13px 14px; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 10px; color: map-get($project-colors, "gradation", 300); background: map-get($project-colors, "gradation", 750); text-align: left; cursor: pointer; }
+  button:hover { background: map-get($project-colors, "gradation", 700); }
+  button.active { border-color: map-get($project-colors, "purple", 300); box-shadow: inset 3px 0 map-get($project-colors, "purple", 300); }
+  strong, small { display: block; font-family: $second_font; }
+  strong { color: map-get($project-colors, "gradation", 100); font-size: 14px; line-height: 19px; }
+  small { margin-top: 2px; color: map-get($project-colors, "gradation", 500); font-size: 11px; line-height: 15px; }
+}
+
+.workspace { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(310px, .72fr); align-items: start; gap: 18px; }
+.editor, .preview-column { padding: 20px; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 12px; background: map-get($project-colors, "gradation", 750); }
+.editor { display: grid; gap: 16px; }
+.field-row { display: grid; grid-template-columns: .8fr 1.2fr; gap: 14px; }
+.check { display: flex; align-items: center; gap: 11px; padding: 12px; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 9px; cursor: pointer; }
+.check input { position: absolute; opacity: 0; }
+.check > i { width: 17px; height: 17px; flex: 0 0 auto; border: 1px solid map-get($project-colors, "gradation", 500); border-radius: 5px; }
+.check input:checked + i { border-color: map-get($project-colors, "purple", 300); background: map-get($project-colors, "purple", 300); box-shadow: inset 0 0 0 4px map-get($project-colors, "purple", 600); }
+.check strong, .check small { display: block; font-family: $second_font; }
+.check strong { color: map-get($project-colors, "gradation", 200); font-size: 13px; }
+.check small { margin-top: 2px; color: map-get($project-colors, "gradation", 500); font-size: 11px; }
+
+.editor-section { display: grid; gap: 14px; padding-top: 18px; border-top: 1px solid map-get($project-colors, "gradation", 600); }
+.stat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+.stat-grid button { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 11px; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 8px; color: map-get($project-colors, "gradation", 300); background: map-get($project-colors, "gradation", 800); text-align: left; cursor: pointer; }
+.stat-grid button span { overflow: hidden; font: 400 12px/16px $second_font; text-overflow: ellipsis; }
+.stat-grid button i { color: map-get($project-colors, "gradation", 500); font: 400 10px/14px $second_font; font-style: normal; }
+.stat-grid button.selected { border-color: map-get($project-colors, "purple", 300); color: map-get($project-colors, "gradation", 100); background: map-get($project-colors, "purple", 600); }
+.stat-grid button.selected i { color: map-get($project-colors, "purple", 200); }
+
+.editor-actions { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 18px; border-top: 1px solid map-get($project-colors, "gradation", 600); }
+.editor-actions p { max-width: 390px; color: map-get($project-colors, "gradation", 500); font: 400 11px/16px $second_font; }
+
+.preview-column { display: grid; gap: 16px; }
+.game-preview { position: relative; min-height: 360px; overflow: hidden; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 11px; background: map-get($project-colors, "gradation", 800); background-position: center; background-size: cover; }
+.game-preview__veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(9,13,17,.08), rgba(9,13,17,.96)); }
+.game-preview__content { position: absolute; inset: auto 0 0; padding: 20px; }
+.game-preview p { margin: 13px 0 3px; color: map-get($project-colors, "purple", 200); font: 600 10px/14px $second_font; letter-spacing: .1em; text-transform: uppercase; }
+.game-preview h4 { margin-bottom: 8px; }
+.game-icon { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 10px; color: map-get($project-colors, "purple", 100); background: map-get($project-colors, "purple", 400); }
+.game-icon yrx-icon { width: 20px; height: 20px; }
+.preview-description { min-height: 38px; color: map-get($project-colors, "gradation", 300); font: 400 12px/18px $second_font; }
+.chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 14px; }
+.chips span { padding: 4px 7px; border-radius: 5px; color: map-get($project-colors, "purple", 100); background: map-get($project-colors, "purple", 500); font: 500 9px/13px $second_font; }
+.publication-note { display: flex; gap: 10px; color: map-get($project-colors, "gradation", 400); font-family: $second_font; }
+.publication-note yrx-icon { width: 18px; height: 18px; flex: 0 0 auto; }
+.publication-note strong, .publication-note small { display: block; }
+.publication-note strong { color: map-get($project-colors, "gradation", 200); font-size: 12px; }
+.publication-note small { margin-top: 2px; font-size: 10px; line-height: 15px; }
+
+.revision-row { display: grid; grid-template-columns: 118px minmax(0, 1fr) auto; align-items: center; gap: 16px; }
+.revision-row strong, .revision-row small { display: block; font-family: $second_font; }
+.revision-row strong { overflow: hidden; color: map-get($project-colors, "gradation", 200); font-size: 13px; line-height: 18px; text-overflow: ellipsis; white-space: nowrap; }
+.revision-row small { margin-top: 3px; color: map-get($project-colors, "gradation", 500); font-size: 10px; line-height: 14px; }
+.revision-actions { display: flex; gap: 7px; }
+.muted { color: map-get($project-colors, "gradation", 400); font: 400 12px/17px $second_font; }
+
+@media (max-width: 980px) { .workspace { grid-template-columns: 1fr; } }
+@media (max-width: 680px) {
+  .field-row, .stat-grid { grid-template-columns: 1fr; }
+  .editor-actions { align-items: stretch; flex-direction: column; }
+  .revision-row { grid-template-columns: 1fr; }
+  .revision-actions { flex-wrap: wrap; }
+}

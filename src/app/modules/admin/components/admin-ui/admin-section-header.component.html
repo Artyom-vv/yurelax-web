@@ -1,0 +1,8 @@
+<header class="admin-section-header">
+  @if (index) {<span class="admin-section-header__index" aria-hidden="true">{{index}}</span>}
+  <div class="admin-section-header__copy">
+    <h4>{{title}}</h4>
+    @if (description) {<p>{{description}}</p>}
+  </div>
+  <div class="admin-section-header__aside"><ng-content></ng-content></div>
+</header>

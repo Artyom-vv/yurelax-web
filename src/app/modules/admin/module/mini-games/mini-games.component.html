@@ -1,74 +1,101 @@
 <yrx-admin-page-header eyebrow="Контент сервера" title="Игровые режимы"
-  description="Оформляйте карточки, проверяйте результат и публикуйте изменения отдельной версией.">
-  <span class="workflow"><i></i> Черновик → публикация</span>
+  description="Редактируйте карточку режима, проверяйте её глазами игрока и публикуйте отдельную версию.">
+  <yrx-admin-status label="Черновик → публикация" tone="positive"></yrx-admin-status>
 </yrx-admin-page-header>
+<yrx-spacing type="M"></yrx-spacing>
 
 @if (loading && games.length === 0) {
   <yrx-admin-state title="Загружаем контракты платформы" [loading]="true"></yrx-admin-state>
 } @else if (games.length === 0) {
-  <yrx-admin-state title="Режимов пока нет" description="Сначала добавьте игровой контракт в платформенный каталог.">
-    <yrx-icon icon="joystick" [stroked]="true"></yrx-icon>
-  </yrx-admin-state>
+  <yrx-admin-state title="Режимов пока нет" description="Сначала добавьте игровой контракт в платформенный каталог."></yrx-admin-state>
 } @else {
   <nav class="game-tabs" aria-label="Игровые режимы">
     @for (game of games; track game.code) {
       <button type="button" [class.active]="selectedGame?.code === game.code" (click)="selectGame(game)">
-        <span>{{game.name}}</span><small>{{game.code}}</small><i [class.offline]="!game.active"></i>
+        <span><strong>{{game.name}}</strong><small>{{game.code}}</small></span>
+        <yrx-admin-status [label]="game.active ? 'Активен' : 'Отключён'" [tone]="game.active ? 'positive' : 'neutral'"></yrx-admin-status>
       </button>
     }
   </nav>
 
   <div class="workspace">
     <form class="editor" [formGroup]="form" (ngSubmit)="save()">
-      <div class="section-title"><div><span>01</span><h4>Карточка режима</h4></div><small>Видит игрок</small></div>
-      <label><span>Описание</span><textarea formControlName="description" rows="4"
-        placeholder="Коротко расскажите, чем интересен режим"></textarea><small>{{form.controls.description.value.length}} / 320</small></label>
+      <yrx-admin-section-header index="01" title="Карточка режима" description="Основные данные, которые увидит игрок."></yrx-admin-section-header>
+      <yrx-spacing type="S"></yrx-spacing>
+      <yrx-admin-field label="Описание" hint="{{form.controls.description.value.length}} / 320" [required]="true">
+        <textarea class="input_normal" formControlName="description" rows="4" placeholder="Коротко расскажите, чем интересен режим"></textarea>
+      </yrx-admin-field>
       <div class="field-row">
-        <label><span>Иконка</span><input formControlName="icon" placeholder="crosshair"><small>Ключ из набора иконок сайта</small></label>
-        <label><span>Обложка</span><input formControlName="heroImageUrl" placeholder="/assets/content/games/hunt.webp"><small>HTTPS или путь внутри сайта</small></label>
+        <yrx-admin-field label="Иконка" hint="Ключ из набора иконок сайта" [required]="true">
+          <input class="input_normal" formControlName="icon" placeholder="crosshair">
+        </yrx-admin-field>
+        <yrx-admin-field label="Обложка" hint="HTTPS или путь внутри сайта">
+          <input class="input_normal" formControlName="heroImageUrl" placeholder="/assets/content/games/hunt.webp">
+        </yrx-admin-field>
       </div>
       <label class="check"><input type="checkbox" formControlName="iconStroked"><i></i>
-        <span><strong>Контурная иконка</strong><small>Использовать stroked-вариант из дизайн-системы</small></span></label>
+        <span><strong>Контурная иконка</strong><small>Использовать stroked-вариант дизайн-системы</small></span>
+      </label>
 
-      <div class="section-title section-title_stats"><div><span>02</span><h4>Акцентная статистика</h4></div><small>До 6 показателей</small></div>
-      <div class="stat-grid">
-        @for (stat of statistics; track stat.code) {
-          @if (statAllowed(stat.code)) {
-            <button type="button" [class.selected]="selectedStats.has(stat.code)" (click)="toggleStat(stat.code)">
-              <span>{{stat.code}}</span><i>{{selectedStats.has(stat.code) ? 'Выбрано' : 'Добавить'}}</i>
-            </button>
-          }
-        } @empty {<p class="muted">Для режима ещё не опубликованы показатели статистики.</p>}
+      <div class="editor-section">
+        <yrx-admin-section-header index="02" title="Акцентная статистика" description="До шести показателей на карточке.">
+          <span>{{selectedStats.size}} / 6 выбрано</span>
+        </yrx-admin-section-header>
+        <div class="stat-grid">
+          @for (stat of statistics; track stat.code) {
+            @if (statAllowed(stat.code)) {
+              <button type="button" [class.selected]="selectedStats.has(stat.code)" (click)="toggleStat(stat.code)">
+                <span>{{stat.code}}</span><i>{{selectedStats.has(stat.code) ? 'Выбрано' : 'Добавить'}}</i>
+              </button>
+            }
+          } @empty {<p class="muted">Для режима ещё не опубликованы показатели статистики.</p>}
+        </div>
       </div>
-      <div class="editor-actions"><p>Сохранение создаёт новую неизменяемую версию и не меняет сайт.</p>
-        <button class="primary" type="submit" [disabled]="saving || form.invalid">{{saving ? 'Сохраняем…' : 'Сохранить черновик'}}</button></div>
+
+      <div class="editor-actions">
+        <p>Сохранение создаёт новую версию. Игроки увидят её только после отдельной публикации.</p>
+        <yrx-button [disabled]="saving || form.invalid" [loading]="saving" (press)="save()">Сохранить черновик</yrx-button>
+      </div>
     </form>
 
     <aside class="preview-column">
-      <div class="section-title"><div><span>03</span><h4>Предпросмотр</h4></div><small>Карточка игрока</small></div>
+      <yrx-admin-section-header index="03" title="Предпросмотр" description="Так карточка выглядит для игрока."></yrx-admin-section-header>
       <article class="game-preview" [class.has-art]="form.controls.heroImageUrl.value"
         [style.background-image]="form.controls.heroImageUrl.value ? 'url(' + form.controls.heroImageUrl.value + ')' : null">
-        <div class="game-preview__veil"></div><div class="game-preview__content">
+        <div class="game-preview__veil"></div>
+        <div class="game-preview__content">
           <span class="game-icon"><yrx-icon [icon]="form.controls.icon.value || 'cube'" [stroked]="form.controls.iconStroked.value"></yrx-icon></span>
           <p>{{selectedGame?.code}}</p><h4>{{selectedGame?.name}}</h4>
           <div class="preview-description">{{form.controls.description.value || 'Описание режима появится здесь.'}}</div>
           <div class="chips">@for (code of selectedStats; track code) {<span>{{code}}</span>}</div>
         </div>
       </article>
-      <div class="publication-note"><strong>Публикация защищена</strong><p>Нужна отдельная роль публикации. В истории останутся автор и время каждого изменения.</p></div>
+      <p class="publication-note"><yrx-icon [stroked]="true" icon="shield"></yrx-icon><span><strong>Публикация защищена</strong><small>Нужна отдельная роль; автор и время изменения сохранятся в истории.</small></span></p>
     </aside>
   </div>
 
-  <section class="history">
-    <div class="section-title"><div><span>04</span><h4>История версий</h4></div><small>{{drafts.length}} версий</small></div>
-    @if (loading) {<div class="history-empty">Загружаем историю…</div>}
-    @for (draft of drafts; track draft.id) {
-      <article><span class="status" [class.published]="draft.status === 'published'">{{draft.status === 'published' ? 'Опубликовано' : 'Черновик'}}</span>
-        <div class="revision"><strong>{{draft.presentation.description}}</strong><small>Создано {{date(draft.createdAt)}}
-          @if (draft.publishedAt) {<br>Опубликовано {{date(draft.publishedAt)}}}</small></div>
-        <div class="revision-actions"><button type="button" (click)="preview(draft)">Посмотреть</button>
-          @if (draft.status === 'draft') {<button type="button" class="publish" [disabled]="publishingId === draft.id" (click)="publish(draft)">{{publishingId === draft.id ? 'Публикуем…' : 'Опубликовать'}}</button>}</div>
-      </article>
-    } @empty {<div class="history-empty">Изменений ещё нет. Сохраните первый черновик.</div>}
-  </section>
+  <yrx-spacing type="M"></yrx-spacing>
+  <yrx-admin-section-header index="04" title="История версий" description="Черновики и опубликованные редакции карточки.">
+    <span>{{drafts.length}} версий</span>
+  </yrx-admin-section-header>
+  <yrx-spacing type="S"></yrx-spacing>
+  @if (loading) {
+    <yrx-admin-state title="Загружаем историю" [loading]="true" [compact]="true"></yrx-admin-state>
+  } @else if (drafts.length === 0) {
+    <yrx-admin-state title="Изменений ещё нет" description="Сохраните первый черновик карточки режима." [compact]="true"></yrx-admin-state>
+  } @else {
+    <yrx-admin-registry ariaLabel="История версий режима">
+      @for (draft of drafts; track draft.id) {
+        <yrx-admin-registry-row>
+          <article class="revision-row">
+            <yrx-admin-status [label]="draft.status === 'published' ? 'Опубликовано' : 'Черновик'"
+              [tone]="draft.status === 'published' ? 'positive' : 'warning'"></yrx-admin-status>
+            <div><strong>{{draft.presentation.description}}</strong><small>Создано {{date(draft.createdAt)}} @if (draft.publishedAt) { · опубликовано {{date(draft.publishedAt)}}}</small></div>
+            <div class="revision-actions"><yrx-button size="small" type="secondary" (press)="preview(draft)">Посмотреть</yrx-button>
+              @if (draft.status === 'draft') {<yrx-button size="small" [loading]="publishingId === draft.id" (press)="publish(draft)">Опубликовать</yrx-button>}</div>
+          </article>
+        </yrx-admin-registry-row>
+      }
+    </yrx-admin-registry>
+  }
 }

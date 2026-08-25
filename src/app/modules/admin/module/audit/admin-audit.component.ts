@@ -13,6 +13,7 @@ export class AdminAuditComponent implements OnInit {
   loading = true;
   action = '';
   resourceType = '';
+  resourceId = '';
   actorId = '';
   correlationId = '';
   nextCursor: string | null = null;
@@ -31,6 +32,7 @@ export class AdminAuditComponent implements OnInit {
     this.api.list({
       action: this.action.trim() || undefined,
       resourceType: this.resourceType.trim() || undefined,
+      resourceId: this.resourceId.trim() || undefined,
       actorId: this.actorId.trim() || undefined,
       correlationId: this.correlationId.trim() || undefined,
       cursor,
@@ -53,6 +55,7 @@ export class AdminAuditComponent implements OnInit {
   reset(): void {
     this.action = '';
     this.resourceType = '';
+    this.resourceId = '';
     this.actorId = '';
     this.correlationId = '';
     this.load();

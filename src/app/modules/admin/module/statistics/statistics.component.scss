@@ -1,63 +1,56 @@
 @import "src/shared/styles/vars.colors";
 
-:host {
-  display: block;
-  width: 100%;
+:host { display: block; width: 100%; }
+
+.summary {
+  color: map-get($project-colors, "gradation", 400);
+  font: 400 12px/16px $second_font;
+  strong { margin-right: 4px; color: map-get($project-colors, "gradation", 100); font-size: 18px; }
 }
-.summary { display: flex; align-items: baseline; gap: 7px; padding: 12px 15px; border-radius: 10px; background: map-get($project-colors, "gradation", 700); }
-.summary strong { color: map-get($project-colors, "gradation", 100); font-size: 22px; }
-.summary span { color: map-get($project-colors, "gradation", 400); font-size: 12px; }
-.box_input {
-  position: relative;
-  z-index: 2;
-}
-.overflow {
-  overflow: hidden;
-}
+
 .contract-form {
-  border: 1px solid rgba(255, 255, 255, .12);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, .03);
-}
-.contract-form > summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px; cursor: pointer; list-style: none; }
-.contract-form > summary::-webkit-details-marker { display: none; }
-.summary-action { color: map-get($project-colors, "purple", 200); font: 600 13px/1.2 $second_font; }
-.editor { padding: 0 20px 20px; border-top: 1px solid map-get($project-colors, "gradation", 600); padding-top: 20px; }
-.field { display: flex; min-width: 0; flex-direction: column; gap: 7px; color: map-get($project-colors, "gradation", 300); font: 500 13px/1.2 $second_font; }
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-.contract-list {
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
   border: 1px solid map-get($project-colors, "gradation", 600);
   border-radius: 12px;
   background: map-get($project-colors, "gradation", 750);
-}
-.contract-card {
-  min-height: 86px;
-  padding: 16px 18px;
-  border-bottom: 1px solid map-get($project-colors, "gradation", 600);
-}
-.contract-card:last-child { border-bottom: 0; }
-.contract-card:hover { background: map-get($project-colors, "gradation", 700); }
-.contract-card_inactive {
-  opacity: .62;
-}
-.state {
-  padding: 4px 8px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, .08);
-}
-select.input_normal {
-  width: 100%;
+
+  > summary { padding: 18px; cursor: pointer; list-style: none; }
+  > summary::-webkit-details-marker { display: none; }
+  &[open] .summary-action { color: map-get($project-colors, "gradation", 400); }
 }
 
-@media (max-width: 760px) {
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
+.summary-action { color: map-get($project-colors, "purple", 200); font-weight: 500; }
+.editor { display: grid; gap: 18px; padding: 18px; border-top: 1px solid map-get($project-colors, "gradation", 600); }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.editor-footer { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.check-row { display: flex; align-items: center; gap: 9px; color: map-get($project-colors, "gradation", 300); font: 400 13px/18px $second_font; cursor: pointer; }
+.check-row input { width: 17px; height: 17px; accent-color: map-get($project-colors, "purple", 300); }
+
+.registry-toolbar { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 400px); align-items: end; gap: 24px; }
+.registry-search { min-width: 0; }
+
+.contract-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(260px, 1.2fr) auto 82px;
+  align-items: center;
+  gap: 18px;
+
+  strong, small, span { display: block; font-family: $second_font; }
+  strong { color: map-get($project-colors, "gradation", 100); font-size: 15px; line-height: 20px; overflow-wrap: anywhere; }
+  small { margin-top: 3px; color: map-get($project-colors, "gradation", 500); font-size: 11px; line-height: 15px; }
+  &__policy > span { color: map-get($project-colors, "gradation", 300); font-size: 13px; line-height: 18px; }
+  &_inactive { opacity: .65; }
+}
+
+@media (max-width: 900px) {
+  .contract-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .contract-row__policy { grid-row: 2; }
+  .contract-row yrx-admin-status { grid-column: 2; grid-row: 1; }
+}
+
+@media (max-width: 680px) {
+  .form-grid, .registry-toolbar { grid-template-columns: 1fr; }
+  .editor-footer { align-items: stretch; flex-direction: column; }
+  .contract-row { grid-template-columns: 1fr; }
+  .contract-row yrx-admin-status { grid-column: auto; grid-row: auto; }
 }

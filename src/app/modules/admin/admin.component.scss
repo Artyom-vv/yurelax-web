@@ -5,6 +5,17 @@
   position: relative;
   overflow-x: hidden;
   background-color: map-get($project-colors, "gradation", 800);
+  font-family: $second_font;
+
+  strong,
+  small,
+  button,
+  input,
+  textarea,
+  select,
+  code {
+    font-family: inherit;
+  }
 }
 .withoutScroll {
   padding-right: 12px;

@@ -1,48 +1,50 @@
 <yrx-admin-page-header eyebrow="Игровые показатели" title="Статистика"
-  description="Показатели, которые режимы записывают в профиль игрока: победы, убийства, опыт и прогресс.">
-  <div class="summary">
-    <strong>{{definitions.length}}</strong>
-    <span>показателей</span>
-  </div>
+  description="Контракты данных, которые режимы записывают в профиль игрока: победы, убийства, опыт и прогресс.">
+  <span class="summary"><strong>{{definitions.length}}</strong> показателей</span>
 </yrx-admin-page-header>
 <yrx-spacing type="M"></yrx-spacing>
 
 <details class="contract-form">
   <summary>
-    <div><h4>Добавить показатель</h4><p class="text text_small c-gradation-300">Для нового события или механики игрового режима</p></div>
-    <span class="summary-action">Настроить</span>
+    <yrx-admin-section-header title="Добавить показатель"
+      description="Зарегистрируйте новый тип игрового факта.">
+      <span class="summary-action">Открыть форму</span>
+    </yrx-admin-section-header>
   </summary>
-  <form class="editor flex flex_column gap-12" [formGroup]="form" (ngSubmit)="create()">
-  <div class="form-grid">
-    <label class="field"><span>Код показателя</span><div class="box box_input"><input formControlName="code" class="input_normal" placeholder="Например: hunt.kills"></div></label>
-    <label class="field"><span>Какие данные храним</span><div class="box box_input">
-      <select formControlName="valueKind" class="input_normal">
-        <option value="BIGINT">Целое число (BIGINT)</option>
-        <option value="NUMERIC">Точное число (NUMERIC)</option>
-        <option value="TEXT">Текст (TEXT)</option>
-        <option value="BOOL">Да / нет (BOOL)</option>
-      </select>
-    </div></label>
-    <label class="field"><span>Как обновлять значение</span><div class="box box_input">
-      <select formControlName="aggregationKind" class="input_normal">
-        <option value="SUM">Суммировать (SUM)</option>
-        <option value="LAST">Последнее значение (LAST)</option>
-      </select>
-    </div></label>
-    <label class="field"><span>Единица измерения</span><div class="box box_input"><input formControlName="unit" class="input_normal" placeholder="Например: очки, секунды"></div></label>
-  </div>
-  <label class="text text_body c-gradation-300 flex flex_align-center gap-8">
-    <input type="checkbox" formControlName="allowNegative">
-    Разрешить отрицательные значения
-  </label>
-  <yrx-button type="primary" [disabled]="form.invalid || mutating" (press)="create()">Добавить показатель</yrx-button>
+  <form class="editor" [formGroup]="form" (ngSubmit)="create()">
+    <div class="form-grid">
+      <yrx-admin-field label="Код показателя" hint="Например: hunt.kills" [required]="true">
+        <div class="box box_input"><input formControlName="code" class="input_normal" placeholder="hunt.kills"></div>
+      </yrx-admin-field>
+      <yrx-admin-field label="Тип значения" [required]="true">
+        <div class="box box_input"><select formControlName="valueKind" class="input_normal">
+          <option value="BIGINT">Целое число</option><option value="NUMERIC">Точное число</option>
+          <option value="TEXT">Текст</option><option value="BOOL">Да / нет</option>
+        </select></div>
+      </yrx-admin-field>
+      <yrx-admin-field label="Правило обновления" [required]="true">
+        <div class="box box_input"><select formControlName="aggregationKind" class="input_normal">
+          <option value="SUM">Суммировать</option><option value="LAST">Хранить последнее значение</option>
+        </select></div>
+      </yrx-admin-field>
+      <yrx-admin-field label="Единица измерения" hint="Например: очки или секунды">
+        <div class="box box_input"><input formControlName="unit" class="input_normal" placeholder="очки"></div>
+      </yrx-admin-field>
+    </div>
+    <div class="editor-footer">
+      <label class="check-row"><input type="checkbox" formControlName="allowNegative"><span>Разрешить отрицательные значения</span></label>
+      <yrx-button [disabled]="form.invalid || mutating" [loading]="mutating" (press)="create()">Добавить показатель</yrx-button>
+    </div>
   </form>
 </details>
 
 <yrx-spacing type="M"></yrx-spacing>
-<div class="box box_input">
-  <input class="input_normal" [value]="search" (input)="search = $any($event.target).value" placeholder="Найти показатель по названию или коду">
-</div>
+<section class="registry-toolbar">
+  <yrx-admin-section-header title="Опубликованные контракты"
+    description="Поиск и управление жизненным циклом показателей."></yrx-admin-section-header>
+  <div class="registry-search box box_input"><input class="input_normal" [value]="search"
+    (input)="search = $any($event.target).value" placeholder="Название или код показателя"></div>
+</section>
 <yrx-spacing type="S"></yrx-spacing>
 
 @if (loading) {
@@ -50,27 +52,22 @@
 } @else if (visibleDefinitions.length === 0) {
   <yrx-admin-state title="Контракты не найдены" description="Измените запрос или добавьте новый показатель." [compact]="true"></yrx-admin-state>
 } @else {
-  <div class="contract-list">
+  <yrx-admin-registry ariaLabel="Контракты статистики">
     @for (definition of visibleDefinitions; track definition.id) {
-      <article class="contract-card" [class.contract-card_inactive]="!definition.active">
-        <div class="flex flex_justify-between gap-24">
-          <div>
-            <div class="flex flex_align-center gap-8">
-              <h4>{{definition.code}}</h4>
-              <span class="state text text_small">{{definition.active ? 'используется' : 'архив'}}</span>
-            </div>
-            <yrx-spacing type="XS2"></yrx-spacing>
-            <p class="text text_body regular c-gradation-300">
-              {{definition.aggregationKind === 'SUM' ? 'Накапливается' : 'Хранит последнее значение'}} · {{definition.valueKind}}
-              @if (definition.unit) { · {{definition.unit}} }
-              · отрицательные: {{definition.allowNegative ? 'разрешены' : 'запрещены'}}
-            </p>
+      <yrx-admin-registry-row>
+        <article class="contract-row" [class.contract-row_inactive]="!definition.active">
+          <div class="contract-row__identity"><strong>{{definition.code}}</strong><small>{{definition.unit || 'Без единицы измерения'}}</small></div>
+          <div class="contract-row__policy">
+            <span>{{definition.aggregationKind === 'SUM' ? 'Накапливается' : 'Последнее значение'}}</span>
+            <small>{{definition.valueKind}} · отрицательные {{definition.allowNegative ? 'разрешены' : 'запрещены'}}</small>
           </div>
+          <yrx-admin-status [label]="definition.active ? 'Используется' : 'В архиве'"
+            [tone]="definition.active ? 'positive' : 'neutral'"></yrx-admin-status>
           @if (definition.active) {
             <yrx-button size="small" custom="red" [disabled]="mutating" (press)="deactivate(definition)">В архив</yrx-button>
-          }
-        </div>
-      </article>
+          } @else {<span class="contract-row__spacer"></span>}
+        </article>
+      </yrx-admin-registry-row>
     }
-  </div>
+  </yrx-admin-registry>
 }

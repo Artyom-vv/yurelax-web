@@ -1,6 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {AdminPageHeaderComponent} from './admin-page-header.component';
 import {AdminStateComponent} from './admin-state.component';
+import {AdminStatusComponent} from './admin-status.component';
 
 describe('Admin UI primitives', () => {
   it('renders one consistent page hierarchy', async () => {
@@ -12,7 +13,7 @@ describe('Admin UI primitives', () => {
     fixture.componentRef.setInput('surface', true);
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('h3').textContent).toContain('Статистика');
+    expect(fixture.nativeElement.querySelector('h2').textContent).toContain('Статистика');
     expect(fixture.nativeElement.querySelector('header').classList).toContain('admin-page-header_surface');
   });
 
@@ -25,5 +26,16 @@ describe('Admin UI primitives', () => {
 
     expect(fixture.nativeElement.querySelector('[role="status"]')).toBeTruthy();
     expect(fixture.nativeElement.querySelector('.admin-state__loader')).toBeTruthy();
+  });
+
+  it('renders a text-first status with an independent dot signal', async () => {
+    await TestBed.configureTestingModule({declarations: [AdminStatusComponent]}).compileComponents();
+    const fixture = TestBed.createComponent(AdminStatusComponent);
+    fixture.componentRef.setInput('label', 'Используется');
+    fixture.componentRef.setInput('tone', 'positive');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain('Используется');
+    expect(fixture.nativeElement.querySelector('.admin-status__dot')).toBeTruthy();
   });
 });

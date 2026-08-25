@@ -9,9 +9,10 @@ import {AdminPlayersRoutingModule} from './admin-players-routing.module';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {AdminUiModule} from '../../components/admin-ui/admin-ui.module';
 import {CommerceOriginModule} from '../../../shared/modules/commerce-origin/commerce-origin.module';
+import {EntitlementLifecycleActionComponent} from './components/entitlement-lifecycle-action/entitlement-lifecycle-action.component';
 
 @NgModule({
-  declarations: [AdminPlayersComponent],
+  declarations: [AdminPlayersComponent, EntitlementLifecycleActionComponent],
   imports: [CommonModule, FormsModule, ButtonModule, SpacingModule, MatSnackBarModule,
     CommerceOriginModule, AdminUiModule, AdminPlayersRoutingModule],
   providers: [AdminPlayersService],

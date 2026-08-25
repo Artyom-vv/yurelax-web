@@ -3,11 +3,12 @@
 
 :host { display: block; width: 100%; }
 .player-layout { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 20px; min-height: 620px; }
-.directory, .player-card { border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 14px; background: map-get($project-colors, "gradation", 750); overflow: hidden; }
-.directory { align-self: start; }
-.search { display: grid; grid-template-columns: 1fr auto; gap: 8px; padding: 14px; border-bottom: 1px solid map-get($project-colors, "gradation", 600); }
+.player-card { border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 12px; background: map-get($project-colors, "gradation", 750); overflow: hidden; }
+.directory { display: grid; align-self: start; gap: 10px; }
+.search { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 8px; }
 .directory-list { max-height: 650px; overflow-y: auto; }
-.player-row { display: flex; width: 100%; align-items: center; gap: 11px; padding: 12px 14px; border: 0; border-bottom: 1px solid map-get($project-colors, "gradation", 700); color: map-get($project-colors, "gradation", 200); text-align: left; background: transparent; cursor: pointer; }
+.player-row { display: flex; width: 100%; align-items: center; gap: 11px; padding: 12px 14px; border: 0; border-bottom: 1px solid map-get($project-colors, "gradation", 600); color: map-get($project-colors, "gradation", 200); text-align: left; background: transparent; cursor: pointer; }
+.player-row:last-child { border-bottom: 0; }
 .player-row:hover, .player-row_active { background: map-get($project-colors, "gradation", 700); }
 .player-row_active { box-shadow: inset 3px 0 map-get($project-colors, "purple", 300); }
 .player-row strong, .player-row small { display: block; }
@@ -22,7 +23,7 @@
 .meta { color: map-get($project-colors, "gradation", 500); font-size: 12px; }
 code { color: map-get($project-colors, "purple", 200); font: 500 12px/1.4 $second_font; overflow-wrap: anywhere; }
 .summary-pills { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
-.summary-pills span { padding: 8px 10px; border-radius: 9px; color: map-get($project-colors, "gradation", 400); background: map-get($project-colors, "gradation", 700); font-size: 12px; }
+.summary-pills span { padding-left: 12px; border-left: 1px solid map-get($project-colors, "gradation", 600); color: map-get($project-colors, "gradation", 400); font: 400 12px/17px $second_font; }
 .summary-pills strong { color: map-get($project-colors, "gradation", 100); }
 .tabs { display: flex; gap: 4px; padding: 0 18px; border-top: 1px solid map-get($project-colors, "gradation", 600); border-bottom: 1px solid map-get($project-colors, "gradation", 600); overflow-x: auto; }
 .tabs button { flex: 0 0 auto; padding: 14px 10px 12px; border: 0; border-bottom: 2px solid transparent; color: map-get($project-colors, "gradation", 400); background: transparent; cursor: pointer; }
@@ -41,8 +42,6 @@ code { color: map-get($project-colors, "purple", 200); font: 500 12px/1.4 $secon
 .fact-row strong, .fact-row span, .right-row strong, .right-row small, .right-row code { display: block; }
 .fact-row span, .right-row small { margin-top: 3px; color: map-get($project-colors, "gradation", 500); font-size: 12px; }
 .fact-row b, .positive { color: map-get($project-colors, "green", 200); white-space: nowrap; }
-.fact-row i, .right-state i { padding: 5px 7px; border-radius: 6px; color: map-get($project-colors, "yellow", 200); background: map-get($project-colors, "yellow", 600); font-style: normal; font-size: 10px; }
-.fact-row i.state_active, .right-state i.state_active { color: map-get($project-colors, "green", 200); background: map-get($project-colors, "green", 600); }
 .timeline-row { display: grid; grid-template-columns: 10px 1fr; gap: 12px; padding: 10px 0; }
 .timeline-row_full { padding: 16px 0; border-top: 1px solid map-get($project-colors, "gradation", 700); }
 .timeline-dot { width: 8px; height: 8px; margin-top: 5px; border-radius: 50%; background: map-get($project-colors, "purple", 300); box-shadow: 0 0 0 4px map-get($project-colors, "purple", 500); }
@@ -64,6 +63,8 @@ code { color: map-get($project-colors, "purple", 200); font: 500 12px/1.4 $secon
 .stat-card strong { display: block; margin: 8px 0 5px; color: map-get($project-colors, "gradation", 100); font-size: 24px; }
 .stat-card span { color: map-get($project-colors, "gradation", 500); font-size: 11px; }
 .right-row { align-items: flex-start; }
+.right-row_entitlement { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+.right-row_entitlement yrx-entitlement-lifecycle-action { grid-column: 1 / -1; }
 .right-copy { min-width: 0; }
 .right-copy yrx-commerce-origin { display: block; margin: 6px 0 8px; }
 .right-copy > p:not(.meta) { max-width: 520px; margin: 4px 0 7px; color: map-get($project-colors, "gradation", 400); font-size: 12px; line-height: 1.45; }

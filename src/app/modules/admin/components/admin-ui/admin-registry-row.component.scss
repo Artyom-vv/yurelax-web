@@ -1,0 +1,14 @@
+@import "src/shared/styles/vars.colors";
+
+:host { display: block; }
+:host + :host { border-top: 1px solid map-get($project-colors, "gradation", 600); }
+
+.admin-registry-row {
+  min-width: 0;
+  padding: 16px 18px;
+  transition: background-color .16s ease;
+}
+
+:host-context(yrx-admin-registry) .admin-registry-row:hover {
+  background: map-get($project-colors, "gradation", 700);
+}
