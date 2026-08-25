@@ -115,8 +115,10 @@ export function deploymentConfig(environment) {
 /** Resolves exactly one Coolify application owned by the expected Git repository. */
 function selectApplication(config, applications) {
   if (!Array.isArray(applications)) throw new Error('Coolify applications response must be a list');
-  const matches = applications.filter((application) => application.name === config.applicationName
-    && repositorySlug(application.git_repository) === config.repository.toLowerCase());
+  const repositoryMatches = applications.filter((application) =>
+    repositorySlug(application.git_repository) === config.repository.toLowerCase());
+  const namedMatches = repositoryMatches.filter((application) => application.name === config.applicationName);
+  const matches = namedMatches.length === 1 ? namedMatches : repositoryMatches;
   if (matches.length !== 1 || typeof matches[0]?.uuid !== 'string') {
     throw new Error(`Coolify must expose exactly one ${config.applicationName} application for ${config.repository}`);
   }
