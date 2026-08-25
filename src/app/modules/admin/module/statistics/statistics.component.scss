@@ -14,13 +14,11 @@
 .overflow {
   overflow: hidden;
 }
-.contract-form,
-.contract-card {
+.contract-form {
   border: 1px solid rgba(255, 255, 255, .12);
   border-radius: 12px;
   background: rgba(255, 255, 255, .03);
 }
-.contract-card { padding: 20px; }
 .contract-form > summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px; cursor: pointer; list-style: none; }
 .contract-form > summary::-webkit-details-marker { display: none; }
 .summary-action { color: map-get($project-colors, "purple", 200); font: 600 13px/1.2 $second_font; }
@@ -34,8 +32,18 @@
 .contract-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  overflow: hidden;
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  border-radius: 12px;
+  background: map-get($project-colors, "gradation", 750);
 }
+.contract-card {
+  min-height: 86px;
+  padding: 16px 18px;
+  border-bottom: 1px solid map-get($project-colors, "gradation", 600);
+}
+.contract-card:last-child { border-bottom: 0; }
+.contract-card:hover { background: map-get($project-colors, "gradation", 700); }
 .contract-card_inactive {
   opacity: .62;
 }
