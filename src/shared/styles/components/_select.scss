@@ -184,6 +184,60 @@ div.mdc-menu-surface.mat-mdc-select-panel {
   }
 }
 
+.mat-mdc-option.yrx-select-option {
+  min-height: 48px;
+  padding: 0 12px;
+
+  &.yrx-select-option_underlined {
+    border-bottom: 1px solid map-get($project-colors, "gradation", 600);
+  }
+
+  .mdc-list-item__primary-text {
+    width: 100%;
+  }
+
+  .yrx-select-option__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    column-gap: 12px;
+    width: 100%;
+    min-height: 47px;
+    color: map-get($project-colors, "gradation", 300);
+
+    &_iconly {
+      grid-template-columns: 20px minmax(0, 1fr);
+    }
+  }
+
+  .yrx-select-option__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    line-height: 0;
+
+    yrx-icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .yrx-select-option__label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &.mdc-list-item--selected .yrx-select-option__content,
+  &:hover .yrx-select-option__content,
+  &.mat-mdc-option-active .yrx-select-option__content {
+    color: map-get($project-colors, "gradation", 100);
+  }
+}
+
 // если панелька сверху
 .mat-mdc-select-panel-above div.mdc-menu-surface.mat-mdc-select-panel {
   border-radius: 6px 6px 0 0;

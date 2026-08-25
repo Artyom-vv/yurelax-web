@@ -9,7 +9,6 @@ import {
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {OptionInterface} from "./interfaces/option.interface";
 import {MatSelect} from "@angular/material/select";
-import {OptionSelectOutputInterface} from "../dropout-point/interfaces/option-select-output.interface";
 
 
 @Component({
@@ -43,7 +42,7 @@ export class SelectComponent implements AfterViewInit {
   onChange: any = () => {};
   onTouch: any = () => {};
 
-  public selectedOption?: OptionSelectOutputInterface;
+  public selectedOption?: Pick<OptionInterface, 'value' | 'icon' | 'iconStroked'>;
   public value: unknown = null;
 
   ngAfterViewInit() {
@@ -59,12 +58,18 @@ export class SelectComponent implements AfterViewInit {
     this.cdr.detectChanges()
   }
 
-  public onOptionSelect($event: OptionSelectOutputInterface): void {
-    this.selectedOption = $event
-    this.onChange($event.value)
-    this.cdr.detectChanges()
-    if (this.select && this.select.panelOpen)
-      this.select.close()
+  public onOptionSelect(value: unknown): void {
+    const option = this.options.find(candidate => candidate.value === value);
+    if (!option) return;
+
+    this.value = value;
+    this.selectedOption = {
+      value: option.value,
+      icon: option.icon,
+      iconStroked: option.iconStroked
+    };
+    this.onChange(value);
+    this.cdr.markForCheck();
   }
 
   public closed() {
