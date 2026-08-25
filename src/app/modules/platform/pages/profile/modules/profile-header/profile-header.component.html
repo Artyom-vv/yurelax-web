@@ -1,12 +1,19 @@
 <header class="profile-header flex flex_align-center">
-  <div class="container container_large flex flex_justify-between">
+  <div class="profile-header__content container container_large flex flex_justify-between flex_align-center">
     <p class="text text_body regular c-gradation-300">Поддержка в наших соц. сетях:</p>
-    <ul class="socials flex gap-12">
-      @for (social of socials; track social) {
+    <ul class="profile-header__socials" aria-label="Социальные сети Yurelax">
+      @for (social of socials; track social.link) {
         @if (social.link) {
           <li>
-            <a [href]="social.link" target="_blank" rel="noopener noreferrer" [attr.aria-label]="social.name">
-              <yrx-icon [icon]="social.icon"></yrx-icon>
+            <a
+              class="profile-header__social-link"
+              [href]="social.link"
+              [style.--social-color]="social.color"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.aria-label]="social.name + ' — откроется в новой вкладке'"
+            >
+              <yrx-icon [hover]="false" [icon]="social.icon"></yrx-icon>
             </a>
           </li>
         }
