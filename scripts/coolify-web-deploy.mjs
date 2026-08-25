@@ -95,8 +95,23 @@ async function request(config, fetcher, path, init = {}) {
     headers: {authorization: `Bearer ${config.token}`, accept: 'application/json', 'content-type': 'application/json'},
     signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
   });
-  if (!response.ok) throw new Error(`Coolify ${init.method ?? 'GET'} ${path} failed with HTTP ${response.status}`);
+  if (!response.ok) {
+    const details = await safeErrorDetails(response);
+    throw new Error(`Coolify ${init.method ?? 'GET'} ${path} failed with HTTP ${response.status}${details}`);
+  }
   return response.json();
+}
+
+/** Keeps API diagnostics actionable without echoing arbitrary response data into CI logs. */
+async function safeErrorDetails(response) {
+  try {
+    const payload = await response.json();
+    const safe = Object.fromEntries(['message', 'error', 'errors', 'warning']
+      .filter((key) => payload?.[key] !== undefined).map((key) => [key, payload[key]]));
+    return Object.keys(safe).length > 0 ? `: ${JSON.stringify(safe).slice(0, 2_000)}` : '';
+  } catch {
+    return '';
+  }
 }
 
 /** Reads and validates every fail-closed web production setting. */

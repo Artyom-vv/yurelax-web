@@ -116,6 +116,12 @@ describe('web production deployment', () => {
     assert.throws(() => deploymentConfig({...ENVIRONMENT, WEB_RELEASE_SHA: 'master'}), /immutable Git commit/);
     assert.throws(() => deploymentConfig({...ENVIRONMENT, COOLIFY_API_URL: 'http:\/\/coolify.example.test'}), /must use HTTPS/);
   });
+
+  it('reports only allowlisted Coolify error fields', async () => {
+    const fetcher = sequence([json({message: 'Invalid field', errors: {name: ['Required']}, token: 'hidden'}, 400)]);
+    await assert.rejects(() => deployWeb('publish', ENVIRONMENT, fetcher, async () => {}),
+      /HTTP 400: {"message":"Invalid field","errors":{"name":\["Required"\]}}/);
+  });
 });
 
 describe('web release repository contract', () => {
