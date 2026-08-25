@@ -70,8 +70,9 @@ describe('web production deployment', () => {
   });
 
   it('fails closed when repository identity is missing or ambiguous', async () => {
-    await assert.rejects(() => deployWeb('publish', ENVIRONMENT, sequence([json([])]), async () => {}),
-      /exactly one yurelax-web/);
+    await assert.rejects(() => deployWeb('publish', ENVIRONMENT,
+      sequence([json([{name: 'yurelax-api', git_repository: 'Artyom-vv/yurelax-platform'}])]), async () => {}),
+    /Yurelax candidates: \[{"name":"yurelax-api","repository":"artyom-vv\/yurelax-platform"}\]/);
     await assert.rejects(() => deployWeb('publish', ENVIRONMENT,
       sequence([json([APPLICATION, {...APPLICATION, uuid: 'duplicate'}])]), async () => {}), /exactly one yurelax-web/);
   });
