@@ -1,0 +1,20 @@
+@import "src/shared/styles/vars.colors";
+
+:host { display: inline-flex; }
+.admin-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 26px;
+  padding: 4px 8px;
+  border-radius: 7px;
+  color: map-get($project-colors, "gradation", 300);
+  background: map-get($project-colors, "gradation", 700);
+  font: 500 11px/16px $second_font;
+  white-space: nowrap;
+
+  &__dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  &_positive { color: map-get($project-colors, "green", 200); background: map-get($project-colors, "green", 600); }
+  &_warning { color: map-get($project-colors, "yellow", 200); background: map-get($project-colors, "yellow", 600); }
+  &_danger { color: map-get($project-colors, "red", 200); background: map-get($project-colors, "red", 600); }
+}

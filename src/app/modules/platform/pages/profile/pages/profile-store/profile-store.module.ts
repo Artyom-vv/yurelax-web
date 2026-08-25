@@ -5,7 +5,7 @@ import {ProfileStoreRoutingModule} from "./profile-store-routing.module";
 import {DonatePanelModule} from "../profile-wallet/modules/donate-panel/donate-panel.module";
 import {PromoCodeModule} from "../../modules/promo-code/promo-code.module";
 import {SpacingModule} from "../../../../../shared/modules/spacing/spacing.module";
-import {SubscriptionComponent} from "./components/subscription/subscription.component";
+import {StoreOfferCardComponent} from './components/store-offer-card/store-offer-card.component';
 import {RefIconModule} from "../../../../../shared/modules/ref-icon/ref-icon.module";
 import {ButtonModule} from "../../../../../shared/modules/button/button.module";
 
@@ -13,7 +13,7 @@ import {ButtonModule} from "../../../../../shared/modules/button/button.module";
 @NgModule({
   declarations: [
     ProfileStoreComponent,
-    SubscriptionComponent,
+    StoreOfferCardComponent,
   ],
   imports: [
     CommonModule,

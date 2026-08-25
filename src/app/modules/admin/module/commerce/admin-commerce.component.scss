@@ -2,26 +2,27 @@
 @import "src/shared/styles/layout/colored-box";
 
 :host { display: block; width: 100%; }
-.page-head, .page-actions, .editor-actions, .card-top, .grant-head, .list-head { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.page-head { align-items: flex-end; }
-.page-head > div:first-child { max-width: 760px; }
+.page-actions, .editor-actions, .card-top, .grant-head, .list-head { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .page-actions { flex-shrink: 0; gap: 8px; }
-.contract-directory { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 12px 14px; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 10px; background: map-get($project-colors, "gradation", 750); }
-.contract-directory span { padding: 6px 9px; border-radius: 7px; color: map-get($project-colors, "gradation", 300); background: map-get($project-colors, "gradation", 700); font: 500 12px/1.2 $second_font; }
+.contract-directory { display: flex; align-items: center; flex-wrap: wrap; gap: 0; padding: 10px 14px; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 10px; background: map-get($project-colors, "gradation", 750); }
+.contract-directory span { padding: 3px 12px; border-right: 1px solid map-get($project-colors, "gradation", 600); color: map-get($project-colors, "gradation", 300); font: 500 12px/1.2 $second_font; }
+.contract-directory span:first-child { padding-left: 0; }
 .contract-directory strong { color: map-get($project-colors, "gradation", 100); }
 .contract-directory small { margin-left: auto; color: map-get($project-colors, "gradation", 400); font: 400 12px/1.3 $second_font; }
-.eyebrow { margin-bottom: 6px; color: map-get($project-colors, "purple", 200); font: 600 12px/1.2 $second_font; letter-spacing: .12em; text-transform: uppercase; }
-.editor-card, .catalog-toolbar { @include colored-box; }
+.editor-card, .catalog-toolbar, .operations-card { @include colored-box; }
 .editor-card { border: 1px solid map-get($project-colors, "gradation", 600); }
 .section-heading { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; margin-bottom: 28px; }
 .section-number { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; color: map-get($project-colors, "purple", 100); background: map-get($project-colors, "purple", 500); font-weight: 700; }
-.editor-form, .grant-editors, .price-editors, .catalog-list { display: flex; flex-direction: column; gap: 16px; }
+.editor-form, .grant-editors, .price-editors, .requirement-editors { display: flex; flex-direction: column; gap: 16px; }
+.catalog-list { display: flex; overflow: hidden; flex-direction: column; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 12px; background: map-get($project-colors, "gradation", 750); }
 .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .form-grid_product { grid-template-columns: 2fr 2fr .65fr 1.4fr; }
 .field { display: flex; min-width: 0; flex-direction: column; gap: 7px; color: map-get($project-colors, "gradation", 300); font: 500 13px/1.2 $second_font; }
 .field .box, .field input, .field select, .field textarea { width: 100%; }
 .editor-textarea { min-height: 92px; padding-top: 13px; resize: vertical; }
 .grant-editor { display: flex; flex-direction: column; gap: 18px; min-width: 0; margin: 0; padding: 20px; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 12px; background: map-get($project-colors, "gradation", 750); }
+.requirement-editor { display: flex; flex-direction: column; gap: 14px; min-width: 0; margin: 0; padding: 16px; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 10px; background: map-get($project-colors, "gradation", 750); }
+.requirement-editor > .form-grid:first-of-type { align-items: end; }
 .grant-editor legend { display: none; }
 .capability-card { display: grid; gap: 14px; padding: 16px; border: 1px solid map-get($project-colors, "purple", 500); border-radius: 10px; background: rgba(map-get($project-colors, "purple", 500), .08); }
 .capability-card strong { color: map-get($project-colors, "gradation", 100); }
@@ -51,11 +52,12 @@
 .catalog-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
 .list-head { margin-bottom: 12px; }
 .list-head span { display: grid; place-items: center; min-width: 28px; height: 28px; padding: 0 8px; border-radius: 8px; color: map-get($project-colors, "gradation", 300); background: map-get($project-colors, "gradation", 600); font-size: 12px; }
-.catalog-card { padding: 20px; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 12px; background: map-get($project-colors, "gradation", 750); transition: border-color .2s ease, transform .2s ease; }
-.catalog-card:hover { border-color: map-get($project-colors, "purple", 400); transform: translateY(-1px); }
+.catalog-card { padding: 18px; border: 0; border-bottom: 1px solid map-get($project-colors, "gradation", 600); background: transparent; transition: background-color .16s ease; }
+.catalog-card:last-child { border-bottom: 0; }
+.catalog-card:hover { background: map-get($project-colors, "gradation", 700); }
 .catalog-card_retired { opacity: .62; }
 .card-top { align-items: flex-start; }
-.card-top h4 { margin: 3px 0 5px; }
+.card-top h4 { margin: 3px 0 5px; font-size: 18px; line-height: 24px; }
 .card-top time, .meta { color: map-get($project-colors, "gradation", 400); font-size: 12px; }
 code { color: map-get($project-colors, "purple", 200); font: 500 12px/1.4 $second_font; overflow-wrap: anywhere; }
 .description { margin: 16px 0; }
@@ -71,5 +73,12 @@ code { color: map-get($project-colors, "purple", 200); font: 500 12px/1.4 $secon
 .empty-state { padding: 36px 20px; border: 1px dashed map-get($project-colors, "gradation", 600); border-radius: 12px; text-align: center; color: map-get($project-colors, "gradation", 300); }
 .empty-state span { display: block; margin-top: 4px; color: map-get($project-colors, "gradation", 500); font-size: 13px; }
 
-@media (max-width: 1100px) { .catalog-columns, .form-grid_product { grid-template-columns: 1fr 1fr; } .page-head { align-items: flex-start; flex-direction: column; } }
-@media (max-width: 760px) { .page-actions, .editor-actions, .catalog-toolbar { align-items: stretch; flex-direction: column; } .page-actions yrx-button, .editor-actions yrx-button { width: 100%; } .catalog-columns, .form-grid, .form-grid_product, .filters, .subsection, .price-editor, .capability-card dl, .capability-card_compact { grid-template-columns: 1fr; } .section-heading { grid-template-columns: 36px 1fr; } .section-number { width: 36px; height: 36px; } }
+.operations-card { padding-top: 20px; padding-bottom: 20px; }
+.operations-heading { display: grid; grid-template-columns: minmax(260px, .8fr) minmax(520px, 1.2fr); align-items: end; gap: 28px; }
+.operations-heading h4 { margin: 4px 0 5px; }
+.operations-heading .eyebrow { color: map-get($project-colors, "purple", 200); font: 600 11px/1.2 $second_font; letter-spacing: .08em; }
+.operations-filters { display: grid; grid-template-columns: 1fr 1fr auto; align-items: end; gap: 10px; }
+.operations-filters yrx-button { align-self: end; }
+
+@media (max-width: 1100px) { .catalog-columns, .form-grid_product, .operations-heading { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 760px) { .page-actions, .editor-actions, .catalog-toolbar { align-items: stretch; flex-direction: column; } .page-actions yrx-button, .editor-actions yrx-button { width: 100%; } .catalog-columns, .form-grid, .form-grid_product, .filters, .subsection, .price-editor, .capability-card dl, .capability-card_compact, .operations-heading, .operations-filters { grid-template-columns: 1fr; } .section-heading { grid-template-columns: 36px 1fr; } .section-number { width: 36px; height: 36px; } }

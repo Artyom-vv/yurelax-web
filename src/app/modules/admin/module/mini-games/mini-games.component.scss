@@ -1,10 +1,72 @@
-:host {
-  width: 100%;
+@import "src/shared/styles/vars.colors";
+
+:host { display: block; width: 100%; }
+
+.game-tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
+
+  button { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 14px; padding: 13px 14px; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 10px; color: map-get($project-colors, "gradation", 300); background: map-get($project-colors, "gradation", 750); text-align: left; cursor: pointer; }
+  button:hover { background: map-get($project-colors, "gradation", 700); }
+  button.active { border-color: map-get($project-colors, "purple", 300); box-shadow: inset 3px 0 map-get($project-colors, "purple", 300); }
+  strong, small { display: block; font-family: $second_font; }
+  strong { color: map-get($project-colors, "gradation", 100); font-size: 14px; line-height: 19px; }
+  small { margin-top: 2px; color: map-get($project-colors, "gradation", 500); font-size: 11px; line-height: 15px; }
 }
-.box_input {
-  position: relative;
-  z-index: 2;
-}
-.overflow {
-  overflow: hidden;
+
+.workspace { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(310px, .72fr); align-items: start; gap: 18px; }
+.editor, .preview-column { padding: 20px; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 12px; background: map-get($project-colors, "gradation", 750); }
+.editor { display: grid; gap: 16px; }
+.field-row { display: grid; grid-template-columns: .8fr 1.2fr; gap: 14px; }
+.check { display: flex; align-items: center; gap: 11px; padding: 12px; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 9px; cursor: pointer; }
+.check input { position: absolute; opacity: 0; }
+.check > i { width: 17px; height: 17px; flex: 0 0 auto; border: 1px solid map-get($project-colors, "gradation", 500); border-radius: 5px; }
+.check input:checked + i { border-color: map-get($project-colors, "purple", 300); background: map-get($project-colors, "purple", 300); box-shadow: inset 0 0 0 4px map-get($project-colors, "purple", 600); }
+.check strong, .check small { display: block; font-family: $second_font; }
+.check strong { color: map-get($project-colors, "gradation", 200); font-size: 13px; }
+.check small { margin-top: 2px; color: map-get($project-colors, "gradation", 500); font-size: 11px; }
+
+.editor-section { display: grid; gap: 14px; padding-top: 18px; border-top: 1px solid map-get($project-colors, "gradation", 600); }
+.stat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+.stat-grid button { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 11px; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 8px; color: map-get($project-colors, "gradation", 300); background: map-get($project-colors, "gradation", 800); text-align: left; cursor: pointer; }
+.stat-grid button span { overflow: hidden; font: 400 12px/16px $second_font; text-overflow: ellipsis; }
+.stat-grid button i { color: map-get($project-colors, "gradation", 500); font: 400 10px/14px $second_font; font-style: normal; }
+.stat-grid button.selected { border-color: map-get($project-colors, "purple", 300); color: map-get($project-colors, "gradation", 100); background: map-get($project-colors, "purple", 600); }
+.stat-grid button.selected i { color: map-get($project-colors, "purple", 200); }
+
+.editor-actions { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 18px; border-top: 1px solid map-get($project-colors, "gradation", 600); }
+.editor-actions p { max-width: 390px; color: map-get($project-colors, "gradation", 500); font: 400 11px/16px $second_font; }
+
+.preview-column { display: grid; gap: 16px; }
+.game-preview { position: relative; min-height: 360px; overflow: hidden; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 11px; background: map-get($project-colors, "gradation", 800); background-position: center; background-size: cover; }
+.game-preview__veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(9,13,17,.08), rgba(9,13,17,.96)); }
+.game-preview__content { position: absolute; inset: auto 0 0; padding: 20px; }
+.game-preview p { margin: 13px 0 3px; color: map-get($project-colors, "purple", 200); font: 600 10px/14px $second_font; letter-spacing: .1em; text-transform: uppercase; }
+.game-preview h4 { margin-bottom: 8px; }
+.game-icon { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 10px; color: map-get($project-colors, "purple", 100); background: map-get($project-colors, "purple", 400); }
+.game-icon yrx-icon { width: 20px; height: 20px; }
+.preview-description { min-height: 38px; color: map-get($project-colors, "gradation", 300); font: 400 12px/18px $second_font; }
+.chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 14px; }
+.chips span { padding: 4px 7px; border-radius: 5px; color: map-get($project-colors, "purple", 100); background: map-get($project-colors, "purple", 500); font: 500 9px/13px $second_font; }
+.publication-note { display: flex; gap: 10px; color: map-get($project-colors, "gradation", 400); font-family: $second_font; }
+.publication-note yrx-icon { width: 18px; height: 18px; flex: 0 0 auto; }
+.publication-note strong, .publication-note small { display: block; }
+.publication-note strong { color: map-get($project-colors, "gradation", 200); font-size: 12px; }
+.publication-note small { margin-top: 2px; font-size: 10px; line-height: 15px; }
+
+.revision-row { display: grid; grid-template-columns: 118px minmax(0, 1fr) auto; align-items: center; gap: 16px; }
+.revision-row strong, .revision-row small { display: block; font-family: $second_font; }
+.revision-row strong { overflow: hidden; color: map-get($project-colors, "gradation", 200); font-size: 13px; line-height: 18px; text-overflow: ellipsis; white-space: nowrap; }
+.revision-row small { margin-top: 3px; color: map-get($project-colors, "gradation", 500); font-size: 10px; line-height: 14px; }
+.revision-actions { display: flex; gap: 7px; }
+.muted { color: map-get($project-colors, "gradation", 400); font: 400 12px/17px $second_font; }
+
+@media (max-width: 980px) { .workspace { grid-template-columns: 1fr; } }
+@media (max-width: 680px) {
+  .field-row, .stat-grid { grid-template-columns: 1fr; }
+  .editor-actions { align-items: stretch; flex-direction: column; }
+  .revision-row { grid-template-columns: 1fr; }
+  .revision-actions { flex-wrap: wrap; }
 }

@@ -1,45 +1,31 @@
-<header class="admin-hero">
-  <div>
-    <p class="eyebrow">Центр управления Yurelax</p>
-    <h3>Контент сервера</h3>
-    <p class="text text_body regular c-gradation-300">Управляйте платформенными контрактами, каталогом и данными игроков из одного кабинета. Изменения остаются аудируемыми и не требуют правки игровых баз вручную.</p>
-  </div>
-  <div class="hero-mark" aria-hidden="true"><yrx-icon [stroked]="true" icon="command"></yrx-icon></div>
-</header>
+<yrx-admin-page-header eyebrow="Центр управления Yurelax" title="Контент сервера"
+  description="Платформенные контракты, каталог и данные игроков в одном кабинете. Все изменения проходят через роли и остаются в аудите.">
+</yrx-admin-page-header>
 
 <yrx-spacing type="M"></yrx-spacing>
 
-<section class="workspace-grid">
-  <a class="workspace-card workspace-card_featured" routerLink="/admin/players">
-    <span class="card-icon"><yrx-icon [stroked]="true" icon="users"></yrx-icon></span>
-    <div><p class="card-kicker">Поддержка</p><h4>Игроки</h4><p>Профиль, награды, статистика, покупки, права и единая история действий.</p></div>
-    <yrx-icon class="card-arrow" [stroked]="true" icon="arrow-right"></yrx-icon>
-  </a>
-  <a class="workspace-card" routerLink="/admin/commerce">
-    <span class="card-icon"><yrx-icon [stroked]="true" icon="shopping-bag"></yrx-icon></span>
-    <div><p class="card-kicker">Каталог</p><h4>Товары и права</h4><p>Версии товаров, составные права, цены, требования и сроки действия.</p></div>
-    <yrx-icon class="card-arrow" [stroked]="true" icon="arrow-right"></yrx-icon>
-  </a>
-  <a class="workspace-card" routerLink="/admin/statistics">
-    <span class="card-icon"><yrx-icon [stroked]="true" icon="arrow-big-up"></yrx-icon></span>
-    <div><p class="card-kicker">Контракты</p><h4>Статистика</h4><p>Коды показателей, типы значений и правила накопления игровых фактов.</p></div>
-    <yrx-icon class="card-arrow" [stroked]="true" icon="arrow-right"></yrx-icon>
-  </a>
-  <a class="workspace-card" routerLink="/admin/mini-games">
-    <span class="card-icon"><yrx-icon [stroked]="true" icon="joystick"></yrx-icon></span>
-    <div><p class="card-kicker">Режимы</p><h4>Игровой каталог</h4><p>Представление режимов, их метаданные и связанные показатели.</p></div>
-    <yrx-icon class="card-arrow" [stroked]="true" icon="arrow-right"></yrx-icon>
-  </a>
-  <a class="workspace-card" routerLink="/admin/wiki">
-    <span class="card-icon"><yrx-icon [stroked]="true" icon="book"></yrx-icon></span>
-    <div><p class="card-kicker">Публикация</p><h4>Вики</h4><p>Страницы знаний и объяснения механик для игроков и команды.</p></div>
-    <yrx-icon class="card-arrow" [stroked]="true" icon="arrow-right"></yrx-icon>
-  </a>
-</section>
+<yrx-admin-section-header title="Рабочие разделы"
+  description="Выберите объект, который нужно проверить или изменить.">
+</yrx-admin-section-header>
+<yrx-spacing type="S"></yrx-spacing>
 
-<yrx-spacing type="M"></yrx-spacing>
+<yrx-admin-registry ariaLabel="Разделы администрирования">
+  @for (item of navigation; track item.route) {
+    <yrx-admin-registry-row>
+      <a class="workspace-row" [routerLink]="item.route">
+        <span class="workspace-row__icon"><yrx-icon [stroked]="true" [icon]="item.icon"></yrx-icon></span>
+        <span class="workspace-row__copy">
+          <span class="workspace-row__kicker">{{item.kicker}}</span>
+          <strong>{{item.title}}</strong>
+          <small>{{item.description}}</small>
+        </span>
+        <yrx-icon class="workspace-row__arrow" [stroked]="true" icon="arrow-right"></yrx-icon>
+      </a>
+    </yrx-admin-registry-row>
+  }
+</yrx-admin-registry>
 
-<section class="admin-note">
+<p class="admin-footnote">
   <yrx-icon [stroked]="true" icon="shield"></yrx-icon>
-  <div><h5>Безопасная работа с контентом</h5><p class="text text_body regular c-gradation-300">Админка использует серверную сессию и платформенные роли. Доступные действия определяются контрактами и сохраняются в аудите.</p></div>
-</section>
+  Доступные действия определяются платформенными ролями; автор и результат каждой операции сохраняются.
+</p>

@@ -37,9 +37,19 @@ const routes: Routes = [
         loadChildren: () => import('../admin/module/commerce/admin-commerce.module').then(m => m.AdminCommerceModule)
       },
       {
+        path: 'finance', component: AdminContentComponent, title: 'Дешборд — Финансовые операции',
+        loadChildren: () => import('../admin/module/finance/admin-finance.module').then(m => m.AdminFinanceModule)
+      },
+      {
+        path: 'quarantine', component: AdminContentComponent, title: 'Дешборд — Карантин событий',
+        loadChildren: () => import('../admin/module/quarantine/admin-quarantine.module').then(m => m.AdminQuarantineModule)
+      },
+      {path:'privacy',component:AdminContentComponent,title:'Дешборд — Privacy',loadChildren:()=>import('../admin/module/privacy/admin-privacy.module').then(m=>m.AdminPrivacyModule)},
+      {path:'audit',component:AdminContentComponent,title:'Дешборд — Аудит',loadChildren:()=>import('../admin/module/audit/admin-audit.module').then(m=>m.AdminAuditModule)},
+      {
         path: 'mini-games',
         component: AdminContentComponent,
-        title: 'Дешборд — Мини-игры',
+        title: 'Дешборд — Контент режимов',
         loadChildren: () => import('../admin/module/mini-games/mini-games.module').then(m => m.MiniGamesModule)
       },
       {

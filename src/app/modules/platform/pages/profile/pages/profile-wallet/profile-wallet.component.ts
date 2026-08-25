@@ -2,6 +2,7 @@ import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {catchError, finalize, forkJoin, of, tap} from 'rxjs';
 import {PlayerWalletBalance, PlayerWalletTransaction} from '../profile-store/interfaces/commerce.interface';
 import {PlatformCommerceService} from '../profile-store/services/platform-commerce.service';
+import {platformErrorMessage} from '../../../../../shared/interfaces/platform-error-message';
 
 @Component({
     selector: 'yrx-profile-wallet',
@@ -25,7 +26,7 @@ export class ProfileWalletComponent implements OnInit {
         this.transactions = result.transactions.items;
       }),
       catchError(error => {
-        this.error = error?.error?.message ?? 'Не удалось загрузить кошельки.';
+        this.error = platformErrorMessage(error, 'Кошельки сейчас недоступны. Попробуйте обновить страницу позже.');
         return of(null);
       }),
       finalize(() => this.loading = false),

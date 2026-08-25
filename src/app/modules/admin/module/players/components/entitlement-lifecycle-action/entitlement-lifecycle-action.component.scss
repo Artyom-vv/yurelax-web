@@ -1,0 +1,14 @@
+@import "src/shared/styles/vars.colors";
+
+:host { display: block; }
+.action-link { padding: 0; border: 0; color: map-get($project-colors, "red", 200); background: transparent; cursor: pointer; font: 500 12px/1.4 $second_font; }
+.action-link:disabled { color: map-get($project-colors, "gradation", 500); cursor: default; }
+.decision { display: grid; grid-template-columns: minmax(220px, .8fr) minmax(260px, 1fr); gap: 16px 22px; padding: 15px; border: 1px solid map-get($project-colors, "red", 500); border-radius: 10px; background: map-get($project-colors, "red", 600); }
+.decision_restore { border-color: map-get($project-colors, "green", 500); background: map-get($project-colors, "green", 600); }
+.decision__copy p { margin-top: 5px; color: map-get($project-colors, "gradation", 300); font: 400 12px/1.45 $second_font; }
+textarea { width: 100%; min-height: 76px; padding: 10px 12px; resize: vertical; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 8px; outline: none; color: map-get($project-colors, "gradation", 100); background: map-get($project-colors, "gradation", 800); font: 400 13px/1.45 $second_font; }
+textarea:focus { border-color: map-get($project-colors, "purple", 300); }
+textarea::placeholder { color: map-get($project-colors, "gradation", 500); }
+.decision__actions { display: flex; grid-column: 1 / -1; justify-content: flex-end; gap: 8px; }
+
+@media (max-width: 720px) { .decision { grid-template-columns: 1fr; } .decision__actions { grid-column: auto; flex-direction: column-reverse; } }

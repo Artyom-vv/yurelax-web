@@ -7,6 +7,8 @@ import {
   AdminCommerceProductRevision,
   AdminCommerceReferences,
   AdminCommerceService,
+  CommerceFulfillmentInspectionResult,
+  CommerceFulfillmentStatus,
   CommerceCapabilityReference,
   CommerceRequirement,
   PublishCommerceGrant,
@@ -26,7 +28,7 @@ const POSITIVE_DECIMAL = /^(?:0|[1-9][0-9]*)(?:\.[0-9]+)?$/;
   standalone: false,
 })
 export class AdminCommerceComponent implements OnInit {
-  public view: 'catalog' | 'product' | 'offer' = 'catalog';
+  public view: 'catalog' | 'product' | 'offer' | 'operations' = 'catalog';
   public products: AdminCommerceProductRevision[] = [];
   public offers: AdminCommerceOfferRevision[] = [];
   public references: AdminCommerceReferences = {
@@ -34,6 +36,10 @@ export class AdminCommerceComponent implements OnInit {
   };
   public productCode = '';
   public offerCode = '';
+  public fulfillmentProvider = '';
+  public fulfillmentStatus: CommerceFulfillmentStatus | '' = '';
+  public fulfillmentData: CommerceFulfillmentInspectionResult | null = null;
+  public fulfillmentLoading = false;
   public loading = true;
   public mutating = false;
   public readonly productForm: FormGroup;
@@ -59,21 +65,15 @@ export class AdminCommerceComponent implements OnInit {
       gameCode: ['', Validators.pattern(CONTRACT_CODE)],
       effectiveFrom: [this.localDateTime(new Date()), Validators.required],
       effectiveUntil: [''],
-      requirementKind: ['NONE'],
-      progressionCode: [''],
-      minimumLevel: [3, Validators.min(0)],
-      statCode: [''],
-      requirementGameCode: [''],
-      minimumStatistic: ['0'],
-      requiredCapabilityId: [''],
-      requiredOfferCode: [''],
-      maximumPurchases: [1, Validators.min(1)],
+      requirementMode: ['NONE'],
+      requirements: this.formBuilder.array([]),
       prices: this.formBuilder.array([this.createPriceGroup()]),
     });
   }
 
   public get grants(): FormArray { return this.productForm.get('grants') as FormArray; }
   public get prices(): FormArray { return this.offerForm.get('prices') as FormArray; }
+  public get requirements(): FormArray { return this.offerForm.get('requirements') as FormArray; }
   public get offerCodes(): string[] { return [...new Set(this.offers.map(offer => offer.code))]; }
 
   ngOnInit(): void { this.load(); }
@@ -82,12 +82,45 @@ export class AdminCommerceComponent implements OnInit {
   public removeGrant(index: number): void { if (this.grants.length > 1) this.grants.removeAt(index); }
   public addPrice(): void { this.prices.push(this.createPriceGroup()); }
   public removePrice(index: number): void { if (this.prices.length > 1) this.prices.removeAt(index); }
+  public addRequirement(): void {
+    this.requirements.push(this.createRequirementGroup());
+    if (this.offerForm.get('requirementMode')?.value === 'NONE') {
+      this.offerForm.patchValue({requirementMode: 'ALL'});
+    }
+  }
+  public removeRequirement(index: number): void {
+    this.requirements.removeAt(index);
+    if (this.requirements.length === 0) this.offerForm.patchValue({requirementMode: 'NONE'});
+  }
 
-  public open(view: 'catalog' | 'product' | 'offer'): void {
+  public open(view: 'catalog' | 'product' | 'offer' | 'operations'): void {
     this.view = view;
     if (view === 'offer' && !this.offerForm.get('productRevision')?.value && this.products.length > 0) {
       this.offerForm.patchValue({productRevision: this.productRevisionValue(this.products[0])});
     }
+    if (view === 'operations') {
+      this.fulfillmentProvider ||= this.references.providers.find(provider => provider.active)?.code ?? '';
+      this.loadFulfillments();
+    }
+  }
+
+  public loadFulfillments(): void {
+    if (!this.fulfillmentProvider) {
+      this.fulfillmentData = null;
+      return;
+    }
+    this.fulfillmentLoading = true;
+    this.commerce.fulfillments(
+      this.fulfillmentProvider,
+      this.fulfillmentStatus || undefined,
+    ).pipe(
+      tap(result => this.fulfillmentData = result),
+      catchError(error => {
+        this.fulfillmentData = null;
+        return this.failure(error, 'Не удалось загрузить состояние выдачи товаров');
+      }),
+      finalize(() => this.fulfillmentLoading = false),
+    ).subscribe();
   }
 
   public load(): void {
@@ -101,6 +134,9 @@ export class AdminCommerceComponent implements OnInit {
         this.products = result.products.items;
         this.offers = result.offers.items;
         this.references = result.references;
+        if (!this.fulfillmentProvider) {
+          this.fulfillmentProvider = result.references.providers.find(provider => provider.active)?.code ?? '';
+        }
       }),
       catchError(error => this.failure(error, 'Не удалось загрузить commerce-каталог')),
       finalize(() => this.loading = false),
@@ -161,8 +197,9 @@ export class AdminCommerceComponent implements OnInit {
         this.offers = [offer, ...this.offers];
         this.snackBar.open(`Предложение ${offer.code} v${offer.version} опубликовано`, 'Хорошо');
         this.offerForm.reset({version: 1, productRevision: '', effectiveFrom: this.localDateTime(new Date()),
-          requirementKind: 'NONE', minimumLevel: 3, minimumStatistic: '0', maximumPurchases: 1});
+          requirementMode: 'NONE'});
         this.prices.clear(); this.prices.push(this.createPriceGroup());
+        this.requirements.clear();
         this.view = 'catalog';
       }),
       catchError(error => this.failure(error, 'Не удалось опубликовать предложение')),
@@ -193,6 +230,9 @@ export class AdminCommerceComponent implements OnInit {
       case 'STAT_THRESHOLD': return `${requirement['statCode']} ≥ ${requirement['minimum']} (${requirement['gameCode'] ?? 'глобально'})`;
       case 'GRANT_OWNED': return `Требуется право ${requirement['providerCode']}:${requirement['grantKey']}`;
       case 'PURCHASE_COUNT_LIMIT': return `Не более ${requirement['maximum']} покупок ${requirement['offerCode']}`;
+      case 'ALL': return `Все условия: ${(requirement['items'] as unknown[]).map(item => this.requirement(item)).join('; ')}`;
+      case 'ANY': return `Любое условие: ${(requirement['items'] as unknown[]).map(item => this.requirement(item)).join('; ')}`;
+      case 'NOT': return `Не должно выполняться: ${this.requirement(requirement['item'])}`;
       default: return 'Контрактное требование';
     }
   }
@@ -235,6 +275,8 @@ export class AdminCommerceComponent implements OnInit {
       ownershipPolicy: ['DENY_DUPLICATE', Validators.required],
       lifetimeKind: ['PERMANENT', Validators.required],
       durationSeconds: [2_592_000, Validators.min(1)],
+      startsAt: [this.localDateTime(new Date())],
+      expiresAt: [this.localDateTime(new Date(Date.now() + 2_592_000_000))],
       activationEnabled: [false],
       activationDurationSeconds: [3_600, Validators.min(1)],
       activationWindowSeconds: [86_400, Validators.min(1)],
@@ -251,21 +293,33 @@ export class AdminCommerceComponent implements OnInit {
     });
   }
 
+  private createRequirementGroup(): FormGroup {
+    return this.formBuilder.group({
+      kind: ['PROGRESSION_LEVEL', Validators.required],
+      negated: [false],
+      progressionCode: [''], minimumLevel: [3, Validators.min(0)],
+      statCode: [''], gameCode: [''], minimum: ['0'],
+      capabilityId: [''], offerCode: [''], maximum: [1, Validators.min(1)],
+    });
+  }
+
   private productGrant(value: Record<string, unknown>): PublishCommerceGrant {
     const capability = this.requiredCapability(value['capabilityId']);
     let payload: unknown;
     try { payload = JSON.parse(String(value['payload'])); }
     catch { throw new Error(`Данные права ${capability.name} должны быть корректным JSON`); }
-    const fixedDuration = value['lifetimeKind'] === 'FIXED_DURATION';
+    const lifetimeKind = value['lifetimeKind'];
     const activation = value['activationEnabled'] === true;
     return {
       providerCode: capability.providerCode, grantKey: capability.grantKey,
       gameCode: capability.gameCode,
       deliveryMode: capability.deliveryMode,
       ownershipPolicy: value['ownershipPolicy'] as PublishCommerceGrant['ownershipPolicy'],
-      lifetime: fixedDuration
+      lifetime: lifetimeKind === 'FIXED_DURATION'
         ? {kind: 'FIXED_DURATION', durationSeconds: Number(value['durationSeconds'])}
-        : {kind: 'PERMANENT'},
+        : lifetimeKind === 'FIXED_WINDOW'
+          ? this.fixedWindow(value['startsAt'], value['expiresAt'])
+          : {kind: 'PERMANENT'},
       activationPolicy: activation ? {
         durationSeconds: Number(value['activationDurationSeconds']),
         lifetimeMaximumActivations: value['lifetimeMaximumActivations']
@@ -278,17 +332,35 @@ export class AdminCommerceComponent implements OnInit {
   }
 
   private requirementInput(value: Record<string, any>): CommerceRequirement | null {
-    switch (value['requirementKind']) {
-      case 'PROGRESSION_LEVEL': return {kind: 'PROGRESSION_LEVEL', progressionCode: this.requiredCode(value['progressionCode'], 'Код прогрессии'), minimumLevel: Number(value['minimumLevel'])};
-      case 'STAT_THRESHOLD': return {kind: 'STAT_THRESHOLD', statCode: this.requiredCode(value['statCode'], 'Код статистики'), gameCode: this.optionalCode(value['requirementGameCode'], 'Код режима'), minimum: String(value['minimumStatistic']).trim()};
+    if (value['requirementMode'] === 'NONE') return null;
+    const items = (value['requirements'] as Record<string, unknown>[]).map(item => this.requirementLeaf(item));
+    if (items.length === 0) throw new Error('Добавьте хотя бы одно условие покупки');
+    return items.length === 1 ? items[0] : {kind: value['requirementMode'] === 'ANY' ? 'ANY' : 'ALL', items};
+  }
+
+  private requirementLeaf(value: Record<string, unknown>): CommerceRequirement {
+    let result: CommerceRequirement;
+    switch (value['kind']) {
+      case 'PROGRESSION_LEVEL': result = {kind: 'PROGRESSION_LEVEL', progressionCode: this.requiredCode(value['progressionCode'], 'Код прогрессии'), minimumLevel: Number(value['minimumLevel'])}; break;
+      case 'STAT_THRESHOLD': result = {kind: 'STAT_THRESHOLD', statCode: this.requiredCode(value['statCode'], 'Код статистики'), gameCode: this.optionalCode(value['gameCode'], 'Код режима'), minimum: String(value['minimum']).trim()}; break;
       case 'GRANT_OWNED': {
-        const capability = this.requiredCapability(value['requiredCapabilityId']);
-        return {kind: 'GRANT_OWNED', providerCode: capability.providerCode,
+        const capability = this.requiredCapability(value['capabilityId']);
+        result = {kind: 'GRANT_OWNED', providerCode: capability.providerCode,
           grantKey: capability.grantKey, gameCode: capability.gameCode};
+        break;
       }
-      case 'PURCHASE_COUNT_LIMIT': return {kind: 'PURCHASE_COUNT_LIMIT', offerCode: this.requiredCode(value['requiredOfferCode'], 'Код предложения'), maximum: Number(value['maximumPurchases'])};
-      default: return null;
+      case 'PURCHASE_COUNT_LIMIT': result = {kind: 'PURCHASE_COUNT_LIMIT', offerCode: this.requiredCode(value['offerCode'], 'Код предложения'), maximum: Number(value['maximum'])}; break;
+      default: throw new Error('Выберите тип условия покупки');
     }
+    return value['negated'] === true ? {kind: 'NOT', item: result} : result;
+  }
+
+  private fixedWindow(startsAt: unknown, expiresAt: unknown): PublishCommerceGrant['lifetime'] {
+    const start = new Date(String(startsAt)); const end = new Date(String(expiresAt));
+    if (!Number.isFinite(start.getTime()) || !Number.isFinite(end.getTime()) || end <= start) {
+      throw new Error('Окончание фиксированного срока права должно быть позже начала');
+    }
+    return {kind: 'FIXED_WINDOW', startsAt: start.toISOString(), expiresAt: end.toISOString()};
   }
 
   private requiredCode(value: unknown, label: string): string {

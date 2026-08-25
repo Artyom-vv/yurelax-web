@@ -1,7 +1,9 @@
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, switchMap} from 'rxjs';
 import {environment} from '../../../../environments/environment';
+import {CommerceAcquisitionOrigin} from '../interfaces/commerce-acquisition.interface';
+import {PlatformSessionService} from './platform-session.service';
 
 export interface AdminPlayerEntry {
   playerId: string;
@@ -36,8 +38,9 @@ export interface AdminPurchase {
   productCode: string;
   productName: string;
   quantity: number;
-  currencyCode: string;
-  totalPrice: string;
+  currencyCode: string | null;
+  totalPrice: string | null;
+  origin: CommerceAcquisitionOrigin;
   purchasedAt: string;
   status: string;
 }
@@ -52,7 +55,9 @@ export interface AdminEntitlement {
   capabilityDescription: string;
   gameCode: string | null;
   status: string;
+  kind: string;
   grantedAt: string;
+  revokedAt: string | null;
   expiresAt: string | null;
   activationState: {
     canActivate: boolean;
@@ -64,6 +69,19 @@ export interface AdminEntitlement {
     periodRemaining: number | null;
     periodResetsAt: string | null;
   };
+  origin: CommerceAcquisitionOrigin;
+}
+
+export interface AdminEntitlementLifecycleResult {
+  entitlementId: string;
+  playerId: string;
+  operation: 'REVOKE' | 'RESTORE';
+  status: 'ACTIVE' | 'REVOKED';
+  reason: string;
+  actorId: string;
+  occurredAt: string;
+  revokedAt: string | null;
+  replayed: boolean;
 }
 
 export interface AdminTimelineItem {
@@ -78,7 +96,7 @@ export interface AdminPage<T> { items: T[]; page?: {nextCursor?: string | null; 
 
 @Injectable()
 export class AdminPlayersService {
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient, private readonly session: PlatformSessionService) {}
 
   players(search?: string): Observable<AdminPlayerEntry[]> {
     return this.http.get<AdminPlayerEntry[]>(`${environment.platformApiUrl}/admin/players`, {
@@ -110,6 +128,14 @@ export class AdminPlayersService {
     });
   }
 
+  revokeEntitlement(playerId: string, entitlementId: string, reason: string): Observable<AdminEntitlementLifecycleResult> {
+    return this.entitlementMutation(playerId, entitlementId, 'revocation', reason);
+  }
+
+  restoreEntitlement(playerId: string, entitlementId: string, reason: string): Observable<AdminEntitlementLifecycleResult> {
+    return this.entitlementMutation(playerId, entitlementId, 'restoration', reason);
+  }
+
   timeline(playerId: string, scope = 'ALL'): Observable<AdminPage<AdminTimelineItem>> {
     return this.http.get<AdminPage<AdminTimelineItem>>(this.playerPath(playerId, 'timeline'), {
       params: this.params({scope, limit: '50'}),
@@ -124,5 +150,13 @@ export class AdminPlayersService {
     let params = new HttpParams();
     for (const [key, value] of Object.entries(values)) if (value) params = params.set(key, value);
     return params;
+  }
+
+  private entitlementMutation(playerId: string, entitlementId: string,
+    operation: 'revocation' | 'restoration', reason: string): Observable<AdminEntitlementLifecycleResult> {
+    return this.session.status().pipe(switchMap(status => this.http.post<AdminEntitlementLifecycleResult>(
+      this.playerPath(playerId, `entitlements/${encodeURIComponent(entitlementId)}/${operation}`),
+      {reason}, {headers: {'x-csrf-token': status.csrfToken ?? '', 'idempotency-key': crypto.randomUUID()}},
+    )));
   }
 }

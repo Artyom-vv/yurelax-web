@@ -1,0 +1,9 @@
+@import "src/shared/styles/vars.colors";
+
+:host { display: block; }
+.admin-registry {
+  overflow: hidden;
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  border-radius: 12px;
+  background: map-get($project-colors, "gradation", 750);
+}

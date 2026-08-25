@@ -4,5 +4,25 @@
   background-color: map-get($project-colors, "gradation", 800);
 }
 .scrollable {
+  min-width: 0;
   overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .main > .container {
+    display: grid;
+    width: 100%;
+    max-width: none;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding: 0 16px;
+  }
+
+  yrx-sidebar {
+    z-index: 50;
+    width: 100%;
+    top: 0;
+  }
+
+  .scrollable { width: 100%; }
 }

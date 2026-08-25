@@ -1,0 +1,25 @@
+@if (operation && !expanded) {
+  <button class="action-link" type="button" [disabled]="busy" (click)="open()">
+    {{operation === 'REVOKE' ? 'Отозвать право' : 'Восстановить право'}}
+  </button>
+}
+
+@if (operation && expanded) {
+  <section class="decision" [class.decision_restore]="operation === 'RESTORE'">
+    <div class="decision__copy">
+      <strong>{{operation === 'REVOKE' ? 'Отозвать право' : 'Восстановить право'}} «{{capabilityName}}»?</strong>
+      <p>{{operation === 'REVOKE'
+        ? 'Право перестанет действовать сразу. Незавершённая выдача больше не попадёт игровому модулю.'
+        : 'Вернётся то же право с исходными сроками и условиями покупки. Новая покупка не создаётся.'}}</p>
+    </div>
+    <yrx-admin-field label="Причина для аудита" hint="{{reason.trim().length}} / 500 · минимум 3 символа" [required]="true">
+      <textarea class="input_normal" [(ngModel)]="reason" maxlength="500" rows="3"
+        placeholder="Опишите проверенную причину изменения"></textarea>
+    </yrx-admin-field>
+    <div class="decision__actions">
+      <yrx-button size="small" type="secondary" [disabled]="busy" (press)="cancel()">Отмена</yrx-button>
+      <yrx-button size="small" [loading]="busy" [disabled]="reason.trim().length < 3 || reason.trim().length > 500 || busy"
+        (press)="submit()">{{operation === 'REVOKE' ? 'Подтвердить отзыв' : 'Подтвердить восстановление'}}</yrx-button>
+    </div>
+  </section>
+}

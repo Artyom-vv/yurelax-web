@@ -1,10 +1,11 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {catchError, finalize, forkJoin, of, tap} from 'rxjs';
+import {catchError, finalize, forkJoin, of, switchMap, tap} from 'rxjs';
 import {
   AdminEntitlement, AdminPlayerEntry, AdminPlayerStatistic, AdminPlayersService,
   AdminPurchase, AdminRewardReceipt, AdminTimelineItem,
 } from '../../../shared/services/admin-players.service';
+import {commercePaymentLabel} from '../../../shared/interfaces/commerce-acquisition.interface';
 
 type PlayerSection = 'overview' | 'rewards' | 'statistics' | 'commerce' | 'timeline';
 
@@ -16,6 +17,7 @@ type PlayerSection = 'overview' | 'rewards' | 'statistics' | 'commerce' | 'timel
   standalone: false,
 })
 export class AdminPlayersComponent implements OnInit {
+  public readonly purchaseLabel = commercePaymentLabel;
   public search = '';
   public gameCode = '';
   public timelineScope = 'ALL';
@@ -29,6 +31,7 @@ export class AdminPlayersComponent implements OnInit {
   public timeline: AdminTimelineItem[] = [];
   public searching = false;
   public loading = false;
+  public lifecycleMutating = false;
 
   constructor(private readonly api: AdminPlayersService, private readonly snackBar: MatSnackBar) {}
 
@@ -93,6 +96,25 @@ export class AdminPlayersComponent implements OnInit {
       ALREADY_ACTIVE: 'Уже запущено', LIFETIME_LIMIT_REACHED: 'Лимит активаций исчерпан',
       PERIOD_LIMIT_REACHED: `Следующая активация ${state.periodResetsAt ? this.date(state.periodResetsAt) : 'позже'}`};
     return reasons[state.blockedReason ?? ''] ?? 'Активация недоступна';
+  }
+
+  public changeEntitlement(right: AdminEntitlement,
+    change: {operation: 'REVOKE' | 'RESTORE'; reason: string}): void {
+    if (!this.selected || this.lifecycleMutating) return;
+    this.lifecycleMutating = true;
+    const operation = change.operation === 'REVOKE'
+      ? this.api.revokeEntitlement(this.selected.playerId, right.id, change.reason)
+      : this.api.restoreEntitlement(this.selected.playerId, right.id, change.reason);
+    operation.pipe(
+      tap(() => this.snackBar.open(
+        change.operation === 'REVOKE' ? 'Право отозвано' : 'Право восстановлено',
+        'Закрыть', {duration: 3500},
+      )),
+      switchMap(() => this.api.entitlements(this.selected!.playerId)),
+      tap(result => this.entitlements = result.items),
+      catchError(error => this.failure(error, 'Не удалось изменить состояние права')),
+      finalize(() => this.lifecycleMutating = false),
+    ).subscribe();
   }
 
   public timelineSummary(item: AdminTimelineItem): string {

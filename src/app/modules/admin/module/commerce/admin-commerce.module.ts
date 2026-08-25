@@ -7,10 +7,12 @@ import {AdminCommerceService} from '../../../shared/services/admin-commerce.serv
 import {AdminCommerceRoutingModule} from './admin-commerce-routing.module';
 import {AdminCommerceComponent} from './admin-commerce.component';
 import {ButtonModule} from '../../../shared/modules/button/button.module';
+import {AdminUiModule} from '../../components/admin-ui/admin-ui.module';
+import {CommerceFulfillmentBoardComponent} from './components/commerce-fulfillment-board/commerce-fulfillment-board.component';
 
 @NgModule({
-  declarations: [AdminCommerceComponent],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatSnackBarModule, SpacingModule, ButtonModule, AdminCommerceRoutingModule],
+  declarations: [AdminCommerceComponent, CommerceFulfillmentBoardComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatSnackBarModule, SpacingModule, ButtonModule, AdminUiModule, AdminCommerceRoutingModule],
   providers: [AdminCommerceService],
 })
 export class AdminCommerceModule {}

@@ -48,6 +48,8 @@ export interface CommerceStorefront {
 
 export interface PlayerWalletBalance {
   currencyCode: string;
+  displayName: string;
+  iconKey: string;
   exponent: number;
   posted: string;
   reserved: string;
@@ -94,6 +96,7 @@ export interface CommercePurchaseResult {
     quantity: number;
     currencyCode: string;
     totalPrice: string;
+    origin: 'PLATFORM';
     purchasedAt: string;
     status: 'CONFIRMED';
   };
@@ -107,9 +110,10 @@ export interface CommercePurchase {
   productCode: string;
   productName: string;
   quantity: number;
-  currencyCode: string;
-  unitPrice: string;
-  totalPrice: string;
+  currencyCode: string | null;
+  unitPrice: string | null;
+  totalPrice: string | null;
+  origin: CommerceAcquisitionOrigin;
   purchasedAt: string;
   status: 'CONFIRMED';
 }
@@ -140,9 +144,11 @@ export interface CommerceEntitlement {
   startsAt: string;
   expiresAt: string | null;
   activationState: CommerceActivationState;
+  origin: CommerceAcquisitionOrigin;
 }
 
 export interface CursorPage<T> {
   items: T[];
   page: {nextCursor: string | null; hasMore: boolean};
 }
+import {CommerceAcquisitionOrigin} from '../../../../../../shared/interfaces/commerce-acquisition.interface';

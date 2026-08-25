@@ -1,0 +1,57 @@
+@import "src/shared/styles/vars.colors";
+
+:host { display: block; width: 100%; }
+
+.admin-page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid map-get($project-colors, "gradation", 600);
+
+  &_surface {
+    padding: 0 0 20px;
+  }
+
+  &__copy { min-width: 0; max-width: 820px; }
+
+  &__eyebrow {
+    margin-bottom: 5px;
+    color: map-get($project-colors, "purple", 200);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin: 0 0 5px;
+    font-size: 36px;
+    line-height: 44px;
+    letter-spacing: .01em;
+  }
+
+  &__description {
+    max-width: 780px;
+    color: map-get($project-colors, "gradation", 300);
+    font-family: $second_font;
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  &__aside { display: flex; flex: 0 0 auto; align-items: center; gap: 10px; }
+}
+
+@media (max-width: 760px) {
+  .admin-page-header {
+    min-height: auto;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+
+    h2 { font-size: 30px; line-height: 38px; }
+    &__aside { width: 100%; flex-wrap: wrap; }
+  }
+}

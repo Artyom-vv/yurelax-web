@@ -51,3 +51,20 @@
   cursor: pointer;
   transition: 0.2s ease;
 }
+
+@media (max-width: 760px) {
+  .header {
+    height: 72px;
+  }
+
+  .header__inner {
+    align-items: center;
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .header__navigation { gap: 0; }
+  .header__routes,
+  .header__socials { display: none; }
+  .header__actions { gap: 10px; }
+}

@@ -1,0 +1,30 @@
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {environment} from '../../../../environments/environment';
+
+export interface AuditEntry {
+  id: string;
+  actorType: string;
+  actorId: string;
+  action: string;
+  resourceType: string;
+  resourceId: string | null;
+  correlationId: string;
+  occurredAt: string;
+  changedFields: string[];
+  reason: string | null;
+}
+
+export interface AuditPage {items: AuditEntry[]; page: {nextCursor: string | null; hasMore: boolean}}
+
+@Injectable()
+export class AdminAuditService {
+  constructor(private readonly http: HttpClient) {}
+
+  list(filters: Record<string, string | undefined>): Observable<AuditPage> {
+    let params = new HttpParams().set('limit', '50');
+    for (const [key, value] of Object.entries(filters)) if (value) params = params.set(key, value);
+    return this.http.get<AuditPage>(`${environment.platformApiUrl}/admin/audit-log`, {params});
+  }
+}

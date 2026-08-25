@@ -66,6 +66,7 @@
               <div class="flex flex_justify-between gap-24">
                 <div>
                   <p class="text text_body c-gradation-300">{{entitlement.productName}} · {{entitlement.status}}</p>
+                  <yrx-commerce-origin [origin]="entitlement.origin"></yrx-commerce-origin>
                   <yrx-spacing type="XS2"></yrx-spacing>
                   <h4>{{entitlement.capabilityName}}</h4>
                   <p class="text text_small c-gradation-300">{{entitlement.capabilityDescription}}</p>
@@ -101,11 +102,13 @@
               <div>
                 <h4>{{purchase.productName}}</h4>
                 <yrx-spacing type="XS2"></yrx-spacing>
+                <yrx-commerce-origin [origin]="purchase.origin"></yrx-commerce-origin>
+                <yrx-spacing type="XS2"></yrx-spacing>
                 <p class="text text_small c-gradation-300">Количество: {{purchase.quantity}}</p>
                 <details><summary>Технический контракт</summary><code>{{purchase.offerCode}} · {{purchase.productCode}}</code></details>
               </div>
               <div class="purchase-price">
-                <h4>{{purchase.totalPrice}} {{purchase.currencyCode}}</h4>
+                <h4>{{purchaseLabel(purchase)}}</h4>
                 <p class="text text_small c-gradation-300">{{purchase.purchasedAt | date:'dd.MM.yyyy HH:mm'}}</p>
               </div>
             </article>

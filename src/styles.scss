@@ -4,6 +4,19 @@ html, body {
 
 body {
   margin: 0;
+  color: var(--gradation-100);
+  background: var(--gradation-800);
+  font-family: 'Onest', sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  line-height: inherit;
 }
 
 @import "src/shared/styles/reset";

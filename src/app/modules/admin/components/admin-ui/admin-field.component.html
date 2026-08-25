@@ -1,0 +1,8 @@
+<label class="admin-field" [class.admin-field_compact]="compact">
+  <span class="admin-field__label">
+    {{label}}
+    @if (required) {<span class="admin-field__required" aria-hidden="true">*</span>}
+  </span>
+  <span class="admin-field__control"><ng-content></ng-content></span>
+  @if (hint) {<small class="admin-field__hint">{{hint}}</small>}
+</label>

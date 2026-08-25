@@ -1,0 +1,42 @@
+<yrx-admin-page-header eyebrow="Неизменяемая история" title="Аудит платформы"
+  description="Кто, когда и над каким контрактом выполнил действие. Снимки значений скрыты; причины операторских решений доступны для проверки.">
+</yrx-admin-page-header>
+<yrx-spacing type="M"></yrx-spacing>
+
+<section class="audit-toolbar">
+  <yrx-admin-section-header title="Фильтры истории"
+    description="Сузьте список до действия, ресурса или оператора."></yrx-admin-section-header>
+  <div class="filter-grid">
+    <yrx-admin-field label="Действие" [compact]="true"><input class="input_small" [(ngModel)]="action" placeholder="commerce.entitlement.revoked"></yrx-admin-field>
+    <yrx-admin-field label="Тип ресурса" [compact]="true"><input class="input_small" [(ngModel)]="resourceType" placeholder="commerce-entitlement"></yrx-admin-field>
+    <yrx-admin-field label="ID ресурса" [compact]="true"><input class="input_small" [(ngModel)]="resourceId" placeholder="UUID"></yrx-admin-field>
+    <yrx-admin-field label="ID оператора" [compact]="true"><input class="input_small" [(ngModel)]="actorId" placeholder="subject"></yrx-admin-field>
+    <yrx-admin-field label="Correlation ID" [compact]="true"><input class="input_small" [(ngModel)]="correlationId" placeholder="UUID"></yrx-admin-field>
+  </div>
+  <div class="filter-actions"><yrx-button size="small" (press)="load()">Применить</yrx-button><yrx-button size="small" type="secondary" (press)="reset()">Сбросить</yrx-button></div>
+</section>
+<yrx-spacing type="S"></yrx-spacing>
+
+@if (loading && items.length === 0) {
+  <yrx-admin-state title="Загружаем аудит" [loading]="true" [compact]="true"></yrx-admin-state>
+} @else if (items.length === 0) {
+  <yrx-admin-state title="Записей по фильтрам нет" description="Сбросьте фильтры или уточните параметры поиска." [compact]="true"></yrx-admin-state>
+} @else {
+  <yrx-admin-registry ariaLabel="Записи аудита">
+    @for (item of items; track item.id) {
+      <yrx-admin-registry-row>
+        <article class="audit-row">
+          <time>{{item.occurredAt | date:'dd.MM.yyyy HH:mm:ss'}}</time>
+          <div class="audit-row__action"><strong>{{item.action}}</strong><span>{{item.resourceType}} · {{item.resourceId || 'без ID'}}</span></div>
+          <div class="audit-row__decision">
+            @if (item.reason) {<p><span>Причина</span>{{item.reason}}</p>}
+            <small>Изменены: {{item.changedFields.length ? item.changedFields.join(', ') : 'метаданные'}}</small>
+          </div>
+          <div class="audit-row__trace"><span>{{item.actorType}} · {{item.actorId}}</span><code>{{item.correlationId}}</code></div>
+        </article>
+      </yrx-admin-registry-row>
+    }
+  </yrx-admin-registry>
+}
+
+@if (nextCursor) {<div class="more"><yrx-button type="secondary" (press)="load(nextCursor!)" [loading]="loading">Показать ещё</yrx-button></div>}

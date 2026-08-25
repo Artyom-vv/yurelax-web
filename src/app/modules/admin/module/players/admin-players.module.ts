@@ -7,10 +7,14 @@ import {AdminPlayersService} from '../../../shared/services/admin-players.servic
 import {AdminPlayersComponent} from './admin-players.component';
 import {AdminPlayersRoutingModule} from './admin-players-routing.module';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {AdminUiModule} from '../../components/admin-ui/admin-ui.module';
+import {CommerceOriginModule} from '../../../shared/modules/commerce-origin/commerce-origin.module';
+import {EntitlementLifecycleActionComponent} from './components/entitlement-lifecycle-action/entitlement-lifecycle-action.component';
 
 @NgModule({
-  declarations: [AdminPlayersComponent],
-  imports: [CommonModule, FormsModule, ButtonModule, SpacingModule, MatSnackBarModule, AdminPlayersRoutingModule],
+  declarations: [AdminPlayersComponent, EntitlementLifecycleActionComponent],
+  imports: [CommonModule, FormsModule, ButtonModule, SpacingModule, MatSnackBarModule,
+    CommerceOriginModule, AdminUiModule, AdminPlayersRoutingModule],
   providers: [AdminPlayersService],
 })
 export class AdminPlayersModule {}

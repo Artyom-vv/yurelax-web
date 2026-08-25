@@ -14,6 +14,7 @@ import {RequestsCancellerService} from "../../../shared/services/requests-cancel
 import {AnimationsService} from "../../../shared/animations/services/animations.service";
 import {InputModule} from "../../../shared/modules/text-fields/modules/input/input.module";
 import {TextAreaModule} from "../../../shared/modules/text-fields/modules/text-area/text-area.module";
+import {AdminUiModule} from '../../components/admin-ui/admin-ui.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {TextAreaModule} from "../../../shared/modules/text-fields/modules/text-a
     IconModule,
     MatSnackBarModule,
     InputModule,
-    TextAreaModule
+    TextAreaModule,
+    AdminUiModule
   ],
   providers: [
     StatisticsService,

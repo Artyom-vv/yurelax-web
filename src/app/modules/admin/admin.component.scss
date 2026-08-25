@@ -5,10 +5,48 @@
   position: relative;
   overflow-x: hidden;
   background-color: map-get($project-colors, "gradation", 800);
+  font-family: $second_font;
+
+  strong,
+  small,
+  button,
+  input,
+  textarea,
+  select,
+  code {
+    font-family: inherit;
+  }
 }
+.admin-layout > .container { min-height: 100%; }
+.scrollable { min-width: 0; }
 .withoutScroll {
   padding-right: 12px;
 }
 yrx-sidebar {
   top: 0;
+}
+
+@media (max-width: 900px) {
+  .admin-layout {
+    height: auto;
+    min-height: 100vh;
+    overflow-x: clip;
+  }
+
+  .admin-layout > .container {
+    display: grid;
+    width: 100%;
+    max-width: none;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding: 0 16px;
+  }
+
+  yrx-sidebar {
+    z-index: 50;
+    width: 100%;
+    top: 0;
+  }
+
+  .scrollable { width: 100%; }
 }

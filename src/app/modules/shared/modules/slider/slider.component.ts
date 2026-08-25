@@ -1,7 +1,8 @@
+import {isPlatformBrowser} from '@angular/common';
 import {
   AfterViewInit,
   Component,
-  ElementRef,
+  ElementRef, Inject, PLATFORM_ID,
   EventEmitter, HostListener,
   Input,
   Output,
@@ -34,7 +35,10 @@ export class SliderComponent implements AfterViewInit {
   public paddingLeft: number = 0
   public paddingRight: number = 0
 
+  constructor(@Inject(PLATFORM_ID) private readonly platformId: object) {}
+
   ngAfterViewInit() {
+    if (!isPlatformBrowser(this.platformId)) return;
     this.slider.nativeElement.tabIndex = 0;
     const computedStyle = getComputedStyle(this.slider.nativeElement);
     this.paddingLeft = parseFloat(computedStyle.paddingLeft);

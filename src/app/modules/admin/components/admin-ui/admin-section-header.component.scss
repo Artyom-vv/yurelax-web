@@ -1,0 +1,54 @@
+@import "src/shared/styles/vars.colors";
+
+:host { display: block; min-width: 0; }
+
+.admin-section-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+
+  &_indexed { grid-template-columns: auto minmax(0, 1fr) auto; }
+
+  &__index {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border-radius: 7px;
+    color: map-get($project-colors, "purple", 100);
+    background: map-get($project-colors, "purple", 500);
+    font: 600 11px/1 $second_font;
+  }
+
+  h4 { font-size: 20px; line-height: 26px; }
+
+  p {
+    margin-top: 3px;
+    color: map-get($project-colors, "gradation", 400);
+    font: 400 13px/18px $second_font;
+  }
+
+  &__aside {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    color: map-get($project-colors, "gradation", 400);
+    font: 400 12px/16px $second_font;
+  }
+}
+
+@media (max-width: 620px) {
+  .admin-section-header {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+
+    &__aside { grid-column: 1; justify-content: flex-start; }
+
+    &_indexed {
+      grid-template-columns: auto minmax(0, 1fr);
+      .admin-section-header__aside { grid-column: 2; }
+    }
+  }
+}

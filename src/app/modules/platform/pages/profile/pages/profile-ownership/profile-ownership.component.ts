@@ -2,6 +2,8 @@ import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {catchError, finalize, forkJoin, of, tap} from 'rxjs';
 import {CommerceEntitlement, CommercePurchase, PlayerRewardReceipt} from '../profile-store/interfaces/commerce.interface';
 import {PlatformCommerceService} from '../profile-store/services/platform-commerce.service';
+import {commercePaymentLabel} from '../../../../../shared/interfaces/commerce-acquisition.interface';
+import {platformErrorMessage} from '../../../../../shared/interfaces/platform-error-message';
 
 @Component({
     selector: 'yrx-profile-ownership',
@@ -11,6 +13,7 @@ import {PlatformCommerceService} from '../profile-store/services/platform-commer
     standalone: false
 })
 export class ProfileOwnershipComponent implements OnInit {
+  public readonly purchaseLabel = commercePaymentLabel;
   public purchases: CommercePurchase[] = [];
   public entitlements: CommerceEntitlement[] = [];
   public rewards: PlayerRewardReceipt[] = [];
@@ -33,7 +36,7 @@ export class ProfileOwnershipComponent implements OnInit {
         this.load(false);
       }),
       catchError(error => {
-        this.error = error?.error?.message ?? 'Не удалось активировать право.';
+        this.error = platformErrorMessage(error, 'Не удалось активировать право. Попробуйте ещё раз.');
         return of(null);
       }),
       finalize(() => this.activating = null),
@@ -71,7 +74,7 @@ export class ProfileOwnershipComponent implements OnInit {
         this.rewards = result.rewards.items;
       }),
       catchError(error => {
-        this.error = error?.error?.message ?? 'Не удалось загрузить покупки и права.';
+        this.error = platformErrorMessage(error, 'Покупки и права сейчас недоступны. Попробуйте обновить страницу позже.');
         return of(null);
       }),
       finalize(() => this.loading = false),

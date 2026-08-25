@@ -22,6 +22,8 @@ import {SelectModule} from "../../../shared/modules/select/select.module";
 import { MiniGamesItemComponent } from './components/mini-games-item/mini-games-item.component';
 import {InputModule} from "../../../shared/modules/text-fields/modules/input/input.module";
 import {TextAreaModule} from "../../../shared/modules/text-fields/modules/text-area/text-area.module";
+import {AdminGameContentService} from "../../../shared/services/admin-game-content.service";
+import {AdminUiModule} from '../../components/admin-ui/admin-ui.module';
 
 
 @NgModule({
@@ -47,12 +49,14 @@ import {TextAreaModule} from "../../../shared/modules/text-fields/modules/text-a
     TagModule,
     SelectModule,
     InputModule,
-    TextAreaModule
+    TextAreaModule,
+    AdminUiModule
   ],
   providers: [
     MiniGamesService,
     StatisticsService,
-    RequestsCancellerService
+    RequestsCancellerService,
+    AdminGameContentService
   ]
 })
 export class MiniGamesModule {

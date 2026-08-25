@@ -24,3 +24,14 @@
   height: 40px;
   border-radius: 6px;
 }
+
+@media (max-width: 760px) {
+  .panel {
+    width: 48px;
+    height: 48px;
+    padding: 4px;
+    border-radius: 8px;
+  }
+
+  .panel > .flex_column { display: none; }
+}

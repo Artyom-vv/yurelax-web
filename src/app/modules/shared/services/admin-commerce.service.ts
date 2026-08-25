@@ -79,6 +79,47 @@ export interface AdminCommerceReferences {
   capabilities: CommerceCapabilityReference[];
 }
 
+export type CommerceFulfillmentStatus = 'PENDING' | 'CLAIMED' | 'FULFILLED' | 'FAILED';
+export type CommerceFulfillmentHealthState = 'HEALTHY' | 'DEGRADED' | 'STALLED';
+
+export interface CommerceFulfillmentInspection {
+  id: string;
+  entitlementId: string;
+  playerId: string;
+  productCode: string;
+  providerCode: string;
+  fulfillmentKey: string;
+  status: CommerceFulfillmentStatus;
+  attempts: number;
+  leaseOwner: string | null;
+  leaseUntil: string | null;
+  resultReference: string | null;
+  lastError: string | null;
+  createdAt: string;
+  updatedAt: string;
+  ageSeconds: number;
+  stale: boolean;
+}
+
+export interface CommerceFulfillmentHealth {
+  providerCode: string;
+  state: CommerceFulfillmentHealthState;
+  pending: number;
+  claimed: number;
+  failed: number;
+  fulfilled: number;
+  outstanding: number;
+  stale: number;
+  maximumAttempts: number;
+  oldestOutstandingAt: string | null;
+  oldestOutstandingAgeSeconds: number | null;
+}
+
+export interface CommerceFulfillmentInspectionResult {
+  items: CommerceFulfillmentInspection[];
+  health: CommerceFulfillmentHealth;
+}
+
 export type CommerceProductKind = 'PERMISSION' | 'ITEM' | 'REWARD_ACCESS' | 'CUSTOM';
 export type CommerceDeliveryMode = 'ENTITLEMENT' | 'FULFILLMENT';
 export type CommerceOwnershipPolicy = 'DENY_DUPLICATE' | 'EXTEND' | 'REPLACE' | 'STACK';
@@ -89,7 +130,8 @@ export interface PublishCommerceGrant {
   gameCode: string | null;
   deliveryMode: CommerceDeliveryMode;
   ownershipPolicy: CommerceOwnershipPolicy;
-  lifetime: {kind: 'PERMANENT'} | {kind: 'FIXED_DURATION'; durationSeconds: number};
+  lifetime: {kind: 'PERMANENT'} | {kind: 'FIXED_DURATION'; durationSeconds: number}
+    | {kind: 'FIXED_WINDOW'; startsAt: string; expiresAt: string};
   activationPolicy: null | {
     durationSeconds: number;
     lifetimeMaximumActivations: number | null;
@@ -108,6 +150,8 @@ export interface PublishCommerceProduct {
 }
 
 export type CommerceRequirement =
+  | {kind: 'ALL' | 'ANY'; items: CommerceRequirement[]}
+  | {kind: 'NOT'; item: CommerceRequirement}
   | {kind: 'PROGRESSION_LEVEL'; progressionCode: string; minimumLevel: number}
   | {kind: 'STAT_THRESHOLD'; statCode: string; gameCode: string | null; minimum: string}
   | {kind: 'GRANT_OWNED'; providerCode: string; grantKey: string; gameCode: string | null}
@@ -148,6 +192,14 @@ export class AdminCommerceService {
 
   references(): Observable<AdminCommerceReferences> {
     return this.http.get<AdminCommerceReferences>(`${environment.platformApiUrl}/admin/commerce/references`);
+  }
+
+  fulfillments(providerCode: string, status?: CommerceFulfillmentStatus): Observable<CommerceFulfillmentInspectionResult> {
+    let params = new HttpParams().set('providerCode', providerCode).set('limit', '50');
+    if (status) params = params.set('status', status);
+    return this.http.get<CommerceFulfillmentInspectionResult>(
+      `${environment.platformApiUrl}/admin/commerce/fulfillments`, {params},
+    );
   }
 
   publishProduct(input: PublishCommerceProduct): Observable<AdminCommerceProductRevision> {

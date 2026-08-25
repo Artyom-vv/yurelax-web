@@ -1,0 +1,32 @@
+@import "src/shared/styles/vars.colors";
+
+:host { display: block; width: 100%; }
+
+.admin-state {
+  display: grid;
+  min-height: 176px;
+  place-content: center;
+  justify-items: center;
+  gap: 7px;
+  padding: 28px;
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  border-radius: 12px;
+  color: map-get($project-colors, "gradation", 200);
+  background: map-get($project-colors, "gradation", 750);
+  text-align: center;
+
+  &_compact { min-height: 96px; }
+  p { max-width: 520px; color: map-get($project-colors, "gradation", 400); font-size: 13px; line-height: 18px; }
+
+  &__loader {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+    border: 2px solid map-get($project-colors, "gradation", 600);
+    border-top-color: map-get($project-colors, "purple", 200);
+    border-radius: 50%;
+    animation: admin-state-spin .7s linear infinite;
+  }
+}
+
+@keyframes admin-state-spin { to { transform: rotate(360deg); } }

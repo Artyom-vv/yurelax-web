@@ -13,7 +13,13 @@
     <div class="wallet-grid">
       @for (wallet of wallets; track wallet.currencyCode) {
         <article class="wallet-card">
-          <p class="text text_body c-gradation-300">{{wallet.currencyCode}}</p>
+          <div class="wallet-name flex flex_align-center gap-10">
+            <span class="wallet-icon flex flex_center"><yrx-ref-icon class="stroke" [name]="wallet.iconKey"></yrx-ref-icon></span>
+            <div class="flex flex_column">
+              <p class="text text_body medium c-gradation-100">{{wallet.displayName}}</p>
+              <p class="text text_table regular c-gradation-400">{{wallet.currencyCode}}</p>
+            </div>
+          </div>
           <yrx-spacing type="XS2"></yrx-spacing>
           <h3>{{amount(wallet.available, wallet.exponent)}}</h3>
           <yrx-spacing type="XS"></yrx-spacing>

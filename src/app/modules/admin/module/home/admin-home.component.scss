@@ -1,93 +1,47 @@
 @import "src/shared/styles/vars.colors";
 
-.admin-hero {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 36px;
-  padding: 30px;
-  border: 1px solid map-get($project-colors, "gradation", 600);
-  border-radius: 12px;
-  background: linear-gradient(120deg, map-get($project-colors, "gradation", 750), map-get($project-colors, "gradation", 700));
+:host { display: block; width: 100%; }
 
-  > div:first-child { max-width: 720px; }
-  h3 { margin: 4px 0 10px; }
-}
-
-.eyebrow, .card-kicker {
-  color: map-get($project-colors, "purple", 200);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.hero-mark {
-  display: flex;
-  width: 72px;
-  height: 72px;
-  padding: 20px;
-  flex: 0 0 auto;
-  border-radius: 18px;
-  color: map-get($project-colors, "purple", 100);
-  background: rgba(108, 92, 231, .16);
-}
-
-.workspace-grid {
+.workspace-row {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.workspace-card {
-  display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) 20px;
+  grid-template-columns: 42px minmax(0, 1fr) 20px;
   align-items: center;
-  gap: 16px;
-  min-height: 152px;
-  padding: 22px;
-  border: 1px solid map-get($project-colors, "gradation", 600);
-  border-radius: 10px;
+  gap: 15px;
   color: inherit;
-  background: map-get($project-colors, "gradation", 750);
-  transition: border-color .18s ease, background-color .18s ease, transform .18s ease;
 
-  &:hover {
-    border-color: map-get($project-colors, "purple", 300);
-    background: map-get($project-colors, "gradation", 700);
-    transform: translateY(-2px);
+  &__icon {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border-radius: 9px;
+    color: map-get($project-colors, "purple", 200);
+    background: map-get($project-colors, "purple", 500);
+
+    yrx-icon { width: 20px; height: 20px; }
   }
 
-  h4 { margin: 3px 0 7px; }
-  p:not(.card-kicker) { color: map-get($project-colors, "gradation", 300); font-size: 14px; line-height: 1.45; }
+  &__copy { display: grid; min-width: 0; grid-template-columns: minmax(170px, .45fr) minmax(260px, 1fr); align-items: baseline; gap: 2px 24px; }
+  &__kicker { grid-row: 1 / span 2; align-self: center; color: map-get($project-colors, "gradation", 400); font: 500 11px/16px $second_font; text-transform: uppercase; letter-spacing: .07em; }
+  strong { color: map-get($project-colors, "gradation", 100); font: 600 15px/20px $second_font; }
+  small { color: map-get($project-colors, "gradation", 400); font: 400 13px/18px $second_font; }
+
+  &__arrow { width: 18px; height: 18px; color: map-get($project-colors, "gradation", 500); transition: color .16s ease, transform .16s ease; }
+  &:hover &__arrow { color: map-get($project-colors, "purple", 200); transform: translateX(2px); }
 }
 
-.card-icon {
-  display: flex;
-  width: 44px;
-  height: 44px;
-  padding: 11px;
-  border-radius: 10px;
-  color: map-get($project-colors, "purple", 200);
-  background: rgba(108, 92, 231, .12);
-}
-
-.card-arrow { width: 18px; height: 18px; color: map-get($project-colors, "gradation", 400); }
-
-.admin-note {
+.admin-footnote {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 20px 22px;
-  border-radius: 10px;
-  background: map-get($project-colors, "gradation", 750);
+  gap: 9px;
+  margin-top: 16px;
+  color: map-get($project-colors, "gradation", 400);
+  font: 400 12px/17px $second_font;
 
-  > yrx-icon { width: 24px; height: 24px; color: map-get($project-colors, "gradation", 300); }
-  h5 { margin-bottom: 4px; }
+  yrx-icon { width: 17px; height: 17px; flex: 0 0 auto; }
 }
 
-@media (max-width: 800px) {
-  .workspace-grid { grid-template-columns: 1fr; }
-  .admin-hero { padding: 22px; }
-  .hero-mark { display: none; }
+@media (max-width: 760px) {
+  .workspace-row__copy { grid-template-columns: 1fr; }
+  .workspace-row__kicker { grid-row: auto; }
 }

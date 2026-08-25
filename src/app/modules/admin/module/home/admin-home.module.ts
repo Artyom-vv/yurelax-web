@@ -6,6 +6,7 @@ import {SpacingModule} from "../../../shared/modules/spacing/spacing.module";
 import {ButtonModule} from "../../../shared/modules/button/button.module";
 import {RouterModule} from "@angular/router";
 import {IconModule} from "../../../shared/modules/icon/icon.module";
+import {AdminUiModule} from '../../components/admin-ui/admin-ui.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {IconModule} from "../../../shared/modules/icon/icon.module";
     SpacingModule,
     ButtonModule,
     RouterModule,
-    IconModule
+    IconModule,
+    AdminUiModule
   ]
 })
 export class AdminHomeModule {
