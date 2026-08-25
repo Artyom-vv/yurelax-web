@@ -16,7 +16,7 @@ export async function deployWeb(action, environment = process.env, fetcher = fet
   if (!ACTIONS.has(action)) throw new Error('Unknown web release operation');
   const baseConfig = deploymentConfig(environment);
   const applications = await request(baseConfig, fetcher, 'applications');
-  const application = selectApplication(baseConfig, applications);
+  const application = await ensureApplication(baseConfig, applications, fetcher);
   const config = {...baseConfig, applicationUuid: application.uuid,
     productionUrl: primaryApplicationUrl(application.fqdn)};
   if (action === 'reconcile' && application.git_commit_sha === config.releaseSha) {
@@ -107,25 +107,63 @@ export function deploymentConfig(environment) {
     releaseSha,
     applicationName: environment.COOLIFY_WEB_APPLICATION_NAME?.trim() || 'yurelax-web',
     repository: environment.COOLIFY_WEB_REPOSITORY?.trim() || 'Artyom-vv/yurelax-web',
+    projectName: environment.COOLIFY_WEB_PROJECT_NAME?.trim() || 'Yurelax',
+    serverName: environment.COOLIFY_WEB_SERVER_NAME?.trim() || '',
     token: required(environment, 'COOLIFY_API_TOKEN'),
     coolifyApiUrl: secureUrl(required(environment, 'COOLIFY_API_URL'), 'COOLIFY_API_URL'),
   };
 }
 
 /** Resolves exactly one Coolify application owned by the expected Git repository. */
-function selectApplication(config, applications) {
+async function ensureApplication(config, applications, fetcher) {
   if (!Array.isArray(applications)) throw new Error('Coolify applications response must be a list');
   const repositoryMatches = applications.filter((application) =>
     repositorySlug(application.git_repository) === config.repository.toLowerCase());
   const namedMatches = repositoryMatches.filter((application) => application.name === config.applicationName);
   const matches = namedMatches.length === 1 ? namedMatches : repositoryMatches;
-  if (matches.length !== 1 || typeof matches[0]?.uuid !== 'string') {
+  if (matches.length === 1 && typeof matches[0]?.uuid === 'string') return matches[0];
+  if (matches.length > 0) {
     const candidates = applications
       .map((application) => ({name: String(application.name ?? ''), repository: repositorySlug(application.git_repository)}))
       .filter(({name, repository}) => `${name} ${repository}`.toLowerCase().includes('yurelax'))
       .slice(0, 20);
     throw new Error(`Coolify must expose exactly one ${config.applicationName} application for ${config.repository}; `
       + `Yurelax candidates: ${JSON.stringify(candidates)}`);
+  }
+  return provisionApplication(config, fetcher);
+}
+
+/** Creates the missing web resource only when project and server ownership are unambiguous. */
+async function provisionApplication(config, fetcher) {
+  const [projects, servers] = await Promise.all([
+    request(config, fetcher, 'projects'), request(config, fetcher, 'servers'),
+  ]);
+  const project = uniqueNamedResource(projects, config.projectName, 'project');
+  const usableServers = servers.filter((server) => server.settings?.is_usable !== false
+    && server.settings?.is_reachable !== false && server.settings?.is_build_server !== true);
+  const server = uniqueNamedResource(usableServers, config.serverName, 'server');
+  const created = await request(config, fetcher, 'applications/public', {
+    method: 'POST',
+    body: JSON.stringify({project_uuid: project.uuid, server_uuid: server.uuid, environment_name: 'production',
+      git_repository: `https://github.com/${config.repository}.git`, git_branch: 'master',
+      git_commit_sha: config.releaseSha, name: config.applicationName, description: 'Yurelax player cabinet and admin',
+      build_pack: 'dockerfile', dockerfile_location: '/Dockerfile', ports_exposes: '4000',
+      is_auto_deploy_enabled: false, health_check_enabled: true, health_check_path: '/health',
+      health_check_port: '4000', autogenerate_domain: true, instant_deploy: false}),
+  });
+  if (typeof created.uuid !== 'string') throw new Error('Coolify did not return the created web application identity');
+  return request(config, fetcher, `applications/${created.uuid}`);
+}
+
+/** Resolves an exact preferred resource, or the only available resource when no preference exists. */
+function uniqueNamedResource(resources, preferredName, kind) {
+  if (!Array.isArray(resources)) throw new Error(`Coolify ${kind}s response must be a list`);
+  const preferred = preferredName
+    ? resources.filter((resource) => String(resource.name).toLowerCase() === preferredName.toLowerCase()) : [];
+  const matches = preferred.length === 1 ? preferred : resources;
+  if (matches.length !== 1 || typeof matches[0]?.uuid !== 'string') {
+    throw new Error(`Coolify must expose exactly one ${kind}; candidates: `
+      + JSON.stringify(resources.map(({name}) => String(name ?? '')).slice(0, 20)));
   }
   return matches[0];
 }
