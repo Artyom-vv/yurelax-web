@@ -1,5 +1,6 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Input, ChangeDetectionStrategy} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {TransitionPanelType} from "./interfaces/transition-panel.interface";
+import {PlayerWalletTransaction} from '../../../profile-store/interfaces/commerce.interface';
 
 @Component({
     selector: 'yrx-transaction-panel',
@@ -8,21 +9,30 @@ import {TransitionPanelType} from "./interfaces/transition-panel.interface";
     changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
-export class TransactionPanelComponent implements AfterViewInit {
+export class TransactionPanelComponent {
+  private readonly reasonNames: Record<string, string> = {
+    TOP_UP: 'Пополнение баланса',
+    SHOP_PURCHASE: 'Покупка в магазине',
+    PLAYER_TRANSFER: 'Перевод игроку',
+    HUNT_KILL: 'Награда за убийство',
+    HUNT_VICTORY: 'Награда за победу',
+    STAT_REWARD: 'Игровая награда',
+    REWARD_GRANT: 'Получена награда',
+    BURN: 'Списание валюты',
+  };
   @Input() even: boolean = false;
-  @Input() amount: number = 0
-  @Input() type: TransitionPanelType = 'income'
+  @Input({required: true}) transaction!: PlayerWalletTransaction;
 
-  public readonly Math = Math;
-  public amountPrefix: string = ''
-
-  constructor(
-    private cdr: ChangeDetectorRef
-  ) {
+  public get type(): TransitionPanelType {
+    return this.transaction.amount.startsWith('-') ? 'outcome' : 'income';
   }
 
-  ngAfterViewInit() {
-    this.amountPrefix = this.amount >= 0 ? '+' : '-'
-    this.cdr.detectChanges()
+  public get amount(): string {
+    const value = this.transaction.amount;
+    return value.startsWith('-') ? value.slice(1) : value;
+  }
+
+  public reason(code: string): string {
+    return this.reasonNames[code] ?? 'Операция с балансом';
   }
 }
