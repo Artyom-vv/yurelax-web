@@ -10,6 +10,10 @@
     color: map-get($project-colors, "gradation", 200);
   }
 }
+.pending-link {
+  color: map-get($project-colors, "gradation", 500);
+  cursor: help;
+}
 .logotype {
   cursor: pointer;
 }

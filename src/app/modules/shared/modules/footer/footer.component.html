@@ -16,14 +16,16 @@
     <div class="flex flex_align-center flex_justify-between">
       <ul class="flex gap-16">
         @for (social of socials; track social) {
-          <li>
-            <a [href]="social.link" target="_blank" class="link text text_body medium">{{social.name}}</a>
-          </li>
+          @if (social.link) {
+            <li>
+              <a [href]="social.link" target="_blank" rel="noopener noreferrer" class="link text text_body medium">{{social.name}}</a>
+            </li>
+          }
         }
       </ul>
       <ul class="flex gap-24">
-        <li><a href="" target="_blank" class="link text text_body medium">Условия пользования</a></li>
-        <li><a href="" target="_blank" class="link text text_body medium">Политика конфеденциальности</a></li>
+        <li><span class="pending-link text text_body medium" title="Документ готовится">Условия пользования</span></li>
+        <li><span class="pending-link text text_body medium" title="Документ готовится">Политика конфиденциальности</span></li>
       </ul>
     </div>
   </div>

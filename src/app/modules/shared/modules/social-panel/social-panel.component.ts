@@ -5,7 +5,8 @@ import {SocialStoreInterface} from "../../../../store/interfaces/socials-store.i
 
 @Component({
     host: {
-        "class": "flex_grow"
+        "class": "flex_grow",
+        "[class.social-unavailable]": "!social?.link"
     },
     selector: 'yrx-social-panel',
     templateUrl: './social-panel.component.html',

@@ -3,6 +3,10 @@
 
 :host {
   flex-basis: 294px;
+
+  &.social-unavailable {
+    display: none;
+  }
 }
 
 .social-panel {
