@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {Subscription, switchMap, tap} from "rxjs";
 import {AnimationsService} from "../../../shared/animations/services/animations.service";
@@ -7,9 +7,11 @@ import {UserRes} from "../../interfaces/user.interface";
 import {SidebarNavItem} from "../../modules/sidebar/interfaces/sidebarNavItem";
 
 @Component({
-  selector: 'yrx-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
+    selector: 'yrx-profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   constructor(

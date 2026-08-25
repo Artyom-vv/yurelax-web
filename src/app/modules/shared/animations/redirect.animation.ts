@@ -32,7 +32,7 @@ export const SwipeAnimation = trigger('authRouteAnimations', [
         opacity: 0
       }),
       animate('600ms 100ms ease')
-    ])
+    ], {optional: true})
   ]),
   transition('* => *', [
     query(':enter, :leave', style({

@@ -1,11 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {tap} from "rxjs";
 
 @Component({
-  selector: 'yrx-platform',
-  templateUrl: './platform.component.html',
-  styleUrls: ['./platform.component.scss']
+    selector: 'yrx-platform',
+    templateUrl: './platform.component.html',
+    styleUrls: ['./platform.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class PlatformComponent implements OnInit {
 

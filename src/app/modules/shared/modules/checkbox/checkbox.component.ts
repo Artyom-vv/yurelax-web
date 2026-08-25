@@ -1,18 +1,20 @@
-import {Component, forwardRef, Input, ViewEncapsulation} from '@angular/core';
+import {Component, forwardRef, Input, ViewEncapsulation, ChangeDetectionStrategy} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({
-  selector: 'yrx-checkbox',
-  templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CheckboxComponent),
-      multi: true
-    }
-  ]
+    selector: 'yrx-checkbox',
+    templateUrl: './checkbox.component.html',
+    styleUrls: ['./checkbox.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => CheckboxComponent),
+            multi: true
+        }
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class CheckboxComponent {
 

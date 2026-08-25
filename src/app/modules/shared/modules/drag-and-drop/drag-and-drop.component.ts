@@ -1,10 +1,12 @@
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {DropBoxOnChangeInterface} from "./interfaces/drop-box.interface";
 
 @Component({
-  selector: 'yrx-drag-and-drop',
-  templateUrl: './drag-and-drop.component.html',
-  styleUrls: ['./drag-and-drop.component.scss']
+    selector: 'yrx-drag-and-drop',
+    templateUrl: './drag-and-drop.component.html',
+    styleUrls: ['./drag-and-drop.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DragAndDropComponent {
   @ViewChild('fileLoader') fileLoader!: ElementRef;

@@ -23,10 +23,10 @@ div.mat-mdc-select-arrow-wrapper {
     @include text-big;
     @include weight-regular;
   }
-  & ~ yrx-icon.select-arrow .icon {
+  & ~ yrx-icon.select-arrow {
     right: 16px;
   }
-  & ~ .icon-wrapper #{$icon_selector} {
+  & ~ .icon-wrapper {
     left: 16px;
   }
 }
@@ -43,10 +43,10 @@ div.mat-mdc-select-arrow-wrapper {
     @include text-body;
     @include weight-regular;
   }
-  & ~ yrx-icon.select-arrow .icon {
+  & ~ yrx-icon.select-arrow {
     right: 14px;
   }
-  & ~ .icon-wrapper #{$icon_selector} {
+  & ~ .icon-wrapper {
     left: 14px;
   }
 }
@@ -66,11 +66,37 @@ div.mat-mdc-select-arrow-wrapper {
   & ~ #{$icon_selector}, & ~ .icon-wrapper #{$icon_selector} {
     @include icon-size(16px);
   }
-  & ~ yrx-icon.select-arrow .icon {
+  & ~ yrx-icon.select-arrow {
     right: 10px;
   }
-  & ~ .icon-wrapper #{$icon_selector} {
+  & ~ .icon-wrapper {
     left: 10px;
+  }
+}
+
+.box_select {
+  > yrx-icon.select-arrow,
+  > .icon-wrapper {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    line-height: 0;
+  }
+
+  > yrx-icon.select-arrow {
+    right: 14px;
+    transition: transform $trs;
+  }
+
+  > .icon-wrapper {
+    left: 14px;
   }
 }
 
@@ -129,11 +155,11 @@ mat-select.mat-mdc-select {
       @include select-small;
     }
     &_expanded {
-      & ~ yrx-icon.select-arrow .icon {
+      & ~ yrx-icon.select-arrow {
         transform: translateY(-50%) scaleY(-1);
         z-index: 1002;
       }
-      & ~ .icon-wrapper #{$icon_selector} {
+      & ~ .icon-wrapper {
         z-index: 1002;
       }
       border-bottom-right-radius: 0;
@@ -181,6 +207,60 @@ div.mdc-menu-surface.mat-mdc-select-panel {
   &::-webkit-scrollbar-thumb {
     border: 4px solid map-get($project-colors, "gradation", 800);
     border-radius: 5px;
+  }
+}
+
+.mat-mdc-option.yrx-select-option {
+  min-height: 48px;
+  padding: 0 12px;
+
+  &.yrx-select-option_underlined {
+    border-bottom: 1px solid map-get($project-colors, "gradation", 600);
+  }
+
+  .mdc-list-item__primary-text {
+    width: 100%;
+  }
+
+  .yrx-select-option__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    column-gap: 12px;
+    width: 100%;
+    min-height: 47px;
+    color: map-get($project-colors, "gradation", 300);
+
+    &_iconly {
+      grid-template-columns: 20px minmax(0, 1fr);
+    }
+  }
+
+  .yrx-select-option__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    line-height: 0;
+
+    yrx-icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .yrx-select-option__label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &.mdc-list-item--selected .yrx-select-option__content,
+  &:hover .yrx-select-option__content,
+  &.mat-mdc-option-active .yrx-select-option__content {
+    color: map-get($project-colors, "gradation", 100);
   }
 }
 

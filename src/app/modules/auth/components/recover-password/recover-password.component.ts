@@ -1,88 +1,57 @@
-import {Component} from '@angular/core';
-import {AuthService} from "../../services/auth.service";
-import {AbstractControlOptions, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {MailerService} from "../../../shared/services/mailer.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {finalize, first, Subscription, switchMap, tap} from "rxjs";
-import {catchError} from "rxjs/operators";
-import {MIN_PASSWORD_LENGTH} from "../../auth.constants";
-import {CheckIfMatchingPasswordsValidator} from "../../validators/check-if-matching-passwords.validator";
-import {AuthStore} from "../../store/auth.store";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {AbstractControlOptions, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {finalize} from 'rxjs';
+import {MIN_PASSWORD_LENGTH} from '../../auth.constants';
+import {CheckIfMatchingPasswordsValidator} from '../../validators/check-if-matching-passwords.validator';
+import {PlatformAccountService} from '../../../shared/services/platform-account.service';
 
 @Component({
   selector: 'yrx-recover-password',
   templateUrl: './recover-password.component.html',
-  styleUrls: ['./recover-password.component.scss']
+  styleUrls: ['./recover-password.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
-export class RecoverPasswordComponent {
+export class RecoverPasswordComponent implements OnInit {
+  public form!: FormGroup;
+  public dataLoading = false;
+  public readonly MIN_PASSWORD_LENGTH = MIN_PASSWORD_LENGTH;
 
   constructor(
-    private authService: AuthService,
-    private fb: FormBuilder,
-    private router: Router,
-    private mailerService: MailerService,
-    private _snackBar: MatSnackBar,
-    private authStore: AuthStore
-  ) {
-  }
+    private readonly accounts: PlatformAccountService,
+    private readonly formBuilder: FormBuilder,
+    private readonly router: Router,
+    private readonly snackBar: MatSnackBar,
+    private readonly changeDetector: ChangeDetectorRef,
+  ) {}
 
-  private subscriptions: Subscription[] = []
-
-  public form!: FormGroup;
-  public dataLoading: boolean = false;
-
-  public MIN_PASSWORD_LENGTH = MIN_PASSWORD_LENGTH
-
-  ngOnInit() {
-    this.initForms()
-    this.dataFields()
-    this.watchForms()
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub.unsubscribe())
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      password: ['', [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH), Validators.maxLength(256)]],
+      passwordRepeat: ['', [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH), Validators.maxLength(256)]],
+    }, {validators: [CheckIfMatchingPasswordsValidator('password', 'passwordRepeat')]} as AbstractControlOptions);
   }
 
   public recoverPassword(): void {
+    if (this.form.invalid || this.dataLoading) return;
     this.dataLoading = true;
-    this.subscriptions.push(
-      this.authStore.recoveringPasswordEmail$.pipe(
-        first(),
-        switchMap((email) => this.authService.recoverPassword({email, ...this.form.getRawValue()})),
-        tap(() => {
-          this.authStore.setIsRecoveringPasswordStep(null);
-          this._snackBar.open('Пароль успешно изменён', 'Хорошо')
-          this.router.navigate(['/auth/login'])
-        }),
-        finalize(() => {
-          this.dataLoading = false;
-        }),
-        catchError(err => {
-          this._snackBar.open(err.error.message, 'Закрыть')
-          throw new Error(err);
-        })
-      ).subscribe()
-    )
+    this.accounts.resetPassword(this.form.getRawValue().password).pipe(
+      finalize(() => { this.dataLoading = false; this.changeDetector.markForCheck(); }),
+    ).subscribe({
+      next: () => {
+        this.snackBar.open('Пароль успешно изменён', 'Хорошо');
+        this.router.navigate(['/auth/login']);
+      },
+      error: error => {
+        this.snackBar.open(error.status === 401
+          ? 'Сессия восстановления истекла. Запросите новый код.'
+          : 'Не удалось изменить пароль. Попробуйте ещё раз.', 'Закрыть');
+        if (error.status === 401) this.router.navigate(['/auth/which-email-recover']);
+      },
+    });
   }
 
-  private initForms(): void {
-    this.form = this.fb.group({
-      password: ["", [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH)]],
-      passwordRepeat: ["", [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH)]],
-    }, {
-      validators: [CheckIfMatchingPasswordsValidator('password', 'passwordRepeat')]
-    } as AbstractControlOptions)
-  }
-
-  private dataFields(): void {
-  }
-
-  private watchForms(): void {
-  }
-
-  public cancel() {
-    this.authStore.setIsRecoveringPasswordStep(null);
-    this.router.navigate(['/auth/login'])
-  }
+  public cancel(): void { this.router.navigate(['/auth/login']); }
 }

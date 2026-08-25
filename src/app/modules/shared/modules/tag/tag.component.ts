@@ -1,10 +1,12 @@
-import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, Output} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
 import {ITagResponse} from "./interfaces/tag.interface";
 
 @Component({
-  selector: 'yrx-tag',
-  templateUrl: './tag.component.html',
-  styleUrls: ['./tag.component.scss']
+    selector: 'yrx-tag',
+    templateUrl: './tag.component.html',
+    styleUrls: ['./tag.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TagComponent implements AfterViewInit {
 

@@ -1,10 +1,59 @@
+@import "src/shared/styles/vars.colors";
+
 :host {
+  display: block;
   width: 100%;
 }
+.page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.page-head > div:first-child { max-width: 720px; }
+.eyebrow { margin-bottom: 6px; color: map-get($project-colors, "purple", 200); font: 600 12px/1.2 $second_font; letter-spacing: .12em; text-transform: uppercase; }
+.summary { display: flex; align-items: baseline; gap: 7px; padding: 12px 15px; border-radius: 10px; background: map-get($project-colors, "gradation", 700); }
+.summary strong { color: map-get($project-colors, "gradation", 100); font-size: 22px; }
+.summary span { color: map-get($project-colors, "gradation", 400); font-size: 12px; }
 .box_input {
   position: relative;
   z-index: 2;
 }
 .overflow {
   overflow: hidden;
+}
+.contract-form,
+.contract-card {
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .03);
+}
+.contract-card { padding: 20px; }
+.contract-form > summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px; cursor: pointer; list-style: none; }
+.contract-form > summary::-webkit-details-marker { display: none; }
+.summary-action { color: map-get($project-colors, "purple", 200); font: 600 13px/1.2 $second_font; }
+.editor { padding: 0 20px 20px; border-top: 1px solid map-get($project-colors, "gradation", 600); padding-top: 20px; }
+.field { display: flex; min-width: 0; flex-direction: column; gap: 7px; color: map-get($project-colors, "gradation", 300); font: 500 13px/1.2 $second_font; }
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.contract-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.contract-card_inactive {
+  opacity: .62;
+}
+.state {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .08);
+}
+select.input_normal {
+  width: 100%;
+}
+
+@media (max-width: 760px) {
+  .page-head { align-items: flex-start; flex-direction: column; }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
 }

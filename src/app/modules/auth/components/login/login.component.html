@@ -1,20 +1,26 @@
-<form [@fadeAnimation]="transitionToMA" [formGroup]="form">
+<form [@fadeAnimation]="transitionToMA" [formGroup]="form" (ngSubmit)="login()">
   <yrx-auth-header page="login">Вход</yrx-auth-header>
   <yrx-spacing type="S"></yrx-spacing>
   <yrx-input>
-    <input autocomplete="email" formControlName="email" yrxInput placeholder="Введите e-mail">
-    <yrx-error-hint-field field="required">Почта не должна быть пустой</yrx-error-hint-field>
-    <yrx-error-hint-field field="email">Указанная почта имеет неверный формат</yrx-error-hint-field>
+    <input autocomplete="username" formControlName="identifier" yrxInput placeholder="Логин или e-mail">
+    <yrx-error-hint-field field="required">Введите логин или e-mail</yrx-error-hint-field>
+    <yrx-error-hint-field field="minlength">Минимум 3 символа</yrx-error-hint-field>
   </yrx-input>
   <yrx-spacing type="XS"></yrx-spacing>
   <yrx-input>
-    <input autocomplete="current-password" formControlName="password" type="password" yrxInput placeholder="Введите пароль">
-    <yrx-error-hint-field field="minlength">Длина пароля не может быть меньше {{MIN_PASSWORD_LENGTH}} символов</yrx-error-hint-field>
-    <yrx-error-hint-field field="required">Пароль не должен быть пустым</yrx-error-hint-field>
+    <input autocomplete="current-password" formControlName="password" type="password" yrxInput placeholder="Пароль">
+    <yrx-error-hint-field field="required">Введите пароль</yrx-error-hint-field>
+    <yrx-error-hint-field field="minlength">Минимум {{MIN_PASSWORD_LENGTH}} символов</yrx-error-hint-field>
   </yrx-input>
   <yrx-spacing type="XS"></yrx-spacing>
   <yrx-link [routerLink]="['/auth/which-email-recover']" [underlined]="true">Забыли пароль?</yrx-link>
   <yrx-spacing type="M"></yrx-spacing>
+  @if ((platformAvailable$ | async) === false) {
+    <p class="text text_table regular c-red-300" role="alert">
+      Yurelax ID сейчас не отвечает. Проверьте подключение и повторите попытку — страница больше не будет ждать бесконечно.
+    </p>
+    <yrx-spacing type="XS"></yrx-spacing>
+  }
   <yrx-button (press)="login()" class="w100" type="primary" [loading]="dataLoading" [disabled]="dataLoading || form.invalid">
     Войти
   </yrx-button>

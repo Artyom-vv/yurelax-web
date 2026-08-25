@@ -1,38 +1,33 @@
-import {APP_INITIALIZER, Component, HostListener, NgZone, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, Inject, NgZone, OnInit, PLATFORM_ID, ChangeDetectionStrategy} from '@angular/core';
 import {PersistenceService} from "./modules/shared/services/persistence.service";
 import {AppStore} from "./store/app.store";
 import {SystemUserService} from "./modules/shared/services/system-user.service";
-import {filter, finalize, Subscription, switchMap, tap, throwError} from "rxjs";
+import {filter, finalize, of, switchMap, tap, throwError} from "rxjs";
 import {AuthService} from "./modules/auth/services/auth.service";
 import {catchError} from "rxjs/operators";
 import {NavigationEnd, Router, RouterOutlet} from "@angular/router";
 import {WikiService} from "./modules/platform/pages/wiki/services/wiki.service";
 import {SidebarNavigation} from "./modules/platform/modules/sidebar/interfaces/sidebarNavItem";
-import {BrowserModule} from "@angular/platform-browser";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AdminModule} from "./modules/admin/admin.module";
-import {registerLocaleData} from "@angular/common";
+import {isPlatformBrowser, registerLocaleData} from "@angular/common";
 import localeRu from '@angular/common/locales/ru';
-import {CookieService} from "ngx-cookie-service";
-import {IconsService} from "./services/icons.service";
-import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
-import {TokenInterceptor} from "./modules/shared/services/guards/token.interceptor";
-import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from "@angular/material/snack-bar";
-import {appInitializer} from "./modules/shared/factories/init.factory";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {PlatformSessionService} from './modules/shared/services/platform-session.service';
+import {SvgSpritesComponent} from './modules/shared/components/svg-sprites/svg-sprites.component';
 
 registerLocaleData(localeRu)
 
 @UntilDestroy()
 @Component({
-  selector: 'yrx-root',
-  standalone: true,
-  imports: [
-    AdminModule,
-    RouterOutlet
-  ],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+    selector: 'yrx-root',
+    imports: [
+        AdminModule,
+        SvgSpritesComponent,
+        RouterOutlet
+    ],
+    templateUrl: './app.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
 
@@ -43,7 +38,9 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private wikiService: WikiService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private platformSession: PlatformSessionService,
+    @Inject(PLATFORM_ID) private platformId: object,
   ) {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -115,35 +112,12 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.wikiService.loading$.next(true)
-    this.wikiService.getNavigation().pipe(
-      tap(navigation => {
-        const sidebarNavigation: SidebarNavigation = [
-          [{name: 'Вики yurelax', link: `/platform/wiki/home`, icon: 'grid', iconStroked: true, isButton: false}]
-        ]
-
-        navigation.forEach(group => {
-          sidebarNavigation.push(group.map(item => {
-            return {
-              name: item.metadata['title'],
-              link: `/platform/wiki/${item.page}`,
-              icon: item.metadata['icon'] ?? 'book',
-              iconStroked: true,
-              isButton: false,
-              data: item
-            }
-          }))
-        })
-
-        this.appStore.setWikiNavigation(sidebarNavigation)
-      }),
-      finalize(() => this.wikiService.loading$.next(false))
-    ).subscribe()
-    const user = this.persistenceService.get('user');
-    if (user) {
-      this.appStore.setUser(user)
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadWikiNavigation();
+      const user = this.persistenceService.get('user');
+      if (user) this.appStore.setUser(user)
+      this.dataFields()
     }
-    this.dataFields()
     this.appStore.setNavigation([
       {link: '/platform', name: 'О проекте', isLogged: false},
       {link: '/platform/wiki', name: 'Вики', isLogged: false},
@@ -156,6 +130,7 @@ export class AppComponent implements OnInit {
         {isButton: false, link: '/platform/profile/home', name: 'Главная', icon: 'home', iconStroked: true},
         {isButton: false, link: '/platform/profile/wallet', name: 'Кошелек', icon: 'wallet', iconStroked: true},
         {isButton: false, link: '/platform/profile/store', name: 'Магазин', icon: 'shopping-bag', iconStroked: true},
+        {isButton: false, link: '/platform/profile/ownership', name: 'Покупки и права', icon: 'file', iconStroked: true},
         {isButton: false, link: '/platform/profile/games', name: 'Мини-игры', icon: 'box', iconStroked: true},
         {isButton: false, link: '/platform/profile/referrals', name: 'Реферальная система', icon: 'user-plus', iconStroked: true},
       ],
@@ -173,7 +148,9 @@ export class AppComponent implements OnInit {
       [
         {isButton: false, link: '/admin/home', name: 'Домашняя', icon: 'home', iconStroked: true},
         {isButton: false, link: '/admin/wiki', name: 'Вики', icon: 'book', iconStroked: true},
+        {isButton: false, link: '/admin/players', name: 'Игроки', icon: 'users', iconStroked: true},
         {isButton: false, link: '/admin/statistics', name: 'Статистика', icon: 'file', iconStroked: true},
+        {isButton: false, link: '/admin/commerce', name: 'Товары и предложения', icon: 'shopping-bag', iconStroked: true},
         {isButton: false, link: '/admin/mini-games', name: 'Мини-игры', icon: 'joystick', iconStroked: true},
       ],
     ])
@@ -181,8 +158,6 @@ export class AppComponent implements OnInit {
     this.appStore.setSocials([
       {link: 'https://vk.com/yurelax', name: 'Вконтакте', icon: 'vk', color: '#0077FF'},
       {link: 'https://discord.gg/xTWx7T4y6W', name: 'Дискорд', icon: 'dc', color: '#5865F2'},
-      {link: '', name: 'Телеграм', icon: 'tg', color: '#0088CC'},
-      {link: '', name: 'Ютуб', icon: 'yt', color: '#CD201F'},
     ])
   }
 
@@ -194,15 +169,41 @@ export class AppComponent implements OnInit {
     ).subscribe()
   }
 
+  private loadWikiNavigation(): void {
+    this.wikiService.loading$.next(true)
+    this.wikiService.getNavigation().pipe(
+      tap(navigation => {
+        const sidebarNavigation: SidebarNavigation = [
+          [{name: 'Вики yurelax', link: `/platform/wiki/home`, icon: 'grid', iconStroked: true, isButton: false}]
+        ]
+        navigation.forEach(group => sidebarNavigation.push(group.map(item => ({
+          name: item.metadata['title'],
+          link: `/platform/wiki/${item.page}`,
+          icon: item.metadata['icon'] ?? 'book',
+          iconStroked: true,
+          isButton: false,
+          data: item
+        }))))
+        this.appStore.setWikiNavigation(sidebarNavigation)
+      }),
+      catchError(() => of([])),
+      finalize(() => this.wikiService.loading$.next(false))
+    ).subscribe()
+  }
+
   private dataFields(): void {
-    this.authService.getMe().pipe(
-      tap(() => {
-        this.appStore.setIsLogged(true);
+    this.platformSession.status(true).pipe(
+      switchMap(status => status.authenticated ? this.authService.getMe() : of(null)),
+      tap(user => {
+        this.appStore.setPlatformAvailable(true);
+        this.appStore.setIsLogged(user !== null);
       }),
       catchError((err) => {
+        this.appStore.setPlatformAvailable(false);
         this.systemUser.logout(false)
-        throw new Error(err.error.message)
+        return of(null)
       }),
+      finalize(() => this.appStore.setPreloading(false)),
       untilDestroyed(this)
     ).subscribe()
     this.appStore.isExit$.pipe(

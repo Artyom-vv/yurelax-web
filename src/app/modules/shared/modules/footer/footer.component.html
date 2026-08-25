@@ -14,16 +14,29 @@
     </div>
     <div class="separator"></div>
     <div class="flex flex_align-center flex_justify-between">
-      <ul class="flex gap-16">
-        @for (social of socials; track social) {
-          <li>
-            <a [href]="social.link" target="_blank" class="link text text_body medium">{{social.name}}</a>
-          </li>
+      <ul class="socials" aria-label="Социальные сети Yurelax">
+        @for (social of socials; track social.link) {
+          @if (social.link) {
+            <li>
+              <a
+                [href]="social.link"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link text text_body medium"
+                [attr.aria-label]="social.name + ' — откроется в новой вкладке'"
+              >
+                <span class="social-icon" [style.--social-color]="social.color" aria-hidden="true">
+                  <yrx-icon [hover]="false" [icon]="social.icon"></yrx-icon>
+                </span>
+                <span>{{social.name}}</span>
+              </a>
+            </li>
+          }
         }
       </ul>
       <ul class="flex gap-24">
-        <li><a href="" target="_blank" class="link text text_body medium">Условия пользования</a></li>
-        <li><a href="" target="_blank" class="link text text_body medium">Политика конфеденциальности</a></li>
+        <li><span class="pending-link text text_body medium" title="Документ готовится">Условия пользования</span></li>
+        <li><span class="pending-link text text_body medium" title="Документ готовится">Политика конфиденциальности</span></li>
       </ul>
     </div>
   </div>

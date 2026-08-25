@@ -1,10 +1,12 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {ContentLayoutImgInterface} from "./interfaces/content-layout-img.interface";
 
 @Component({
-  selector: 'yrx-content-layout',
-  templateUrl: './content-layout.component.html',
-  styleUrls: ['./content-layout.component.scss']
+    selector: 'yrx-content-layout',
+    templateUrl: './content-layout.component.html',
+    styleUrls: ['./content-layout.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ContentLayoutComponent {
   @Input() img: ContentLayoutImgInterface = {} as ContentLayoutImgInterface

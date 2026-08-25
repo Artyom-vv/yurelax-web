@@ -1,15 +1,15 @@
 <div class="box box_select" #boxSelect>
-  <mat-select (opened)="opened()" (closed)="closed()" [panelClass]="'select-panel-'+custom" [attr.custom]="custom" [class.isAbove]="isAbove" [class.select_expanded]="select.panelOpen" [value]="selectedOption?.value" [ngClass]="'select_'+size" [class.select_iconly]="icon.children.length > 0" [placeholder]="placeholder" #select>
-    <ng-template #optionTemplate let-option>
-      <yrx-dropout-point [optionCustom]="custom" [selected]="options[option.idx].value === selectedOption?.value" [icon]="option.option.icon" [iconStroked]="option.option.iconStroked"
-        (optionSelect)="onOptionSelect($event)" [isOption]="true" [underlined]="options.length-1 !== option.idx"
-        [value]="option.option.value">{{option.option.text}}
-      </yrx-dropout-point>
-    </ng-template>
+  <mat-select (closed)="closed()" (selectionChange)="onOptionSelect($event.value)" [panelClass]="'select-panel-'+custom" [attr.custom]="custom" [class.select_expanded]="select.panelOpen" [value]="$safeNavigationMigration(selectedOption?.value)" [ngClass]="'select_'+size" [class.select_iconly]="icon.children.length > 0" [placeholder]="placeholder" #select>
     @for (option of options; track option; let idx = $index) {
-      <mat-option style="display: none"
-        [value]="option.value"
-        [ngTemplateOutlet]="optionTemplate" [ngTemplateOutletContext]="{ $implicit: {option, idx}}">{{option.text}}
+      <mat-option class="yrx-select-option" [class.yrx-select-option_underlined]="options.length - 1 !== idx" [value]="option.value">
+        <span class="yrx-select-option__content" [class.yrx-select-option__content_iconly]="option.icon">
+          @if (option.icon) {
+            <span class="yrx-select-option__icon" aria-hidden="true">
+              <yrx-icon [stroked]="option.iconStroked ?? false" [icon]="option.icon"></yrx-icon>
+            </span>
+          }
+          <span class="yrx-select-option__label">{{option.text}}</span>
+        </span>
       </mat-option>
     }
   </mat-select>

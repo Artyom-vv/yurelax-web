@@ -1,0 +1,17 @@
+@import "src/shared/styles/vars.colors";
+
+.link-code {
+  padding: 18px;
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  border-radius: 12px;
+  background: map-get($project-colors, "gradation", 700);
+  color: map-get($project-colors, "purple", 200);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  text-align: center;
+}
+
+.link-state { padding: 18px; border-radius: 12px; }
+.link-state_success { background: rgba(70, 191, 122, .12); border: 1px solid rgba(70, 191, 122, .35); }
+.link-state h4 { margin-bottom: 8px; }

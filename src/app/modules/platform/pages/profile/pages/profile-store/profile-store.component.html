@@ -1,17 +1,35 @@
 <div class="flex flex_align-center flex_justify-between">
   <h3>Доступные подписки</h3>
   <div class="flex gap-12">
-    <yrx-button (press)="prev()" type="secondary">
+    <yrx-button (press)="prev()" type="secondary" [disabled]="step === 0">
       <yrx-ref-icon btn-icon class="stroke" name="chevron-left"></yrx-ref-icon>
     </yrx-button>
-    <yrx-button (press)="next()" type="secondary">
+    <yrx-button (press)="next()" type="secondary" [disabled]="step + subscriptionsPerPage >= totalSubscriptions">
       <yrx-ref-icon btn-icon class="stroke" name="chevron-right"></yrx-ref-icon>
     </yrx-button>
   </div>
 </div>
 <yrx-spacing type="S"></yrx-spacing>
-<div class="subscriptions flex gap-24">
-  @for (index of indexes; track index) {
-    <yrx-subscription [data]="subscriptions[index]"></yrx-subscription>
-  }
-</div>
+@if (message) {
+  <div class="notice notice_success text text_body regular">{{message}}</div>
+  <yrx-spacing type="XS"></yrx-spacing>
+}
+@if (error) {
+  <div class="notice notice_error text text_body regular">{{error}}</div>
+  <yrx-spacing type="XS"></yrx-spacing>
+}
+@if (loading) {
+  <div class="empty flex flex_center text text_body regular c-gradation-300">Загружаем персональный каталог…</div>
+} @else if (subscriptions.length === 0) {
+  <div class="empty flex flex_center text text_body regular c-gradation-300">Сейчас нет доступных предложений.</div>
+} @else {
+  <div class="subscriptions flex gap-24">
+    @for (index of indexes; track subscriptions[index].offerCode) {
+      <yrx-subscription
+        [data]="subscriptions[index]"
+        [loading]="purchasingOffer === subscriptions[index].offerCode"
+        (purchase)="purchase($event)">
+      </yrx-subscription>
+    }
+  </div>
+}

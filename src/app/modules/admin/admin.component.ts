@@ -3,6 +3,7 @@ import {
   Component,
   OnDestroy,
   OnInit,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {AppStore} from "../../store/app.store";
 import {Subscription, switchMap, tap} from "rxjs";
@@ -11,9 +12,11 @@ import {AdminStore} from "./store/admin.store";
 import {ToolsService} from "../shared/services/tools.service";
 
 @Component({
-  selector: 'yrx-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss'],
+    selector: 'yrx-admin',
+    templateUrl: './admin.component.html',
+    styleUrls: ['./admin.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AdminComponent implements OnInit, OnDestroy {
 

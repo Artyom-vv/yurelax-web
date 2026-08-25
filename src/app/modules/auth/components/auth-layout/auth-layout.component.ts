@@ -1,15 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {SwipeAnimation} from "../../../shared/animations/redirect.animation";
 import {AnimationsService} from "../../../shared/animations/services/animations.service";
 import {RouterOutlet} from "@angular/router";
 
 @Component({
-  selector: 'yrx-auth-layout',
-  templateUrl: './auth-layout.component.html',
-  styleUrls: ['./auth-layout.component.scss'],
-  animations: [
-    SwipeAnimation
-  ]
+    selector: 'yrx-auth-layout',
+    templateUrl: './auth-layout.component.html',
+    styleUrls: ['./auth-layout.component.scss'],
+    animations: [
+        SwipeAnimation
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AuthLayoutComponent implements OnInit {
   constructor(

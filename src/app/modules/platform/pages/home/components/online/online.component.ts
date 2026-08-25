@@ -1,13 +1,15 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ServerService} from "../../../../../shared/services/server.service";
 import {finalize, interval, Observable, retry, retryWhen, Subscription, switchMap, tap} from "rxjs";
 import {ToolsService} from "../../../../../shared/services/tools.service";
 import {GetOnlineResponseInterface} from "../../../../../shared/interfaces/old/get-online-response.interface";
 
 @Component({
-  selector: 'yrx-online',
-  templateUrl: './online.component.html',
-  styleUrls: ['./online.component.scss']
+    selector: 'yrx-online',
+    templateUrl: './online.component.html',
+    styleUrls: ['./online.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class OnlineComponent implements OnInit, OnDestroy {
   constructor(

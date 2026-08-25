@@ -6,12 +6,15 @@ import {
   Input,
   Output,
   ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 @Component({
-  selector: 'yrx-slider',
-  templateUrl: './slider.component.html',
-  styleUrls: ['./slider.component.scss']
+    selector: 'yrx-slider',
+    templateUrl: './slider.component.html',
+    styleUrls: ['./slider.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class SliderComponent implements AfterViewInit {
   @Input() min: number = 0;
@@ -90,8 +93,8 @@ export class SliderComponent implements AfterViewInit {
   }
 
 
-  @HostListener('document:mouseup', ['$event'])
-  @HostListener('document:touchend', ['$event'])
+  @HostListener('document:mouseup')
+  @HostListener('document:touchend')
   onTouchEnd(): void {
     this.isSliding = false;
   }

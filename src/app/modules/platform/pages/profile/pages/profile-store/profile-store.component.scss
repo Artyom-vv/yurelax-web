@@ -6,3 +6,28 @@
   height: 100%;
   overflow: hidden;
 }
+
+.empty {
+  min-height: 220px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.notice {
+  padding: 12px 14px;
+  border-radius: 8px;
+
+  &_success {
+    color: #b7e7ca;
+    background: rgba(86, 197, 132, 0.08);
+    border: 1px solid rgba(86, 197, 132, 0.2);
+  }
+
+  &_error {
+    color: #f0b6b8;
+    background: rgba(242, 138, 142, 0.08);
+    border: 1px solid rgba(242, 138, 142, 0.2);
+  }
+}

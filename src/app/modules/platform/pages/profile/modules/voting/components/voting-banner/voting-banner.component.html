@@ -1,3 +1,5 @@
-<div class="voting-banner">
-
+<div class="voting-banner" tabindex="0" [attr.aria-label]="title + ': ссылка для голосования пока недоступна'">
+  <span class="voting-icon"><yrx-icon [stroked]="true" [icon]="icon"></yrx-icon></span>
+  <span class="voting-copy"><strong>{{title}}</strong><small>{{description}}</small></span>
+  <span class="voting-status">Скоро</span>
 </div>

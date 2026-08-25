@@ -1,13 +1,15 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {SidebarNavItem} from '../../modules/sidebar/interfaces/sidebarNavItem';
 import {combineLatest, tap} from 'rxjs';
 import {WikiService} from "./services/wiki.service";
 
 @Component({
-  selector: 'yrx-wiki',
-  templateUrl: './wiki.component.html',
-  styleUrls: ['./wiki.component.scss'],
+    selector: 'yrx-wiki',
+    templateUrl: './wiki.component.html',
+    styleUrls: ['./wiki.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class WikiComponent {
   public wikiNavigation: SidebarNavItem[][] = []

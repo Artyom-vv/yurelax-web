@@ -3,3 +3,30 @@
 .colored-box {
   background-color: map-get($project-colors, "gradation", 700);
 }
+
+.cabinet-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.cabinet-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  border-radius: 8px;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 160ms ease, transform 160ms ease;
+
+  &:hover {
+    border-color: map-get($project-colors, "purple", 300);
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 900px) {
+  .cabinet-grid { grid-template-columns: 1fr; }
+}

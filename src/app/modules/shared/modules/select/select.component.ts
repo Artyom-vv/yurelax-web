@@ -2,41 +2,37 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component, ElementRef, forwardRef, Inject,
+  Component, forwardRef,
   Input,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {OptionInterface} from "./interfaces/option.interface";
 import {MatSelect} from "@angular/material/select";
-import {OptionSelectOutputInterface} from "../dropout-point/interfaces/option-select-output.interface";
-import {SelectService} from "./services/select.service";
-import {DOCUMENT} from "@angular/common";
+
 
 @Component({
-  selector: 'yrx-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SelectComponent),
-      multi: true
-    }
-  ]
+    selector: 'yrx-select',
+    templateUrl: './select.component.html',
+    styleUrls: ['./select.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SelectComponent),
+            multi: true
+        }
+    ],
+    standalone: false
 })
 export class SelectComponent implements AfterViewInit {
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private selectService: SelectService,
-    @Inject(DOCUMENT) private document: Document
   ) {
   }
 
   @ViewChild('select') select!: MatSelect
-  @ViewChild('boxSelect') boxSelect!: ElementRef
   @Input() options: OptionInterface[] = []
   @Input() placeholder: string = ''
   @Input() custom: 'dark' | null = null
@@ -46,9 +42,8 @@ export class SelectComponent implements AfterViewInit {
   onChange: any = () => {};
   onTouch: any = () => {};
 
-  public selectedOption?: OptionSelectOutputInterface;
-  public isAbove: boolean = false;
-  public value: boolean = false;
+  public selectedOption?: Pick<OptionInterface, 'value' | 'icon' | 'iconStroked'>;
+  public value: unknown = null;
 
   ngAfterViewInit() {
     const option = this.value ? this.options.find(x => x.value === this.value) : this.options[0];
@@ -63,26 +58,35 @@ export class SelectComponent implements AfterViewInit {
     this.cdr.detectChanges()
   }
 
-  public onOptionSelect($event: OptionSelectOutputInterface): void {
-    this.selectedOption = $event
-    this.onChange($event.value)
-    this.cdr.detectChanges()
-    if (this.select && this.select.panelOpen)
-      this.select.close()
-  }
+  public onOptionSelect(value: unknown): void {
+    const option = this.options.find(candidate => candidate.value === value);
+    if (!option) return;
 
-  public opened() {
-    this.selectService.openBlocker(this.boxSelect);
-    this.isAbove = !!this.document.documentElement.querySelector('.mat-mdc-select-panel-above')
+    this.value = value;
+    this.selectedOption = {
+      value: option.value,
+      icon: option.icon,
+      iconStroked: option.iconStroked
+    };
+    this.onChange(value);
+    this.cdr.markForCheck();
   }
 
   public closed() {
-    this.selectService.closeBlocker()
+    this.onTouch();
   }
 
-  writeValue(value: boolean): void {
+  writeValue(value: unknown): void {
     this.value = value;
-    this.onChange(this.value);
+    const option = this.options.find(candidate => candidate.value === value);
+    if (option) {
+      this.selectedOption = {
+        value: option.value,
+        icon: option.icon,
+        iconStroked: option.iconStroked
+      };
+    }
+    this.cdr.markForCheck();
   }
 
   registerOnChange(fn: any): void {

@@ -1,19 +1,17 @@
 import {Injectable} from "@angular/core";
-import {ComponentStore} from "@ngrx/component-store";
 import {AdminState, DEFAULT_STATE} from "./admin-store.interface";
-import {Observable} from "rxjs";
+import {BehaviorSubject, distinctUntilChanged, map, Observable} from "rxjs";
 
 @Injectable()
-export class AdminStore extends ComponentStore<AdminState> {
+export class AdminStore {
+  private readonly state$ = new BehaviorSubject<AdminState>(DEFAULT_STATE);
 
-  constructor() {
-    super(DEFAULT_STATE);
-  }
+  readonly withoutScroll$: Observable<boolean> = this.state$.pipe(
+    map(state => state.withoutScroll),
+    distinctUntilChanged()
+  );
 
-  readonly withoutScroll$: Observable<boolean> = this.select(state => state.withoutScroll);
-
-  readonly setWithoutScroll = this.updater((state, withoutScroll: boolean) => ({
-    ...state,
-    withoutScroll
-  }));
+  readonly setWithoutScroll = (withoutScroll: boolean): void => {
+    this.state$.next({...this.state$.value, withoutScroll});
+  };
 }

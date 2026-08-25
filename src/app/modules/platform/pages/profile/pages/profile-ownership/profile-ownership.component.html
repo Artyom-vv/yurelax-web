@@ -1,0 +1,78 @@
+<div class="flex flex_column gap-24">
+  <div class="colored-box">
+    <h3>Покупки и права</h3>
+    <yrx-spacing type="XS"></yrx-spacing>
+    <p class="text text_body c-gradation-300">Здесь собраны подтвержденные покупки и все права, которые платформа выдала вашему аккаунту.</p>
+  </div>
+
+  @if (message) {
+    <div class="notice notice_success text text_body">{{message}}</div>
+  }
+  @if (error) {
+    <div class="notice notice_error text text_body">{{error}}</div>
+  }
+
+  @if (loading) {
+    <div class="colored-box text text_body c-gradation-300">Загружаем историю владения…</div>
+  } @else {
+    <section class="colored-box">
+      <h3>Активные и прошлые права</h3>
+      <yrx-spacing type="S"></yrx-spacing>
+      @if (entitlements.length === 0) {
+        <p class="text text_body c-gradation-300">Права пока не выдавались.</p>
+      } @else {
+        <div class="card-list">
+          @for (entitlement of entitlements; track entitlement.id) {
+            <article class="ownership-card">
+              <div class="flex flex_justify-between gap-24">
+                <div>
+                  <p class="text text_body c-gradation-300">{{entitlement.productName}} · {{entitlement.status}}</p>
+                  <yrx-spacing type="XS2"></yrx-spacing>
+                  <h4>{{entitlement.capabilityName}}</h4>
+                  <p class="text text_small c-gradation-300">{{entitlement.capabilityDescription}}</p>
+                </div>
+                @if (entitlement.activationState.canActivate) {
+                  <yrx-button type="primary" [disabled]="activating === entitlement.id" (press)="activate(entitlement)">
+                    {{activating === entitlement.id ? 'Активируем…' : 'Активировать'}}
+                  </yrx-button>
+                }
+              </div>
+              <yrx-spacing type="XS"></yrx-spacing>
+              <div class="metadata text text_small c-gradation-300">
+                <span>Товар: {{entitlement.productName}}</span>
+                <span>Область: {{entitlement.gameCode ?? 'весь проект'}}</span>
+                <span>Действует до: {{entitlement.expiresAt ? (entitlement.expiresAt | date:'dd.MM.yyyy HH:mm') : 'бессрочно'}}</span>
+                <span>{{activationHint(entitlement)}}</span>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </section>
+
+    <section class="colored-box">
+      <h3>История покупок</h3>
+      <yrx-spacing type="S"></yrx-spacing>
+      @if (purchases.length === 0) {
+        <p class="text text_body c-gradation-300">Покупок пока нет.</p>
+      } @else {
+        <div class="card-list">
+          @for (purchase of purchases; track purchase.id) {
+            <article class="ownership-card flex flex_justify-between gap-24">
+              <div>
+                <h4>{{purchase.productName}}</h4>
+                <yrx-spacing type="XS2"></yrx-spacing>
+                <p class="text text_small c-gradation-300">Количество: {{purchase.quantity}}</p>
+                <details><summary>Технический контракт</summary><code>{{purchase.offerCode}} · {{purchase.productCode}}</code></details>
+              </div>
+              <div class="purchase-price">
+                <h4>{{purchase.totalPrice}} {{purchase.currencyCode}}</h4>
+                <p class="text text_small c-gradation-300">{{purchase.purchasedAt | date:'dd.MM.yyyy HH:mm'}}</p>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </section>
+  }
+</div>

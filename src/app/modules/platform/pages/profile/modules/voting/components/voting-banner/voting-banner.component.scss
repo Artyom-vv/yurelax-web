@@ -5,12 +5,46 @@
   width: 100%;
 }
 .voting-banner {
-  cursor: pointer;
-  height: 72px;
-  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 84px;
+  padding: 14px;
+  border-radius: 8px;
   border: 1px solid map-get($project-colors, "gradation", 600);
   transition: $trs;
   &:hover {
-    background-color: map-get($project-colors, "gradation", 600);
+    border-color: map-get($project-colors, "gradation", 500);
+    background-color: map-get($project-colors, "gradation", 700);
   }
+}
+
+.voting-icon {
+  display: flex;
+  width: 38px;
+  height: 38px;
+  padding: 9px;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  color: map-get($project-colors, "purple", 200);
+  background: rgba(108, 92, 231, .12);
+}
+
+.voting-copy {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+
+  strong { color: map-get($project-colors, "gradation", 100); }
+  small { color: map-get($project-colors, "gradation", 300); line-height: 1.35; }
+}
+
+.voting-status {
+  padding: 5px 8px;
+  border-radius: 999px;
+  color: map-get($project-colors, "gradation", 300);
+  background: map-get($project-colors, "gradation", 700);
+  font-size: 12px;
 }

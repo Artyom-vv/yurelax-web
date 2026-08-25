@@ -1,7 +1,8 @@
 import {Directive, ElementRef, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 
 @Directive({
-  selector: '[yrxInView]'
+    selector: '[yrxInView]',
+    standalone: false
 })
 export class InViewDirective implements OnInit, OnDestroy {
 

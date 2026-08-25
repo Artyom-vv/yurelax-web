@@ -1,10 +1,12 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {IRatingTableColumn} from "../../interfaces/rating-table.interface";
 
 @Component({
-  selector: 'yrx-rating-table-head',
-  templateUrl: './rating-table-head.component.html',
-  styleUrls: ['./rating-table-head.component.scss']
+    selector: 'yrx-rating-table-head',
+    templateUrl: './rating-table-head.component.html',
+    styleUrls: ['./rating-table-head.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class RatingTableHeadComponent {
   @Input() filteredByKey!: string | undefined

@@ -1,53 +1,95 @@
-import { HttpClient } from "@angular/common/http";
-import {Injectable} from "@angular/core";
-import {Observable, throwError} from "rxjs";
-import {StatisticsResponseInterface} from "../interfaces/old/statistics-response.interface";
-import {environment} from "../../../../environments/environment";
-import {catchError} from "rxjs/operators";
-import {CreateStatisticsRequestInterface} from "../interfaces/old/create-statistics-request.interface";
-import {StatisticsListRequestInterface} from "../interfaces/old/statistics-list-request.interface";
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {map, Observable, switchMap} from 'rxjs';
+import {environment} from '../../../../environments/environment';
+import {StatisticsListRequestInterface} from '../interfaces/old/statistics-list-request.interface';
+import {StatisticsResponseInterface} from '../interfaces/old/statistics-response.interface';
+import {PlatformSessionService} from './platform-session.service';
+
+export type StatValueKind = 'BIGINT' | 'NUMERIC' | 'TEXT' | 'BOOL';
+export type StatAggregationKind = 'SUM' | 'LAST';
+
+export interface PlatformStatDefinition {
+  id: string;
+  code: string;
+  valueKind: StatValueKind;
+  aggregationKind: StatAggregationKind;
+  unit?: string;
+  allowNegative: boolean;
+  active: boolean;
+}
+
+export interface PlatformStatDefinitionPage {
+  items: PlatformStatDefinition[];
+  page: {nextCursor: string | null; hasMore: boolean};
+}
+
+export interface CreatePlatformStatDefinition {
+  code: string;
+  valueKind: StatValueKind;
+  aggregationKind: StatAggregationKind;
+  unit?: string;
+  allowNegative: boolean;
+}
 
 @Injectable()
 export class StatisticsService {
   constructor(
-    private http: HttpClient
-  ) {
+    private readonly http: HttpClient,
+    private readonly session: PlatformSessionService,
+  ) {}
+
+  list(): Observable<PlatformStatDefinitionPage> {
+    return this.http.get<PlatformStatDefinitionPage>(`${environment.platformApiUrl}/admin/stat-definitions`);
   }
 
-  checkStatisticsExists(key: string): Observable<boolean> {
-    return this.http.get<boolean>(`${environment.apiUrl}/statistics/check-statistics-exists/${key}`).pipe(
-      catchError((err) => throwError(err))
-    )
+  /** Compatibility projection for existing game selectors while they migrate to contract codes. */
+  getStatisticsList(input: StatisticsListRequestInterface): Observable<StatisticsResponseInterface[]> {
+    return this.list().pipe(map(page => page.items
+      .filter(item => !input.value || item.code.includes(input.value))
+      .map(item => this.legacyProjection(item))));
   }
 
-  deleteStatistics(key: string): Observable<StatisticsResponseInterface> {
-    return this.http.delete<StatisticsResponseInterface>(`${environment.apiUrl}/statistics/delete-statistics/${key}`).pipe(
-      catchError((err) => throwError(err))
-    )
+  /** Compatibility projection for existing leaderboard column labels. */
+  getStatistics(code: string): Observable<StatisticsResponseInterface> {
+    return this.list().pipe(map(page => {
+      const definition = page.items.find(item => item.code === code);
+      if (!definition) throw new Error(`Statistic contract ${code} is not published`);
+      return this.legacyProjection(definition);
+    }));
   }
 
-
-  getStatistics(key: string): Observable<StatisticsResponseInterface> {
-    return this.http.get<StatisticsResponseInterface>(`${environment.apiUrl}/statistics/get-statistics/${key}`).pipe(
-      catchError((err) => throwError(err))
-    )
+  create(input: CreatePlatformStatDefinition): Observable<PlatformStatDefinition> {
+    return this.session.status().pipe(
+      switchMap(status => this.http.post<PlatformStatDefinition>(
+        `${environment.platformApiUrl}/admin/stat-definitions`, input,
+        {headers: {
+          'x-csrf-token': status.csrfToken ?? '',
+          'idempotency-key': crypto.randomUUID(),
+        }}
+      ))
+    );
   }
 
-  getStatisticsList(data: StatisticsListRequestInterface): Observable<StatisticsResponseInterface[]> {
-    return this.http.post<StatisticsResponseInterface[]>(`${environment.apiUrl}/statistics/list`, data).pipe(
-      catchError((err) => throwError(err))
-    )
+  deactivate(statDefinitionId: string, reason: string): Observable<PlatformStatDefinition> {
+    return this.session.status().pipe(
+      switchMap(status => this.http.post<PlatformStatDefinition>(
+        `${environment.platformApiUrl}/admin/stat-definitions/${encodeURIComponent(statDefinitionId)}/deactivate`,
+        {reason},
+        {headers: {
+          'x-csrf-token': status.csrfToken ?? '',
+          'idempotency-key': crypto.randomUUID(),
+        }}
+      ))
+    );
   }
 
-  createStatistics(data: CreateStatisticsRequestInterface): Observable<StatisticsResponseInterface> {
-    return this.http.post<StatisticsResponseInterface>(`${environment.apiUrl}/statistics/create-statistics`, data).pipe(
-      catchError((err) => throwError(err))
-    )
-  }
-
-  updateStatistics(data: CreateStatisticsRequestInterface): Observable<StatisticsResponseInterface> {
-    return this.http.patch<StatisticsResponseInterface>(`${environment.apiUrl}/statistics/update-statistics`, data).pipe(
-      catchError((err) => throwError(err))
-    )
+  private legacyProjection(definition: PlatformStatDefinition): StatisticsResponseInterface {
+    const aggregation = definition.aggregationKind === 'SUM' ? 'сумма значений' : 'последнее значение';
+    return {
+      key: definition.code,
+      title: definition.code,
+      description: `${definition.valueKind}, ${aggregation}${definition.unit ? `, единица: ${definition.unit}` : ''}`,
+    };
   }
 }

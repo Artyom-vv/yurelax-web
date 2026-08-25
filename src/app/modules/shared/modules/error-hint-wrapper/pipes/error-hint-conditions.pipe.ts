@@ -6,7 +6,8 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
 @UntilDestroy()
 @Pipe({
-  name: 'errorHintConditions'
+    name: 'errorHintConditions',
+    standalone: false
 })
 export class ErrorHintConditionsPipe implements PipeTransform {
 

@@ -1,9 +1,11 @@
-import {AfterViewInit, ChangeDetectorRef, Component, DoCheck, EventEmitter, Input, Output} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, DoCheck, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
-  selector: 'yrx-selector-point',
-  templateUrl: './selector-point.component.html',
-  styleUrls: ['./selector-point.component.scss']
+    selector: 'yrx-selector-point',
+    templateUrl: './selector-point.component.html',
+    styleUrls: ['./selector-point.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class SelectorPointComponent implements AfterViewInit, DoCheck {
   constructor(private cdr: ChangeDetectorRef) {

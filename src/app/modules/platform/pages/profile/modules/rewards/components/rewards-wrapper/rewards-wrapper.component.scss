@@ -1,7 +1,50 @@
 @import "src/shared/styles/vars.colors";
 
 .rewards-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.reward-kind {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 92px;
+  padding: 16px;
   border: 1px solid map-get($project-colors, "gradation", 600);
-  border-radius: 6px;
-  height: 72px;
+  border-radius: 8px;
+  background: map-get($project-colors, "gradation", 750);
+
+  h4 { margin-bottom: 4px; }
+  p { color: map-get($project-colors, "gradation", 300); font-size: 14px; line-height: 1.35; }
+}
+
+.reward-icon {
+  display: flex;
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  color: map-get($project-colors, "purple", 200);
+  background: rgba(108, 92, 231, .12);
+}
+
+.reward-state {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 13px 16px;
+  border-radius: 8px;
+  background: map-get($project-colors, "gradation", 750);
+
+  span { color: map-get($project-colors, "gradation", 300); font-size: 14px; }
+}
+
+@media (max-width: 900px) {
+  .rewards-wrapper { grid-template-columns: 1fr; }
+  .reward-state { grid-column: auto; align-items: flex-start; flex-direction: column; gap: 4px; }
 }

@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {AnimationsService} from "../../../../../shared/animations/services/animations.service";
 import {MiniGamesService} from "../../../../../shared/services/mini-games.service";
@@ -8,9 +8,11 @@ import {DELETE_DURATION} from "../../../../admin.constants";
 import {catchError} from "rxjs/operators";
 
 @Component({
-  selector: 'yrx-mini-games-item',
-  templateUrl: './mini-games-item.component.html',
-  styleUrls: ['./mini-games-item.component.scss']
+    selector: 'yrx-mini-games-item',
+    templateUrl: './mini-games-item.component.html',
+    styleUrls: ['./mini-games-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class MiniGamesItemComponent {
   constructor(

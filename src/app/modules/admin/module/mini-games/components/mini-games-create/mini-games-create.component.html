@@ -4,7 +4,7 @@
       <yrx-drag-and-drop [loading]="imageLoading" (onLoad)="imageLoading = true" [fullHeight]="true" [accept]="['image/png','image/jpg','image/jpeg']" class="flex_grow" (onChange)="onPreviewSelect($event)" icon="file" [iconStroked]="true"></yrx-drag-and-drop>
       <div class="preview flex_grow">
         @if (dndResponse) {
-          <img [src]="dndResponse?.url" [alt]="dndResponse?.file?.name">
+          <img [src]="$safeNavigationMigration(dndResponse?.url)" [alt]="$safeNavigationMigration(dndResponse?.file?.name)">
         }
       </div>
     </div>
@@ -28,7 +28,7 @@
         @if (statisticsList.length > 0) {
           <div class="flex gap-8 flex_wrap">
             @for (statistics of statisticsList; track statistics) {
-              <yrx-tag [disabled]="form.getRawValue().keys.length >= 3" (onSelect)="onSelectTag($event)" [defaultSelect]="form.get('keys')?.value?.includes?.(statistics.key)" [value]="statistics.key">{{statistics.title}}</yrx-tag>
+              <yrx-tag [disabled]="form.getRawValue().keys.length >= 3" (onSelect)="onSelectTag($event)" [defaultSelect]="$safeNavigationMigration(form.get('keys')?.value?.includes?.(statistics.key))" [value]="statistics.key">{{statistics.title}}</yrx-tag>
             }
           </div>
         }

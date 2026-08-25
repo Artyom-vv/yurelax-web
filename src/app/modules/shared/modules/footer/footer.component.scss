@@ -4,11 +4,66 @@
 .footer {
   background-color: map-get($project-colors, "gradation", 750);
 }
-.link {
-  transition: $trs;
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 4px 14px 4px 5px;
+  color: map-get($project-colors, "gradation", 300);
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: color $trs, border-color $trs, background-color $trs, transform $trs;
+
   &:hover {
-    color: map-get($project-colors, "gradation", 200);
+    color: map-get($project-colors, "gradation", 100);
+    border-color: map-get($project-colors, "gradation", 500);
+    background-color: map-get($project-colors, "gradation", 700);
+    transform: translateY(-1px);
+
+    .social-icon {
+      color: map-get($project-colors, "gradation", 100);
+      background-color: var(--social-color);
+    }
   }
+
+  &:focus-visible {
+    outline: 2px solid map-get($project-colors, "purple", 200);
+    outline-offset: 3px;
+  }
+}
+
+.social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  color: var(--social-color);
+  background-color: map-get($project-colors, "gradation", 700);
+  border-radius: 7px;
+  transition: color $trs, background-color $trs;
+
+  yrx-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.pending-link {
+  color: map-get($project-colors, "gradation", 500);
+  cursor: help;
 }
 .logotype {
   cursor: pointer;

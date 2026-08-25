@@ -1,5 +1,5 @@
 import {APP_BASE_HREF} from '@angular/common';
-import {CommonEngine} from '@angular/ssr';
+import {CommonEngine} from '@angular/ssr/node';
 import express from 'express';
 import {fileURLToPath} from 'node:url';
 import {dirname, join, resolve} from 'node:path';
@@ -16,6 +16,11 @@ export function app(): express.Express {
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
+
+  server.get('/health', (_req, res) => {
+    res.setHeader('cache-control', 'no-store');
+    res.json({status: 'ok', service: 'yurelax-web', revision: process.env['WEB_RELEASE_SHA'] ?? 'development'});
+  });
 
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
@@ -54,4 +59,4 @@ function run(): void {
   });
 }
 
-run();
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) run();

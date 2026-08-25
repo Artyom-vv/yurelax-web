@@ -1,22 +1,22 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {filter, finalize, Subscription, switchMap, tap} from "rxjs";
-import {SystemUserService} from "../../../shared/services/system-user.service";
 import {ContentLayoutInterface} from "./components/content-layout/interfaces/content-layout.interface";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MiniGamesService} from "../../../shared/services/mini-games.service";
 import {MiniGameResponseInterface} from "../../../shared/interfaces/old/mini-game-response.interface";
 
 @Component({
-  selector: 'yrx-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'yrx-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private appStore: AppStore,
-    private systemUserService: SystemUserService,
     private fb: FormBuilder,
     private miniGamesService: MiniGamesService
   ) {
@@ -89,12 +89,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForms()
-    this.access_token = !!this.systemUserService.getAccessToken();
     this.appStore.setIsHomePage(true)
     this.subscriptions.push(
       this.appStore.isLogged$.pipe(
         tap((val) => {
           this.isLogged = val
+          this.access_token = val
         }),
         filter((val) => val),
         switchMap(() => this.appStore.user$),

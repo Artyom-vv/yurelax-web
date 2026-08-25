@@ -3,7 +3,8 @@ import {InputEmitInterface} from "./interfaces/input-emit.interface";
 import {AbstractControl} from "@angular/forms";
 
 @Directive({
-  selector: '[inputEvent]'
+  selector: '[inputEvent]',
+  standalone: false,
 })
 export class InputEventDirective {
 

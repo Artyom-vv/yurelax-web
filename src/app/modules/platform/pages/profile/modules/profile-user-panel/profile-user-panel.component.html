@@ -4,25 +4,33 @@
       @if (dataLoading) {
         <yrx-skeleton [styles]="{width: '48px', height: '48px', borderRadius: '6px'}" theme="dark"></yrx-skeleton>
       } @else {
-        <img [src]="userStore?.userInfoRef?.avatarUrl ?? 'assets/content/header/default-avatar.png'" [alt]="'Аватар игрока '+userStore?.login+' yurelax'" class="avatar">
+        <img [src]="userStore?.userInfoRef?.avatarUrl ?? 'assets/content/header/default-avatar.png'" [alt]="'Аватар игрока '+$safeNavigationMigration(userStore?.login)+' yurelax'" class="avatar">
       }
       <h4>{{userStore?.login}}</h4>
     </div>
-    <p class="tag text text_body medium c-gradation-300 flex_align-self-start">Обычный тариф</p>
+    <p class="tag text text_body medium c-gradation-300 flex_align-self-start">Yurelax ID</p>
   </div>
   <yrx-spacing type="S"></yrx-spacing>
   <div class="flex flex_column gap-8">
     <div class="flex gap-4">
       <p class="text text_body regular c-gradation-300">Почта:</p>
-      <p class="text text_body regular c-gradation-100">{{userStore?.email}}</p>
+      <p class="text text_body regular c-gradation-100">{{userStore?.email || 'не указана'}}</p>
+    </div>
+    <div class="flex gap-4">
+      <p class="text text_body regular c-gradation-300">Безопасность:</p>
+      <p class="text text_body regular" [class.c-green-300]="userStore?.emailVerify" [class.c-red-300]="!userStore?.emailVerify">
+        {{userStore?.emailVerify ? 'почта подтверждена' : 'почта не подтверждена'}}
+      </p>
     </div>
     <div class="flex gap-4">
       <p class="text text_body regular c-gradation-300">Дата регистрации:</p>
-      <p class="text text_body regular c-gradation-100">{{userStore?.userInfoRef?.createdAt | date: 'dd.MM.YY'}}</p>
+      <p class="text text_body regular c-gradation-100">{{$safeNavigationMigration(userStore?.userInfoRef?.createdAt) | date: 'dd.MM.YY'}}</p>
     </div>
     <div class="flex gap-4">
-      <p class="text text_body regular c-gradation-300">2-ух факторная верификация:</p>
-      <p class="text text_body regular c-red-300">нет</p>
+      <p class="text text_body regular c-gradation-300">Minecraft:</p>
+      <p class="text text_body regular" [class.c-green-300]="userStore?.userInfoRef?.minecraftLinked" [class.c-gradation-300]="!userStore?.userInfoRef?.minecraftLinked">
+        {{userStore?.userInfoRef?.minecraftLinked ? 'подключён' : 'ещё не подключён'}}
+      </p>
     </div>
   </div>
   <yrx-spacing type="S"></yrx-spacing>

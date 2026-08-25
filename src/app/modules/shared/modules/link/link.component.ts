@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
-  selector: 'yrx-link',
-  templateUrl: './link.component.html',
-  styleUrls: ['./link.component.scss'],
-
+    selector: 'yrx-link',
+    templateUrl: './link.component.html',
+    styleUrls: ['./link.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class LinkComponent {
   @Input() underlined: boolean = false;

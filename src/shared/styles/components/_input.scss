@@ -53,6 +53,76 @@ textarea {
   }
 }
 
+// Native controls used by API-backed admin forms keep the same visual contract
+// as the reusable text-field components.
+input.input_big,
+input.input_normal,
+input.input_small,
+select.input_big,
+select.input_normal,
+select.input_small,
+textarea.input_big,
+textarea.input_normal,
+textarea.input_small {
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding-right: 16px;
+  padding-left: 16px;
+  color: var(--gradation-100);
+  caret-color: var(--purple-400);
+  background-color: var(--gradation-700);
+  transition: $trs;
+  @include text;
+  @include weight-regular;
+  font-family: $second_font;
+  line-height: 1.35;
+
+  &::placeholder {
+    color: var(--gradation-400);
+    opacity: 1;
+  }
+
+  &:focus {
+    border-color: var(--purple-400);
+    outline: none;
+    background-color: var(--purple-500);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: .55;
+  }
+}
+
+input.input_big,
+select.input_big { @include input-size-big; }
+input.input_normal,
+select.input_normal { @include input-size-normal; }
+input.input_small,
+select.input_small { @include input-size-small; }
+
+select.input_big,
+select.input_normal,
+select.input_small {
+  appearance: none;
+  padding-right: 42px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--gradation-300) 50%),
+                    linear-gradient(135deg, var(--gradation-300) 50%, transparent 50%);
+  background-position: calc(100% - 19px) 50%, calc(100% - 14px) 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+
+textarea.input_big,
+textarea.input_normal,
+textarea.input_small {
+  min-height: 104px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  line-height: 1.5;
+}
+
 .input {
   width: 100%;
   transition: $trs;

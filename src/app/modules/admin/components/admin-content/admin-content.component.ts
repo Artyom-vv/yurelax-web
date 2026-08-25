@@ -1,15 +1,17 @@
-import {ChangeDetectorRef, Component, ElementRef, Inject, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Inject, ViewChild, DOCUMENT, ChangeDetectionStrategy} from '@angular/core';
 import {AnimationsService} from "../../../shared/animations/services/animations.service";
 import {AppearanceAnimation} from "../../../shared/animations/redirect.animation";
-import {DOCUMENT} from "@angular/common";
+
 import {ToolsService} from "../../../shared/services/tools.service";
 import {AdminStore} from "../../store/admin.store";
 
 @Component({
-  selector: 'yrx-admin-content',
-  templateUrl: './admin-content.component.html',
-  styleUrls: ['./admin-content.component.scss'],
-  animations: [AppearanceAnimation]
+    selector: 'yrx-admin-content',
+    templateUrl: './admin-content.component.html',
+    styleUrls: ['./admin-content.component.scss'],
+    animations: [AppearanceAnimation],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AdminContentComponent {
   constructor(

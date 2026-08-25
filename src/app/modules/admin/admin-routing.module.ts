@@ -8,10 +8,6 @@ import {AdminContentComponent} from "./components/admin-content/admin-content.co
 
 const routes: Routes = [
   {
-    path: 'auth',
-    loadChildren: () => import('../admin/module/auth/auth.module').then(m => m.AuthModule)
-  },
-  {
     path: '',
     canActivate: [AuthGuard, RoleGuard],
     component: AdminComponent,
@@ -23,10 +19,22 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
+        path: 'players',
+        component: AdminContentComponent,
+        title: 'Дешборд — Игроки',
+        loadChildren: () => import('../admin/module/players/admin-players.module').then(m => m.AdminPlayersModule)
+      },
+      {
         path: 'statistics',
         component: AdminContentComponent,
         title: 'Дешборд — Статистики',
         loadChildren: () => import('../admin/module/statistics/statistics.module').then(m => m.StatisticsModule)
+      },
+      {
+        path: 'commerce',
+        component: AdminContentComponent,
+        title: 'Дешборд — Товары и предложения',
+        loadChildren: () => import('../admin/module/commerce/admin-commerce.module').then(m => m.AdminCommerceModule)
       },
       {
         path: 'mini-games',

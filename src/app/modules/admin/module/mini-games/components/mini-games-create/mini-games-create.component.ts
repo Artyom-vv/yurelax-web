@@ -6,7 +6,8 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Output
+  Output,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -25,9 +26,11 @@ import {RequestsCancellerService} from "../../../../../shared/services/requests-
 import {ITagResponse} from "../../../../../shared/modules/tag/interfaces/tag.interface";
 
 @Component({
-  selector: 'yrx-mini-games-create',
-  templateUrl: './mini-games-create.component.html',
-  styleUrls: ['./mini-games-create.component.scss']
+    selector: 'yrx-mini-games-create',
+    templateUrl: './mini-games-create.component.html',
+    styleUrls: ['./mini-games-create.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class MiniGamesCreateComponent implements OnInit, OnDestroy, AfterViewInit {
 

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {AppStore} from "../../../../../../store/app.store";
 import {Subscription, tap} from "rxjs";
 import {IRatingRow, RatingTableInterface} from "../../interfaces/rating-table.interface";
@@ -6,9 +6,11 @@ import {AnimationsService} from "../../../../animations/services/animations.serv
 import {UserRes} from "../../../../../platform/interfaces/user.interface";
 
 @Component({
-  selector: 'yrx-rating-table-point',
-  templateUrl: './rating-table-point.component.html',
-  styleUrls: ['./rating-table-point.component.scss']
+    selector: 'yrx-rating-table-point',
+    templateUrl: './rating-table-point.component.html',
+    styleUrls: ['./rating-table-point.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class RatingTablePointComponent implements OnInit, OnDestroy, AfterViewInit {
 

@@ -1,10 +1,12 @@
-import {Component} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {PromoCodeEnum} from "./enums/promo-code.enum";
 
 @Component({
-  selector: 'yrx-promo-code',
-  templateUrl: './promo-code.component.html',
-  styleUrls: ['./promo-code.component.scss']
+    selector: 'yrx-promo-code',
+    templateUrl: './promo-code.component.html',
+    styleUrls: ['./promo-code.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class PromoCodeComponent {
 

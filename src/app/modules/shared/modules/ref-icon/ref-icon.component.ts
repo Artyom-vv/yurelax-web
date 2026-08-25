@@ -7,15 +7,18 @@ import {
   OnChanges,
   Renderer2,
   SimpleChanges,
-  ViewChild
+  ViewChild,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { RefIconService } from "./services/ref-icon.service";
 
 @Component({
-  selector: 'yrx-ref-icon',
-  templateUrl: './ref-icon.component.html',
-  styleUrls: ['./ref-icon.component.scss']
+    selector: 'yrx-ref-icon',
+    templateUrl: './ref-icon.component.html',
+    styleUrls: ['./ref-icon.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class RefIconComponent implements OnChanges {
 

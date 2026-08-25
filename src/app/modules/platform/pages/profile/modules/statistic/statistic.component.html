@@ -4,10 +4,14 @@
     <yrx-spacing type="XS"></yrx-spacing>
     <yrx-select placeholder="Выберите опцию" formControlName="statisticType" [options]="options" custom="dark"></yrx-select>
   </div>
-  @for (statistic of statistics; track statistic; let idx = $index) {
+  @for (statistic of visibleStatistics; track statistic; let idx = $index) {
     <yrx-table-section [even]="idx % 2 === 0" class="flex_justify-between">
-      <p class="text text_regular c-gradation-100">Сыграно игр</p>
-      <p class="text text_regular c-gradation-100">128</p>
+      <p class="text text_body regular c-gradation-200">{{statistic}}</p>
+      <p class="statistic-value text text_body medium c-gradation-400" title="Показатель появится после подключения истории игрока">—</p>
     </yrx-table-section>
   }
+  <div class="statistic-note">
+    <yrx-icon [stroked]="true" icon="alert-triangle"></yrx-icon>
+    <p class="text text_small regular c-gradation-300">Исторические значения пока переносятся в новую платформу. Структура раздела сохранена и заполнится автоматически.</p>
+  </div>
 </div>

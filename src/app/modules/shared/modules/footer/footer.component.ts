@@ -5,17 +5,21 @@ import {
   Inject,
   OnDestroy,
   OnInit,
-  ViewChild
+  ViewChild,
+  DOCUMENT,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
 import {Subscription} from "rxjs";
 import {SocialStoreInterface} from "../../../../store/interfaces/socials-store.interface";
-import {DOCUMENT} from "@angular/common";
+
 
 @Component({
-  selector: 'yrx-footer',
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss']
+    selector: 'yrx-footer',
+    templateUrl: './footer.component.html',
+    styleUrls: ['./footer.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FooterComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(

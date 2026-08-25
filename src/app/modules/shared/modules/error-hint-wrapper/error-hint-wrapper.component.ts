@@ -8,7 +8,7 @@ import {
   tap,
 } from "rxjs";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {AfterViewInit, ChangeDetectorRef, Component, Inject, Input, OnInit} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, Inject, Input, OnInit, ChangeDetectionStrategy} from "@angular/core";
 import {
   BASE_COMPONENT_INPUT_BLUR,
   BaseComponentInputDirective
@@ -18,19 +18,21 @@ import {animateChild, transition, trigger} from "@angular/animations";
 
 @UntilDestroy()
 @Component({
-  host: {
-    "[style.display]": "display"
-  },
-  selector: 'yrx-error-hint-wrapper',
-  templateUrl: './error-hint-wrapper.component.html',
-  styleUrls: ['./error-hint-wrapper.component.scss'],
-  animations: [
-    trigger('childTrigger', [
-      transition(':leave', [
-        animateChild()
-      ]),
-    ]),
-  ]
+    host: {
+        "[style.display]": "display"
+    },
+    selector: 'yrx-error-hint-wrapper',
+    templateUrl: './error-hint-wrapper.component.html',
+    styleUrls: ['./error-hint-wrapper.component.scss'],
+    animations: [
+        trigger('childTrigger', [
+            transition(':leave', [
+                animateChild()
+            ]),
+        ]),
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ErrorHintWrapperComponent implements OnInit, AfterViewInit {
   @Input() isYandexCringe: boolean = false;

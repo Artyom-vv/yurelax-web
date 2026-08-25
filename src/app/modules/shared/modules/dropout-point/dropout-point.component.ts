@@ -1,11 +1,13 @@
-import {Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation, ChangeDetectionStrategy} from '@angular/core';
 import {OptionSelectOutputInterface} from "./interfaces/option-select-output.interface";
 import {RouterLinkActive} from "@angular/router";
 
 @Component({
-  selector: 'yrx-dropout-point',
-  templateUrl: './dropout-point.component.html',
-  styleUrls: ['./dropout-point.component.scss'],
+    selector: 'yrx-dropout-point',
+    templateUrl: './dropout-point.component.html',
+    styleUrls: ['./dropout-point.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DropoutPointComponent {
   @Input() size: 'big' | 'normal' | 'small' = 'normal'

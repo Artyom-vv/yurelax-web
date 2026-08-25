@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {first, Observable, switchMap, tap} from "rxjs";
 import {WikiService} from "../../services/wiki.service";
@@ -11,10 +11,12 @@ import {SidebarNavigation, SidebarNavItem} from "../../../../modules/sidebar/int
 import {FootPanelItem} from "../../../../../shared/modules/foot-panel/interfaces/foot-panel.interface";
 
 @Component({
-  selector: 'yrx-wiki-page',
-  templateUrl: './wiki-page.component.html',
-  styleUrls: ['./wiki-page.component.scss'],
-  animations: [AppearanceAnimation]
+    selector: 'yrx-wiki-page',
+    templateUrl: './wiki-page.component.html',
+    styleUrls: ['./wiki-page.component.scss'],
+    animations: [AppearanceAnimation],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class WikiPageComponent implements OnInit {
 

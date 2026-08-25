@@ -1,108 +1,73 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {AuthService} from "../../services/auth.service";
-import {filter, Subscription, tap} from "rxjs";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MIN_PASSWORD_LENGTH} from "../../auth.constants";
-import {catchError} from "rxjs/operators";
-import {Router} from "@angular/router";
-import {AuthStore} from "../../store/auth.store";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {OpacityAnimation} from "../../animations/opacity.animation";
+import {AppStore} from '../../../../store/app.store';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from '../../services/auth.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {catchError, finalize, Observable, throwError} from 'rxjs';
+import {MIN_PASSWORD_LENGTH} from '../../auth.constants';
 
 @Component({
-  selector: 'yrx-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  animations: [
-    OpacityAnimation
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'yrx-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    animations: [
+        OpacityAnimation
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
 
   constructor(
-    private authService: AuthService,
-    private fb: FormBuilder,
-    private router: Router,
-    private cdr: ChangeDetectorRef,
-    private authStore: AuthStore,
-    private _snackBar: MatSnackBar
+    private readonly appStore: AppStore,
+    private readonly auth: AuthService,
+    private readonly formBuilder: FormBuilder,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly snackBar: MatSnackBar,
+    private readonly changeDetector: ChangeDetectorRef,
   ) {
   }
 
-  private subscriptions: Subscription[] = []
-
+  public readonly platformAvailable$ = this.appStore.platformAvailable$;
+  public readonly MIN_PASSWORD_LENGTH = MIN_PASSWORD_LENGTH;
   public form!: FormGroup;
+
   public dataLoading: boolean = false;
-  public MAKey: string = '';
   public transitionToMA: boolean = false;
-  public MIN_PASSWORD_LENGTH = MIN_PASSWORD_LENGTH
 
-  ngOnInit() {
-    this.dataFields()
-    this.initForms()
-    this.watchForms()
-    this.cdr.detectChanges()
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub.unsubscribe())
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      identifier: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(254)]],
+      password: ['', [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH), Validators.maxLength(256)]],
+    });
   }
 
   public login(): void {
+    if (this.form.invalid || this.dataLoading) return;
     this.dataLoading = true;
-    this.cdr.detectChanges()
-    this.subscriptions.push(
-      this.authService.login(this.form.getRawValue()).pipe(
-        tap(() => {
-          this.dataLoading = false;
-          this.cdr.detectChanges()
-          if (!this.MAKey) this.router.navigate(['/platform']);
-        }),
-        filter(() => !!this.MAKey),
-        tap(() => {
-          this.transitionToMA = true;
-          this.cdr.detectChanges()
-          setTimeout(() => this.router.navigate(['/auth/minecraft'], {
-            queryParams: {
-              key: this.MAKey
-            }
-          }), 600)
-        }),
-        catchError(err => {
-          this.dataLoading = false
-          this.cdr.detectChanges()
-          if (err.status === 401) {
-            this._snackBar.open('Неправильный логин или пароль', 'Закрыть')
-          } else {
-            this._snackBar.open(err.error.message, 'Закрыть')
-          }
-
-          throw new Error(err.message);
-        })
-      ).subscribe()
-    )
+    const returnTo = this.safeReturnTo(this.route.snapshot.queryParamMap.get('returnTo'));
+    const request: Observable<unknown> = returnTo.startsWith('/auth/link')
+      ? this.auth.loginSession(this.form.getRawValue())
+      : this.auth.login(this.form.getRawValue());
+    request.pipe(
+      finalize(() => {
+        this.dataLoading = false;
+        this.changeDetector.markForCheck();
+      }),
+      catchError(error => {
+        const message = error.status === 401
+          ? 'Неверный логин или пароль'
+          : 'Yurelax ID сейчас недоступен. Попробуйте ещё раз.';
+        this.snackBar.open(message, 'Закрыть');
+        return throwError(() => error);
+      })
+    ).subscribe({next: () => this.router.navigateByUrl(returnTo), error: () => undefined});
   }
 
-  private initForms(): void {
-    this.form = this.fb.group({
-      email: ["", [Validators.required, Validators.email]],
-      password: ["", [Validators.required, Validators.minLength(MIN_PASSWORD_LENGTH)]]
-    })
+  private safeReturnTo(value: string | null): string {
+    return value?.startsWith('/') && !value.startsWith('//') ? value : '/platform/profile/home';
   }
-
-  private dataFields(): void {
-    this.subscriptions.push(
-      this.authStore.MAKey$.pipe(
-        tap(key => {
-          this.MAKey = key
-        })
-      ).subscribe()
-    )
-  }
-
-  private watchForms(): void {
-
-  }
-
 }

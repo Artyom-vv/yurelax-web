@@ -4,3 +4,17 @@
   display: block;
   background-color: map-get($project-colors, "gradation", 750);
 }
+
+.leaderboard-state {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 54px;
+  padding: 13px 16px;
+  border: 1px solid map-get($project-colors, "gradation", 600);
+  border-radius: 8px;
+  color: map-get($project-colors, "gradation", 300);
+  background: map-get($project-colors, "gradation", 700);
+
+  yrx-icon { width: 18px; height: 18px; flex: 0 0 auto; }
+}

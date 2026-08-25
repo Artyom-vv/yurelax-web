@@ -4,7 +4,8 @@ import {Directive, HostBinding, HostListener, Input} from "@angular/core";
   selector: '[yrxPasswordHider]',
   host: {
     '[class.cursor-pointer]': 'true'
-  }
+  },
+  standalone: false,
 })
 export class PasswordHiderDirective {
   @Input() yrxPasswordHider?: HTMLInputElement[];
