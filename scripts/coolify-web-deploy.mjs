@@ -72,10 +72,22 @@ async function waitForDeployment(config, deploymentUuid, fetcher, sleep) {
     const deployment = await request(config, fetcher, `deployments/${deploymentUuid}`);
     const status = String(deployment.status ?? '').toLowerCase();
     if (SUCCESS.has(status)) return;
-    if (FAILURE.has(status)) throw new Error(`Coolify web deployment ended with status ${status}`);
+    if (FAILURE.has(status)) {
+      throw new Error(`Coolify web deployment ended with status ${status}${deploymentLogSummary(deployment.logs)}`);
+    }
     await sleep(POLL_INTERVAL_MS);
   }
   throw new Error('Coolify web deployment exceeded its timeout');
+}
+
+/** Redacts common credential shapes before exposing the useful tail of a private deployment log. */
+function deploymentLogSummary(value) {
+  if (typeof value !== 'string' || value.trim() === '') return '';
+  const clean = value.replace(/\x1B\[[0-?]*[ -\/]*[@-~]/g, '')
+    .replace(/(authorization:\s*bearer\s+)\S+/gi, '$1[redacted]')
+    .replace(/((?:token|password|secret)\s*[=:]\s*)\S+/gi, '$1[redacted]')
+    .replace(/(https?:\/\/)[^\s/@:]+:[^\s/@]+@/gi, '$1[redacted]@');
+  return `; log tail:\n${clean.slice(-4_000)}`;
 }
 
 /** Verifies the semantic public health response belongs to the selected Git revision. */

@@ -108,6 +108,20 @@ describe('web production deployment', () => {
     await assert.rejects(() => deployWeb('rollback', ENVIRONMENT, fetcher, async () => {}), /No successful previous/);
   });
 
+  it('reports a redacted deployment log tail on terminal failure', async () => {
+    const fetcher = sequence([
+      json([{...APPLICATION, git_commit_sha: SHA_TWO}]),
+      json([]), json({message: 'created'}, 201), json({message: 'updated'}),
+      json({deployments: [{deployment_uuid: 'deployment-failed'}]}),
+      json({status: 'failed', logs: 'Build error\nTOKEN=unsafe\nhttps://user:pass@example.test/private'}),
+    ]);
+    await assert.rejects(() => deployWeb('publish', ENVIRONMENT, fetcher, async () => {}), (error) => {
+      assert.match(error.message, /Build error/);
+      assert.doesNotMatch(error.message, /unsafe|user:pass/);
+      return true;
+    });
+  });
+
   it('fails closed when repository identity is missing or ambiguous', async () => {
     await assert.rejects(() => deployWeb('publish', ENVIRONMENT, sequence([
       json([{name: 'duplicate', uuid: 'one', git_repository: 'Artyom-vv/yurelax-web'},
