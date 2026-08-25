@@ -1,6 +1,51 @@
 @import "src/shared/styles/vars.colors";
+@import "src/shared/styles/vars.animations";
 
 .profile-header {
   height: 48px;
   background-color: map-get($project-colors, "gradation", 750);
+}
+
+.profile-header__content {
+  height: 100%;
+}
+
+.profile-header__socials {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.profile-header__social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: map-get($project-colors, "gradation", 300);
+  border-radius: 8px;
+  transition:
+    color $trs,
+    background-color $trs,
+    transform $trs;
+
+  yrx-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover,
+  &:focus-visible {
+    color: var(--social-color);
+    background-color: rgba(255, 255, 255, 0.06);
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px var(--social-color);
+  }
 }
