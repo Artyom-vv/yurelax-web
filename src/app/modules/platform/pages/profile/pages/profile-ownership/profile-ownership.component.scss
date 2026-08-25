@@ -24,6 +24,10 @@
 .purchase-price {
   text-align: right;
 }
+
+.ownership-card details { margin-top: 7px; }
+.ownership-card summary { color: map-get($project-colors, "gradation", 500); font-size: 11px; cursor: pointer; }
+.ownership-card code { display: block; margin-top: 4px; color: map-get($project-colors, "purple", 200); font-size: 11px; overflow-wrap: anywhere; }
 .notice_success {
   border-color: map-get($project-colors, "green", 300);
 }

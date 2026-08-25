@@ -62,7 +62,8 @@
               <div>
                 <h4>{{purchase.productName}}</h4>
                 <yrx-spacing type="XS2"></yrx-spacing>
-                <p class="text text_small c-gradation-300">Предложение: {{purchase.offerCode}} · количество: {{purchase.quantity}}</p>
+                <p class="text text_small c-gradation-300">Количество: {{purchase.quantity}}</p>
+                <details><summary>Технический контракт</summary><code>{{purchase.offerCode}} · {{purchase.productCode}}</code></details>
               </div>
               <div class="purchase-price">
                 <h4>{{purchase.totalPrice}} {{purchase.currencyCode}}</h4>

@@ -116,11 +116,11 @@ export class ProfileStoreComponent implements OnInit {
     const requirement = reason.requirement;
     switch (reason.code) {
       case 'PROGRESSION_LEVEL_REQUIRED':
-        return `Нужен уровень ${requirement['minimumLevel']} (${requirement['progressionCode']}), сейчас ${reason.actual ?? 'нет данных'}`;
+        return `Нужен уровень ${requirement['minimumLevel']}, сейчас ${reason.actual ?? 'нет данных'}`;
       case 'STAT_THRESHOLD_REQUIRED':
-        return `Нужно ${requirement['minimum']} по показателю ${requirement['statCode']}, сейчас ${reason.actual ?? 'нет данных'}`;
+        return `Нужно значение ${requirement['minimum']}, сейчас ${reason.actual ?? 'нет данных'}`;
       case 'GRANT_REQUIRED':
-        return `Требуется право ${requirement['grantKey']}`;
+        return 'Сначала получите необходимое право';
       case 'PURCHASE_LIMIT_REACHED':
         return `Достигнут лимит покупок: ${requirement['maximum']}`;
       case 'NEGATED_REQUIREMENT_MATCHED':
