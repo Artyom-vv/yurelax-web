@@ -58,6 +58,18 @@ export interface PlayerWalletPage {
   items: PlayerWalletBalance[];
 }
 
+export interface PlayerWalletTransaction {
+  transactionId: string;
+  currencyCode: string;
+  reasonCode: string;
+  amount: string;
+  recordedAt: string;
+}
+
+export interface PlayerWalletTransactionPage {
+  items: PlayerWalletTransaction[];
+}
+
 export interface CommercePurchaseResult {
   purchase: {
     id: string;

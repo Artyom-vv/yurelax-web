@@ -51,8 +51,16 @@
     <p class="text text_body c-gradation-300">Начисления и списания появятся здесь после загрузки истории кошелька. Если операция вам незнакома, обратитесь в поддержку.</p>
   </div>
   <div class="flex flex_column">
-    @for (transaction of [1,2,3,4]; track transaction; let idx = $index) {
-      <yrx-transaction-panel [even]="idx % 2 === 0"></yrx-transaction-panel>
+    @if (loading) {
+      <div class="wallet-state text text_body c-gradation-300">Загружаем операции…</div>
+    } @else if (error) {
+      <div class="wallet-state wallet-state_error text text_body">{{error}}</div>
+    } @else if (transactions.length === 0) {
+      <div class="wallet-state text text_body c-gradation-300">Операций пока нет.</div>
+    } @else {
+      @for (transaction of transactions; track transaction.transactionId; let idx = $index) {
+        <yrx-transaction-panel [even]="idx % 2 === 0" [transaction]="transaction"></yrx-transaction-panel>
+      }
     }
   </div>
 </div>

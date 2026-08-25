@@ -9,7 +9,8 @@ import {
   CommercePurchase,
   CommerceStorefront,
   CursorPage,
-  PlayerWalletPage
+  PlayerWalletPage,
+  PlayerWalletTransactionPage
 } from '../interfaces/commerce.interface';
 
 @Injectable({providedIn: 'root'})
@@ -28,6 +29,10 @@ export class PlatformCommerceService {
 
   wallets(): Observable<PlayerWalletPage> {
     return this.http.get<PlayerWalletPage>(`${environment.platformApiUrl}/me/wallets`);
+  }
+
+  walletTransactions(): Observable<PlayerWalletTransactionPage> {
+    return this.http.get<PlayerWalletTransactionPage>(`${environment.platformApiUrl}/me/wallet-transactions`);
   }
 
   purchases(): Observable<CursorPage<CommercePurchase>> {

@@ -37,6 +37,14 @@ describe('PlatformCommerceService', () => {
     request.flush({items: []});
   });
 
+  it('reads immutable wallet history owned by the authenticated session', () => {
+    service.walletTransactions().subscribe();
+    const request = http.expectOne('/api/me/wallet-transactions');
+    expect(request.request.method).toBe('GET');
+    expect(request.request.params.keys()).toEqual([]);
+    request.flush({items: []});
+  });
+
   it('reads owner purchases and filtered entitlements', () => {
     service.purchases().subscribe();
     http.expectOne('/api/me/purchases').flush({items: [], page: {nextCursor: null, hasMore: false}});

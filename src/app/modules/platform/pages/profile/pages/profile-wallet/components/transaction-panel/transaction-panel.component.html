@@ -1,16 +1,15 @@
 <div class="transaction flex flex_column" [class.even]="even" [ngClass]="type">
   <yrx-spacing type="XS"></yrx-spacing>
   <div class="flex flex_justify-between gap-8">
-    <p class="text text_body c-gradation-300">Пополнение баланса:</p>
+    <p class="text text_body c-gradation-300" [title]="transaction.reasonCode">{{reason(transaction.reasonCode)}}</p>
     <div class="flex gap-6">
-      <p class="text text_body c-gradation-400">16:53</p>
-      <p class="text text_body c-gradation-300">01.01.2023</p>
+      <p class="text text_body c-gradation-300">{{transaction.recordedAt | date:'dd.MM.yyyy, HH:mm'}}</p>
     </div>
   </div>
   <yrx-spacing type="XS2"></yrx-spacing>
   <div class="flex flex_align-center gap-8">
-    <h5 [class]="type === 'income' ? 'c-green-300' : 'c-red-300'">{{amountPrefix}}{{Math.abs(amount)}}</h5>
-    <yrx-ref-icon class="test" name="ucoin"></yrx-ref-icon>
+    <h5 [class]="type === 'income' ? 'c-green-300' : 'c-red-300'">{{type === 'income' ? '+' : '-'}}{{amount}}</h5>
+    <span class="text text_body c-gradation-300">{{transaction.currencyCode}}</span>
   </div>
   <yrx-spacing type="XS"></yrx-spacing>
 </div>

@@ -1,6 +1,6 @@
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {catchError, finalize, of, tap} from 'rxjs';
-import {PlayerWalletBalance} from '../profile-store/interfaces/commerce.interface';
+import {catchError, finalize, forkJoin, of, tap} from 'rxjs';
+import {PlayerWalletBalance, PlayerWalletTransaction} from '../profile-store/interfaces/commerce.interface';
 import {PlatformCommerceService} from '../profile-store/services/platform-commerce.service';
 
 @Component({
@@ -12,14 +12,18 @@ import {PlatformCommerceService} from '../profile-store/services/platform-commer
 })
 export class ProfileWalletComponent implements OnInit {
   public wallets: PlayerWalletBalance[] = [];
+  public transactions: PlayerWalletTransaction[] = [];
   public loading = true;
   public error = '';
 
   constructor(private readonly commerce: PlatformCommerceService) {}
 
   ngOnInit(): void {
-    this.commerce.wallets().pipe(
-      tap(page => this.wallets = page.items),
+    forkJoin({wallets: this.commerce.wallets(), transactions: this.commerce.walletTransactions()}).pipe(
+      tap(result => {
+        this.wallets = result.wallets.items;
+        this.transactions = result.transactions.items;
+      }),
       catchError(error => {
         this.error = error?.error?.message ?? 'Не удалось загрузить кошельки.';
         return of(null);

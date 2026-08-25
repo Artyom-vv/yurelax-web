@@ -12,17 +12,3 @@
 .transaction {
   @include transaction
 }
-
-yrx-ref-icon {
-  @include icon-size(24px)
-}
-
-:host {
-  &:has(.income) ::ng-deep yrx-ref-icon {
-    @include icon-color(map-get($project-colors, "green", 300))
-  }
-  &:has(.outcome) ::ng-deep yrx-ref-icon {
-    @include icon-color(map-get($project-colors, "red", 300))
-  }
-}
-
