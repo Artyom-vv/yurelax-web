@@ -40,6 +40,19 @@ describe('web production deployment', () => {
     assert.equal(fetcher.calls.length, 2);
   });
 
+  it('updates only the production release variable when a preview value exists', async () => {
+    const fetcher = sequence([
+      json([{...APPLICATION, git_commit_sha: SHA_TWO}]),
+      json([{key: 'WEB_RELEASE_SHA', is_preview: false}, {key: 'WEB_RELEASE_SHA', is_preview: true}]),
+      json({message: 'updated'}), json({message: 'updated'}),
+      json({deployments: [{deployment_uuid: 'deployment-production-env'}]}),
+      json({status: 'finished'}), json({status: 'ok', service: 'yurelax-web', revision: SHA_ONE}),
+    ]);
+    const result = await deployWeb('publish', ENVIRONMENT, fetcher, async () => {});
+    assert.equal(result.revision, SHA_ONE);
+    assert.equal(fetcher.calls[2].options.method, 'PATCH');
+  });
+
   it('accepts one repository-owned application when Coolify suffixes its name', async () => {
     const fetcher = sequence([
       json([{...APPLICATION, name: 'yurelax-web-yv5e',

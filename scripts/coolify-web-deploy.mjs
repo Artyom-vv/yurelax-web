@@ -46,7 +46,7 @@ export async function deployWeb(action, environment = process.env, fetcher = fet
 async function pinRuntimeRevision(config, revision, fetcher) {
   const path = `applications/${config.applicationUuid}/envs`;
   const variables = await request(config, fetcher, path);
-  const matches = variables.filter((entry) => entry.key === RELEASE_ENVIRONMENT);
+  const matches = variables.filter((entry) => entry.key === RELEASE_ENVIRONMENT && entry.is_preview !== true);
   if (matches.length > 1) throw new Error('Coolify WEB_RELEASE_SHA must exist at most once');
   await request(config, fetcher, path, {
     method: matches.length === 0 ? 'POST' : 'PATCH',
