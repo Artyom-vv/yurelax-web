@@ -55,6 +55,18 @@ export interface CommerceStatisticReference {
   allowNegative: boolean; active: boolean;
 }
 export interface CommerceProviderReference { id: string; code: string; active: boolean }
+export interface CommerceCapabilityReference {
+  id: string;
+  providerCode: string;
+  grantKey: string;
+  name: string;
+  description: string;
+  gameCode: string | null;
+  deliveryMode: CommerceDeliveryMode;
+  payloadSchema: unknown;
+  active: boolean;
+  createdAt: string;
+}
 export interface CommerceProgressionReference {
   id: string; code: string; name: string; inputStatCode: string; activeRulesetVersions: string[];
 }
@@ -64,6 +76,7 @@ export interface AdminCommerceReferences {
   statistics: CommerceStatisticReference[];
   providers: CommerceProviderReference[];
   progressions: CommerceProgressionReference[];
+  capabilities: CommerceCapabilityReference[];
 }
 
 export type CommerceProductKind = 'PERMISSION' | 'ITEM' | 'REWARD_ACCESS' | 'CUSTOM';

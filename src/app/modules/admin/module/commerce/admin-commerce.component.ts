@@ -7,6 +7,7 @@ import {
   AdminCommerceProductRevision,
   AdminCommerceReferences,
   AdminCommerceService,
+  CommerceCapabilityReference,
   CommerceRequirement,
   PublishCommerceGrant,
   PublishCommerceOffer,
@@ -29,7 +30,7 @@ export class AdminCommerceComponent implements OnInit {
   public products: AdminCommerceProductRevision[] = [];
   public offers: AdminCommerceOfferRevision[] = [];
   public references: AdminCommerceReferences = {
-    currencies: [], games: [], statistics: [], providers: [], progressions: [],
+    currencies: [], games: [], statistics: [], providers: [], progressions: [], capabilities: [],
   };
   public productCode = '';
   public offerCode = '';
@@ -64,8 +65,7 @@ export class AdminCommerceComponent implements OnInit {
       statCode: [''],
       requirementGameCode: [''],
       minimumStatistic: ['0'],
-      providerCode: [''],
-      grantKey: [''],
+      requiredCapabilityId: [''],
       requiredOfferCode: [''],
       maximumPurchases: [1, Validators.min(1)],
       prices: this.formBuilder.array([this.createPriceGroup()]),
@@ -207,6 +207,19 @@ export class AdminCommerceComponent implements OnInit {
     return `${product.productCode}::${product.version}`;
   }
 
+  public capability(id: unknown): CommerceCapabilityReference | undefined {
+    return this.references.capabilities.find(capability => capability.id === id);
+  }
+
+  public capabilityLabel(capability: CommerceCapabilityReference): string {
+    const scope = capability.gameCode ?? 'весь проект';
+    return `${capability.name} · ${scope}`;
+  }
+
+  public capabilitySchema(capability: CommerceCapabilityReference): string {
+    return JSON.stringify(capability.payloadSchema, null, 2);
+  }
+
   private parseProductRevision(value: unknown): {productCode: string; productVersion: number} {
     const [productCode, version] = String(value ?? '').split('::');
     const productVersion = Number(version);
@@ -218,10 +231,7 @@ export class AdminCommerceComponent implements OnInit {
 
   private createGrantGroup(): FormGroup {
     return this.formBuilder.group({
-      providerCode: ['', [Validators.required, Validators.pattern(CONTRACT_CODE)]],
-      grantKey: ['', [Validators.required, Validators.pattern(CONTRACT_CODE)]],
-      gameCode: ['', Validators.pattern(CONTRACT_CODE)],
-      deliveryMode: ['ENTITLEMENT', Validators.required],
+      capabilityId: ['', Validators.required],
       ownershipPolicy: ['DENY_DUPLICATE', Validators.required],
       lifetimeKind: ['PERMANENT', Validators.required],
       durationSeconds: [2_592_000, Validators.min(1)],
@@ -242,15 +252,16 @@ export class AdminCommerceComponent implements OnInit {
   }
 
   private productGrant(value: Record<string, unknown>): PublishCommerceGrant {
+    const capability = this.requiredCapability(value['capabilityId']);
     let payload: unknown;
     try { payload = JSON.parse(String(value['payload'])); }
-    catch { throw new Error(`Payload права ${String(value['grantKey'])} должен быть корректным JSON`); }
+    catch { throw new Error(`Данные права ${capability.name} должны быть корректным JSON`); }
     const fixedDuration = value['lifetimeKind'] === 'FIXED_DURATION';
     const activation = value['activationEnabled'] === true;
     return {
-      providerCode: String(value['providerCode']).trim(), grantKey: String(value['grantKey']).trim(),
-      gameCode: String(value['gameCode'] ?? '').trim() || null,
-      deliveryMode: value['deliveryMode'] as PublishCommerceGrant['deliveryMode'],
+      providerCode: capability.providerCode, grantKey: capability.grantKey,
+      gameCode: capability.gameCode,
+      deliveryMode: capability.deliveryMode,
       ownershipPolicy: value['ownershipPolicy'] as PublishCommerceGrant['ownershipPolicy'],
       lifetime: fixedDuration
         ? {kind: 'FIXED_DURATION', durationSeconds: Number(value['durationSeconds'])}
@@ -270,7 +281,11 @@ export class AdminCommerceComponent implements OnInit {
     switch (value['requirementKind']) {
       case 'PROGRESSION_LEVEL': return {kind: 'PROGRESSION_LEVEL', progressionCode: this.requiredCode(value['progressionCode'], 'Код прогрессии'), minimumLevel: Number(value['minimumLevel'])};
       case 'STAT_THRESHOLD': return {kind: 'STAT_THRESHOLD', statCode: this.requiredCode(value['statCode'], 'Код статистики'), gameCode: this.optionalCode(value['requirementGameCode'], 'Код режима'), minimum: String(value['minimumStatistic']).trim()};
-      case 'GRANT_OWNED': return {kind: 'GRANT_OWNED', providerCode: this.requiredCode(value['providerCode'], 'Provider'), grantKey: this.requiredCode(value['grantKey'], 'Ключ права'), gameCode: this.optionalCode(value['requirementGameCode'], 'Код режима')};
+      case 'GRANT_OWNED': {
+        const capability = this.requiredCapability(value['requiredCapabilityId']);
+        return {kind: 'GRANT_OWNED', providerCode: capability.providerCode,
+          grantKey: capability.grantKey, gameCode: capability.gameCode};
+      }
       case 'PURCHASE_COUNT_LIMIT': return {kind: 'PURCHASE_COUNT_LIMIT', offerCode: this.requiredCode(value['requiredOfferCode'], 'Код предложения'), maximum: Number(value['maximumPurchases'])};
       default: return null;
     }
@@ -280,6 +295,12 @@ export class AdminCommerceComponent implements OnInit {
     const code = String(value ?? '').trim();
     if (!CONTRACT_CODE.test(code)) throw new Error(`${label}: выберите корректный контрактный ключ`);
     return code;
+  }
+
+  private requiredCapability(id: unknown): CommerceCapabilityReference {
+    const capability = this.capability(id);
+    if (!capability?.active) throw new Error('Выберите активное право из платформенного реестра');
+    return capability;
   }
 
   private optionalCode(value: unknown, label: string): string | null {
