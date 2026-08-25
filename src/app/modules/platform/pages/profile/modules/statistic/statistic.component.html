@@ -2,16 +2,31 @@
   <div class="statistic" [formGroup]="form">
     <h3>Ваша статистика</h3>
     <yrx-spacing type="XS"></yrx-spacing>
-    <yrx-select placeholder="Выберите опцию" formControlName="statisticType" [options]="options" custom="dark"></yrx-select>
+    <p class="text text_body regular c-gradation-300">Режимы и показатели загружаются из опубликованных контрактов платформы.</p>
+    <yrx-spacing type="XS"></yrx-spacing>
+    @if (options.length > 0) {
+      <yrx-select placeholder="Выберите режим" formControlName="gameCode" [options]="options" custom="dark"></yrx-select>
+    }
   </div>
-  @for (statistic of visibleStatistics; track statistic; let idx = $index) {
-    <yrx-table-section [even]="idx % 2 === 0" class="flex_justify-between">
-      <p class="text text_body regular c-gradation-200">{{statistic}}</p>
-      <p class="statistic-value text text_body medium c-gradation-400" title="Показатель появится после подключения истории игрока">—</p>
-    </yrx-table-section>
+  @if (loading) {
+    <div class="statistic-state text text_body c-gradation-300">Загружаем показатели…</div>
+  } @else if (error) {
+    <div class="statistic-state statistic-state_error text text_body">{{error}}</div>
+  } @else if (!selectedGroup || selectedGroup!.items.length === 0) {
+    <div class="statistic-state text text_body c-gradation-300">В этой области пока нет записанных показателей.</div>
+  } @else {
+    @for (statistic of selectedGroup!.items; track statistic.statCode; let idx = $index) {
+      <yrx-table-section [even]="idx % 2 === 0" class="flex_justify-between flex_align-center">
+        <div class="statistic-key">
+          <p class="text text_body regular c-gradation-200">{{statistic.statCode}}</p>
+          <p class="text text_small regular c-gradation-400">
+            {{statistic.aggregationKind === 'SUM' ? 'Накопительный показатель' : 'Последнее значение'}}
+          </p>
+        </div>
+        <p class="statistic-value text text_body medium c-gradation-100" [title]="'Обновлено: ' + statistic.updatedAt">
+          {{value(statistic.value)}}
+        </p>
+      </yrx-table-section>
+    }
   }
-  <div class="statistic-note">
-    <yrx-icon [stroked]="true" icon="alert-triangle"></yrx-icon>
-    <p class="text text_small regular c-gradation-300">Исторические значения пока переносятся в новую платформу. Структура раздела сохранена и заполнится автоматически.</p>
-  </div>
 </div>

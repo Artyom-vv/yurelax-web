@@ -6,6 +6,7 @@ import {SelectModule} from "../../../../../shared/modules/select/select.module";
 import {IconModule} from "../../../../../shared/modules/icon/icon.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {TableSectionModule} from "../../../../../shared/modules/table-section/table-section.module";
+import {StatisticsService} from "../../../../../shared/services/statistics.service";
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {TableSectionModule} from "../../../../../shared/modules/table-section/ta
         IconModule,
         ReactiveFormsModule,
         TableSectionModule,
-    ]
+    ],
+    providers: [StatisticsService],
 })
 export class StatisticModule {
 }

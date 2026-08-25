@@ -29,6 +29,13 @@ describe('StatisticsService platform contracts', () => {
     request.flush({items: [], page: {nextCursor: null, hasMore: false}});
   });
 
+  it('reads owner-bound statistic groups without a browser-supplied player id', () => {
+    service.playerOverview().subscribe();
+    const request = http.expectOne('/api/me/statistics');
+    expect(request.request.method).toBe('GET');
+    request.flush({playerId: 'player-id', groups: []});
+  });
+
   it('creates an exact typed contract with CSRF and idempotency', () => {
     const input = {code: 'hunt.kills', valueKind: 'BIGINT', aggregationKind: 'SUM', allowNegative: false} as const;
     service.create(input).subscribe();
