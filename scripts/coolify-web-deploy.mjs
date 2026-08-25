@@ -12,11 +12,11 @@ const RELEASE_ENVIRONMENT = 'WEB_RELEASE_SHA';
 
 /** Publishes one immutable web revision or the last successful predecessor. */
 export async function deployWeb(action, environment = process.env, fetcher = fetch, sleep = delay) {
-  const config = deploymentConfig(environment);
-  const application = await request(config, fetcher, `applications/${config.applicationUuid}`);
-  if (application.uuid !== config.applicationUuid || application.name !== config.applicationName) {
-    throw new Error('Coolify web application identity does not match repository configuration');
-  }
+  const baseConfig = deploymentConfig(environment);
+  const applications = await request(baseConfig, fetcher, 'applications');
+  const application = selectApplication(baseConfig, applications);
+  const config = {...baseConfig, applicationUuid: application.uuid,
+    productionUrl: primaryApplicationUrl(application.fqdn)};
   const target = action === 'publish'
     ? config.releaseSha
     : await previousRevision(config, application.git_commit_sha, fetcher);
@@ -100,12 +100,39 @@ export function deploymentConfig(environment) {
   if (!SHA.test(releaseSha)) throw new Error('WEB_RELEASE_SHA must be a full immutable Git commit SHA');
   return {
     releaseSha,
-    applicationUuid: required(environment, 'COOLIFY_WEB_APPLICATION_UUID'),
     applicationName: environment.COOLIFY_WEB_APPLICATION_NAME?.trim() || 'yurelax-web',
+    repository: environment.COOLIFY_WEB_REPOSITORY?.trim() || 'Artyom-vv/yurelax-web',
     token: required(environment, 'COOLIFY_API_TOKEN'),
     coolifyApiUrl: secureUrl(required(environment, 'COOLIFY_API_URL'), 'COOLIFY_API_URL'),
-    productionUrl: secureUrl(required(environment, 'WEB_PRODUCTION_URL'), 'WEB_PRODUCTION_URL'),
   };
+}
+
+/** Resolves exactly one Coolify application owned by the expected Git repository. */
+function selectApplication(config, applications) {
+  if (!Array.isArray(applications)) throw new Error('Coolify applications response must be a list');
+  const matches = applications.filter((application) => application.name === config.applicationName
+    && repositorySlug(application.git_repository) === config.repository.toLowerCase());
+  if (matches.length !== 1 || typeof matches[0]?.uuid !== 'string') {
+    throw new Error(`Coolify must expose exactly one ${config.applicationName} application for ${config.repository}`);
+  }
+  return matches[0];
+}
+
+/** Normalizes supported Coolify Git repository values to an owner/name slug. */
+function repositorySlug(value) {
+  if (typeof value !== 'string') return '';
+  const normalized = value.trim().replace(/\.git$/, '');
+  if (!normalized.includes('://')) return normalized.toLowerCase();
+  const url = new URL(normalized);
+  return url.pathname.replace(/^\//, '').toLowerCase();
+}
+
+/** Selects the canonical first HTTPS domain configured by Coolify. */
+function primaryApplicationUrl(value) {
+  if (typeof value !== 'string') throw new Error('Coolify web application has no public URL');
+  const entries = value.split(',').map((entry) => entry.trim()).filter(Boolean);
+  if (entries.length === 0) throw new Error('Coolify web application has no public URL');
+  return secureUrl(entries[0], 'Coolify web application URL');
 }
 
 function required(environment, name) {

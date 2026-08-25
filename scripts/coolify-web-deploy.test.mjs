@@ -7,17 +7,18 @@ const SHA_ONE = '1'.repeat(40);
 const SHA_TWO = '2'.repeat(40);
 const ENVIRONMENT = {
   WEB_RELEASE_SHA: SHA_ONE,
-  COOLIFY_WEB_APPLICATION_UUID: 'web-uuid',
   COOLIFY_WEB_APPLICATION_NAME: 'yurelax-web',
+  COOLIFY_WEB_REPOSITORY: 'Artyom-vv/yurelax-web',
   COOLIFY_API_TOKEN: 'secret',
   COOLIFY_API_URL: 'https://coolify.example.test',
-  WEB_PRODUCTION_URL: 'https://yurelax.example.test',
 };
+const APPLICATION = {uuid: 'web-uuid', name: 'yurelax-web', git_repository: 'https://github.com/Artyom-vv/yurelax-web.git',
+  fqdn: 'https://yurelax.example.test'};
 
 describe('web production deployment', () => {
   it('pins and verifies one immutable publish revision', async () => {
     const fetcher = sequence([
-      json({uuid: 'web-uuid', name: 'yurelax-web', git_commit_sha: SHA_TWO}),
+      json([{...APPLICATION, git_commit_sha: SHA_TWO}]),
       json([]), json({message: 'created'}, 201), json({message: 'updated'}),
       json({deployments: [{deployment_uuid: 'deployment-1'}]}),
       json({status: 'finished'}), json({status: 'ok', service: 'yurelax-web', revision: SHA_ONE}),
@@ -31,7 +32,7 @@ describe('web production deployment', () => {
 
   it('selects the latest successful revision other than current for rollback', async () => {
     const fetcher = sequence([
-      json({uuid: 'web-uuid', name: 'yurelax-web', git_commit_sha: SHA_ONE}),
+      json([{...APPLICATION, git_commit_sha: SHA_ONE}]),
       json([{status: 'failed', git_commit_sha: '3'.repeat(40)},
         {status: 'finished', git_commit_sha: SHA_ONE}, {status: 'finished', git_commit_sha: SHA_TWO}]),
       json([{key: 'WEB_RELEASE_SHA'}]), json({message: 'updated'}), json({message: 'updated'}),
@@ -44,8 +45,15 @@ describe('web production deployment', () => {
   });
 
   it('fails closed without a previous successful revision', async () => {
-    const fetcher = sequence([json({uuid: 'web-uuid', name: 'yurelax-web', git_commit_sha: SHA_ONE}), json([])]);
+    const fetcher = sequence([json([{...APPLICATION, git_commit_sha: SHA_ONE}]), json([])]);
     await assert.rejects(() => deployWeb('rollback', ENVIRONMENT, fetcher, async () => {}), /No successful previous/);
+  });
+
+  it('fails closed when repository identity is missing or ambiguous', async () => {
+    await assert.rejects(() => deployWeb('publish', ENVIRONMENT, sequence([json([])]), async () => {}),
+      /exactly one yurelax-web/);
+    await assert.rejects(() => deployWeb('publish', ENVIRONMENT,
+      sequence([json([APPLICATION, {...APPLICATION, uuid: 'duplicate'}])]), async () => {}), /exactly one yurelax-web/);
   });
 
   it('requires HTTPS and a full commit SHA', () => {
@@ -62,10 +70,14 @@ describe('web release repository contract', () => {
       assert.match(workflow, /workflow_dispatch:/);
       assert.match(workflow, /if: github\.ref == 'refs\/heads\/master'/);
       assert.match(workflow, /group: web-production/);
+      assert.match(workflow,
+        /uses: Artyom-vv\/yurelax-platform\/\.github\/workflows\/web-release\.yaml@[a-f0-9]{40}/);
       assert.doesNotMatch(workflow, /workflow_dispatch:\s*\n\s+inputs:/);
+      assert.doesNotMatch(workflow, /COOLIFY_API_TOKEN|secrets:/);
     }
     assert.match(publish, /branches: \[master\]/);
-    assert.match(publish, /WEB_RELEASE_SHA: \$\{\{ github\.sha \}\}/);
+    assert.match(publish, /action: publish/);
+    assert.match(rollback, /action: rollback/);
   });
 
   it('runs an immutable non-root image with semantic health verification', async () => {

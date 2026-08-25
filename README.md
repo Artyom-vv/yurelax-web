@@ -14,14 +14,11 @@ Push в `master` запускает `Publish web`: workflow фиксирует C
 health endpoint вернул тот же revision. `Roll back web` — отдельная кнопка без
 ручного SHA; она выбирает последний успешный predecessor из истории Coolify.
 
-GitHub environment `production` должен содержать:
-
-- variable `WEB_PRODUCTION_URL`;
-- variable `COOLIFY_API_URL`;
-- variable `COOLIFY_WEB_APPLICATION_UUID`;
-- variable `COOLIFY_WEB_APPLICATION_NAME` со значением `yurelax-web`;
-- secret `COOLIFY_API_TOKEN` с минимальными правами чтения приложения,
-  просмотра deployments, изменения application и запуска deployment.
+Обе кнопки вызывают release-engine из `yurelax-platform`. Он использует единый
+GitHub environment `production` платформы и сам fail-closed находит ровно одно
+Coolify-приложение `yurelax-web`, принадлежащее репозиторию
+`Artyom-vv/yurelax-web`. Coolify UUID, домен и API token не дублируются в этом
+репозитории.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
 
