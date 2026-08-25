@@ -1,10 +1,9 @@
 import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AppStore} from "../../../../store/app.store";
-import {filter, finalize, Subscription, switchMap, tap} from "rxjs";
+import {catchError, EMPTY, filter, finalize, Subscription, switchMap, tap} from "rxjs";
 import {ContentLayoutInterface} from "./components/content-layout/interfaces/content-layout.interface";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MiniGamesService} from "../../../shared/services/mini-games.service";
-import {MiniGameResponseInterface} from "../../../shared/interfaces/old/mini-game-response.interface";
+import {PlatformGameCatalogService, PublicGame} from "../../../shared/services/platform-game-catalog.service";
 
 @Component({
     selector: 'yrx-home',
@@ -18,7 +17,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private appStore: AppStore,
     private fb: FormBuilder,
-    private miniGamesService: MiniGamesService
+    private gameCatalog: PlatformGameCatalogService
   ) {
   }
 
@@ -31,7 +30,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public dataLoading: boolean = true;
   public messageLoading: boolean = false;
   public access_token: boolean = false;
-  public miniGames: MiniGameResponseInterface[] = []
+  public miniGames: PublicGame[] = []
   public content_blocks: ContentLayoutInterface[] = [{
     img: {
       src: 'assets/content/landing/rpg.png',
@@ -99,11 +98,13 @@ export class HomeComponent implements OnInit, OnDestroy {
         filter((val) => val),
         switchMap(() => this.appStore.user$),
         tap((user) => this.form.patchValue({email: user?.email})),
-        switchMap(() => this.miniGamesService.getMiniGames()),
-        tap((list) => this.miniGames = list),
-        finalize(() => this.dataLoading = false)
       ).subscribe()
     )
+    this.subscriptions.push(this.gameCatalog.list().pipe(
+      tap((page) => this.miniGames = page.items),
+      catchError(() => EMPTY),
+      finalize(() => this.dataLoading = false),
+    ).subscribe())
     this.subscriptions.push(
       this.appStore.preloading$.subscribe((val) => this.preloading = val)
     )

@@ -26,6 +26,11 @@ const routes: Routes = [
     path: 'wiki',
     loadChildren: () => import('./pages/wiki/wiki.module').then(m => m.WikiModule)
   },
+  {
+    path: 'games',
+    component: PlatformComponent,
+    loadChildren: () => import('./pages/games/games.module').then(m => m.GamesModule)
+  },
 ];
 
 @NgModule({

@@ -1,0 +1,71 @@
+<main class="games-page">
+  <section class="games-hero">
+    <div class="container games-hero__content">
+      <span class="games-kicker">Режимы Yurelax</span>
+      <h1>Выбирайте игру.<br><span>История продолжится внутри.</span></h1>
+      <p>Каждый режим живёт по собственным правилам, но прогресс, награды и покупки остаются частью единого аккаунта Yurelax.</p>
+      <a class="server-address" href="javascript:void(0)" clipboard value="mc.yurelax.ru" aria-label="Скопировать адрес сервера">
+        <span class="server-address__pulse"></span>
+        <span>mc.yurelax.ru</span>
+        <yrx-ref-icon class="stroke" name="copy"></yrx-ref-icon>
+      </a>
+    </div>
+  </section>
+
+  <section class="games-catalog">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <span class="section-heading__eyebrow">Сейчас доступны</span>
+          <h2>Игровые миры</h2>
+        </div>
+        @if (!loading && games.length > 0) {
+          <span class="section-heading__count">{{ games.length }} {{ games.length === 1 ? 'режим' : 'режима' }}</span>
+        }
+      </div>
+
+      @if (loading) {
+        <div class="games-grid" aria-label="Загрузка режимов">
+          <div class="game-card game-card--skeleton"></div>
+          <div class="game-card game-card--skeleton"></div>
+        </div>
+      } @else if (unavailable) {
+        <div class="catalog-state">
+          <yrx-icon [stroked]="true" icon="alert-triangle"></yrx-icon>
+          <div><h3>Каталог временно недоступен</h3><p>Сами игровые серверы могут работать. Попробуйте обновить страницу чуть позже.</p></div>
+        </div>
+      } @else if (games.length === 0) {
+        <div class="catalog-state">
+          <yrx-icon [stroked]="true" icon="joystick"></yrx-icon>
+          <div><h3>Готовим первый режим</h3><p>Здесь появятся только опубликованные игры с полным описанием.</p></div>
+        </div>
+      } @else {
+        <div class="games-grid">
+          @for (game of games; track trackGame($index, game); let index = $index) {
+            <article class="game-card" [class.game-card--featured]="index === 0">
+              <div class="game-card__art" [style.background-image]="game.presentation.heroImageUrl ? 'url(' + game.presentation.heroImageUrl + ')' : null">
+                <span class="game-card__code">{{ game.code }}</span>
+                <span class="game-card__orb game-card__orb--one"></span>
+                <span class="game-card__orb game-card__orb--two"></span>
+                <div class="game-card__icon"><yrx-icon [stroked]="game.presentation.iconStroked" [icon]="game.presentation.icon"></yrx-icon></div>
+              </div>
+              <div class="game-card__body">
+                <div class="game-card__title"><h3>{{ game.name }}</h3><span class="live-badge"><i></i> Доступен</span></div>
+                <p>{{ game.presentation.description }}</p>
+                <div class="game-card__stats" aria-label="Ключевые показатели режима">
+                  @for (stat of game.presentation.featuredStatCodes; track stat) {
+                    <span>{{ statLabel(stat) }}</span>
+                  }
+                </div>
+                <div class="game-card__footer">
+                  <span>Прогресс сохраняется в аккаунте</span>
+                  <yrx-ref-icon class="stroke" name="arrow-right"></yrx-ref-icon>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </div>
+  </section>
+</main>
