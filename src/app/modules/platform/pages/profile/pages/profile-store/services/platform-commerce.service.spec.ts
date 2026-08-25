@@ -45,6 +45,14 @@ describe('PlatformCommerceService', () => {
     request.flush({items: []});
   });
 
+  it('reads immutable reward receipts owned by the authenticated session', () => {
+    service.rewards().subscribe();
+    const request = http.expectOne('/api/me/rewards');
+    expect(request.request.method).toBe('GET');
+    expect(request.request.params.keys()).toEqual([]);
+    request.flush({items: [], page: {nextCursor: null, hasMore: false}});
+  });
+
   it('reads owner purchases and filtered entitlements', () => {
     service.purchases().subscribe();
     http.expectOne('/api/me/purchases').flush({items: [], page: {nextCursor: null, hasMore: false}});
