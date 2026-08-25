@@ -45,6 +45,7 @@ const routes: Routes = [
         loadChildren: () => import('../admin/module/quarantine/admin-quarantine.module').then(m => m.AdminQuarantineModule)
       },
       {path:'privacy',component:AdminContentComponent,title:'Дешборд — Privacy',loadChildren:()=>import('../admin/module/privacy/admin-privacy.module').then(m=>m.AdminPrivacyModule)},
+      {path:'audit',component:AdminContentComponent,title:'Дешборд — Аудит',loadChildren:()=>import('../admin/module/audit/admin-audit.module').then(m=>m.AdminAuditModule)},
       {
         path: 'mini-games',
         component: AdminContentComponent,

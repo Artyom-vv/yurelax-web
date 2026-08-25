@@ -1,0 +1,1 @@
+import{NgModule}from'@angular/core';import{RouterModule,Routes}from'@angular/router';import{AdminAuditComponent}from'./admin-audit.component';const routes:Routes=[{path:'',pathMatch:'full',component:AdminAuditComponent}];@NgModule({imports:[RouterModule.forChild(routes)],exports:[RouterModule]})export class AdminAuditRoutingModule{}
