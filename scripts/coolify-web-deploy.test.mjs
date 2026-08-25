@@ -42,7 +42,8 @@ describe('web production deployment', () => {
 
   it('accepts one repository-owned application when Coolify suffixes its name', async () => {
     const fetcher = sequence([
-      json([{...APPLICATION, name: 'yurelax-web-yv5e', git_commit_sha: SHA_ONE}]),
+      json([{...APPLICATION, name: 'yurelax-web-yv5e',
+        git_repository: 'git@github.com:Artyom-vv/yurelax-web.git', git_commit_sha: SHA_ONE}]),
       json({status: 'ok', service: 'yurelax-web', revision: SHA_ONE}),
     ]);
     const result = await deployWeb('reconcile', ENVIRONMENT, fetcher, async () => {});
