@@ -48,6 +48,20 @@ export interface AdminCommercePage<T> {
   page: {nextCursor: string | null; hasMore: boolean};
 }
 
+export interface CommerceCurrencyReference { id: string; code: string; exponent: number; active: boolean }
+export interface CommerceGameReference { id: string; code: string; name: string; active: boolean; createdAt: string }
+export interface CommerceStatisticReference {
+  id: string; code: string; valueKind: string; aggregationKind: string; unit?: string;
+  allowNegative: boolean; active: boolean;
+}
+export interface CommerceProviderReference { id: string; code: string; active: boolean }
+export interface AdminCommerceReferences {
+  currencies: CommerceCurrencyReference[];
+  games: CommerceGameReference[];
+  statistics: CommerceStatisticReference[];
+  providers: CommerceProviderReference[];
+}
+
 export type CommerceProductKind = 'PERMISSION' | 'ITEM' | 'REWARD_ACCESS' | 'CUSTOM';
 export type CommerceDeliveryMode = 'ENTITLEMENT' | 'FULFILLMENT';
 export type CommerceOwnershipPolicy = 'DENY_DUPLICATE' | 'EXTEND' | 'REPLACE' | 'STACK';
@@ -113,6 +127,10 @@ export class AdminCommerceService {
     return this.http.get<AdminCommercePage<AdminCommerceOfferRevision>>(
       `${environment.platformApiUrl}/admin/commerce/offers`, {params},
     );
+  }
+
+  references(): Observable<AdminCommerceReferences> {
+    return this.http.get<AdminCommerceReferences>(`${environment.platformApiUrl}/admin/commerce/references`);
   }
 
   publishProduct(input: PublishCommerceProduct): Observable<AdminCommerceProductRevision> {

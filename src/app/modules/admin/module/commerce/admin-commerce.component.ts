@@ -5,6 +5,7 @@ import {catchError, finalize, forkJoin, of, tap} from 'rxjs';
 import {
   AdminCommerceOfferRevision,
   AdminCommerceProductRevision,
+  AdminCommerceReferences,
   AdminCommerceService,
   CommerceRequirement,
   PublishCommerceGrant,
@@ -27,6 +28,7 @@ export class AdminCommerceComponent implements OnInit {
   public view: 'catalog' | 'product' | 'offer' = 'catalog';
   public products: AdminCommerceProductRevision[] = [];
   public offers: AdminCommerceOfferRevision[] = [];
+  public references: AdminCommerceReferences = {currencies: [], games: [], statistics: [], providers: []};
   public productCode = '';
   public offerCode = '';
   public loading = true;
@@ -50,8 +52,7 @@ export class AdminCommerceComponent implements OnInit {
     this.offerForm = this.formBuilder.group({
       code: ['', [Validators.required, Validators.pattern(CONTRACT_CODE)]],
       version: [1, [Validators.required, Validators.min(1)]],
-      productCode: ['', [Validators.required, Validators.pattern(CONTRACT_CODE)]],
-      productVersion: [1, [Validators.required, Validators.min(1)]],
+      productRevision: ['', Validators.required],
       gameCode: ['', Validators.pattern(CONTRACT_CODE)],
       effectiveFrom: [this.localDateTime(new Date()), Validators.required],
       effectiveUntil: [''],
@@ -71,6 +72,7 @@ export class AdminCommerceComponent implements OnInit {
 
   public get grants(): FormArray { return this.productForm.get('grants') as FormArray; }
   public get prices(): FormArray { return this.offerForm.get('prices') as FormArray; }
+  public get offerCodes(): string[] { return [...new Set(this.offers.map(offer => offer.code))]; }
 
   ngOnInit(): void { this.load(); }
 
@@ -81,6 +83,9 @@ export class AdminCommerceComponent implements OnInit {
 
   public open(view: 'catalog' | 'product' | 'offer'): void {
     this.view = view;
+    if (view === 'offer' && !this.offerForm.get('productRevision')?.value && this.products.length > 0) {
+      this.offerForm.patchValue({productRevision: this.productRevisionValue(this.products[0])});
+    }
   }
 
   public load(): void {
@@ -88,10 +93,12 @@ export class AdminCommerceComponent implements OnInit {
     forkJoin({
       products: this.commerce.products(this.productCode.trim() || undefined),
       offers: this.commerce.offers(this.offerCode.trim() || undefined),
+      references: this.commerce.references(),
     }).pipe(
       tap(result => {
         this.products = result.products.items;
         this.offers = result.offers.items;
+        this.references = result.references;
       }),
       catchError(error => this.failure(error, 'Не удалось загрузить commerce-каталог')),
       finalize(() => this.loading = false),
@@ -131,9 +138,10 @@ export class AdminCommerceComponent implements OnInit {
     let input: PublishCommerceOffer;
     try {
       const value = this.offerForm.getRawValue();
+      const productRevision = this.parseProductRevision(value.productRevision);
       input = {
-        code: value.code.trim(), version: Number(value.version), productCode: value.productCode.trim(),
-        productVersion: Number(value.productVersion), gameCode: value.gameCode.trim() || null,
+        code: value.code.trim(), version: Number(value.version), productCode: productRevision.productCode,
+        productVersion: productRevision.productVersion, gameCode: value.gameCode.trim() || null,
         effectiveFrom: new Date(value.effectiveFrom).toISOString(),
         effectiveUntil: value.effectiveUntil ? new Date(value.effectiveUntil).toISOString() : null,
         requirement: this.requirementInput(value),
@@ -150,7 +158,7 @@ export class AdminCommerceComponent implements OnInit {
       tap(offer => {
         this.offers = [offer, ...this.offers];
         this.snackBar.open(`Предложение ${offer.code} v${offer.version} опубликовано`, 'Хорошо');
-        this.offerForm.reset({version: 1, productVersion: 1, effectiveFrom: this.localDateTime(new Date()),
+        this.offerForm.reset({version: 1, productRevision: '', effectiveFrom: this.localDateTime(new Date()),
           requirementKind: 'NONE', minimumLevel: 3, minimumStatistic: '0', maximumPurchases: 1});
         this.prices.clear(); this.prices.push(this.createPriceGroup());
         this.view = 'catalog';
@@ -191,6 +199,19 @@ export class AdminCommerceComponent implements OnInit {
     return grant.lifetime.kind === 'PERMANENT'
       ? 'Навсегда'
       : `На ${grant.lifetime.durationSeconds} сек.`;
+  }
+
+  public productRevisionValue(product: AdminCommerceProductRevision): string {
+    return `${product.productCode}::${product.version}`;
+  }
+
+  private parseProductRevision(value: unknown): {productCode: string; productVersion: number} {
+    const [productCode, version] = String(value ?? '').split('::');
+    const productVersion = Number(version);
+    if (!CONTRACT_CODE.test(productCode ?? '') || !Number.isInteger(productVersion) || productVersion < 1) {
+      throw new Error('Выберите опубликованную версию товара');
+    }
+    return {productCode: productCode!, productVersion};
   }
 
   private createGrantGroup(): FormGroup {

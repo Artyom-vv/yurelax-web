@@ -6,6 +6,10 @@
 .page-head { align-items: flex-end; }
 .page-head > div:first-child { max-width: 760px; }
 .page-actions { flex-shrink: 0; gap: 8px; }
+.contract-directory { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 12px 14px; border: 1px solid map-get($project-colors, "gradation", 600); border-radius: 10px; background: map-get($project-colors, "gradation", 750); }
+.contract-directory span { padding: 6px 9px; border-radius: 7px; color: map-get($project-colors, "gradation", 300); background: map-get($project-colors, "gradation", 700); font: 500 12px/1.2 $second_font; }
+.contract-directory strong { color: map-get($project-colors, "gradation", 100); }
+.contract-directory small { margin-left: auto; color: map-get($project-colors, "gradation", 400); font: 400 12px/1.3 $second_font; }
 .eyebrow { margin-bottom: 6px; color: map-get($project-colors, "purple", 200); font: 600 12px/1.2 $second_font; letter-spacing: .12em; text-transform: uppercase; }
 .editor-card, .catalog-toolbar { @include colored-box; }
 .editor-card { border: 1px solid map-get($project-colors, "gradation", 600); }

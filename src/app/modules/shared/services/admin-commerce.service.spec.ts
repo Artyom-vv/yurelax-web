@@ -20,6 +20,11 @@ describe('AdminCommerceService', () => {
   afterEach(() => http.verify());
 
   it('reads only allow-listed product and offer history', () => {
+    service.references().subscribe();
+    const references = http.expectOne('/api/admin/commerce/references');
+    expect(references.request.method).toBe('GET');
+    references.flush({currencies: [], games: [], statistics: [], providers: []});
+
     service.products('hunt.class.archer').subscribe();
     const products = http.expectOne('/api/admin/commerce/products?productCode=hunt.class.archer');
     expect(products.request.method).toBe('GET');
