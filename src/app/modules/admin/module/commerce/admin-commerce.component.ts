@@ -28,7 +28,9 @@ export class AdminCommerceComponent implements OnInit {
   public view: 'catalog' | 'product' | 'offer' = 'catalog';
   public products: AdminCommerceProductRevision[] = [];
   public offers: AdminCommerceOfferRevision[] = [];
-  public references: AdminCommerceReferences = {currencies: [], games: [], statistics: [], providers: []};
+  public references: AdminCommerceReferences = {
+    currencies: [], games: [], statistics: [], providers: [], progressions: [],
+  };
   public productCode = '';
   public offerCode = '';
   public loading = true;

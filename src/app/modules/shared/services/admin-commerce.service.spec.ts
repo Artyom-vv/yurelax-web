@@ -23,7 +23,7 @@ describe('AdminCommerceService', () => {
     service.references().subscribe();
     const references = http.expectOne('/api/admin/commerce/references');
     expect(references.request.method).toBe('GET');
-    references.flush({currencies: [], games: [], statistics: [], providers: []});
+    references.flush({currencies: [], games: [], statistics: [], providers: [], progressions: []});
 
     service.products('hunt.class.archer').subscribe();
     const products = http.expectOne('/api/admin/commerce/products?productCode=hunt.class.archer');

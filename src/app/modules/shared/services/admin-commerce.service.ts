@@ -55,11 +55,15 @@ export interface CommerceStatisticReference {
   allowNegative: boolean; active: boolean;
 }
 export interface CommerceProviderReference { id: string; code: string; active: boolean }
+export interface CommerceProgressionReference {
+  id: string; code: string; name: string; inputStatCode: string; activeRulesetVersions: string[];
+}
 export interface AdminCommerceReferences {
   currencies: CommerceCurrencyReference[];
   games: CommerceGameReference[];
   statistics: CommerceStatisticReference[];
   providers: CommerceProviderReference[];
+  progressions: CommerceProgressionReference[];
 }
 
 export type CommerceProductKind = 'PERMISSION' | 'ITEM' | 'REWARD_ACCESS' | 'CUSTOM';
